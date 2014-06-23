@@ -1,9 +1,0 @@
-global:
-  license: 本博客遵循的许可证是：
-
-home:
-  more: 更多文章...
-
-archive:
-  search: 搜索标题
-  noResult: 抱歉，针对你输入的关键词没有搜索结果
