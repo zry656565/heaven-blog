@@ -1,0 +1,49 @@
+---
+layout: page
+title: Archive
+---
+<img src="/res/images/archive.png" width="64" height="64" align="right" alt="archive">
+<input type="text" id="search_box" placeholder="{% t archive.search %}"/>
+
+<script type="text/javascript">
+$((function($){
+   $('#search_box').keyup(function(){
+      var target = $(this).val();
+      var regexp = new RegExp(target.toLowerCase());
+      var num = $('li.article').length;
+      $('#noResult').remove();
+      $('li.article').each(function(){
+          var el = $(this);
+          if(!el.find('a').html().toLowerCase().match(regexp)){
+              el.hide();
+          }
+          else if(el.find('a').html().toLowerCase().match(regexp)){
+              el.show();
+          }
+          if (el.css("display") === "none") {
+              num--;
+          }
+      })
+      if (num === 0) {
+        $('ul.article').append('<li id="noResult">{% t archive.noResult %}</li>');
+      }
+   });
+})(jQuery));
+</script>
+
+<style type="text/css">
+#search_box {
+    width: 300px;
+    margin-left: 30px;
+    border-radius: 5px;
+    border: 2px solid #ccc;
+}
+</style>
+
+<ul class="article">
+{% for post in site.posts %}
+  <li class="article">
+    {{ post.date | date: "%b %d, %Y"  }} -- <a href="{% if site.lang == "zh" %}/zh{% endif %}{{ post.url }}">{{ post.title }}</a>
+  </li>
+{% endfor %}
+</ul>

@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{% if page.title %}{{ page.title }}{%else%}Jerry's Blog{% endif %}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script src="/res/js/jquery-1.11.0.min.js"></script>
+    <link rel="stylesheet" media="screen, projection" href="/res/css/screen.css" type="text/css">
+    <link rel="stylesheet" href="/res/css/polar-clock.css" type="text/css">
+    <link rel="stylesheet" href="/res/css/duoshuo.css" type="text/css">
+    <link rel="shortcut icon" href="/res/images/favicon.ico">
+	<script>
+		//baidu site center
+		var _hmt = _hmt || [];
+		(function() {
+		var hm = document.createElement("script");
+		hm.src = "//hm.baidu.com/hm.js?2744fd74aa568e064f9986394a60ead1";
+		var s = document.getElementsByTagName("script")[0]; 
+		s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+  </head>
+  <body>
+    <header>
+      <h1 class="logo">
+        <a href="{% if site.lang == "zh" %}/zh{% endif %}/home">
+        <img src='/res/images/jerry_title.png' width="240" height="50" alt="Jerry's Blog"></a>
+      </h1>
+      <ul class="navigation">
+        {% if site.lang == "en" %}
+          {% capture link1 %}/zh{{ page.url}}{% endcapture %}
+          <li><a href="/projects/" {% if page.url contains "/projects/" %}class="active"{% endif %}>Projects</a></li>
+          <li><a href="/archive/" {% if page.url contains "/archive/" %}class="active"{% endif %}>Archive</a></li>
+          <li><a href="/about/" {% if page.url contains "/about/" %}class="active"{% endif %}>About me</a></li>
+          <li><a href="/special/" {% if page.url contains "/special/" %}class="active"{% endif %}>Special</a></li>
+          <li><a href="{{ link1 }}" >中文</a></li>
+        {% else if site.lang == "zh" %}
+          {% capture link2 %}{{ page.url  }}{% endcapture %}
+          <li><a href="/zh/projects/" {% if page.url contains "/projects/" %}class="active"{% endif %}>项目</a></li>
+          <li><a href="/zh/archive/" {% if page.url contains "/archive/" %}class="active"{% endif %}>文章</a></li>
+          <li><a href="/zh/about/" {% if page.url contains "/about/" %}class="active"{% endif %}>关于我</a></li>
+          <li><a href="/zh/special/" {% if page.url contains "/special/" %}class="active"{% endif %}>特别</a></li>
+          <li><a href="{{ link2 }}" >English</a></li>
+        {% endif %}
+      </ul>
+    </header>
+
+    <!--div class="wrapper content"-->
+      {{ content }}
+    <!--/div-->
+    
+    {% unless page.no_footer %}
+    <footer>
+      <p>
+        <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US" class="cc">
+            <img src="/res/images/cc-cc.png" class="cc">
+            <img src="/res/images/cc-by.png" class="cc">
+        </a>
+        {% t global.license %}<a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US"> Creative Commons License</a>
+      </p>
+    </footer>
+    {% endunless %}
+
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-47842677-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+    
+    {% include prettify.html %}
+  </body>
+</html>

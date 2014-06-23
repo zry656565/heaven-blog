@@ -1,0 +1,46 @@
+---
+layout: default
+---
+<div class="content{% if page.photo_url %} photo-post{% endif %}">
+  <div class="post single">
+    <h1>{{ page.title }}</h1>
+    <p class="info" datetime="{{ page.date | date: "%Y-%m-%d" }}">
+      {{ page.date | date: "%b %d, %Y" }}<br/>
+      <small>
+        {{ page.description }}
+      </small>
+    </p>
+    <div class="body">
+
+        {% if page.noEnVersion %}
+            {% include NoEnVersion.html %}
+        {% endif %}
+
+        {{ content }}
+
+        {% include footer.html %}
+    </div>
+
+      {% if page.duoshuo_comment %}
+      <div class="comment-container">
+          <!-- Duoshuo Comment BEGIN -->
+          <div class="ds-thread"></div>
+          <script type="text/javascript">
+              var duoshuoQuery = {short_name:"jerryzou"};
+              (function() {
+                  var ds = document.createElement('script');
+                  ds.type = 'text/javascript';ds.async = true;
+                  ds.src = 'http://static.duoshuo.com/embed.js';
+                  ds.charset = 'UTF-8';
+                  (document.getElementsByTagName('head')[0]
+                          || document.getElementsByTagName('body')[0]).appendChild(ds);
+              })();
+          </script>
+          <!-- Duoshuo Comment END -->
+      </div>
+      {% endif %}
+
+    <!-- <div class="breaker"></div> -->
+    <div class="breaker"></div>
+  </div>
+</div>
