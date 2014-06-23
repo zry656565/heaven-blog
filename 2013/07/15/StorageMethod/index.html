@@ -4,10 +4,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Jerry的乐园</title>
+    <title>搞清大数端小数端</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="在我看来，编程不仅仅是我与生俱来的使命，也是我快乐的源泉。我正在上海交通大学攻读软件工程硕士学位，同时我作为一名实习生，为Microsoft GBS BI工作。">
-    <link rel="canonical" href="http://jerryzou.com/">
+    <link rel="canonical" href="http://jerryzou.com/2013/07/15/StorageMethod/">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/main.css">
@@ -53,48 +53,54 @@
 
     <div class="page-content">
       <div class="wrap">
-      <div class="home">
+      <div class="post">
 
-  <h1>Posts</h1>
+  <header class="post-header">
+    <h1>搞清大数端小数端</h1>
+    <p class="meta">Jul 15, 2013</p>
+  </header>
 
-  <ul class="posts">
-    
-      <li>
-        <span class="post-date">Feb 4, 2014</span>
-        <a class="post-link" href="/2014/02/04/DeepCopyInJS/">Javascript中的一种深复制实现</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Feb 1, 2014</span>
-        <a class="post-link" href="/2014/02/01/HearthStoneTroubleShooting/">《炉石传说》无法运行的常见错误</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Dec 21, 2013</span>
-        <a class="post-link" href="/2013/12/21/HowToLearnJS/">学习Javascript的建议</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Dec 16, 2013</span>
-        <a class="post-link" href="/2013/12/16/blogisopen/">博客建立</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Jul 15, 2013</span>
-        <a class="post-link" href="/2013/07/15/TipsForC/">C语言中可能被你忽视的小细节</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Jul 15, 2013</span>
-        <a class="post-link" href="/2013/07/15/StorageMethod/">搞清大数端小数端</a>
-      </li>
-    
-  </ul>
+  <article class="post-content">
+  <p>对于同样一个数0x123456。</p>
 
-  <p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p>
+<ul>
+  <li>大数端的存储方法是：
+    <table>
+      <tr><td>地址</td><td>值</td></tr>
+      <tr><td>0x00</td><td>0x12</td></tr>
+      <tr><td>0x01</td><td>0x34</td></tr>
+      <tr><td>0x02</td><td>0x56</td></tr>
+  </table>
+    <p><br />
+  <strong>大数端记忆方法：低地址存高（大）位</strong></p>
+  </li>
+  <li>而小数端的存储方法是：
+    <table>
+      <tr><td>地址</td><td>值</td></tr>
+      <tr><td>0x00</td><td>0x56</td></tr>
+      <tr><td>0x01</td><td>0x34</td></tr>
+      <tr><td>0x02</td><td>0x12</td></tr>
+  </table>
+    <p><br />
+  <strong>小数端记忆方法：低地址存低（小）</strong></p>
+  </li>
+</ul>
+
+<p>另外，</p>
+
+<ul>
+  <li>我们日常生活中常见的IA-32位体系架构一般都是小数端存储方法。</li>
+  <li>而IA-64则同时采用大数端和小数端的存储方法。</li>
+</ul>
+
+<p>但需要注意的是，现在很常见的家装64位的windows系统可不算真正的64位系统。真正的64位体系结构与32位体系结构完全不同，32位体系结构的程序在64位体系结构上的机器上根本运行不了。因为两者根本就使用了完全不同的指令集。<br />
+其实啊，家装的64位windows系统还是属于32位体系结构EM64T。而EM64T前面的E就是Extended的简称啦（即32位的扩展，实际上是48位系统）。</p>
+
+<p><strong>说明</strong>:本文原发布于我的CSDN博客<a href="http://blog.csdn.net/zry656565">天上之海原</a>。</p>
+
+  </article>
 
 </div>
-
       </div>
     </div>
 
