@@ -4,13 +4,14 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>C语言中可能被你忽视的小细节</title>
+    <title>Javascript中的一种深复制实现</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="在我看来，编程不仅仅是我与生俱来的使命，也是我快乐的源泉。我正在上海交通大学攻读软件工程硕士学位，同时我作为一名实习生，为Microsoft GBS BI工作。">
-    <link rel="canonical" href="http://jerryzou.com/2013/07/15/TipsForC/">
+    <link rel="canonical" href="http://jerryzou.com/posts/deepcopy/">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/typo.css">
 
 </head>
 
@@ -56,29 +57,86 @@
       <div class="post">
 
   <header class="post-header">
-    <h1>C语言中可能被你忽视的小细节</h1>
-    <p class="meta">Jul 15, 2013</p>
+    <h1>Javascript中的一种深复制实现</h1>
+    <p class="meta">Feb 4, 2014</p>
   </header>
 
   <article class="post-content">
-  <ol>
-  <li>EOF是文件结束符，它的值是-1.<br />
-因此用于接收getchar()的返回值的变量一般用int而不是char。</li>
-  <li>声明数组时，如int n[10]<br />
-方括号中的数字必须为常数，因为这是静态声明数组。<br />
-也有动态声明数组的方式，那会用到指针，这在后面讨论。</li>
-  <li>在C语言中，所有函数参数都是“通过值”传递的。（如果你真的想在函数中修改主调函数的变量，你可以传地址，其实也就是传指针，这个也是后话）</li>
-  <li>处理数组时一定要时刻注意边界值的处理（是否溢出）</li>
-  <li>变量和函数的extern声明通常写在头文件中。</li>
-  <li>如果函数没有参数，在声明该函数时需要使用void关键词显式声明。因为ANSI C为了兼容老版本的C语言，把空参数表看成老版本的函数声明方式，而对参数表不做任何检查。就像这样：
-&lt;div style="margin-left: 40px"&gt;</li>
-</ol>
+  <p>要实现深复制有很多办法，比如最简单的办法有：</p>
 
-<div class="highlight"><pre><code class="c"><span class="kt">int</span> <span class="nf">func</span><span class="p">(</span><span class="kt">void</span> <span class="p">);</span></code></pre></div>
+<pre><code>var cloneObj = JSON.parse(JSON.stringify(obj));
+</code></pre>
 
-<p>&lt;/div&gt;</p>
+<p>上面这种方法好处是非常简单易用，但是坏处也显而易见，这会抛弃对象的constructor，也就是深复制之后，无论这个对象原本的构造函数是什么，在深复制之后都会变成Object。另外诸如<code>RegExp</code>对象是无法通过这种方式深复制的。</p>
 
-<p><strong>说明</strong>:本文原发布于我的CSDN博客<a href="http://blog.csdn.net/zry656565">天上之海原</a>。</p>
+<p>所以这里我将介绍一种，我自认为很优美的深复制方法，当然可能也存在问题。如果你发现了我的实现方法有什么问题，请及时让我知道~</p>
+
+<p>先决条件：
+1. 对于任何对象，它可能的类型有<code>Boolean</code>, <code>Number</code>, <code>Date</code>, <code>String</code>, <code>RegExp</code>, <code>Array</code> 以及 <code>Object</code>（所有自定义的对象全都继承于<code>Object</code>）
+2. 我们必须保留对象的构造函数信息（从而使新对象可以使用定义在<code>prototype</code>上的函数）</p>
+
+<p>最重要的一个函数：</p>
+
+<pre><code>Object.prototype.clone = function () {
+    var Constructor = this.constructor;
+    var obj = new Constructor();
+
+    for (var attr in this) {
+        if (this.hasOwnProperty(attr)) {
+            if (typeof(this[attr]) !== "function") {
+                if (this[attr] === null) {
+                    obj[attr] = null;
+                }
+                else {
+                    obj[attr] = this[attr].clone();
+                }
+            }
+        }
+    }
+    return obj;
+};
+</code></pre>
+
+<p>定义在<code>Object.prototype</code>上的<code>clone()</code>函数是整个方法的核心，对于任意一个非js预定义的对象，都会调用这个函数。而对于所有js预定义的对象，如<code>Number</code>,<code>Array</code>等，我们就要实现一个<strong>辅助<code>clone()</code>函数</strong>来实现完整的克隆过程：</p>
+
+<pre><code>/* Method of Array*/
+Array.prototype.clone = function () {
+    var thisArr = this.valueOf();
+    var newArr = [];
+    for (var i=0; i&lt;thisArr.length; i++) {
+        newArr.push(thisArr[i].clone());
+    }
+    return newArr;
+};
+
+/* Method of Boolean, Number, String*/
+Boolean.prototype.clone = function() { return this.valueOf(); };
+Number.prototype.clone = function() { return this.valueOf(); };
+String.prototype.clone = function() { return this.valueOf(); };
+
+/* Method of Date*/
+Date.prototype.clone = function() { return new Date(this.valueOf()); };
+
+/* Method of RegExp*/
+RegExp.prototype.clone = function() {
+    var pattern = this.valueOf();
+    var flags = '';
+    flags += pattern.global ? 'g' : '';
+    flags += pattern.ignoreCase ? 'i' : '';
+    flags += pattern.multiline ? 'm' : '';
+    return new RegExp(pattern.source, flags);
+};
+</code></pre>
+
+<p>可能直接定义在预定义对象的方法上，让人感觉会有些问题。但在我看来这是一种优美的实现方式。</p>
+
+<p>同时我也在开发一个插件，主要的思想也就是扩展预定义对象的方法。
+这个插件叫<code>JustJS</code>（<a href="https://github.com/zry656565/JustJS">Github项目地址</a>）
+有以下一些特性：
+1. 同时支持<code>Web</code>前端和<code>node.js</code>使用。
+2. 直接对预定义对象的方法进行扩展
+3. 使用 <code>J(function(){...})</code> 语句块，决不污染全局命名空间。
+目前只写了一小部分，同时也写了些简单的文档，有兴趣的同学可以看一下，也可以加入我，<code>Fork</code>我的项目，喜欢的同学还可以给<code>Star</code>！</p>
 
   </article>
 

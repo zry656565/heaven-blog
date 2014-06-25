@@ -8,82 +8,85 @@
     
       <item>
         <title>Javascript中的一种深复制实现</title>
-        <description>&lt;p&gt;在javascript中，所有的object变量之间的赋值都是传地址的，可能有同学会问哪些是object对象。举例子来说明可能会比较好：&lt;/p&gt;
+        <description>&lt;p&gt;要实现深复制有很多办法，比如最简单的办法有：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;k&quot;&gt;typeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;//&amp;quot;boolean&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;typeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;       &lt;span class=&quot;c1&quot;&gt;//&amp;quot;number&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;typeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;     &lt;span class=&quot;c1&quot;&gt;//&amp;quot;string&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;typeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({})&lt;/span&gt;      &lt;span class=&quot;c1&quot;&gt;//&amp;quot;object&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;typeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([])&lt;/span&gt;      &lt;span class=&quot;c1&quot;&gt;//&amp;quot;object&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;typeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;//&amp;quot;object&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;typeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){})&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;//&amp;quot;function&amp;quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;var cloneObj = JSON.parse(JSON.stringify(obj));
+&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;所以其实我们深复制主要需要处理的对象就是object对象，非object对象只要直接正常的赋值就好。我实现js深复制的思路就是：&lt;/p&gt;
+&lt;p&gt;上面这种方法好处是非常简单易用，但是坏处也显而易见，这会抛弃对象的constructor，也就是深复制之后，无论这个对象原本的构造函数是什么，在深复制之后都会变成Object。另外诸如&lt;code&gt;RegExp&lt;/code&gt;对象是无法通过这种方式深复制的。&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;遍历所有该对象的属性，&lt;/li&gt;
-  &lt;li&gt;如果该属性是”object”则需要特殊处理，
-    &lt;ul&gt;
-      &lt;li&gt;如果这个object对象比较特殊，是一个数组，那就创建一个新的数组并深复制数组里的元素&lt;/li&gt;
-      &lt;li&gt;如果这个object对象是个非数组对象，那直接再对它递归调用深复制方法即可。&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;如果不是”object”，则直接正常复制就行。&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;所以这里我将介绍一种，我自认为很优美的深复制方法，当然可能也存在问题。如果你发现了我的实现方法有什么问题，请及时让我知道~&lt;/p&gt;
 
-&lt;p&gt;下面就是我的实现了：&lt;/p&gt;
+&lt;p&gt;先决条件：
+1. 对于任何对象，它可能的类型有&lt;code&gt;Boolean&lt;/code&gt;, &lt;code&gt;Number&lt;/code&gt;, &lt;code&gt;Date&lt;/code&gt;, &lt;code&gt;String&lt;/code&gt;, &lt;code&gt;RegExp&lt;/code&gt;, &lt;code&gt;Array&lt;/code&gt; 以及 &lt;code&gt;Object&lt;/code&gt;（所有自定义的对象全都继承于&lt;code&gt;Object&lt;/code&gt;）
+2. 我们必须保留对象的构造函数信息（从而使新对象可以使用定义在&lt;code&gt;prototype&lt;/code&gt;上的函数）&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;nb&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;DeepCopy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{};&lt;/span&gt;
+&lt;p&gt;最重要的一个函数：&lt;/p&gt;
 
-  &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;hasOwnProperty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;typeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;object&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-          &lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;call&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;[object Array]&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-          &lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[];&lt;/span&gt;
-          &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;DeepCopy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
-          &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-          &lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;DeepCopy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;Object.prototype.clone = function () {
+    var Constructor = this.constructor;
+    var obj = new Constructor();
 
-&lt;p&gt;如果浏览器支持&lt;strong&gt;ECMAScript 5&lt;/strong&gt;的话，为了深复制对象属性的所有特性，可以使用&lt;/p&gt;
+    for (var attr in this) {
+        if (this.hasOwnProperty(attr)) {
+            if (typeof(this[attr]) !== &quot;function&quot;) {
+                if (this[attr] === null) {
+                    obj[attr] = null;
+                }
+                else {
+                    obj[attr] = this[attr].clone();
+                }
+            }
+        }
+    }
+    return obj;
+};
+&lt;/code&gt;&lt;/pre&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;nb&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;defineProperty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getOwnPropertyDescriptor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;定义在&lt;code&gt;Object.prototype&lt;/code&gt;上的&lt;code&gt;clone()&lt;/code&gt;函数是整个方法的核心，对于任意一个非js预定义的对象，都会调用这个函数。而对于所有js预定义的对象，如&lt;code&gt;Number&lt;/code&gt;,&lt;code&gt;Array&lt;/code&gt;等，我们就要实现一个&lt;strong&gt;辅助&lt;code&gt;clone()&lt;/code&gt;函数&lt;/strong&gt;来实现完整的克隆过程：&lt;/p&gt;
 
-&lt;p&gt;来替代&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;/* Method of Array*/
+Array.prototype.clone = function () {
+    var thisArr = this.valueOf();
+    var newArr = [];
+    for (var i=0; i&amp;lt;thisArr.length; i++) {
+        newArr.push(thisArr[i].clone());
+    }
+    return newArr;
+};
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+/* Method of Boolean, Number, String*/
+Boolean.prototype.clone = function() { return this.valueOf(); };
+Number.prototype.clone = function() { return this.valueOf(); };
+String.prototype.clone = function() { return this.valueOf(); };
 
-&lt;p&gt;&lt;br /&gt;
-直接在Object.prototype上实现该方法的好处是，所有对象都会继承该方法。坏处是某些库也会改写Object对象，所以有时会发生冲突。这是需要注意的。具体使用方法如下：&lt;/p&gt;
+/* Method of Date*/
+Date.prototype.clone = function() { return new Date(this.valueOf()); };
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;nb&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;DeepCopy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;DeepCopy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;//3&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;//3&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;//1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+/* Method of RegExp*/
+RegExp.prototype.clone = function() {
+    var pattern = this.valueOf();
+    var flags = &#39;&#39;;
+    flags += pattern.global ? &#39;g&#39; : &#39;&#39;;
+    flags += pattern.ignoreCase ? &#39;i&#39; : &#39;&#39;;
+    flags += pattern.multiline ? &#39;m&#39; : &#39;&#39;;
+    return new RegExp(pattern.source, flags);
+};
+&lt;/code&gt;&lt;/pre&gt;
 
+&lt;p&gt;可能直接定义在预定义对象的方法上，让人感觉会有些问题。但在我看来这是一种优美的实现方式。&lt;/p&gt;
+
+&lt;p&gt;同时我也在开发一个插件，主要的思想也就是扩展预定义对象的方法。
+这个插件叫&lt;code&gt;JustJS&lt;/code&gt;（&lt;a href=&quot;https://github.com/zry656565/JustJS&quot;&gt;Github项目地址&lt;/a&gt;）
+有以下一些特性：
+1. 同时支持&lt;code&gt;Web&lt;/code&gt;前端和&lt;code&gt;node.js&lt;/code&gt;使用。
+2. 直接对预定义对象的方法进行扩展
+3. 使用 &lt;code&gt;J(function(){...})&lt;/code&gt; 语句块，决不污染全局命名空间。
+目前只写了一小部分，同时也写了些简单的文档，有兴趣的同学可以看一下，也可以加入我，&lt;code&gt;Fork&lt;/code&gt;我的项目，喜欢的同学还可以给&lt;code&gt;Star&lt;/code&gt;！&lt;/p&gt;
 </description>
         <pubDate>Tue, 04 Feb 2014 21:33:00 +0000</pubDate>
-        <link>http://jerryzou.com/2014/02/04/DeepCopyInJS/</link>
-        <guid isPermaLink="true">http://jerryzou.com/2014/02/04/DeepCopyInJS/</guid>
+        <link>http://jerryzou.com/posts/deepcopy/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/deepcopy/</guid>
       </item>
     
       <item>
@@ -106,8 +109,8 @@
 &lt;/ul&gt;
 </description>
         <pubDate>Sat, 01 Feb 2014 15:56:00 +0000</pubDate>
-        <link>http://jerryzou.com/2014/02/01/HearthStoneTroubleShooting/</link>
-        <guid isPermaLink="true">http://jerryzou.com/2014/02/01/HearthStoneTroubleShooting/</guid>
+        <link>http://jerryzou.com/posts/hstroubleshoot/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/hstroubleshoot/</guid>
       </item>
     
       <item>
@@ -145,11 +148,10 @@
 &lt;/ul&gt;
 
 &lt;p&gt;加油吧，总有一天你可以完成一件属于你自己的、开天辟地的作品。&lt;/p&gt;
-
 </description>
         <pubDate>Sat, 21 Dec 2013 15:56:00 +0000</pubDate>
-        <link>http://jerryzou.com/2013/12/21/HowToLearnJS/</link>
-        <guid isPermaLink="true">http://jerryzou.com/2013/12/21/HowToLearnJS/</guid>
+        <link>http://jerryzou.com/posts/learnjs/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/learnjs/</guid>
       </item>
     
       <item>
@@ -166,8 +168,8 @@
 
 </description>
         <pubDate>Mon, 16 Dec 2013 10:00:00 +0000</pubDate>
-        <link>http://jerryzou.com/2013/12/16/blogisopen/</link>
-        <guid isPermaLink="true">http://jerryzou.com/2013/12/16/blogisopen/</guid>
+        <link>http://jerryzou.com/posts/opentopublic/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/opentopublic/</guid>
       </item>
     
       <item>
@@ -192,8 +194,8 @@
 &lt;p&gt;&lt;strong&gt;说明&lt;/strong&gt;:本文原发布于我的CSDN博客&lt;a href=&quot;http://blog.csdn.net/zry656565&quot;&gt;天上之海原&lt;/a&gt;。&lt;/p&gt;
 </description>
         <pubDate>Mon, 15 Jul 2013 15:37:00 +0000</pubDate>
-        <link>http://jerryzou.com/2013/07/15/TipsForC/</link>
-        <guid isPermaLink="true">http://jerryzou.com/2013/07/15/TipsForC/</guid>
+        <link>http://jerryzou.com/posts/tipsforC/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/tipsforC/</guid>
       </item>
     
       <item>
@@ -236,8 +238,8 @@
 &lt;p&gt;&lt;strong&gt;说明&lt;/strong&gt;:本文原发布于我的CSDN博客&lt;a href=&quot;http://blog.csdn.net/zry656565&quot;&gt;天上之海原&lt;/a&gt;。&lt;/p&gt;
 </description>
         <pubDate>Mon, 15 Jul 2013 15:37:00 +0000</pubDate>
-        <link>http://jerryzou.com/2013/07/15/StorageMethod/</link>
-        <guid isPermaLink="true">http://jerryzou.com/2013/07/15/StorageMethod/</guid>
+        <link>http://jerryzou.com/posts/storageMethod/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/storageMethod/</guid>
       </item>
     
   </channel>
