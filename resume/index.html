@@ -4,10 +4,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>搞清大数端小数端</title>
+    <title>简历</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="在我看来，编程不仅仅是我与生俱来的使命，也是我快乐的源泉。我正在上海交通大学攻读软件工程硕士学位，同时我作为一名实习生，为Microsoft GBS BI工作。">
-    <link rel="canonical" href="http://jerryzou.com/posts/storageMethod/">
+    <link rel="canonical" href="http://jerryzou.com/resume/">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/main.css">
@@ -56,47 +56,75 @@
       <div class="post">
 
   <header class="post-header">
-    <h1>搞清大数端小数端</h1>
-    <p class="meta">Jul 15, 2013</p>
+    <h1>简历</h1>
   </header>
 
   <article class="post-content">
-  <p>对于同样一个数0x123456。</p>
-
+  <h1 id="section">教育经历</h1>
 <ul>
-  <li>大数端的存储方法是：
-    <table>
-      <tr><td>地址</td><td>值</td></tr>
-      <tr><td>0x00</td><td>0x12</td></tr>
-      <tr><td>0x01</td><td>0x34</td></tr>
-      <tr><td>0x02</td><td>0x56</td></tr>
-  </table>
-    <p><br />
-  <strong>大数端记忆方法：低地址存高（大）位</strong></p>
-  </li>
-  <li>而小数端的存储方法是：
-    <table>
-      <tr><td>地址</td><td>值</td></tr>
-      <tr><td>0x00</td><td>0x56</td></tr>
-      <tr><td>0x01</td><td>0x34</td></tr>
-      <tr><td>0x02</td><td>0x12</td></tr>
-  </table>
-    <p><br />
-  <strong>小数端记忆方法：低地址存低（小）</strong></p>
+  <li>上海交通大学(2010-2014) 软件工程 本科</li>
+  <li>上海交通大学(2014-2017) 软件工程 硕士</li>
+</ul>
+
+<h1 id="section-1">工作经历</h1>
+<ul>
+  <li>Microsoft(2013.12-2014.8) 前端开发实习生
+    <ul>
+      <li>参与COSMOS的开发工作，前端开发核心成员之一</li>
+    </ul>
   </li>
 </ul>
 
-<p>另外，</p>
-
+<h1 id="section-2">项目经历</h1>
 <ul>
-  <li>我们日常生活中常见的IA-32位体系架构一般都是小数端存储方法。</li>
-  <li>而IA-64则同时采用大数端和小数端的存储方法。</li>
+  <li><strong>海角教育</strong> – 在线教育平台
+    <ul>
+      <li>老师与学生仅仅依靠浏览器就可以进行视频授课与交流</li>
+      <li>支持音频、视频、白板编辑、PDF阅读</li>
+      <li>我的第一个创业项目</li>
+      <li><a href="https://github.com/qqfish/haijiao">开源</a></li>
+    </ul>
+  </li>
+  <li><strong>LogV</strong> – 日志可视化系统
+    <ul>
+      <li>是一个运用MongoDB的大数据解决方案</li>
+      <li>支持4种标准格式的日志</li>
+      <li>用户可以定制自己的日志格式</li>
+      <li>分析未来的数据走势</li>
+      <li>折线图、柱状图、饼图、三维图</li>
+      <li>专为本应用量身定制的类SQL语言与相对应的控制台</li>
+    </ul>
+  </li>
+  <li><strong>ScreenBuilder</strong> – 基于Kinect的实时三维重建
+    <ul>
+      <li>通过Kinect收集原始数据</li>
+      <li>压缩并通过异步传输来传送数据</li>
+      <li>在远端主机实时重建出三维图像</li>
+    </ul>
+  </li>
+  <li><strong>冒险的召唤</strong> – 富有RPG元素的第三人称视角射击游戏
+    <ul>
+      <li>玩家可以通过打败怪物来收集装备</li>
+      <li>原创模型</li>
+      <li>使用Unity3D</li>
+    </ul>
+  </li>
 </ul>
 
-<p>但需要注意的是，现在很常见的家装64位的windows系统可不算真正的64位系统。真正的64位体系结构与32位体系结构完全不同，32位体系结构的程序在64位体系结构上的机器上根本运行不了。因为两者根本就使用了完全不同的指令集。<br />
-其实啊，家装的64位windows系统还是属于32位体系结构EM64T。而EM64T前面的E就是Extended的简称啦（即32位的扩展，实际上是48位系统）。</p>
+<h1 id="section-3">提交过代码的开源项目</h1>
 
-<p><strong>说明</strong>:本文原发布于我的CSDN博客<a href="http://blog.csdn.net/zry656565">天上之海原</a>。</p>
+<ul>
+  <li><a href="https://github.com/mmistakes/hpstr-jekyll-theme">HPSTR Jekyll Theme</a>
+    <ul>
+      <li>一个富有魅力的Jekyll模板</li>
+    </ul>
+  </li>
+  <li><a href="http://jekyllrb.com/">Jekyll</a>
+    <ul>
+      <li>一个面向博客的静态网站生成器</li>
+    </ul>
+  </li>
+</ul>
 
   </article>
 
