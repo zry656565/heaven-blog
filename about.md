@@ -1,7 +1,7 @@
 ---
-layout: page
 title: 关于我
 permalink: /about/
+nav: true
 ---
 
 <img src="/images/monkey.jpg" width="220" height="220" align="right">

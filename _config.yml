@@ -9,3 +9,10 @@ url: "http://jerryzou.com"
 markdown: kramdown
 permalink: pretty
 
+# default Front matter
+defaults:
+  -
+    scope:
+      path: ""
+    values:
+      layout: "page"
