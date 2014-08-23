@@ -1,10 +1,7 @@
 ---
-layout: post
 date: 2013-07-15 15:37:00 UTC
 title: 搞清大数端小数端
 description: 我们日常生活中常见的IA-32位体系架构一般都是小数端存储方法。而IA-64则同时采用大数端和小数端的存储方法。究竟什么是大数端，什么是小数端呢？
-footer: true
-duoshuo_comment: true
 permalink: /posts/storageMethod/
 ---
 

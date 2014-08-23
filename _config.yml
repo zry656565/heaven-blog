@@ -14,5 +14,13 @@ defaults:
   -
     scope:
       path: ""
+      type: "page"
     values:
-      layout: "page"
+      layout: page
+  -
+    scope:
+      path: ""
+      type: "post"
+    values:
+      layout: post
+      duoshuo_comment: true

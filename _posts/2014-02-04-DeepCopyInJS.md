@@ -1,10 +1,7 @@
 ---
-layout: post
 date: 2014-02-04 21:33:00 UTC
 title: Javascript中的一种深复制实现
 description: 本文将给大家详细介绍一种javascript中的深复制实现。
-footer: true
-duoshuo_comment: true
 permalink: /posts/deepcopy/
 ---
 
