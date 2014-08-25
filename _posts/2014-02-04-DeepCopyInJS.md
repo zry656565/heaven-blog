@@ -1,5 +1,5 @@
 ---
-date: 2014-02-04 21:33:00 UTC
+date: 2014-05-11 21:33:00 UTC
 title: Javascript中的一种深复制实现
 description: 本文将给大家详细介绍一种javascript中的深复制实现。
 permalink: /posts/deepcopy/
@@ -7,7 +7,9 @@ permalink: /posts/deepcopy/
 
 要实现深复制有很多办法，比如最简单的办法有：
 
-    var cloneObj = JSON.parse(JSON.stringify(obj));
+{% highlight javascript %}
+var cloneObj = JSON.parse(JSON.stringify(obj));
+{% endhighlight %}
 
 上面这种方法好处是非常简单易用，但是坏处也显而易见，这会抛弃对象的constructor，也就是深复制之后，无论这个对象原本的构造函数是什么，在深复制之后都会变成Object。另外诸如`RegExp`对象是无法通过这种方式深复制的。
 
@@ -19,54 +21,58 @@ permalink: /posts/deepcopy/
 
 最重要的一个函数：
 
-    Object.prototype.clone = function () {
-        var Constructor = this.constructor;
-        var obj = new Constructor();
+{% highlight javascript %}
+Object.prototype.clone = function () {
+    var Constructor = this.constructor;
+    var obj = new Constructor();
 
-        for (var attr in this) {
-            if (this.hasOwnProperty(attr)) {
-                if (typeof(this[attr]) !== "function") {
-                    if (this[attr] === null) {
-                        obj[attr] = null;
-                    }
-                    else {
-                        obj[attr] = this[attr].clone();
-                    }
+    for (var attr in this) {
+        if (this.hasOwnProperty(attr)) {
+            if (typeof(this[attr]) !== "function") {
+                if (this[attr] === null) {
+                    obj[attr] = null;
+                }
+                else {
+                    obj[attr] = this[attr].clone();
                 }
             }
         }
-        return obj;
-    };
+    }
+    return obj;
+};
+{% endhighlight %}
 
 定义在`Object.prototype`上的`clone()`函数是整个方法的核心，对于任意一个非js预定义的对象，都会调用这个函数。而对于所有js预定义的对象，如`Number`,`Array`等，我们就要实现一个**辅助`clone()`函数**来实现完整的克隆过程：
 
-    /* Method of Array*/
-    Array.prototype.clone = function () {
-        var thisArr = this.valueOf();
-        var newArr = [];
-        for (var i=0; i<thisArr.length; i++) {
-            newArr.push(thisArr[i].clone());
-        }
-        return newArr;
-    };
+{% highlight javascript %}
+/* Method of Array */
+Array.prototype.clone = function () {
+    var thisArr = this.valueOf();
+    var newArr = [];
+    for (var i=0; i<thisArr.length; i++) {
+        newArr.push(thisArr[i].clone());
+    }
+    return newArr;
+};
 
-    /* Method of Boolean, Number, String*/
-    Boolean.prototype.clone = function() { return this.valueOf(); };
-    Number.prototype.clone = function() { return this.valueOf(); };
-    String.prototype.clone = function() { return this.valueOf(); };
+/* Method of Boolean, Number, String*/
+Boolean.prototype.clone = function() { return this.valueOf(); };
+Number.prototype.clone = function() { return this.valueOf(); };
+String.prototype.clone = function() { return this.valueOf(); };
 
-    /* Method of Date*/
-    Date.prototype.clone = function() { return new Date(this.valueOf()); };
+/* Method of Date*/
+Date.prototype.clone = function() { return new Date(this.valueOf()); };
 
-    /* Method of RegExp*/
-    RegExp.prototype.clone = function() {
-        var pattern = this.valueOf();
-        var flags = '';
-        flags += pattern.global ? 'g' : '';
-        flags += pattern.ignoreCase ? 'i' : '';
-        flags += pattern.multiline ? 'm' : '';
-        return new RegExp(pattern.source, flags);
-    };
+/* Method of RegExp*/
+RegExp.prototype.clone = function() {
+    var pattern = this.valueOf();
+    var flags = '';
+    flags += pattern.global ? 'g' : '';
+    flags += pattern.ignoreCase ? 'i' : '';
+    flags += pattern.multiline ? 'm' : '';
+    return new RegExp(pattern.source, flags);
+};
+{% endhighlight %}
 
 可能直接定义在预定义对象的方法上，让人感觉会有些问题。但在我看来这是一种优美的实现方式。
 

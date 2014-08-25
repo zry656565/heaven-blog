@@ -1,6 +1,6 @@
 ---
 date: 2013-12-21 15:56:00 UTC
-title: 学习Javascript的建议
+title: 如何循序渐进地学习Javascript
 description: 在这篇文章中，我将结合我自己的经历来给js初学者提一些学习的建议。
 permalink: /posts/learnjs/
 ---
