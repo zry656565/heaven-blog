@@ -4,10 +4,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>关于我</title>
+    <title>IEEE论文PDF格式检测中的问题与解决</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="在我看来，编程不仅仅是我与生俱来的使命，也是我快乐的源泉。我正在上海交通大学攻读软件工程硕士学位，同时我作为一名实习生，为Microsoft GBS BI工作。">
-    <link rel="canonical" href="http://jerryzou.com/about/">
+    <link rel="canonical" href="http://jerryzou.com/posts/paperFormat/">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/main.css">
@@ -78,27 +78,34 @@
       <div class="post">
 
   <header class="post-header">
-    <h1>关于我</h1>
+    <h1>IEEE论文PDF格式检测中的问题与解决</h1>
+    <p class="meta">Jun 2, 2014</p>
   </header>
 
   <article class="post-content">
-  <p><img src="/images/monkey.jpg" width="220" height="220" align="right" /></p>
+  <p>这两天要发一篇很酱油的论文了，根据格式的模板改了半天终于大功告成。结果发现在<a href="www.pdf-express.org">IEEE PDF Express</a>网站上说我检验不通过，并给出了以下的错误信息。</p>
 
-<p>你们好，我叫邹润阳，是一名生活在上海的程序员。在我看来，编程不仅仅是我与生俱来的使命，也是我快乐的源泉。<br /><br />
-我正在<strong>上海交通大学</strong>攻读软件工程硕士学位。我喜欢前端的技术、喜欢研究不同的编程语言之间的联系与差异。我最爱的编程语言是javascript，而我的梦想是成为一名独立游戏开发者。<br /><br />
-如果你有任何问题，请给我发送邮件：<a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#122;&#114;&#121;&#054;&#053;&#054;&#053;&#054;&#053;&#064;&#103;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;">&#122;&#114;&#121;&#054;&#053;&#054;&#053;&#054;&#053;&#064;&#103;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;</a><br /></p>
+<p><img src="http://segmentfault.com/img/bVcobF" alt="Error and Warnings" /></p>
 
-<h2 id="section">我在别处</h2>
+<p>我瞬间摸不着头脑了，<strong>Font Times New Roman is not embedded (583x)</strong>到底是什么错啊，还没有行号，这叫我如何定位这个错误！</p>
 
-<p>你可以在网络上的很多其他地方找到我，比如：</p>
+<p>根据官方给出的提示一路顺藤摸瓜，最终发现这一段：</p>
 
-<ul>
-  <li><a href="https://github.com/zry656565">GitHub</a></li>
-  <li><a href="http://www.linkedin.com/profile/view?id=289040657">LinkedIn</a></li>
-  <li><a href="http://segmentfault.com/u/jerryzou">Segmentfault</a></li>
-  <li><a href="http://www.douban.com/people/jerry_zou/">Douban</a></li>
-  <li><a href="http://weibo.com/u/1943775181">Weibo</a></li>
-</ul>
+<blockquote>
+  <p>Every pdf document with text uses fonts. The pdf format allows to embed fonts within the pdf document. If a font is embedded then the viewer can display and print any text based on this font correctly. If a font is not embedded then the viewer looks for a substitute font on the computer where it is installed that is similar to the original font and uses this. The similarity may not be complete. For this reason publishers of pdf documents that are to be published and distributed electronically often require that all fonts are embedded.
+<strong>An exception is sometimes made for the “Base 14” fonts of Adobe because they are considered to be widely available.</strong> These are the fonts Times-Roman, Times-Italic, Times-Bold, Times-BoldItalic, Helvetica, Helvetica-Oblique, Helvetica-Bold, Helvetica-BoldOblique, Courier, Courier-Oblique, Courier-Bold, Courier-BoldOblique, Symbol and ZapfDingbats. Even if these fonts are not available then they can often safely be substituted by similar other fonts.
+The pdf test detects all fonts used by the document. Non-embedded fonts that need to be embedded are reported. The report includes the pages on which the fonts are used and also any graphics that use the font. Graphics are identified in the format Graphics4.2, that is, the second graphics on page 4. The ordering on the page is as the test finds the graphics. Note that not all graphics are identified as separate objects. Some graphics are embedded within the text.
+Consult the support section on how to make sure that the required fonts are embedded.</p>
+</blockquote>
+
+<p>真相终于大白，IEEE的论文格式检测需要PDF中嵌入所使用到的字体，可是因为那些像Times-Roman一类的字体实在是太常用了，所以一般在转换PDF的时候不会去嵌入这些字体。因此我们需要在WORD转PDF的时候做一些特殊的设置！</p>
+
+<p>只要以下三步你就可以通过检查啦！</p>
+
+<p><img src="http://segmentfault.com/img/bVcobH" alt="1,2步" /></p>
+
+<p><img src="http://segmentfault.com/img/bVcobI" alt="第3步" /></p>
+
 
   </article>
 

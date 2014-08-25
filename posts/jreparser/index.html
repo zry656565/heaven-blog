@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>一款在线Javascript正则表达式测试器</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="在我看来，编程不仅仅是我与生俱来的使命，也是我快乐的源泉。我正在上海交通大学攻读软件工程硕士学位，同时我作为一名实习生，为Microsoft GBS BI工作。">
+    <link rel="canonical" href="http://jerryzou.com/posts/jreparser/">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/typo.css">
+
+    <!-- Baidu Analysis -->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?2744fd74aa568e064f9986394a60ead1";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-47842677-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+  <div class="wrap">
+    <a class="site-title" href="/">Jerry的乐园</a>
+    <nav class="site-nav">
+      <div class="trigger">
+        <a class="page-link" href="/">首页</a>
+        
+          
+          <a class="page-link" href="/resume/">简历</a>
+          
+        
+          
+          <a class="page-link" href="/about/">关于我</a>
+          
+        
+          
+          <a class="page-link" href="/timeaxis/">时间轴</a>
+          
+        
+          
+          <a class="page-link" href="/love/">特别</a>
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+  </div>
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+      <div class="post">
+
+  <header class="post-header">
+    <h1>一款在线Javascript正则表达式测试器</h1>
+    <p class="meta">May 6, 2014</p>
+  </header>
+
+  <article class="post-content">
+  <p>昨天在看《<a href="http://deerchao.net/tutorials/regex/regex.htm">正则表达式30分钟入门教程</a>》的时候，看到博主自己实现了一个<code>C#</code>写的正则测试器，看上去挺方便的样子。但是我自己又不太喜欢乱装东西，所以寻思着能不能自己实现一个<code>javascript</code>正则表达式测试器。于是几十行代码实现了这样一个正则测试器。</p>
+
+<p>先展示一下0.1版本的效果图吧~
+<img src="http://segmentfault.com/img/bVce9v" alt="JRE-Parser效果图" /></p>
+
+<p>页面还比较简单，但是基本功能算是有了。可以正常使用~。</p>
+
+<p>关于怎么从用户的输入中提取正则表达式的过程多亏<code>@依云</code>大神提点（<a href="http://segmentfault.com/q/1010000000494735">传送门</a>），有了如下的解决办法：</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="c1">//r是用户输入的字符串</span>
+<span class="kd">var</span> <span class="nx">JTester</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">r</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">begin</span> <span class="o">=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">end</span> <span class="o">=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">lastIndexOf</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">flags</span> <span class="o">=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/\/([igm]{0,3})$/i</span><span class="p">)[</span><span class="mi">1</span><span class="p">];</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">r</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="nx">begin</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">end</span><span class="p">),</span> <span class="nx">flags</span><span class="p">);</span>
+<span class="p">};</span></code></pre></div>
+
+<p>如果有什么更好的想法也可以随时和我说，或者干脆Fork我在Github上创建的repo，给我pull request~。（<a href="https://github.com/zry656565/JRE-Parser">Github上项目的传送门</a>）</p>
+
+<p>最后附上这款测试工具的地址：<a href="http://zry656565.github.io/JRE-Parser/">http://zry656565.github.io/JRE-Parser/</a></p>
+
+  </article>
+
+</div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+  <div class="wrap">
+    <a href="https://github.com/zry656565"><img class="icon" src="/images/github_icon.png"/></a>
+    <a href="http://www.linkedin.com/profile/view?id=289040657"><img class="icon" src="/images/linkedin_icon.png"/></a>
+    <a href="http://weibo.com/u/1943775181"><img class="icon" src="/images/weibo_icon.png"/></a>
+    <a href="http://www.douban.com/people/jerry_zou/"><img class="icon" src="/images/douban_icon.png"/></a>
+    <a href="/feed.xml"><img class="icon" src="/images/rss_icon.png"/></a>
+    <p>Powered by <a href="http://jekyllrb.com/">Jekyll</a> and <a href="https://pages.github.com/">Github Pages</a>.</p>
+  </div>
+</footer>
+
+
+    </body>
+</html>

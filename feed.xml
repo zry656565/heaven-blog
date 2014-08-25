@@ -7,11 +7,262 @@
     <atom:link href="http://jerryzou.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>小型局域网的多路由配置</title>
+        <description>&lt;p&gt;如何成为一个网管，首先要有一个坑爹的妈！&lt;/p&gt;
+
+&lt;p&gt;今天刚回到家，我妈就找到我说公司里的几台无线路由用不了，在同一时刻只能用一个路由，其他的都得拔掉。我第一反应就是ip冲突了，但是感觉很麻烦的样子，因为要合理管理公司里的网络，肯定需要一个网管来分配网段嘛。可是老妈说急用啊，这次一定要搞好！没办法，硬着头皮上吧！&lt;/p&gt;
+
+&lt;h1 id=&quot;section&quot;&gt;问题&lt;/h1&gt;
+&lt;p&gt;使得6个无线路由可以同时正常工作。
+#情景
+从Modem出来的网线接到交换机A上，从交换机中接到2个路由器，并同时接上交换机B；从交换机B中再接到4个路由器上。下面是图示：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://segmentfault.com/img/bVcMXi&quot; alt=&quot;请输入图片描述&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;section-1&quot;&gt;解决&lt;/h1&gt;
+&lt;p&gt;其实在这个场景中，6个路由器是平级的，并不需要设置二级路由，所以设置非常简单。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;WAN口设置：&lt;/li&gt;
+  &lt;li&gt;IP: 192.168.1.x (x!=1 &amp;amp;&amp;amp; x &amp;gt;= 0 &amp;amp;&amp;amp; x &amp;lt;= 255) ——&amp;gt; 6个路由器的x不可重复，每个路由器对下都有一个各自的子网，对上需要有唯一的地址来收发数据，即IP地址。x!=1是为了防止和Modem的IP地址冲突。&lt;/li&gt;
+  &lt;li&gt;子网掩码: 255.255.255.0&lt;/li&gt;
+  &lt;li&gt;网关: 192.168.1.1 ——&amp;gt; Modem一般都是192.168.1.1，如果不是请修改成Modem的地址。&lt;/li&gt;
+  &lt;li&gt;LAN口设置：&lt;/li&gt;
+  &lt;li&gt;IP: 192.168.y.1 (y!=1 &amp;amp;&amp;amp; y &amp;gt;= 0 &amp;amp;&amp;amp; y &amp;lt;= 255) ——&amp;gt; LAN口是路由器对下的接口，Client可以通过LAN口的IP地址来访问路由器。&lt;/li&gt;
+  &lt;li&gt;子网掩码: 255.255.255.0&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;我觉得比较好的实践是使得 x === y。&lt;/strong&gt; &lt;/p&gt;
+
+&lt;h1 id=&quot;section-2&quot;&gt;总结&lt;/h1&gt;
+&lt;p&gt;第一次认真地思考了一下这个问题，肯定有理解不到位的地方，欢迎拍砖。另外了解了子网掩码、Modem和路由的一些常识后，感觉很有趣。可惜当初的计算机网络课没有好好上，有点后悔啊。&lt;/p&gt;
+
+</description>
+        <pubDate>Sat, 02 Aug 2014 00:00:00 +0000</pubDate>
+        <link>http://jerryzou.com/posts/networkConfig/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/networkConfig/</guid>
+      </item>
+    
+      <item>
+        <title>IEEE论文PDF格式检测中的问题与解决</title>
+        <description>&lt;p&gt;这两天要发一篇很酱油的论文了，根据格式的模板改了半天终于大功告成。结果发现在&lt;a href=&quot;www.pdf-express.org&quot;&gt;IEEE PDF Express&lt;/a&gt;网站上说我检验不通过，并给出了以下的错误信息。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://segmentfault.com/img/bVcobF&quot; alt=&quot;Error and Warnings&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;我瞬间摸不着头脑了，&lt;strong&gt;Font Times New Roman is not embedded (583x)&lt;/strong&gt;到底是什么错啊，还没有行号，这叫我如何定位这个错误！&lt;/p&gt;
+
+&lt;p&gt;根据官方给出的提示一路顺藤摸瓜，最终发现这一段：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Every pdf document with text uses fonts. The pdf format allows to embed fonts within the pdf document. If a font is embedded then the viewer can display and print any text based on this font correctly. If a font is not embedded then the viewer looks for a substitute font on the computer where it is installed that is similar to the original font and uses this. The similarity may not be complete. For this reason publishers of pdf documents that are to be published and distributed electronically often require that all fonts are embedded.
+&lt;strong&gt;An exception is sometimes made for the “Base 14” fonts of Adobe because they are considered to be widely available.&lt;/strong&gt; These are the fonts Times-Roman, Times-Italic, Times-Bold, Times-BoldItalic, Helvetica, Helvetica-Oblique, Helvetica-Bold, Helvetica-BoldOblique, Courier, Courier-Oblique, Courier-Bold, Courier-BoldOblique, Symbol and ZapfDingbats. Even if these fonts are not available then they can often safely be substituted by similar other fonts.
+The pdf test detects all fonts used by the document. Non-embedded fonts that need to be embedded are reported. The report includes the pages on which the fonts are used and also any graphics that use the font. Graphics are identified in the format Graphics4.2, that is, the second graphics on page 4. The ordering on the page is as the test finds the graphics. Note that not all graphics are identified as separate objects. Some graphics are embedded within the text.
+Consult the support section on how to make sure that the required fonts are embedded.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;真相终于大白，IEEE的论文格式检测需要PDF中嵌入所使用到的字体，可是因为那些像Times-Roman一类的字体实在是太常用了，所以一般在转换PDF的时候不会去嵌入这些字体。因此我们需要在WORD转PDF的时候做一些特殊的设置！&lt;/p&gt;
+
+&lt;p&gt;只要以下三步你就可以通过检查啦！&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://segmentfault.com/img/bVcobH&quot; alt=&quot;1,2步&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://segmentfault.com/img/bVcobI&quot; alt=&quot;第3步&quot; /&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 02 Jun 2014 00:00:00 +0000</pubDate>
+        <link>http://jerryzou.com/posts/paperFormat/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/paperFormat/</guid>
+      </item>
+    
+      <item>
+        <title>深入了解Javascript模块化编程</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;本文译自Ben Cherry的《&lt;a href=&quot;http://www.adequatelygood.com/JavaScript-Module-Pattern-In-Depth.html&quot;&gt;JavaScript Module Pattern: In-Depth&lt;/a&gt;》。虽然个人不太认同js中私有变量存在的必要性，但是本文非常全面地介绍了Javascript中模块化模式地方方面面。我读完之后还是受益匪浅，所以翻译出来希望对各位也有些帮助。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;模块化编程是一种非常常见Javascript编程模式。它一般来说可以使得代码更易于理解，但是有许多优秀的实践还没有广为人知。在这篇文章中，我将会回顾一下js模块化编程的基础，并且将会讲到一些真的非常值得一提的进阶话题，包括一个我认为是我自创的模式。
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;section&quot;&gt;基础&lt;/h1&gt;
+
+&lt;p&gt;我们首先简单地概述一下，自从三年前Eric Miraglia（YUI的开发者）第一次发表博客描述模块化模式以来的一些模块化模式。如果你已经对于这些模块化模式非常熟悉了，大可以直接跳过本节，从“进阶模式”开始阅读。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-1&quot;&gt;匿名闭包&lt;/h3&gt;
+
+&lt;p&gt;这是一种让一切变为可能的基本结构，同时它也是Javascript&lt;strong&gt;最棒的特性&lt;/strong&gt;。我们将简单地创建一个匿名函数并立即执行它。所有的代码将跑在这个函数内，生存在一个提供&lt;strong&gt;私有化&lt;/strong&gt;的闭包中，它足以使得这些闭包中的变量能够贯穿我们的应用的整个生命周期。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// ... all vars and functions are in this scope only&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// still maintains access to all globals&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}());&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;注意这对包裹匿名函数的最外层括号。因为Javascript的语言特性，这对括号是必须的。在js中由关键词function开头的语句总是会被认为是&lt;strong&gt;函数声明式&lt;/strong&gt;。把这段代码包裹在括号中就可以让解释器知道这是个&lt;strong&gt;函数表达式&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-2&quot;&gt;全局变量导入&lt;/h3&gt;
+
+&lt;p&gt;Javascript有一个特性叫做&lt;strong&gt;隐式全局变量&lt;/strong&gt;。无论一个变量名在哪儿被用到了，解释器会根据作用域链来反向找到这个变量的&lt;code&gt;var&lt;/code&gt;声明语句。如果没有找到&lt;code&gt;var&lt;/code&gt;声明语句，那么这个变量就会被视为全局变量。如果这个变量用在一句赋值语句中，同时这个变量又不存在时，就会创建出一个全局变量。这意味着在匿名闭包中使用或创建全局变量是很容易的。不幸的是，这会导致写出的代码极难维护，因为对于人的直观感受来说，一眼根本分不清那些是全局的变量。&lt;/p&gt;
+
+&lt;p&gt;幸运的是，我们的匿名函数提供了简单的变通方法。只要将全局变量作为参数传递到我们的匿名函数中，就可以得到比隐式全局变量更&lt;strong&gt;清晰&lt;/strong&gt;又&lt;strong&gt;快速&lt;/strong&gt;的代码了。下面是示例：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;YAHOO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// now have access to globals jQuery (as $) and YAHOO in this code&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;jQuery&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;YAHOO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;section-3&quot;&gt;模块导出&lt;/h3&gt;
+&lt;p&gt;有时你不仅想要使用全局变量，你还想要声明它们，以供反复使用。我们可以很容易地通过导出它们来做到这一点——通过匿名函数的&lt;strong&gt;返回值&lt;/strong&gt;。这样做将会完成一个基本的模块化模式雏形，接下来会是一个完整的例子：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;MODULE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{},&lt;/span&gt;
+		&lt;span class=&quot;nx&quot;&gt;privateVariable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+	&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;privateMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;c1&quot;&gt;// ...&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+	&lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;moduleProperty&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;moduleMethod&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;c1&quot;&gt;// ...&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}());&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;注意我们已经声明了一个叫做&lt;code&gt;MODULE&lt;/code&gt;的全局模块，它拥有2个公有的属性：一个叫做&lt;code&gt;MODULE.moduleMethod&lt;/code&gt;的方法和一个叫做&lt;code&gt;MODULE.moduleProperty&lt;/code&gt;的变量。另外，它还维护了一个利用匿名函数闭包的、&lt;strong&gt;私有的内置&lt;/strong&gt;状态。同时，我们可以很容易地导入需要的全局变量，并像之前我们所学到的那样来使用这个模块化模式。
+&lt;br /&gt;&lt;br /&gt;
+#进阶模式&lt;/p&gt;
+
+&lt;p&gt;上面一节所描述的基础已经足以应对许多情况，现在我们可以将这个模块化模式进一步的发展，创建更多强大的、可扩展的结构。让我们从&lt;code&gt;MODULE&lt;/code&gt;模块开始，一一介绍这些进阶模式。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-4&quot;&gt;放大模式&lt;/h3&gt;
+
+&lt;p&gt;整个模块必须在一个文件中是模块化模式的一个限制。任何一个参与大型项目的人都会明白将js拆分多个文件的价值。幸运的是，我们拥有一个很棒的实现来&lt;strong&gt;放大模块&lt;/strong&gt;。首先，我们导入一个模块，并为它添加属性，最后再导出它。下面是一个例子——从原本的&lt;code&gt;MODULE&lt;/code&gt;中放大它：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;MODULE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;anotherMethod&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;c1&quot;&gt;// added method...&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;MODULE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;我们用var关键词来保证一致性，虽然它在此处不是必须的。在这段代码执行完之后，我们的模块就已经拥有了一个新的、叫做&lt;code&gt;MODULE.anotherMethod&lt;/code&gt;的公有方法。这个放大文件也会维护它自己的私有内置状态和导入的对象。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-5&quot;&gt;宽放大模式&lt;/h3&gt;
+
+&lt;p&gt;我们的上面例子需要我们的初始化模块最先被执行，然后放大模块才能执行，当然有时这可能也不一定是必需的。Javascript应用可以做到的、用来提升性能的、最棒的事之一就是异步执行脚本。我们可以创建灵活的多部分模块并通过&lt;strong&gt;宽放大模式&lt;/strong&gt;使它们可以以任意顺序加载。每一个文件都需要按下面的结构组织：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;MODULE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;c1&quot;&gt;// add capabilities...&lt;/span&gt;
+
+	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;MODULE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}));&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;在这个模式中，&lt;code&gt;var&lt;/code&gt;表达式使必需的。注意如果MODULE还未初始化过，这句导入语句会创建&lt;code&gt;MODULE&lt;/code&gt;。这意味着你可以用一个像LABjs的工具来并行加载你所有的模块文件，而不会被阻塞。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-6&quot;&gt;紧放大模式&lt;/h3&gt;
+&lt;p&gt;宽放大模式非常不错，但它也会给你的模块带来一些限制。最重要的是，你不能安全地覆盖模块的属性。你也无法在初始化的时候，使用其他文件中的属性（但你可以在运行的时候用）。&lt;strong&gt;紧放大模式&lt;/strong&gt;包含了一个加载的顺序序列，并且允许&lt;strong&gt;覆盖属性&lt;/strong&gt;。这儿是一个简单的例子（放大我们的原始&lt;code&gt;MODULE&lt;/code&gt;）：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;MODULE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;old_moduleMethod&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;moduleMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;moduleMethod&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// method override, has access to old through old_moduleMethod...&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;MODULE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;我们在上面的例子中覆盖了&lt;code&gt;MODULE.moduleMethod&lt;/code&gt;的实现，但在需要的时候，可以维护一个对原来方法的引用。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-7&quot;&gt;克隆与继承&lt;/h3&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;MODULE_TWO&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;old&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{},&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;old&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;old&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;hasOwnProperty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;old&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;super_moduleMethod&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;old&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;moduleMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;moduleMethod&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// override method on the clone, access to super through super_moduleMethod&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;MODULE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;这个模式可能是&lt;strong&gt;最缺乏灵活性&lt;/strong&gt;的一种选择了。它确实使得代码显得很整洁，但那是用灵活性的代价换来的。正如我上面写的这段代码，如果某个属性是对象或者函数，它将不会被复制，而是会成为这个对象或函数的第二个引用。修改了其中的某一个就会同时修改另一个（译者注：因为它们根本就是一个啊！）。这可以通过递归克隆过程来解决这个对象克隆问题，但函数克隆可能无法解决，也许用eval可以解决吧。因此，我在这篇文章中讲述这个方法仅仅是考虑到文章的完整性。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-8&quot;&gt;跨文件私有变量&lt;/h3&gt;
+&lt;p&gt;把一个模块分到多个文件中有一个重大的限制：每一个文件都维护了各自的私有变量，并且无法访问到其他文件的私有变量。但这个问题是可以解决的。这里有一个维护跨文件私有变量的、宽放大模块的例子：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;MODULE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;_private&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_private&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_private&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{},&lt;/span&gt;
+		&lt;span class=&quot;nx&quot;&gt;_seal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_seal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_seal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;delete&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_private&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;delete&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_seal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;delete&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_unseal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+		&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+		&lt;span class=&quot;nx&quot;&gt;_unseal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_unseal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_unseal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+			&lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_private&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;_private&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+			&lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_seal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;_seal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+			&lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_unseal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;_unseal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+		&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+	&lt;span class=&quot;c1&quot;&gt;// permanent access to _private, _seal, and _unseal&lt;/span&gt;
+
+	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;MODULE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}));&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;所有文件可以在它们各自的&lt;code&gt;_private&lt;/code&gt;变量上设置属性，并且它理解可以被其他文件访问。一旦这个模块加载完成，应用程序可以调用&lt;code&gt;MODULE._seal()&lt;/code&gt;来防止外部对内部&lt;code&gt;_private&lt;/code&gt;的调用。如果这个模块需要被重新放大，在任何一个文件中的内部方法可以在加载新的文件前调用&lt;code&gt;_unseal()&lt;/code&gt;，并在新文件执行好以后再次调用&lt;code&gt;_seal()&lt;/code&gt;。我如今在工作中使用这种模式，而且我在其他地方还没有见过这种方法。我觉得这是一种非常有用的模式，很值得就这个模式本身写一篇文章。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-9&quot;&gt;子模块&lt;/h3&gt;
+&lt;p&gt;我们的最后一种进阶模式是显而易见最简单的。创建子模块有许多优秀的实例。这就像是创建一般的模块一样：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;MODULE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sub&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{};&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// ...&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}());&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;虽然这看上去很简单，但我觉得还是值得在这里提一提。子模块拥有一切一般模块的进阶优势，包括了放大模式和私有化状态。
+&lt;br /&gt;&lt;br /&gt;
+#结论
+大多数进阶模式可以结合到一起来创建一个更为有用的模式。如果实在要我推荐一种设计复杂应用程序的模块化模式的化，我会选择结合宽放大模式、私有变量和子模块。&lt;/p&gt;
+
+&lt;p&gt;我还未考虑过这些模式的性能问题，但我宁愿把这转化为一个更简单的思考方式：如果一个模块化模式有很好的性能，那么它能够把最小化做的很棒，使得下载这个脚本文件更快。使用宽放大模式可以允许简单的非阻塞并行下载，这就会加快下载速度。初始化时间可能会稍慢于其他方法，但权衡利弊后这还是值得的。只要全局变量导入准确，运行时性能应该会不会受到影响，而且还有可能在子模块中通过用私有变量缩短引用链来得到更快的运行速度。&lt;/p&gt;
+
+&lt;p&gt;作为结束，这里是一个子模块动态地把自身加载到它的父模块的例子（如果父模块不存在则创建它）。为了简洁，我把私有变量给去除了，当然加上私有变量也是很简单的啦。这种编程模式允许一整个复杂层级结构代码库通过子模块并行地完成加载。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UTIL&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;parent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;parent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ajax&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;parent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ajax&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{};&lt;/span&gt;
+
+	&lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;get&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;callback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;c1&quot;&gt;// ok, so I&amp;#39;m cheating a bit :)&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getJSON&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;callback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+	&lt;span class=&quot;c1&quot;&gt;// etc...&lt;/span&gt;
+
+	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;parent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;UTIL&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{},&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;jQuery&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;我希望这篇文章对你有帮助，请在文章下面留言分享你的想法。从现在起，就开始写更棒、更模块化的Javascript吧！&lt;/p&gt;
+</description>
+        <pubDate>Sun, 01 Jun 2014 00:00:00 +0000</pubDate>
+        <link>http://jerryzou.com/posts/jsmodular/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/jsmodular/</guid>
+      </item>
+    
+      <item>
         <title>Javascript中的一种深复制实现</title>
         <description>&lt;p&gt;要实现深复制有很多办法，比如最简单的办法有：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;var cloneObj = JSON.parse(JSON.stringify(obj));
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;cloneObj&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;JSON&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;parse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;JSON&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;stringify&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;上面这种方法好处是非常简单易用，但是坏处也显而易见，这会抛弃对象的constructor，也就是深复制之后，无论这个对象原本的构造函数是什么，在深复制之后都会变成Object。另外诸如&lt;code&gt;RegExp&lt;/code&gt;对象是无法通过这种方式深复制的。&lt;/p&gt;
 
@@ -23,56 +274,54 @@
 
 &lt;p&gt;最重要的一个函数：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;Object.prototype.clone = function () {
-    var Constructor = this.constructor;
-    var obj = new Constructor();
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;nb&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;clone&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Constructor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;constructor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Constructor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
 
-    for (var attr in this) {
-        if (this.hasOwnProperty(attr)) {
-            if (typeof(this[attr]) !== &quot;function&quot;) {
-                if (this[attr] === null) {
-                    obj[attr] = null;
-                }
-                else {
-                    obj[attr] = this[attr].clone();
-                }
-            }
-        }
-    }
-    return obj;
-};
-&lt;/code&gt;&lt;/pre&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;hasOwnProperty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;typeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;function&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                    &lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                    &lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;clone&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;定义在&lt;code&gt;Object.prototype&lt;/code&gt;上的&lt;code&gt;clone()&lt;/code&gt;函数是整个方法的核心，对于任意一个非js预定义的对象，都会调用这个函数。而对于所有js预定义的对象，如&lt;code&gt;Number&lt;/code&gt;,&lt;code&gt;Array&lt;/code&gt;等，我们就要实现一个&lt;strong&gt;辅助&lt;code&gt;clone()&lt;/code&gt;函数&lt;/strong&gt;来实现完整的克隆过程：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;/* Method of Array*/
-Array.prototype.clone = function () {
-    var thisArr = this.valueOf();
-    var newArr = [];
-    for (var i=0; i&amp;lt;thisArr.length; i++) {
-        newArr.push(thisArr[i].clone());
-    }
-    return newArr;
-};
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/* Method of Array */&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;clone&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;thisArr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;valueOf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;newArr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[];&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;thisArr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;newArr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;thisArr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;clone&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;newArr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
 
-/* Method of Boolean, Number, String*/
-Boolean.prototype.clone = function() { return this.valueOf(); };
-Number.prototype.clone = function() { return this.valueOf(); };
-String.prototype.clone = function() { return this.valueOf(); };
+&lt;span class=&quot;cm&quot;&gt;/* Method of Boolean, Number, String*/&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;Boolean&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;clone&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;valueOf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;Number&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;clone&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;valueOf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;clone&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;valueOf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
 
-/* Method of Date*/
-Date.prototype.clone = function() { return new Date(this.valueOf()); };
+&lt;span class=&quot;cm&quot;&gt;/* Method of Date*/&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;Date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;clone&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;valueOf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
 
-/* Method of RegExp*/
-RegExp.prototype.clone = function() {
-    var pattern = this.valueOf();
-    var flags = &#39;&#39;;
-    flags += pattern.global ? &#39;g&#39; : &#39;&#39;;
-    flags += pattern.ignoreCase ? &#39;i&#39; : &#39;&#39;;
-    flags += pattern.multiline ? &#39;m&#39; : &#39;&#39;;
-    return new RegExp(pattern.source, flags);
-};
-&lt;/code&gt;&lt;/pre&gt;
+&lt;span class=&quot;cm&quot;&gt;/* Method of RegExp*/&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;RegExp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;clone&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pattern&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;valueOf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;flags&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;flags&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;global&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;g&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;flags&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ignoreCase&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;i&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;flags&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;multiline&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;m&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;RegExp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;source&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;可能直接定义在预定义对象的方法上，让人感觉会有些问题。但在我看来这是一种优美的实现方式。&lt;/p&gt;
 
@@ -84,9 +333,37 @@ RegExp.prototype.clone = function() {
 3. 使用 &lt;code&gt;J(function(){...})&lt;/code&gt; 语句块，决不污染全局命名空间。
 目前只写了一小部分，同时也写了些简单的文档，有兴趣的同学可以看一下，也可以加入我，&lt;code&gt;Fork&lt;/code&gt;我的项目，喜欢的同学还可以给&lt;code&gt;Star&lt;/code&gt;！&lt;/p&gt;
 </description>
-        <pubDate>Tue, 04 Feb 2014 21:33:00 +0000</pubDate>
+        <pubDate>Sun, 11 May 2014 21:33:00 +0000</pubDate>
         <link>http://jerryzou.com/posts/deepcopy/</link>
         <guid isPermaLink="true">http://jerryzou.com/posts/deepcopy/</guid>
+      </item>
+    
+      <item>
+        <title>一款在线Javascript正则表达式测试器</title>
+        <description>&lt;p&gt;昨天在看《&lt;a href=&quot;http://deerchao.net/tutorials/regex/regex.htm&quot;&gt;正则表达式30分钟入门教程&lt;/a&gt;》的时候，看到博主自己实现了一个&lt;code&gt;C#&lt;/code&gt;写的正则测试器，看上去挺方便的样子。但是我自己又不太喜欢乱装东西，所以寻思着能不能自己实现一个&lt;code&gt;javascript&lt;/code&gt;正则表达式测试器。于是几十行代码实现了这样一个正则测试器。&lt;/p&gt;
+
+&lt;p&gt;先展示一下0.1版本的效果图吧~
+&lt;img src=&quot;http://segmentfault.com/img/bVce9v&quot; alt=&quot;JRE-Parser效果图&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;页面还比较简单，但是基本功能算是有了。可以正常使用~。&lt;/p&gt;
+
+&lt;p&gt;关于怎么从用户的输入中提取正则表达式的过程多亏&lt;code&gt;@依云&lt;/code&gt;大神提点（&lt;a href=&quot;http://segmentfault.com/q/1010000000494735&quot;&gt;传送门&lt;/a&gt;），有了如下的解决办法：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;c1&quot;&gt;//r是用户输入的字符串&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;JTester&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;begin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;indexOf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;lastIndexOf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;flags&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;match&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/\/([igm]{0,3})$/i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;RegExp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;substring&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;begin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;如果有什么更好的想法也可以随时和我说，或者干脆Fork我在Github上创建的repo，给我pull request~。（&lt;a href=&quot;https://github.com/zry656565/JRE-Parser&quot;&gt;Github上项目的传送门&lt;/a&gt;）&lt;/p&gt;
+
+&lt;p&gt;最后附上这款测试工具的地址：&lt;a href=&quot;http://zry656565.github.io/JRE-Parser/&quot;&gt;http://zry656565.github.io/JRE-Parser/&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 06 May 2014 00:00:00 +0000</pubDate>
+        <link>http://jerryzou.com/posts/jreparser/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/jreparser/</guid>
       </item>
     
       <item>
@@ -114,7 +391,7 @@ RegExp.prototype.clone = function() {
       </item>
     
       <item>
-        <title>学习Javascript的建议</title>
+        <title>如何循序渐进地学习Javascript</title>
         <description>&lt;p&gt;javascript入门太容易了，导致几乎人人随便看看就能上手，零基础的人学个三五天都能对外宣称自己掌握了js。可是真正掌握js是一件很难的事情。如果在初学一门语言的时候第一想到的是问别人，是很难取得进步的。因为得到答案太容易，而不会去想为什么。而且说实话，js并不适合作为第一门编程语言，它兼容并包，容错性高，但这也意味着一但出错你就很难找到错误的原因。另一方面js有一些优秀的特性对于没有编程经历的人来说也很难发现。&lt;/p&gt;
 
 &lt;p&gt;如果你真想学好js，我有个大概的自学轨迹供你们参考。&lt;/p&gt;
@@ -166,6 +443,11 @@ RegExp.prototype.clone = function() {
 &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
 &lt;span class=&quot;nx&quot;&gt;JerryBlog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
+&lt;hr /&gt;
+
+&lt;p&gt;2014-08-23更新：&lt;/p&gt;
+
+&lt;p&gt;如今博客已经改版了，不再使用Rasmus Andersson的源码，而是在jekyll官方模版的基础上做了一定的修改，喜欢新博客样子的朋友可以前往&lt;a href=&quot;https://github.com/zry656565/heaven-blog/&quot;&gt;zry656565/heaven-blog&lt;/a&gt;来获得源码。&lt;/p&gt;
 </description>
         <pubDate>Mon, 16 Dec 2013 10:00:00 +0000</pubDate>
         <link>http://jerryzou.com/posts/opentopublic/</link>
