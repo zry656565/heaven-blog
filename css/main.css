@@ -194,6 +194,9 @@ a:visited { color: #205caa; }
 
 .post-content ul,
 .post-content ol { padding-left: 20px; }
+.post-content p {
+  text-indent: 2em;
+}
 
 .post pre,
 .post code {
