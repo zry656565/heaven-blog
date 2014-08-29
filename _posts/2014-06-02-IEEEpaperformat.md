@@ -3,6 +3,7 @@ date: 2014-06-02 00:00:00 UTC
 title: IEEE论文PDF格式检测中的问题与解决
 description: 本文将讨论IEEE论文PDF格式检测中的问题与解决
 permalink: /posts/paperFormat/
+key: 10009
 ---
 
 这两天要发一篇很酱油的论文了，根据格式的模板改了半天终于大功告成。结果发现在[IEEE PDF Express](www.pdf-express.org)网站上说我检验不通过，并给出了以下的错误信息。

@@ -3,6 +3,7 @@ date: 2014-06-01 00:00:00 UTC
 title: 深入了解Javascript模块化编程
 description: 本文译自Ben Cherry的JavaScript Module Pattern In-Depth
 permalink: /posts/jsmodular/
+key: 10008
 ---
 
 >本文译自Ben Cherry的《[JavaScript Module Pattern: In-Depth](http://www.adequatelygood.com/JavaScript-Module-Pattern-In-Depth.html)》。虽然个人不太认同js中私有变量存在的必要性，但是本文非常全面地介绍了Javascript中模块化模式地方方面面。我读完之后还是受益匪浅，所以翻译出来希望对各位也有些帮助。

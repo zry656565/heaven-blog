@@ -3,6 +3,7 @@ date: 2014-05-11 21:33:00 UTC
 title: Javascript中的一种深复制实现
 description: 本文将给大家详细介绍一种javascript中的深复制实现。
 permalink: /posts/deepcopy/
+key: 10011
 ---
 
 要实现深复制有很多办法，比如最简单的办法有：
