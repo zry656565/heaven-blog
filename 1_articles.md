@@ -1,6 +1,6 @@
 ---
-title: 时间轴
-permalink: /timeaxis/
+title: 所有文章
+permalink: /articles/
 nav: true
 ---
 
