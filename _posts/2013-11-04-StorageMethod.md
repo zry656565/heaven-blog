@@ -1,7 +1,7 @@
 ---
 date: 2013-07-15 15:37:00 UTC
 title: 搞清大数端小数端
-description: 我们日常生活中常见的IA-32位体系架构一般都是小数端存储方法。而IA-64则同时采用大数端和小数端的存储方法。究竟什么是大数端，什么是小数端呢？
+description: 我们日常生活中常见的IA-32位体系架构一般都是小数端存储方法。而IA-64则同时采用大数端和小数端的存储方法。究竟什么是大数端，什么是小数端呢？就让我们从这篇文章中了解一下吧。
 permalink: /posts/storageMethod/
 key: 10001
 ---
@@ -10,7 +10,7 @@ key: 10001
 
 - 大数端的存储方法是：
     <table>
-        <tr><td>地址</td><td>值</td></tr>
+        <tr><td width="20px">地址</td><td>值</td></tr>
         <tr><td>0x00</td><td>0x12</td></tr>
         <tr><td>0x01</td><td>0x34</td></tr>
         <tr><td>0x02</td><td>0x56</td></tr>
@@ -19,7 +19,7 @@ key: 10001
 
 - 而小数端的存储方法是：
     <table>
-        <tr><td>地址</td><td>值</td></tr>
+        <tr><td width="20px">地址</td><td>值</td></tr>
         <tr><td>0x00</td><td>0x56</td></tr>
         <tr><td>0x01</td><td>0x34</td></tr>
         <tr><td>0x02</td><td>0x12</td></tr>

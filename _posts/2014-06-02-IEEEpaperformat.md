@@ -1,7 +1,7 @@
 ---
 date: 2014-06-02 00:00:00 UTC
 title: IEEE论文PDF格式检测中的问题与解决
-description: 本文将讨论IEEE论文PDF格式检测中的问题与解决
+description: 这两天要发一篇很酱油的论文了，根据格式的模板改了半天终于大功告成。结果发现在IEEE PDF Express网站上说我检验不通过，并给出了以下的错误信息。我瞬间摸不着头脑了，Font Times New Roman is not embedded (583x)到底是什么错啊，还没有行号，这叫我如何定位这个错误！根据官方给出的提示一路顺藤摸瓜，最终发现这一段：...
 permalink: /posts/paperFormat/
 key: 10009
 ---

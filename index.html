@@ -8,7 +8,7 @@ layout: default
       <li>
         <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
         <span class="post-date">Posted on {{ post.date | date: "%b %-d, %Y" }}</span>
-        <p class="post-description">{{ post.description }}</p>
+        <p class="post-description">{{ post.description }} <a class="post-link2" href="{{ post.url | prepend: site.baseurl }}">继续阅读...</a></p>
       </li>
     {% endfor %}
   </ul>

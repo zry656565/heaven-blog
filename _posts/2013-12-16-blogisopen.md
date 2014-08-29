@@ -1,7 +1,7 @@
 ---
 date: 2013-12-16 10:00:00 UTC
 title: 博客建立
-description: 今天我的博客终于搞定了，首先要谢谢Rasmus Andersson开源了他的博客代码……
+description: 今天我的博客终于搞定了，首先要谢谢Rasmus Andersson开源了他的博客代码，我才能把博客做成现在这样。
 permalink: /posts/opentopublic/
 key: 10003
 ---
