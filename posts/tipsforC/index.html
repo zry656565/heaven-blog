@@ -78,7 +78,7 @@
 
     <div class="page-content">
       <div class="wrap">
-      <div class="post">
+      <div class="post typo">
 
   <header class="post-header">
     <h1>C语言中可能被你忽视的小细节</h1>
@@ -95,13 +95,10 @@
   <li>在C语言中，所有函数参数都是“通过值”传递的。（如果你真的想在函数中修改主调函数的变量，你可以传地址，其实也就是传指针，这个也是后话）</li>
   <li>处理数组时一定要时刻注意边界值的处理（是否溢出）</li>
   <li>变量和函数的extern声明通常写在头文件中。</li>
-  <li>如果函数没有参数，在声明该函数时需要使用void关键词显式声明。因为ANSI C为了兼容老版本的C语言，把空参数表看成老版本的函数声明方式，而对参数表不做任何检查。就像这样：
-&lt;div style="margin-left: 40px"&gt;</li>
+  <li>如果函数没有参数，在声明该函数时需要使用void关键词显式声明。因为ANSI C为了兼容老版本的C语言，把空参数表看成老版本的函数声明方式，而对参数表不做任何检查。就像这样：</li>
 </ol>
 
 <div class="highlight"><pre><code class="c"><span class="kt">int</span> <span class="nf">func</span><span class="p">(</span><span class="kt">void</span> <span class="p">);</span></code></pre></div>
-
-<p>&lt;/div&gt;</p>
 
 <p><strong>说明</strong>:本文原发布于我的CSDN博客<a href="http://blog.csdn.net/zry656565">天上之海原</a>。</p>
 

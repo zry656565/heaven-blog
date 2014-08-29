@@ -78,7 +78,7 @@
 
     <div class="page-content">
       <div class="wrap">
-      <div class="post">
+      <div class="post typo">
 
   <header class="post-header">
     <h1>一款在线Javascript正则表达式测试器</h1>
@@ -86,14 +86,15 @@
   </header>
 
   <article class="post-content">
-  <p>昨天在看《<a href="http://deerchao.net/tutorials/regex/regex.htm">正则表达式30分钟入门教程</a>》的时候，看到博主自己实现了一个<code>C#</code>写的正则测试器，看上去挺方便的样子。但是我自己又不太喜欢乱装东西，所以寻思着能不能自己实现一个<code>javascript</code>正则表达式测试器。于是几十行代码实现了这样一个正则测试器。</p>
+  <p>昨天在看《<a href="http://deerchao.net/tutorials/regex/regex.htm">正则表达式30分钟入门教程</a>》的时候，看到博主自己实现了一个C#写的正则测试器，看上去挺方便的样子。但是我自己又不太喜欢乱装东西，所以寻思着能不能自己实现一个javascript正则表达式测试器。于是几十行代码实现了这样一个正则测试器。</p>
 
-<p>先展示一下0.1版本的效果图吧~
-<img src="http://segmentfault.com/img/bVce9v" alt="JRE-Parser效果图" /></p>
+<p>先展示一下0.1版本的效果图吧~</p>
+
+<p><img src="/images/jre-parser.png" width="700" /></p>
 
 <p>页面还比较简单，但是基本功能算是有了。可以正常使用~。</p>
 
-<p>关于怎么从用户的输入中提取正则表达式的过程多亏<code>@依云</code>大神提点（<a href="http://segmentfault.com/q/1010000000494735">传送门</a>），有了如下的解决办法：</p>
+<p>关于怎么从用户的输入中提取正则表达式的过程多亏segmentfault的依云提点（<a href="http://segmentfault.com/q/1010000000494735">传送门</a>），有了如下的解决办法：</p>
 
 <div class="highlight"><pre><code class="javascript"><span class="c1">//r是用户输入的字符串</span>
 <span class="kd">var</span> <span class="nx">JTester</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">r</span><span class="p">)</span> <span class="p">{</span>

@@ -323,13 +323,16 @@ Consult the support section on how to make sure that the required fonts are embe
 
 &lt;p&gt;可能直接定义在预定义对象的方法上，让人感觉会有些问题。但在我看来这是一种优美的实现方式。&lt;/p&gt;
 
-&lt;p&gt;同时我也在开发一个插件，主要的思想也就是扩展预定义对象的方法。
-这个插件叫&lt;code&gt;JustJS&lt;/code&gt;（&lt;a href=&quot;https://github.com/zry656565/JustJS&quot;&gt;Github项目地址&lt;/a&gt;）
-有以下一些特性：
-1. 同时支持&lt;code&gt;Web&lt;/code&gt;前端和&lt;code&gt;node.js&lt;/code&gt;使用。
-2. 直接对预定义对象的方法进行扩展
-3. 使用 &lt;code&gt;J(function(){...})&lt;/code&gt; 语句块，决不污染全局命名空间。
-目前只写了一小部分，同时也写了些简单的文档，有兴趣的同学可以看一下，也可以加入我，&lt;code&gt;Fork&lt;/code&gt;我的项目，喜欢的同学还可以给&lt;code&gt;Star&lt;/code&gt;！&lt;/p&gt;
+&lt;p&gt;同时我也在开发一个插件，主要的思想也就是扩展预定义对象的方法。这个插件叫&lt;code&gt;JustJS&lt;/code&gt;（&lt;a href=&quot;https://github.com/zry656565/JustJS&quot;&gt;Github项目地址&lt;/a&gt;）
+有以下一些特性：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;同时支持&lt;code&gt;Web&lt;/code&gt;前端和&lt;code&gt;node.js&lt;/code&gt;使用。&lt;/li&gt;
+  &lt;li&gt;直接对预定义对象的方法进行扩展&lt;/li&gt;
+  &lt;li&gt;使用 &lt;code&gt;J(function(){...})&lt;/code&gt; 语句块，决不污染全局命名空间。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;目前只写了一小部分，同时也写了些简单的文档，有兴趣的同学可以看一下，也可以加入我，&lt;code&gt;Fork&lt;/code&gt;我的项目，喜欢的同学还可以给&lt;code&gt;Star&lt;/code&gt;！&lt;/p&gt;
 </description>
         <pubDate>Sun, 11 May 2014 21:33:00 +0000</pubDate>
         <link>http://jerryzou.com/posts/deepcopy/</link>
@@ -338,14 +341,15 @@ Consult the support section on how to make sure that the required fonts are embe
     
       <item>
         <title>一款在线Javascript正则表达式测试器</title>
-        <description>&lt;p&gt;昨天在看《&lt;a href=&quot;http://deerchao.net/tutorials/regex/regex.htm&quot;&gt;正则表达式30分钟入门教程&lt;/a&gt;》的时候，看到博主自己实现了一个&lt;code&gt;C#&lt;/code&gt;写的正则测试器，看上去挺方便的样子。但是我自己又不太喜欢乱装东西，所以寻思着能不能自己实现一个&lt;code&gt;javascript&lt;/code&gt;正则表达式测试器。于是几十行代码实现了这样一个正则测试器。&lt;/p&gt;
+        <description>&lt;p&gt;昨天在看《&lt;a href=&quot;http://deerchao.net/tutorials/regex/regex.htm&quot;&gt;正则表达式30分钟入门教程&lt;/a&gt;》的时候，看到博主自己实现了一个C#写的正则测试器，看上去挺方便的样子。但是我自己又不太喜欢乱装东西，所以寻思着能不能自己实现一个javascript正则表达式测试器。于是几十行代码实现了这样一个正则测试器。&lt;/p&gt;
 
-&lt;p&gt;先展示一下0.1版本的效果图吧~
-&lt;img src=&quot;http://segmentfault.com/img/bVce9v&quot; alt=&quot;JRE-Parser效果图&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;先展示一下0.1版本的效果图吧~&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/jre-parser.png&quot; width=&quot;700&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;页面还比较简单，但是基本功能算是有了。可以正常使用~。&lt;/p&gt;
 
-&lt;p&gt;关于怎么从用户的输入中提取正则表达式的过程多亏&lt;code&gt;@依云&lt;/code&gt;大神提点（&lt;a href=&quot;http://segmentfault.com/q/1010000000494735&quot;&gt;传送门&lt;/a&gt;），有了如下的解决办法：&lt;/p&gt;
+&lt;p&gt;关于怎么从用户的输入中提取正则表达式的过程多亏segmentfault的依云提点（&lt;a href=&quot;http://segmentfault.com/q/1010000000494735&quot;&gt;传送门&lt;/a&gt;），有了如下的解决办法：&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;c1&quot;&gt;//r是用户输入的字符串&lt;/span&gt;
 &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;JTester&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -439,13 +443,10 @@ Consult the support section on how to make sure that the required fonts are embe
   &lt;li&gt;在C语言中，所有函数参数都是“通过值”传递的。（如果你真的想在函数中修改主调函数的变量，你可以传地址，其实也就是传指针，这个也是后话）&lt;/li&gt;
   &lt;li&gt;处理数组时一定要时刻注意边界值的处理（是否溢出）&lt;/li&gt;
   &lt;li&gt;变量和函数的extern声明通常写在头文件中。&lt;/li&gt;
-  &lt;li&gt;如果函数没有参数，在声明该函数时需要使用void关键词显式声明。因为ANSI C为了兼容老版本的C语言，把空参数表看成老版本的函数声明方式，而对参数表不做任何检查。就像这样：
-&amp;lt;div style=&quot;margin-left: 40px&quot;&amp;gt;&lt;/li&gt;
+  &lt;li&gt;如果函数没有参数，在声明该函数时需要使用void关键词显式声明。因为ANSI C为了兼容老版本的C语言，把空参数表看成老版本的函数声明方式，而对参数表不做任何检查。就像这样：&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;c&quot;&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;&amp;lt;/div&amp;gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;说明&lt;/strong&gt;:本文原发布于我的CSDN博客&lt;a href=&quot;http://blog.csdn.net/zry656565&quot;&gt;天上之海原&lt;/a&gt;。&lt;/p&gt;
 </description>
@@ -461,7 +462,7 @@ Consult the support section on how to make sure that the required fonts are embe
 &lt;ul&gt;
   &lt;li&gt;大数端的存储方法是：
     &lt;table&gt;
-      &lt;tr&gt;&lt;td width=&quot;20px&quot;&gt;地址&lt;/td&gt;&lt;td&gt;值&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td width=&quot;60px&quot;&gt;地址&lt;/td&gt;&lt;td&gt;值&lt;/td&gt;&lt;/tr&gt;
       &lt;tr&gt;&lt;td&gt;0x00&lt;/td&gt;&lt;td&gt;0x12&lt;/td&gt;&lt;/tr&gt;
       &lt;tr&gt;&lt;td&gt;0x01&lt;/td&gt;&lt;td&gt;0x34&lt;/td&gt;&lt;/tr&gt;
       &lt;tr&gt;&lt;td&gt;0x02&lt;/td&gt;&lt;td&gt;0x56&lt;/td&gt;&lt;/tr&gt;
@@ -471,7 +472,7 @@ Consult the support section on how to make sure that the required fonts are embe
   &lt;/li&gt;
   &lt;li&gt;而小数端的存储方法是：
     &lt;table&gt;
-      &lt;tr&gt;&lt;td width=&quot;20px&quot;&gt;地址&lt;/td&gt;&lt;td&gt;值&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td width=&quot;60px&quot;&gt;地址&lt;/td&gt;&lt;td&gt;值&lt;/td&gt;&lt;/tr&gt;
       &lt;tr&gt;&lt;td&gt;0x00&lt;/td&gt;&lt;td&gt;0x56&lt;/td&gt;&lt;/tr&gt;
       &lt;tr&gt;&lt;td&gt;0x01&lt;/td&gt;&lt;td&gt;0x34&lt;/td&gt;&lt;/tr&gt;
       &lt;tr&gt;&lt;td&gt;0x02&lt;/td&gt;&lt;td&gt;0x12&lt;/td&gt;&lt;/tr&gt;
@@ -491,7 +492,7 @@ Consult the support section on how to make sure that the required fonts are embe
 &lt;p&gt;但需要注意的是，现在很常见的家装64位的windows系统可不算真正的64位系统。真正的64位体系结构与32位体系结构完全不同，32位体系结构的程序在64位体系结构上的机器上根本运行不了。因为两者根本就使用了完全不同的指令集。&lt;br /&gt;
 其实啊，家装的64位windows系统还是属于32位体系结构EM64T。而EM64T前面的E就是Extended的简称啦（即32位的扩展，实际上是48位系统）。&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;说明&lt;/strong&gt;:本文原发布于我的CSDN博客&lt;a href=&quot;http://blog.csdn.net/zry656565&quot;&gt;天上之海原&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;说明&lt;/strong&gt;: 本文原发布于我的CSDN博客&lt;a href=&quot;http://blog.csdn.net/zry656565&quot;&gt;天上之海原&lt;/a&gt;。&lt;/p&gt;
 </description>
         <pubDate>Mon, 15 Jul 2013 15:37:00 +0000</pubDate>
         <link>http://jerryzou.com/posts/storageMethod/</link>
