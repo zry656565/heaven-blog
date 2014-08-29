@@ -365,30 +365,6 @@ Consult the support section on how to make sure that the required fonts are embe
       </item>
     
       <item>
-        <title>《炉石传说》无法运行的常见错误</title>
-        <description>&lt;ul&gt;
-  &lt;li&gt;
-    &lt;h5 id=&quot;blzbntbgs800000213003&quot;&gt;&lt;strong&gt;问题1&lt;/strong&gt;: 无法连接到战网服务 BLZBNTBGS80000021(3003)&lt;/h5&gt;
-    &lt;p&gt;&lt;img src=&quot;/images/BNerror.png&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;解决办法&lt;/strong&gt;:使用XP兼容模式后，重新启动战网登陆器
-&lt;img src=&quot;/images/BNerror_fix.png&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;h5 id=&quot;section&quot;&gt;&lt;strong&gt;问题2&lt;/strong&gt;: 一直初始化不完的”正在初始化…”&lt;/h5&gt;
-    &lt;p&gt;&lt;img src=&quot;/images/endlessInitializing.png&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;解决办法&lt;/strong&gt;:注销或重新启动计算机即可解决此问题。
-&lt;img src=&quot;/images/endlessInitializing_fix.png&quot; /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Sat, 01 Feb 2014 15:56:00 +0000</pubDate>
-        <link>http://jerryzou.com/posts/hstroubleshoot/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/hstroubleshoot/</guid>
-      </item>
-    
-      <item>
         <title>如何循序渐进地学习Javascript</title>
         <description>&lt;p&gt;javascript入门太容易了，导致几乎人人随便看看就能上手，零基础的人学个三五天都能对外宣称自己掌握了js。可是真正掌握js是一件很难的事情。如果在初学一门语言的时候第一想到的是问别人，是很难取得进步的。因为得到答案太容易，而不会去想为什么。而且说实话，js并不适合作为第一门编程语言，它兼容并包，容错性高，但这也意味着一但出错你就很难找到错误的原因。另一方面js有一些优秀的特性对于没有编程经历的人来说也很难发现。&lt;/p&gt;
 
@@ -485,7 +461,7 @@ Consult the support section on how to make sure that the required fonts are embe
 &lt;ul&gt;
   &lt;li&gt;大数端的存储方法是：
     &lt;table&gt;
-      &lt;tr&gt;&lt;td&gt;地址&lt;/td&gt;&lt;td&gt;值&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td width=&quot;20px&quot;&gt;地址&lt;/td&gt;&lt;td&gt;值&lt;/td&gt;&lt;/tr&gt;
       &lt;tr&gt;&lt;td&gt;0x00&lt;/td&gt;&lt;td&gt;0x12&lt;/td&gt;&lt;/tr&gt;
       &lt;tr&gt;&lt;td&gt;0x01&lt;/td&gt;&lt;td&gt;0x34&lt;/td&gt;&lt;/tr&gt;
       &lt;tr&gt;&lt;td&gt;0x02&lt;/td&gt;&lt;td&gt;0x56&lt;/td&gt;&lt;/tr&gt;
@@ -495,7 +471,7 @@ Consult the support section on how to make sure that the required fonts are embe
   &lt;/li&gt;
   &lt;li&gt;而小数端的存储方法是：
     &lt;table&gt;
-      &lt;tr&gt;&lt;td&gt;地址&lt;/td&gt;&lt;td&gt;值&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td width=&quot;20px&quot;&gt;地址&lt;/td&gt;&lt;td&gt;值&lt;/td&gt;&lt;/tr&gt;
       &lt;tr&gt;&lt;td&gt;0x00&lt;/td&gt;&lt;td&gt;0x56&lt;/td&gt;&lt;/tr&gt;
       &lt;tr&gt;&lt;td&gt;0x01&lt;/td&gt;&lt;td&gt;0x34&lt;/td&gt;&lt;/tr&gt;
       &lt;tr&gt;&lt;td&gt;0x02&lt;/td&gt;&lt;td&gt;0x12&lt;/td&gt;&lt;/tr&gt;

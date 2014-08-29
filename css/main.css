@@ -1,4 +1,4 @@
-/* Base */
+* Base */
 /* ----------------------------------------------------------*/
 
 * {
@@ -107,18 +107,29 @@ a:visited { color: #205caa; }
 
 .posts { list-style-type: none; }
 
-.posts li { margin-bottom: 30px; }
+.posts li { 
+  margin-bottom: 30px;
+}
 
 .posts .post-link {
-  font-size: 24px;
+  font-size: 20px;
   letter-spacing: -1px;
   line-height: 1;
 }
 
+.posts .post-link2 {
+  font-size: 11px;
+}
+
 .posts .post-date {
   display: block;
-  font-size: 15px;
+  font-size: 12px;
   color: #818181;
+}
+
+.posts .post-description {
+  font-size: 14px;
+  color: #555;
 }
 
 
