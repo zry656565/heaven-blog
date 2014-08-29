@@ -10,7 +10,7 @@ key: 10001
 
 - 大数端的存储方法是：
     <table>
-        <tr><td width="20px">地址</td><td>值</td></tr>
+        <tr><td width="60px">地址</td><td>值</td></tr>
         <tr><td>0x00</td><td>0x12</td></tr>
         <tr><td>0x01</td><td>0x34</td></tr>
         <tr><td>0x02</td><td>0x56</td></tr>
@@ -19,7 +19,7 @@ key: 10001
 
 - 而小数端的存储方法是：
     <table>
-        <tr><td width="20px">地址</td><td>值</td></tr>
+        <tr><td width="60px">地址</td><td>值</td></tr>
         <tr><td>0x00</td><td>0x56</td></tr>
         <tr><td>0x01</td><td>0x34</td></tr>
         <tr><td>0x02</td><td>0x12</td></tr>
