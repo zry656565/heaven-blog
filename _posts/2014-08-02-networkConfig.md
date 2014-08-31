@@ -31,4 +31,4 @@ key: 10010
 #总结
 第一次认真地思考了一下这个问题，肯定有理解不到位的地方，欢迎拍砖。另外了解了子网掩码、Modem和路由的一些常识后，感觉很有趣。可惜当初的计算机网络课没有好好上，有点后悔啊。
 
-  [1]: http://segmentfault.com/img/bVcMXi
+[1]: /images/netconfig.png

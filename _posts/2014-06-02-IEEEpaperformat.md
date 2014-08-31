@@ -29,6 +29,6 @@ Consult the support section on how to make sure that the required fonts are embe
 
 
 
-  [1]: http://segmentfault.com/img/bVcobF
-  [2]: http://segmentfault.com/img/bVcobH
-  [3]: http://segmentfault.com/img/bVcobI
+  [1]: /images/ieee_1.png
+  [2]: /images/ieee_2.png
+  [3]: /images/ieee_3.png
