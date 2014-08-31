@@ -15,7 +15,7 @@
 #情景
 从Modem出来的网线接到交换机A上，从交换机中接到2个路由器，并同时接上交换机B；从交换机B中再接到4个路由器上。下面是图示：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://segmentfault.com/img/bVcMXi&quot; alt=&quot;请输入图片描述&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/netconfig.png&quot; alt=&quot;请输入图片描述&quot; /&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;section-1&quot;&gt;解决&lt;/h1&gt;
 &lt;p&gt;其实在这个场景中，6个路由器是平级的，并不需要设置二级路由，所以设置非常简单。&lt;/p&gt;
@@ -45,7 +45,7 @@
         <title>IEEE论文PDF格式检测中的问题与解决</title>
         <description>&lt;p&gt;这两天要发一篇很酱油的论文了，根据格式的模板改了半天终于大功告成。结果发现在&lt;a href=&quot;www.pdf-express.org&quot;&gt;IEEE PDF Express&lt;/a&gt;网站上说我检验不通过，并给出了以下的错误信息。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://segmentfault.com/img/bVcobF&quot; alt=&quot;Error and Warnings&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/ieee_1.png&quot; alt=&quot;Error and Warnings&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;我瞬间摸不着头脑了，&lt;strong&gt;Font Times New Roman is not embedded (583x)&lt;/strong&gt;到底是什么错啊，还没有行号，这叫我如何定位这个错误！&lt;/p&gt;
 
@@ -62,9 +62,9 @@ Consult the support section on how to make sure that the required fonts are embe
 
 &lt;p&gt;只要以下三步你就可以通过检查啦！&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://segmentfault.com/img/bVcobH&quot; alt=&quot;1,2步&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/ieee_2.png&quot; alt=&quot;1,2步&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://segmentfault.com/img/bVcobI&quot; alt=&quot;第3步&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/ieee_3.png&quot; alt=&quot;第3步&quot; /&gt;&lt;/p&gt;
 
 </description>
         <pubDate>Mon, 02 Jun 2014 00:00:00 +0000</pubDate>

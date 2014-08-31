@@ -40,42 +40,27 @@
 
     <body>
 
-    <!-- script for justfont -->
-<script type="text/javascript">var _jf = _jf || [];_jf.push(['_setAppId','d1880564u6nscUF7iAlkRAr9ojvp2W87nVFiRF-OohsauEGskymDo_9ccb7IXRhbRGD8Q6KhxuZ73Hw4sVEiJEqCmyXTLzpSppIPPnckLJfrejL3PCjcT9dk3Rjm4vPErauP8hi34wpMzQr3VJEaNg_xv88pIsZjX1Lp3S2721JUQ-PdMis=']);_jf.push(['p','29272']);_jf.push(['_setFont','wts55','css','.wts55']);_jf.push(['_setFont','wts55','alias','wts55']);_jf.push(['_setFont','wts55','english','Avenir']);_jf.push(['_setFont','hanamin','css','.hanamin']);_jf.push(['_setFont','hanamin','alias','hanamin']);_jf.push(['_setFont','hanamin','english','Avenir']);(function(f,q,c,h,e,i,r,d){var k=f._jf;if(k.constructor===Object){return}var l,t=q.getElementsByTagName("html")[0],a=function(u){for(var v in k){if(k[v][0]==u){if(false===k[v][1].call(k)){break}}}},j=/\S+/g,o=/[\t\r\n\f]/g,b=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,g="".trim,s=g&&!g.call("\uFEFF\xA0")?function(u){return u==null?"":g.call(u)}:function(u){return u==null?"":(u+"").replace(b,"")},m=function(y){var w,z,v,u,x=typeof y==="string"&&y;if(x){w=(y||"").match(j)||[];z=t[c]?(" "+t[c]+" ").replace(o," "):" ";if(z){u=0;while((v=w[u++])){if(z.indexOf(" "+v+" ")<0){z+=v+" "}}t[c]=s(z)}}},p=function(y){var w,z,v,u,x=arguments.length===0||typeof y==="string"&&y;if(x){w=(y||"").match(j)||[];z=t[c]?(" "+t[c]+" ").replace(o," "):"";if(z){u=0;while((v=w[u++])){while(z.indexOf(" "+v+" ")>=0){z=z.replace(" "+v+" "," ")}}t[c]=y?s(z):""}}},n;k.push(["_eventActived",function(){p(h);m(e)}]);k.push(["_eventInactived",function(){p(h);m(i)}]);k.addScript=n=function(u,A,w,C,E,B){E=E||function(){};B=B||function(){};var x=q.createElement("script"),z=q.getElementsByTagName("script")[0],v,y=false,D=function(){x.src="";x.onerror=x.onload=x.onreadystatechange=null;x.parentNode.removeChild(x);x=null;a("_eventInactived");B()};if(C){v=setTimeout(function(){D()},C)}x.type=A||"text/javascript";x.async=w;x.onload=x.onreadystatechange=function(G,F){if(!y&&(!x.readyState||/loaded|complete/.test(x.readyState))){y=true;if(C){clearTimeout(v)}x.src="";x.onerror=x.onload=x.onreadystatechange=null;x.parentNode.removeChild(x);x=null;if(!F){setTimeout(function(){E()},200)}}};x.onerror=function(H,G,F){if(C){clearTimeout(v)}D();return true};x.src=u;z.parentNode.insertBefore(x,z)};a("_eventPreload");m(h);n(r,"text/javascript",false,3000)})(this,this.document,"className","jf-loading","jf-active","jf-inactive","//ds.justfont.com/js/stable/v/4.2/id/128694312045");</script>
-<!-- script for justfont end -->
-<!-- script for hidding justfont badge -->
-<script type="text/javascript">
-  var flag = setInterval(function(){
-    var icon = document.getElementById("justfont-badge");
-    if (icon.style.display !== 'none') {
-      icon.style.display = 'none';
-    } else {
-      clearInterval(flag);
-    }
-  }, 200);
-</script>
-<!-- end -->
-<header class="site-header">
+    <header class="site-header">
   <div class="wrap">
-    <a class="site-title hanamin" href="/">Jerry的乐园</a>
+    <a class="site-title" href="/">Jerry的乐园</a>
     <nav class="site-nav">
       <div class="trigger">
-        <a class="page-link hanamin" href="/">首页</a>
+        <a class="page-link" href="/">首页</a>
         
           
-          <a class="page-link hanamin" href="/resume/">简历</a>
-          
-        
-          
-          <a class="page-link hanamin" href="/about/">关于我</a>
+          <a class="page-link" href="/articles/">所有文章</a>
           
         
           
-          <a class="page-link hanamin" href="/timeaxis/">时间轴</a>
+          <a class="page-link" href="/resume/">简历</a>
           
         
           
-          <a class="page-link hanamin" href="/love/">特别</a>
+          <a class="page-link" href="/about/">关于我</a>
+          
+        
+          
+          <a class="page-link" href="/love/">特别</a>
           
         
           
@@ -100,7 +85,7 @@
   <article class="post-content">
   <p>这两天要发一篇很酱油的论文了，根据格式的模板改了半天终于大功告成。结果发现在<a href="www.pdf-express.org">IEEE PDF Express</a>网站上说我检验不通过，并给出了以下的错误信息。</p>
 
-<p><img src="http://segmentfault.com/img/bVcobF" alt="Error and Warnings" /></p>
+<p><img src="/images/ieee_1.png" alt="Error and Warnings" /></p>
 
 <p>我瞬间摸不着头脑了，<strong>Font Times New Roman is not embedded (583x)</strong>到底是什么错啊，还没有行号，这叫我如何定位这个错误！</p>
 
@@ -117,9 +102,9 @@ Consult the support section on how to make sure that the required fonts are embe
 
 <p>只要以下三步你就可以通过检查啦！</p>
 
-<p><img src="http://segmentfault.com/img/bVcobH" alt="1,2步" /></p>
+<p><img src="/images/ieee_2.png" alt="1,2步" /></p>
 
-<p><img src="http://segmentfault.com/img/bVcobI" alt="第3步" /></p>
+<p><img src="/images/ieee_3.png" alt="第3步" /></p>
 
 
   </article>
