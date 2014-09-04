@@ -5,8 +5,24 @@ nav: true
 ---
 
 #教育经历
-- 上海交通大学(2010-2014) 软件工程 本科
-- 上海交通大学(2014-2017) 软件工程 硕士
+
+<table id="education">
+  <tr>
+    <td><ul><li>上海交通大学(2010-2014)</li></ul></td>
+    <td>软件工程</td>
+    <td>本科</td>
+  </tr>
+  <tr>
+    <td><ul><li>上海交通大学(2014-2017)</li></ul></td>
+    <td>软件工程</td>
+    <td>硕士</td>
+  </tr>
+</table>
+<style>
+  table#education td{
+    padding-right: 20px;
+  }
+</style>
 
 #工作经历
 - Microsoft(2013.12-2014.8) 前端开发实习生
@@ -40,8 +56,8 @@ nav: true
   - 一个富有魅力的Jekyll模板
 - [Jekyll](http://jekyllrb.com/)
   - 一个面向博客的静态网站生成器
-－[cocos-docs](https://github.com/chukong/cocos-docs)
-  － cocos2d-x的维基文档
+- [cocos-docs](https://github.com/chukong/cocos-docs)
+  - cocos2d-x的维基文档
 
 #技能
 
@@ -50,4 +66,4 @@ nav: true
 <script type="text/javascript" src="/js/arbor-tween.js"></script>
 <script type="text/javascript" src="/js/arbor_main.js"></script>
 
-<canvas id="viewport" width="800" height="400"></canvas>
+<canvas id="skillboard" width="800" height="400"></canvas>
