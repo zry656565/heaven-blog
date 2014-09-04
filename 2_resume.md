@@ -40,3 +40,14 @@ nav: true
   - 一个富有魅力的Jekyll模板
 - [Jekyll](http://jekyllrb.com/)
   - 一个面向博客的静态网站生成器
+－[cocos-docs](https://github.com/chukong/cocos-docs)
+  － cocos2d-x的维基文档
+
+#技能
+
+<script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="/js/arbor.js"></script>
+<script type="text/javascript" src="/js/arbor-tween.js"></script>
+<script type="text/javascript" src="/js/arbor_main.js"></script>
+
+<canvas id="viewport" width="800" height="400"></canvas>
