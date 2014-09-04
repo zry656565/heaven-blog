@@ -10,6 +10,37 @@
     var canvas = $(canvas).get(0),
         ctx = canvas.getContext("2d"),
         particleSystem;
+    var gfx = arbor.Graphics(canvas);
+
+    // helpers for figuring out where to draw arrows (thanks springy.js)
+    var intersect_line_line = function(p1, p2, p3, p4)
+    {
+      var denom = ((p4.y - p3.y)*(p2.x - p1.x) - (p4.x - p3.x)*(p2.y - p1.y));
+      if (denom === 0) return false // lines are parallel
+      var ua = ((p4.x - p3.x)*(p1.y - p3.y) - (p4.y - p3.y)*(p1.x - p3.x)) / denom;
+      var ub = ((p2.x - p1.x)*(p1.y - p3.y) - (p2.y - p1.y)*(p1.x - p3.x)) / denom;
+
+      if (ua < 0 || ua > 1 || ub < 0 || ub > 1)  return false
+      return arbor.Point(p1.x + ua * (p2.x - p1.x), p1.y + ua * (p2.y - p1.y));
+    }
+
+    var intersect_line_box = function(p1, p2, boxTuple)
+    {
+      var p3 = {x:boxTuple[0], y:boxTuple[1]},
+          w = boxTuple[2],
+          h = boxTuple[3]
+      
+      var tl = {x: p3.x, y: p3.y};
+      var tr = {x: p3.x + w, y: p3.y};
+      var bl = {x: p3.x, y: p3.y + h};
+      var br = {x: p3.x + w, y: p3.y + h};
+
+      return intersect_line_line(p1, p2, tl, tr) ||
+             intersect_line_line(p1, p2, tr, br) ||
+             intersect_line_line(p1, p2, br, bl) ||
+             intersect_line_line(p1, p2, bl, tl) ||
+             false
+    }
 
     var that = {
       init:function(system){
@@ -29,31 +60,130 @@
         // which allow you to step through the actual node objects but also pass an
         // x,y point in the screen's coordinate system
         // 
-        ctx.fillStyle = "white";
-        ctx.fillRect(0,0, canvas.width, canvas.height);
-        
+        if (!particleSystem) return
+                
+        ctx.clearRect(0,0, canvas.width, canvas.height)
+
+        var nodeBoxes = {}
+        particleSystem.eachNode(function(node, pt){
+          // node: {mass:#, p:{x,y}, name:"", data:{}}
+          // pt:   {x:#, y:#}  node position in screen coords
+          
+
+          // determine the box size and round off the coords if we'll be 
+          // drawing a text label (awful alignment jitter otherwise...)
+          var label = (node.data.description || "").toString();
+          var w = ctx.measureText(label).width + 10;
+          if (!(label).match(/^[\t]*$/)){
+            pt.x = Math.floor(pt.x);
+            pt.y = Math.floor(pt.y);
+          }else{
+            label = null;
+          }
+          
+          // draw a rectangle centered at pt
+          //if (node.data.color) ctx.fillStyle = node.data.color;
+          // else ctx.fillStyle = "#d0d0d0"
+          //else ctx.fillStyle = "rgba(0,0,0,.2)";
+          //if (node.data.color=='none') ctx.fillStyle = "white";
+
+          if (!node.data.color) {
+            switch (node.data.type) {
+              case 'lang':
+                ctx.fillStyle = '#4F94CD';
+                break;
+              case 'tool':
+                ctx.fillStyle = '#FF6A6A';
+                break;
+              case 'experience':
+                ctx.fillStyle = '#EEB422';
+                break;
+              default:
+                ctx.fillStyle = '#333333';
+                break;
+            }
+          } else {
+            ctx.fillStyle = node.data.color;
+          }
+          
+          // ctx.fillRect(pt.x-w/2, pt.y-10, w,20)
+          if (node.data.shape=='dot'){
+             gfx.oval(pt.x-w/2, pt.y-w/2, w,w, {fill:ctx.fillStyle});
+             nodeBoxes[node.name] = [pt.x-w/2, pt.y-w/2, w,w];
+          }else{
+            gfx.rect(pt.x-w/2, pt.y-10, w,20, 4, {fill:ctx.fillStyle});
+            nodeBoxes[node.name] = [pt.x-w/2, pt.y-11, w, 22];
+          }
+
+          // w = Math.max(20,w)
+
+          // draw the text
+          if (label){
+            ctx.font = "14px Avenir, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif";
+            ctx.textAlign = "center";
+            ctx.fillStyle = "white";
+            ctx.fillText(label||"", pt.x, pt.y+4);
+            ctx.fillText(label||"", pt.x, pt.y+4);
+          }
+        })          
+
+
+        ctx.strokeStyle = "#cccccc";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
         particleSystem.eachEdge(function(edge, pt1, pt2){
           // edge: {source:Node, target:Node, length:#, data:{}}
           // pt1:  {x:#, y:#}  source position in screen coords
           // pt2:  {x:#, y:#}  target position in screen coords
 
-          // draw a line from pt1 to pt2
-          ctx.strokeStyle = "rgba(0,0,0, .333)";
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.moveTo(pt1.x, pt1.y);
-          ctx.lineTo(pt2.x, pt2.y);
-          ctx.stroke();
-        })
+          var weight = edge.data.weight;
+          var color = edge.data.color;
+          
+          // trace(color)
+          if (!color || (""+color).match(/^[ \t]*$/)) color = null;
 
-        particleSystem.eachNode(function(node, pt){
-          // node: {mass:#, p:{x,y}, name:"", data:{}}
-          // pt:   {x:#, y:#}  node position in screen coords
+          // find the start point
+          var tail = intersect_line_box(pt1, pt2, nodeBoxes[edge.source.name]);
+          var head = intersect_line_box(tail, pt2, nodeBoxes[edge.target.name]);
 
-          var w = 10;
-          ctx.fillStyle = "black";
-          ctx.fillRect(pt.x-w/2, pt.y-w/2, w, w);
-        })    			
+          ctx.save();
+            ctx.beginPath();
+
+            if (!isNaN(weight)) ctx.lineWidth = weight;
+            if (color) ctx.strokeStyle = color;
+            // if (color) trace(color)
+            ctx.fillStyle = null;
+          
+            ctx.moveTo(tail.x, tail.y);
+            ctx.lineTo(head.x, head.y);
+            ctx.stroke();
+          ctx.restore();
+          
+          // draw an arrowhead if this is a -> style edge
+          if (edge.data.directed){
+            ctx.save();
+              // move to the head position of the edge we just drew
+              var wt = !isNaN(weight) ? parseFloat(weight) : ctx.lineWidth;
+              var arrowLength = 6 + wt;
+              var arrowWidth = 2 + wt;
+              ctx.fillStyle = (color) ? color : ctx.strokeStyle;
+              ctx.translate(head.x, head.y);
+              ctx.rotate(Math.atan2(head.y - tail.y, head.x - tail.x));
+
+              // delete some of the edge that's already there (so the point isn't hidden)
+              ctx.clearRect(-arrowLength/2,-wt/2, arrowLength/2,wt)
+
+              // draw the chevron
+              ctx.beginPath();
+              ctx.moveTo(-arrowLength, arrowWidth);
+              ctx.lineTo(0, 0);
+              ctx.lineTo(-arrowLength, -arrowWidth);
+              ctx.lineTo(-arrowLength * 0.8, -0);
+              ctx.closePath();
+              ctx.fill();
+            ctx.restore();
+          }
+        })			
       },
       
       initMouseHandling:function(){
@@ -127,16 +257,79 @@
     //
     sys.graft({
       nodes: {
-        js: {name: 'javascript', value: 10}
+        'js': { description: 'javascript', type: 'lang' },
+        'java': { description: 'Java', type: 'lang' },
+        'c': { description: 'C/C++', type: 'lang' },
+        'c#': { description: 'C#', type: 'lang' },
+        'lisp': { description: 'lisp', type: 'lang' },
+        'css': { description: 'css', type: 'lang' },
+        'html': { description: 'html5', type: 'lang' },
+        'ms-intern': { description: 'Microsoft实习', type: 'experience' },
+        'haijiao': { description: '海角教育', type: 'experience' },
+        'cocos2d-js': { description: 'cocos2d-JS', type: 'tool' },
+        'unity-3d': { description: 'Unity-3d', type: 'tool' },
+        'mongodb': { description: 'MongoDB', type: 'tool' },
+        'logv': { description: 'LogV', type: 'experience' },
+        'kinect': { description: 'Kinect', type: 'tool' },
+        'screenbuilder': { description: 'Screen Builder', type: 'experience' },
+        'maoxian': { description: '冒险的召唤', type: 'experience' },
+        'jekyll': { description: 'jekyll', type: 'tool' },
+        'cocos-docs': { description: 'cocos维基', type: 'experience' },
+        'uav': { description: '小型无人机技术大赛', type: 'experience' },
+        'ssh': { description: 'Struct+Spring+Hibernate', type: 'tool' },
+        'game-dev': { description: '游戏开发', type: 'experience' },
+        'blog': { description: 'Jerry的乐园（博客）', type: 'experience' }
       },
       edges:{
-        js:{
-          MS:{name: 'internship in Microsoft', value: 5},
-          haijiao:{name: 'haijiao education', value: 5},
+        'ms-intern': {
+          'js': { weight: 3 },
+          'css': { weight: 2 },
+          'html': { weight: 2 },
+          'c#': { weight: 2 }
+        },
+        'haijiao':{
+          'ssh': { weight: 2 },
+          'js': { weight: 1 },
+          'java': { weight: 2 }
+        },
+        'cocos2d-js': {
+          'js': { weight: 2 },
+          'game-dev': { weight: 3 }
+        },
+        'logv': {
+          'js': { weight: 2 },
+          'css': { weight: 1 },
+          'java': { weight: 2 },
+          'mongodb': { weight: 2 }
+        },
+        'screenbuilder': {
+          'c': { weight: 2 },
+          'c#': { weight: 2 },
+          'kinect': { weight: 3 }
+        },
+        'maoxian': {
+          'unity-3d': { weight: 3 },
+          'game-dev': { weight: 3 },
+          'c#': { weight: 1 },
+          'js': { weight: 2 }
+        },
+        'blog': {
+          'jekyll': { weight: 2 },
+          'js': { weight: 2 },
+          'css': { weight: 3 },
+          'html': { weight: 3 }
+        },
+        'uav': {
+          'c': { weight: 2 }
+        },
+        'lisp': {
+          'js': { weight: 1 }
+        },
+        'cocos-docs': {
+          'cocos2d-js': { weight: 1 }
         }
       }
     })
-    
   })
 
 })(this.jQuery)

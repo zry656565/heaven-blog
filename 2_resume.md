@@ -3,7 +3,7 @@ title: 简历
 permalink: /resume/
 nav: true
 requireJq: true
-requireJs: [/js/arbor.js, /js/arbor-tween.js, /js/arbor_main.js]
+requireJs: [/js/arbor.js, /js/arbor-tween.js, /js/graphics.js, /js/arbor_main.js]
 extCss: [/css/resume.css]
 ---
 
@@ -57,6 +57,6 @@ extCss: [/css/resume.css]
 - [cocos-docs](https://github.com/chukong/cocos-docs)
   - cocos2d-x的维基文档
 
-#技能
+##技能图谱
 
 <canvas id="skillboard" width="800" height="400"></canvas>
