@@ -32,4 +32,21 @@
         ga('send', 'pageview');
     </script>
     
+    <!-- handle external js files -->
+    {% if page.requireJq %}
+    <script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
+    {% endif %}
+    
+    {% if page.requireJs %}
+        {% for jsPath in page.requireJs %}
+            <script type="text/javascript" src="{{ jsPath | prepend: site.baseurl }}"></script>
+        {% endfor %}
+    {% endif %}
+
+    <!-- handle external css files -->
+    {% if page.extCss %}
+        {% for cssPath in page.extCss %}
+            <link rel="stylesheet" href="{{ cssPath | prepend: site.baseurl }}">
+        {% endfor %}
+    {% endif %}
 </head>

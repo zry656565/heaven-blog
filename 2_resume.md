@@ -2,6 +2,9 @@
 title: 简历
 permalink: /resume/
 nav: true
+requireJq: true
+requireJs: [/js/arbor.js, /js/arbor-tween.js, /js/arbor_main.js]
+extCss: [/css/resume.css]
 ---
 
 #教育经历
@@ -18,11 +21,6 @@ nav: true
     <td>硕士</td>
   </tr>
 </table>
-<style>
-  table#education td{
-    padding-right: 20px;
-  }
-</style>
 
 #工作经历
 - Microsoft(2013.12-2014.8) 前端开发实习生
@@ -60,10 +58,5 @@ nav: true
   - cocos2d-x的维基文档
 
 #技能
-
-<script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="/js/arbor.js"></script>
-<script type="text/javascript" src="/js/arbor-tween.js"></script>
-<script type="text/javascript" src="/js/arbor_main.js"></script>
 
 <canvas id="skillboard" width="800" height="400"></canvas>

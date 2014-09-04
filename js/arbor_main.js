@@ -1,34 +1,22 @@
-//
-//  main.js
-//
-//  A project template for using arbor.js
-//
+/*
+ * arbor_main.js
+ * author: jerryzou
+ * email: zry656565@gmail.com
+ */
 
 (function($){
 
   var Renderer = function(canvas){
-    var canvas = $(canvas).get(0)
-    var ctx = canvas.getContext("2d");
-    var particleSystem
+    var canvas = $(canvas).get(0),
+        ctx = canvas.getContext("2d"),
+        particleSystem;
 
     var that = {
       init:function(system){
-        //
-        // the particle system will call the init function once, right before the
-        // first frame is to be drawn. it's a good place to set up the canvas and
-        // to pass the canvas size to the particle system
-        //
-        // save a reference to the particle system for use in the .redraw() loop
-        particleSystem = system
-
-        // inform the system of the screen dimensions so it can map coords for us.
-        // if the canvas is ever resized, screenSize should be called again with
-        // the new dimensions
-        particleSystem.screenSize(canvas.width, canvas.height) 
-        particleSystem.screenPadding(80) // leave an extra 80px of whitespace per side
-        
-        // set up some event handlers to allow for node-dragging
-        that.initMouseHandling()
+        particleSystem = system;
+        particleSystem.screenSize(canvas.width, canvas.height);
+        particleSystem.screenPadding(20);
+        that.initMouseHandling();
       },
       
       redraw:function(){
@@ -41,8 +29,8 @@
         // which allow you to step through the actual node objects but also pass an
         // x,y point in the screen's coordinate system
         // 
-        ctx.fillStyle = "white"
-        ctx.fillRect(0,0, canvas.width, canvas.height)
+        ctx.fillStyle = "white";
+        ctx.fillRect(0,0, canvas.width, canvas.height);
         
         particleSystem.eachEdge(function(edge, pt1, pt2){
           // edge: {source:Node, target:Node, length:#, data:{}}
@@ -50,22 +38,21 @@
           // pt2:  {x:#, y:#}  target position in screen coords
 
           // draw a line from pt1 to pt2
-          ctx.strokeStyle = "rgba(0,0,0, .333)"
-          ctx.lineWidth = 1
-          ctx.beginPath()
-          ctx.moveTo(pt1.x, pt1.y)
-          ctx.lineTo(pt2.x, pt2.y)
-          ctx.stroke()
+          ctx.strokeStyle = "rgba(0,0,0, .333)";
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(pt1.x, pt1.y);
+          ctx.lineTo(pt2.x, pt2.y);
+          ctx.stroke();
         })
 
         particleSystem.eachNode(function(node, pt){
           // node: {mass:#, p:{x,y}, name:"", data:{}}
           // pt:   {x:#, y:#}  node position in screen coords
 
-          // draw a rectangle centered at pt
-          var w = 10
-          ctx.fillStyle = (node.data.alone) ? "orange" : "black"
-          ctx.fillRect(pt.x-w/2, pt.y-w/2, w,w)
+          var w = 10;
+          ctx.fillStyle = "black";
+          ctx.fillRect(pt.x-w/2, pt.y-w/2, w, w);
         })    			
       },
       
@@ -124,32 +111,31 @@
     return that
   }    
 
-  $(document).ready(function(){
+  $(function(){
     var sys = arbor.ParticleSystem(1000, 600, 0.5) // create the system with sensible repulsion/stiffness/friction
     sys.parameters({gravity:true}) // use center-gravity to make the graph settle nicely (ymmv)
-    sys.renderer = Renderer("#viewport") // our newly created renderer will have its .init() method called shortly by sys...
+    sys.renderer = Renderer("#skillboard") // our newly created renderer will have its .init() method called shortly by sys...
 
     // add some nodes to the graph and watch it go...
-    sys.addEdge('a','b')
-    sys.addEdge('a','c')
-    sys.addEdge('a','d')
-    sys.addEdge('a','e')
-    sys.addNode('f', {alone:true, mass:.25})
+    //sys.addEdge('a','b')
+    //sys.addEdge('a','c')
+    //sys.addEdge('a','d')
+    //sys.addEdge('a','e')
+    //sys.addNode('f', {alone:true, mass:.25})
 
     // or, equivalently:
     //
-    // sys.graft({
-    //   nodes:{
-    //     f:{alone:true, mass:.25}
-    //   }, 
-    //   edges:{
-    //     a:{ b:{},
-    //         c:{},
-    //         d:{},
-    //         e:{}
-    //     }
-    //   }
-    // })
+    sys.graft({
+      nodes: {
+        js: {name: 'javascript', value: 10}
+      },
+      edges:{
+        js:{
+          MS:{name: 'internship in Microsoft', value: 5},
+          haijiao:{name: 'haijiao education', value: 5},
+        }
+      }
+    })
     
   })
 
