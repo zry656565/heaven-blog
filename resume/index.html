@@ -35,6 +35,27 @@
         ga('send', 'pageview');
     </script>
     
+    <!-- handle external js files -->
+    
+    <script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
+    
+    
+    
+        
+            <script type="text/javascript" src="/js/arbor.js"></script>
+        
+            <script type="text/javascript" src="/js/arbor-tween.js"></script>
+        
+            <script type="text/javascript" src="/js/arbor_main.js"></script>
+        
+    
+
+    <!-- handle external css files -->
+    
+        
+            <link rel="stylesheet" href="/css/resume.css">
+        
+    
 </head>
 
 
@@ -83,10 +104,19 @@
 
   <article class="post-content">
   <h1 id="section">教育经历</h1>
-<ul>
-  <li>上海交通大学(2010-2014) 软件工程 本科</li>
-  <li>上海交通大学(2014-2017) 软件工程 硕士</li>
-</ul>
+
+<table id="education">
+  <tr>
+    <td><ul><li>上海交通大学(2010-2014)</li></ul></td>
+    <td>软件工程</td>
+    <td>本科</td>
+  </tr>
+  <tr>
+    <td><ul><li>上海交通大学(2014-2017)</li></ul></td>
+    <td>软件工程</td>
+    <td>硕士</td>
+  </tr>
+</table>
 
 <h1 id="section-1">工作经历</h1>
 <ul>
@@ -146,7 +176,16 @@
       <li>一个面向博客的静态网站生成器</li>
     </ul>
   </li>
+  <li><a href="https://github.com/chukong/cocos-docs">cocos-docs</a>
+    <ul>
+      <li>cocos2d-x的维基文档</li>
+    </ul>
+  </li>
 </ul>
+
+<h1 id="section-4">技能</h1>
+
+<canvas id="skillboard" width="800" height="400"></canvas>
 
   </article>
 
