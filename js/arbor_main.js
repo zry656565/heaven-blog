@@ -73,19 +73,33 @@
           // determine the box size and round off the coords if we'll be 
           // drawing a text label (awful alignment jitter otherwise...)
           var label = (node.data.description || "").toString();
-          var w = ctx.measureText(label).width + 10;
+          var w, h, fontsize;
+          switch (node.data.style) {
+            case 'biggest':
+              ctx.font = "24px Avenir";
+              w = ctx.measureText(label).width + 10;
+              h = 36;
+              fontsize = "24px";
+              break;
+            case 'bigger':
+              ctx.font = "20px Avenir";
+              w = ctx.measureText(label).width + 10;
+              h = 28;
+              fontsize = "20px";
+              break;
+            default:
+              ctx.font = "14px Avenir";
+              w = ctx.measureText(label).width + 10;
+              h = 20;
+              fontsize = "14px";
+              break;
+          }
           if (!(label).match(/^[\t]*$/)){
             pt.x = Math.floor(pt.x);
             pt.y = Math.floor(pt.y);
           }else{
             label = null;
           }
-          
-          // draw a rectangle centered at pt
-          //if (node.data.color) ctx.fillStyle = node.data.color;
-          // else ctx.fillStyle = "#d0d0d0"
-          //else ctx.fillStyle = "rgba(0,0,0,.2)";
-          //if (node.data.color=='none') ctx.fillStyle = "white";
 
           if (!node.data.color) {
             switch (node.data.type) {
@@ -106,20 +120,12 @@
             ctx.fillStyle = node.data.color;
           }
           
-          // ctx.fillRect(pt.x-w/2, pt.y-10, w,20)
-          if (node.data.shape=='dot'){
-             gfx.oval(pt.x-w/2, pt.y-w/2, w,w, {fill:ctx.fillStyle});
-             nodeBoxes[node.name] = [pt.x-w/2, pt.y-w/2, w,w];
-          }else{
-            gfx.rect(pt.x-w/2, pt.y-10, w,20, 4, {fill:ctx.fillStyle});
-            nodeBoxes[node.name] = [pt.x-w/2, pt.y-11, w, 22];
-          }
-
-          // w = Math.max(20,w)
+          gfx.rect(pt.x-w/2, pt.y-h/2, w, h, 4, {fill:ctx.fillStyle});
+          nodeBoxes[node.name] = [pt.x-w/2, pt.y-h/2-1, w, h+2];
 
           // draw the text
           if (label){
-            ctx.font = "14px Avenir, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif";
+            ctx.font = fontsize + " Avenir, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif";
             ctx.textAlign = "center";
             ctx.fillStyle = "white";
             ctx.fillText(label||"", pt.x, pt.y+4);
@@ -255,80 +261,123 @@
 
     // or, equivalently:
     //
-    sys.graft({
-      nodes: {
-        'js': { description: 'javascript', type: 'lang' },
-        'java': { description: 'Java', type: 'lang' },
-        'c': { description: 'C/C++', type: 'lang' },
-        'c#': { description: 'C#', type: 'lang' },
-        'lisp': { description: 'lisp', type: 'lang' },
-        'css': { description: 'css', type: 'lang' },
-        'html': { description: 'html5', type: 'lang' },
-        'ms-intern': { description: 'Microsoft实习', type: 'experience' },
-        'haijiao': { description: '海角教育', type: 'experience' },
-        'cocos2d-js': { description: 'cocos2d-JS', type: 'tool' },
-        'unity-3d': { description: 'Unity-3d', type: 'tool' },
-        'mongodb': { description: 'MongoDB', type: 'tool' },
-        'logv': { description: 'LogV', type: 'experience' },
-        'kinect': { description: 'Kinect', type: 'tool' },
-        'screenbuilder': { description: 'Screen Builder', type: 'experience' },
-        'maoxian': { description: '冒险的召唤', type: 'experience' },
-        'jekyll': { description: 'jekyll', type: 'tool' },
-        'cocos-docs': { description: 'cocos维基', type: 'experience' },
-        'uav': { description: '小型无人机技术大赛', type: 'experience' },
-        'ssh': { description: 'Struct+Spring+Hibernate', type: 'tool' },
-        'game-dev': { description: '游戏开发', type: 'experience' },
-        'blog': { description: 'Jerry的乐园（博客）', type: 'experience' }
+    var nodes = {
+      'js': { description: 'javascript', type: 'lang' },
+      'java': { description: 'Java', type: 'lang' },
+      'c': { description: 'C/C++', type: 'lang' },
+      'c#': { description: 'C#', type: 'lang' },
+      'lisp': { description: 'lisp', type: 'lang' },
+      'css': { description: 'css', type: 'lang' },
+      'html': { description: 'html5', type: 'lang' },
+      'git': { description: 'git', type: 'tool' },
+      'justjs': { description: 'JustJS', type: 'experience' },
+      'jreparser': { description: 'JRE-Parser', type: 'experience' },
+      'ms-intern': { description: 'Microsoft实习', type: 'experience' },
+      'haijiao': { description: '海角教育', type: 'experience' },
+      'cocos2d-js': { description: 'cocos2d-JS', type: 'tool' },
+      'unity-3d': { description: 'Unity-3d', type: 'tool' },
+      'mongodb': { description: 'MongoDB', type: 'tool' },
+      'logv': { description: 'LogV', type: 'experience' },
+      'kinect': { description: 'Kinect', type: 'tool' },
+      'screenbuilder': { description: 'Screen Builder', type: 'experience' },
+      'maoxian': { description: '冒险的召唤', type: 'experience' },
+      'jekyll': { description: 'jekyll', type: 'tool' },
+      'cocos-docs': { description: 'cocos维基', type: 'experience' },
+      'uav': { description: '小型无人机技术大赛', type: 'experience' },
+      'ssh': { description: 'Struct+Spring+Hibernate', type: 'tool' },
+      'game-dev': { description: '游戏开发', type: 'experience' },
+      'blog': { description: 'Jerry的乐园（博客）', type: 'experience' }
+    };
+
+    var edges = {
+      'ms-intern': {
+        'js': { weight: 3 },
+        'css': { weight: 2 },
+        'html': { weight: 2 },
+        'c#': { weight: 2 },
+        'git': { weight: 2 }
       },
-      edges:{
-        'ms-intern': {
-          'js': { weight: 3 },
-          'css': { weight: 2 },
-          'html': { weight: 2 },
-          'c#': { weight: 2 }
-        },
-        'haijiao':{
-          'ssh': { weight: 2 },
-          'js': { weight: 1 },
-          'java': { weight: 2 }
-        },
-        'cocos2d-js': {
-          'js': { weight: 2 },
-          'game-dev': { weight: 3 }
-        },
-        'logv': {
-          'js': { weight: 2 },
-          'css': { weight: 1 },
-          'java': { weight: 2 },
-          'mongodb': { weight: 2 }
-        },
-        'screenbuilder': {
-          'c': { weight: 2 },
-          'c#': { weight: 2 },
-          'kinect': { weight: 3 }
-        },
-        'maoxian': {
-          'unity-3d': { weight: 3 },
-          'game-dev': { weight: 3 },
-          'c#': { weight: 1 },
-          'js': { weight: 2 }
-        },
-        'blog': {
-          'jekyll': { weight: 2 },
-          'js': { weight: 2 },
-          'css': { weight: 3 },
-          'html': { weight: 3 }
-        },
-        'uav': {
-          'c': { weight: 2 }
-        },
-        'lisp': {
-          'js': { weight: 1 }
-        },
-        'cocos-docs': {
-          'cocos2d-js': { weight: 1 }
+      'haijiao':{
+        'ssh': { weight: 2 },
+        'js': { weight: 1 },
+        'java': { weight: 2 },
+        'git': { weight: 1 }
+      },
+      'cocos2d-js': {
+        'js': { weight: 2 },
+        'game-dev': { weight: 3 }
+      },
+      'logv': {
+        'js': { weight: 2 },
+        'css': { weight: 1 },
+        'java': { weight: 2 },
+        'mongodb': { weight: 2 }
+      },
+      'screenbuilder': {
+        'c': { weight: 2 },
+        'c#': { weight: 2 },
+        'kinect': { weight: 3 }
+      },
+      'maoxian': {
+        'unity-3d': { weight: 3 },
+        'game-dev': { weight: 3 },
+        'c#': { weight: 1 },
+        'js': { weight: 2 }
+      },
+      'blog': {
+        'jekyll': { weight: 2 },
+        'js': { weight: 2 },
+        'css': { weight: 3 },
+        'html': { weight: 3 },
+        'git': { weight: 2 }
+      },
+      'uav': {
+        'c': { weight: 2 },
+        'git': { weight: 1 }
+      },
+      'lisp': {
+        'js': { weight: 1 }
+      },
+      'cocos-docs': {
+        'cocos2d-js': { weight: 1 }
+      },
+      'justjs': {
+        'js': { weight: 3 }
+      },
+      'jreparser': {
+        'js': { weight: 3 }
+      }
+    };
+
+    for (var n1 in edges) {
+      if (edges.hasOwnProperty(n1)) {
+        for (var n2 in edges[n1]) {
+          if (edges[n1].hasOwnProperty(n2)) {
+            var edgeWeight = edges[n1][n2].weight;
+            nodes[n2].weight = nodes[n2].weight ? nodes[n2].weight + edgeWeight : edgeWeight;
+          }
         }
       }
+    }
+    // select 3 nodes with the most weight.
+    var max3 = [];
+    for (var n in nodes) {
+      if (nodes.hasOwnProperty(n)) {
+        nodes[n].weight || (nodes[n].weight = 0);
+        max3.push(nodes[n]);
+      }
+    }
+    max3.sort(function(a, b){
+      return b.weight - a.weight;
+    })
+    console.log(max3);
+    max3[0].style = "biggest";
+    max3[1].style = "bigger";
+    max3[2].style = "bigger";
+
+    sys.graft({
+      nodes: nodes,
+      edges: edges
     })
   })
 
