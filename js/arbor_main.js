@@ -142,7 +142,7 @@
           // pt1:  {x:#, y:#}  source position in screen coords
           // pt2:  {x:#, y:#}  target position in screen coords
 
-          var weight = edge.data.weight;
+          var weight = 1;//edge.data.weight;
           var color = edge.data.color;
           
           // trace(color)
