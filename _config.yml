@@ -8,6 +8,7 @@ url: "http://jerryzou.com"
 # Build settings
 markdown: kramdown
 permalink: pretty
+highlighter: pygments
 
 # default Front matter
 defaults:
