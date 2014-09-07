@@ -369,8 +369,7 @@
     }
     max3.sort(function(a, b){
       return b.weight - a.weight;
-    })
-    console.log(max3);
+    });
     max3[0].style = "biggest";
     max3[1].style = "bigger";
     max3[2].style = "bigger";

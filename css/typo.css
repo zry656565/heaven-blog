@@ -186,12 +186,6 @@ pre, code{
   word-wrap:break-word;
 }
 
-pre{
-  background:#f8f8f8;
-  border:1px solid #ddd;
-  padding:1em 1.5em;
-}
-
 /* 一致化 horizonal rule */
 hr{
   border:none;
