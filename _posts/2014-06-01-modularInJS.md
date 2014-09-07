@@ -43,19 +43,19 @@ Javascript有一个特性叫做**隐式全局变量**。无论一个变量名在
 有时你不仅想要使用全局变量，你还想要声明它们，以供反复使用。我们可以很容易地通过导出它们来做到这一点——通过匿名函数的**返回值**。这样做将会完成一个基本的模块化模式雏形，接下来会是一个完整的例子：
 {% highlight javascript %}
 var MODULE = (function () {
-	var my = {},
-		privateVariable = 1;
+    var my = {},
+        privateVariable = 1;
 
-	function privateMethod() {
-		// ...
-	}
+    function privateMethod() {
+        // ...
+    }
 
-	my.moduleProperty = 1;
-	my.moduleMethod = function () {
-		// ...
-	};
+    my.moduleProperty = 1;
+    my.moduleMethod = function () {
+        // ...
+    };
 
-	return my;
+    return my;
 }());
 {% endhighlight%}
 注意我们已经声明了一个叫做`MODULE`的全局模块，它拥有2个公有的属性：一个叫做`MODULE.moduleMethod`的方法和一个叫做`MODULE.moduleProperty`的变量。另外，它还维护了一个利用匿名函数闭包的、**私有的内置**状态。同时，我们可以很容易地导入需要的全局变量，并像之前我们所学到的那样来使用这个模块化模式。
@@ -69,11 +69,11 @@ var MODULE = (function () {
 整个模块必须在一个文件中是模块化模式的一个限制。任何一个参与大型项目的人都会明白将js拆分多个文件的价值。幸运的是，我们拥有一个很棒的实现来**放大模块**。首先，我们导入一个模块，并为它添加属性，最后再导出它。下面是一个例子——从原本的`MODULE`中放大它：
 {% highlight javascript %}
 var MODULE = (function (my) {
-	my.anotherMethod = function () {
-		// added method...
-	};
+    my.anotherMethod = function () {
+        // added method...
+    };
 
-	return my;
+    return my;
 }(MODULE));
 {% endhighlight %}
 我们用var关键词来保证一致性，虽然它在此处不是必须的。在这段代码执行完之后，我们的模块就已经拥有了一个新的、叫做`MODULE.anotherMethod`的公有方法。这个放大文件也会维护它自己的私有内置状态和导入的对象。
@@ -83,9 +83,9 @@ var MODULE = (function (my) {
 我们的上面例子需要我们的初始化模块最先被执行，然后放大模块才能执行，当然有时这可能也不一定是必需的。Javascript应用可以做到的、用来提升性能的、最棒的事之一就是异步执行脚本。我们可以创建灵活的多部分模块并通过**宽放大模式**使它们可以以任意顺序加载。每一个文件都需要按下面的结构组织：
 {% highlight javascript %}
 var MODULE = (function (my) {
-	// add capabilities...
+    // add capabilities...
 
-	return my;
+    return my;
 }(MODULE || {}));
 {% endhighlight %}
 在这个模式中，`var`表达式使必需的。注意如果MODULE还未初始化过，这句导入语句会创建`MODULE`。这意味着你可以用一个像LABjs的工具来并行加载你所有的模块文件，而不会被阻塞。
@@ -131,21 +131,21 @@ var MODULE_TWO = (function (old) {
 把一个模块分到多个文件中有一个重大的限制：每一个文件都维护了各自的私有变量，并且无法访问到其他文件的私有变量。但这个问题是可以解决的。这里有一个维护跨文件私有变量的、宽放大模块的例子：
 {% highlight javascript %}
 var MODULE = (function (my) {
-	var _private = my._private = my._private || {},
-		_seal = my._seal = my._seal || function () {
-			delete my._private;
-			delete my._seal;
-			delete my._unseal;
-		},
-		_unseal = my._unseal = my._unseal || function () {
-			my._private = _private;
-			my._seal = _seal;
-			my._unseal = _unseal;
-		};
+    var _private = my._private = my._private || {},
+        _seal = my._seal = my._seal || function () {
+            delete my._private;
+            delete my._seal;
+            delete my._unseal;
+        },
+        _unseal = my._unseal = my._unseal || function () {
+            my._private = _private;
+            my._seal = _seal;
+            my._unseal = _unseal;
+        };
 
-	// permanent access to _private, _seal, and _unseal
+    // permanent access to _private, _seal, and _unseal
 
-	return my;
+    return my;
 }(MODULE || {}));
 {% endhighlight %}
 所有文件可以在它们各自的`_private`变量上设置属性，并且它理解可以被其他文件访问。一旦这个模块加载完成，应用程序可以调用`MODULE._seal()`来防止外部对内部`_private`的调用。如果这个模块需要被重新放大，在任何一个文件中的内部方法可以在加载新的文件前调用`_unseal()`，并在新文件执行好以后再次调用`_seal()`。我如今在工作中使用这种模式，而且我在其他地方还没有见过这种方法。我觉得这是一种非常有用的模式，很值得就这个模式本身写一篇文章。
@@ -171,16 +171,16 @@ MODULE.sub = (function () {
 作为结束，这里是一个子模块动态地把自身加载到它的父模块的例子（如果父模块不存在则创建它）。为了简洁，我把私有变量给去除了，当然加上私有变量也是很简单的啦。这种编程模式允许一整个复杂层级结构代码库通过子模块并行地完成加载。
 {% highlight javascript %}
 var UTIL = (function (parent, $) {
-	var my = parent.ajax = parent.ajax || {};
+    var my = parent.ajax = parent.ajax || {};
 
-	my.get = function (url, params, callback) {
-		// ok, so I'm cheating a bit :)
-		return $.getJSON(url, params, callback);
-	};
+    my.get = function (url, params, callback) {
+        // ok, so I'm cheating a bit :)
+        return $.getJSON(url, params, callback);
+    };
 
-	// etc...
+    // etc...
 
-	return parent;
+    return parent;
 }(UTIL || {}, jQuery));
 {% endhighlight %}
 我希望这篇文章对你有帮助，请在文章下面留言分享你的想法。从现在起，就开始写更棒、更模块化的Javascript吧！
