@@ -85,10 +85,11 @@ a:visited { color: #205caa; }
   margin-right: 10px;
   width: 24px;
   height: 24px;
+  opacity: 0.6;
 }
 
 .site-footer img.icon:hover {
-  opacity: 0.6;
+  opacity: 1;
 }
 
 /* Page Content styles */
