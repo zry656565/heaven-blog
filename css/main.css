@@ -198,7 +198,7 @@ a:visited { color: #205caa; }
 .post-content p {
   text-indent: 2em;
 }
-.post-content p img {
+.post-content p > img:first-child {
   margin: 0 0 0 -2em;
 }
 
