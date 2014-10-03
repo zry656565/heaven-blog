@@ -7,6 +7,18 @@
     <atom:link href="http://jerryzou.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>上海交大校园巴士时刻表查询APP反馈信息入口</title>
+        <description>&lt;p&gt;上周上海交大校园巴士时刻表查询APP上线。为了更好地服务于同学，有任何建议和反馈都可以在本帖下留言。谢谢支持！&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/sjtubus.png&quot; alt=&quot;SJTU-Bus&quot; /&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 24 Sep 2014 21:31:53 +0000</pubDate>
+        <link>http://jerryzou.com/posts/sjtuBusFeedback/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/sjtuBusFeedback/</guid>
+      </item>
+    
+      <item>
         <title>使用百度地图API来完成交大校园巴士时刻表</title>
         <description>&lt;p&gt;交大的校园巴士时刻表都只能在车站的站牌上查看。这对于需要出行的学生来说非常不方便，无法合理做好出行的安排。为了解决这个问题，我和同一个套件的两位同学一起完成了这个简单的app。这篇博客将简要介绍这个web应用是如何实现的。以下是效果图，实际的效果请到&lt;a href=&quot;http://zry656565.github.io/SJTU-Bus/&quot;&gt;http://zry656565.github.io/SJTU-Bus&lt;/a&gt;查看。&lt;/p&gt;
 
@@ -684,29 +696,6 @@ Consult the support section on how to make sure that the required fonts are embe
         <pubDate>Mon, 16 Dec 2013 10:00:00 +0000</pubDate>
         <link>http://jerryzou.com/posts/opentopublic/</link>
         <guid isPermaLink="true">http://jerryzou.com/posts/opentopublic/</guid>
-      </item>
-    
-      <item>
-        <title>C语言中可能被你忽视的小细节</title>
-        <description>&lt;ol&gt;
-  &lt;li&gt;EOF是文件结束符，它的值是-1.&lt;br /&gt;
-因此用于接收getchar()的返回值的变量一般用int而不是char。&lt;/li&gt;
-  &lt;li&gt;声明数组时，如int n[10]&lt;br /&gt;
-方括号中的数字必须为常数，因为这是静态声明数组。&lt;br /&gt;
-也有动态声明数组的方式，那会用到指针，这在后面讨论。&lt;/li&gt;
-  &lt;li&gt;在C语言中，所有函数参数都是“通过值”传递的。（如果你真的想在函数中修改主调函数的变量，你可以传地址，其实也就是传指针，这个也是后话）&lt;/li&gt;
-  &lt;li&gt;处理数组时一定要时刻注意边界值的处理（是否溢出）&lt;/li&gt;
-  &lt;li&gt;变量和函数的extern声明通常写在头文件中。&lt;/li&gt;
-  &lt;li&gt;如果函数没有参数，在声明该函数时需要使用void关键词显式声明。因为ANSI C为了兼容老版本的C语言，把空参数表看成老版本的函数声明方式，而对参数表不做任何检查。就像这样：&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;c&quot;&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;说明&lt;/strong&gt;:本文原发布于我的CSDN博客&lt;a href=&quot;http://blog.csdn.net/zry656565&quot;&gt;天上之海原&lt;/a&gt;。&lt;/p&gt;
-</description>
-        <pubDate>Mon, 15 Jul 2013 15:37:00 +0000</pubDate>
-        <link>http://jerryzou.com/posts/tipsforC/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/tipsforC/</guid>
       </item>
     
   </channel>
