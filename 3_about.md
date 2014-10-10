@@ -19,5 +19,6 @@ nav: true
 - [GitHub](https://github.com/zry656565)
 - [LinkedIn](http://www.linkedin.com/profile/view?id=289040657)
 - [Segmentfault](http://segmentfault.com/u/jerryzou)
+- [Stackoverflow](http://stackoverflow.com/users/3152296/jerryddg)
 - [Douban](http://www.douban.com/people/jerry_zou/)
 - [Weibo](http://weibo.com/u/1943775181)

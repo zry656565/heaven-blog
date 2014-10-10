@@ -3,6 +3,7 @@ title: 所有文章
 permalink: /articles/
 layout: default
 nav: true
+sidePart: true
 ---
 
 <div class="home">

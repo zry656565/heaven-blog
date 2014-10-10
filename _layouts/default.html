@@ -9,6 +9,7 @@
 
     <div class="page-content">
       <div class="wrap">
+        {% if page.sidePart %}
         <div class="central-part">
         {{ content }}
         </div>
@@ -45,6 +46,9 @@
             <p>你可以不仅可以直接浏览我的博客，也可以通过<a href="{{ "/feed.xml" | prepend: site.baseurl }}">订阅RSS</a>来进行实时关注！</p>
           </div>
         </div>
+        {% else %}
+        {{ content }}
+        {% endif %}
       </div>
     </div>
 
