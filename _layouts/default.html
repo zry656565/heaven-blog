@@ -9,7 +9,42 @@
 
     <div class="page-content">
       <div class="wrap">
-      {{ content }}
+        <div class="central-part">
+        {{ content }}
+        </div>
+
+        <div class="side-part">
+          <!-- segmentfault card -->
+          <div class="sf-usercard" id="sf-usercard-1030000000491480"></div>
+          <script>
+            (function() {
+            var sf = document.createElement('script'); sf.type = 'text/javascript'; sf.async = true;
+            sf.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://w.segmentfault.com/card/1030000000491480.js?w=0&3rd=1&bg=0&bd=0&cl=333333&btn=eaeaea';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(sf, s);
+            })();
+          </script>
+          <!-- end -->
+
+          <!-- other sites -->
+          <div class="other-sites">
+            <h6>我在别处</h6>
+            <hr/>
+            <p>你可以在许多其他地方找到我：</p>
+            <a href="https://github.com/zry656565"><img class="icon" src="/images/github_icon.png" title="Github"/></a>
+            <a href="http://segmentfault.com/u/jerryzou"><img class="icon" src="/images/sf_icon.png" title="segmentfault" /></a>
+            <a href="http://stackoverflow.com/users/3152296/jerryddg"><img class="icon" src="/images/stackoverflow_icon.png" title="stackoverflow" /></a>
+            <a href="http://www.linkedin.com/profile/view?id=289040657"><img class="icon" src="/images/linkedin_icon.png" title="Linkedin" /></a>
+            <a href="http://weibo.com/u/1943775181"><img class="icon" src="/images/weibo_icon.png" title="微博" /></a>
+            <a href="http://www.douban.com/people/jerry_zou/"><img class="icon" src="/images/douban_icon.png" title="豆瓣" /></a>
+          </div>
+          <!-- end -->
+
+          <div>
+            <h6>RSS订阅</h6>
+            <hr/>
+            <p>你可以不仅可以直接浏览我的博客，也可以通过<a href="{{ "/feed.xml" | prepend: site.baseurl }}">订阅RSS</a>来进行实时关注！</p>
+          </div>
+        </div>
       </div>
     </div>
 
