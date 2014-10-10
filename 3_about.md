@@ -4,11 +4,13 @@ permalink: /about/
 nav: true
 ---
 
-<img src="/images/monkey.jpg" width="220" height="220" align="right">
+<img src="/images/monkey.jpg" width="220" height="220" style="padding-left:50px; float:right;">
 
-你们好，我叫邹润阳，是一名生活在上海的程序员。在我看来，编程不仅仅是我与生俱来的使命，也是我快乐的源泉。<br/><br/>
-我正在**上海交通大学**攻读软件工程硕士学位。我喜欢前端的技术、喜欢研究不同的编程语言之间的联系与差异。我最爱的编程语言是javascript，而我的梦想是成为一名独立游戏开发者。<br/><br/>
-如果你有任何问题，请给我发送邮件：[zry656565@gmail.com](mailto:zry656565@gmail.com)<br/>
+你们好，我叫邹润阳，是一名生活在上海的程序员。在我看来，编程不仅仅是我与生俱来的使命，也是我快乐的源泉。
+
+我正在**上海交通大学**攻读软件工程硕士学位。我喜欢前端的技术、喜欢研究不同的编程语言之间的联系与差异。我最爱的编程语言是javascript，而我的梦想是成为一名独立游戏开发者。
+
+如果你有任何问题，请给我发送邮件：[zry656565@gmail.com](mailto:zry656565@gmail.com)
 
 ## 我在别处
 
