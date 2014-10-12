@@ -7,8 +7,10 @@ requireJq: true
 ---
 
 <!-- Labels -->
+<!--*****************************-->
+
 <section class="label-section">
-  <h6>所有标签</h6>
+  <h6>标签列表</h6>
   <hr/>
 </section>
 <script type="text/javascript">
@@ -51,23 +53,28 @@ requireJq: true
   }
 })(jQuery);
 </script>
-<!-- end -->
+
+<!-- article section-->
+<!--*****************************-->
 
 <section class="articles-section">
-<h6>文章列表</h6>
-<hr/>
-<ul class="articles">
-  {% for post in site.posts %}
-    <li data-key="{{ post.key }}">
-      <p class="article">
-        <span class="article-date">{{ post.date | date: "%Y-%m-%d" }}</span>
-        <a class="article-title" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-      </p>
-    </li>
-  {% endfor %}
-</ul>
+  <h6>文章列表</h6>
+  <input class="search-box" type="text" placeholder="搜索包含在标题中的关键词" />
+  <div class="search-icon">
+    <img src="/images/search_icon.png"/>
+  </div>
+  <hr/>
+  <ul class="articles">
+    {% for post in site.posts %}
+      <li data-key="{{ post.key }}" data-show="true">
+        <p class="article">
+          <span class="article-date">{{ post.date | date: "%Y-%m-%d" }}</span>
+          <a class="article-title" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+        </p>
+      </li>
+    {% endfor %}
+  </ul>
 </section>
-
 <script type="text/javascript">
 (function($){
   var posts = [
@@ -87,9 +94,25 @@ requireJq: true
     label = decodeURI(label);
     for (var i = 0; i < posts.length; i++) {
       if (posts[i].labels.indexOf(label) == -1) {
-        $('[data-key='+ posts[i].key +']').hide();
+        $('[data-key='+ posts[i].key +']').removeAttr('data-show').hide();
       }
     }
   }
+  // search box event
+  var doSearch = function(){
+    var text = $('.search-box').val();
+      $('.articles li').each(function(){
+        console.log($(this).data('show'));
+        if ($(this).data('show')===true) {
+          $(this).show();
+          var title = $(this).find('.article-title').text();
+          if (title.toLowerCase().search(text.toLowerCase()) == -1) {
+            $(this).hide();
+          }
+        }
+    })
+  };
+  $('.search-box').change(doSearch);
+  $('.search-icon').click(doSearch);
 })(jQuery);
 </script>
