@@ -4,6 +4,7 @@ title: 一款在线Javascript正则表达式测试器
 description: 昨天在看《正则表达式30分钟入门教程》的时候，看到博主自己实现了一个C#写的正则测试器，看上去挺方便的样子。但是我自己又不太喜欢乱装东西，所以寻思着能不能自己实现一个javascript正则表达式测试器。于是几十行代码实现了这样一个正则测试器。
 permalink: /posts/jreparser/
 key: 10007
+labels: [javascript, "JRE Parser", 正则表达式]
 ---
 
 昨天在看《[正则表达式30分钟入门教程](http://deerchao.net/tutorials/regex/regex.htm)》的时候，看到博主自己实现了一个C#写的正则测试器，看上去挺方便的样子。但是我自己又不太喜欢乱装东西，所以寻思着能不能自己实现一个javascript正则表达式测试器。于是几十行代码实现了这样一个正则测试器。

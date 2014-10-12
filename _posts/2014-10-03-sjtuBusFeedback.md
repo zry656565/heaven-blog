@@ -4,6 +4,7 @@ title: 上海交大校园巴士时刻表查询APP反馈信息入口
 description: 上周上海交大校园巴士时刻表查询APP上线。为了更好地服务于同学，有任何建议和反馈都可以在本帖下留言。
 permalink: /posts/sjtuBusFeedback/
 key: 10014
+labels: [SJTU, 意见反馈]
 ---
 
 上周上海交大校园巴士时刻表查询APP上线。为了更好地服务于同学，有任何建议和反馈都可以在本帖下留言。谢谢支持！

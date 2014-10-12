@@ -4,6 +4,7 @@ title: 博客建立
 description: 今天我的博客终于搞定了，首先要谢谢Rasmus Andersson开源了他的博客代码，我才能把博客做成现在这样。
 permalink: /posts/opentopublic/
 key: 10003
+labels: [博客, jekyll]
 ---
 
 今天我的博客终于搞定了，首先要谢谢Rasmus Andersson开源了他的博客代码，我才能把博客做成现在这样。

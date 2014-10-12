@@ -4,6 +4,7 @@ title: Javascript中的一种深复制实现
 description: 要实现深复制有很多办法，比如最简单的办法有：var cloneObj = JSON.parse(JSON.stringify(obj));上面这种方法好处是非常简单易用，但是坏处也显而易见，这会抛弃对象的constructor，也就是深复制之后，无论这个对象原本的构造函数是什么，在深复制之后都会变成Object。另外诸如`RegExp`对象是无法通过这种方式深复制的。所以这里我将介绍一种，我自认为很优美的深复制方法，当然可能也存在问题。如果你发现了我的实现方法有什么问题，请及时让我知道~
 permalink: /posts/deepcopy/
 key: 10011
+labels: [javascript, 深复制, JustJS]
 ---
 
 要实现深复制有很多办法，比如最简单的办法有：
