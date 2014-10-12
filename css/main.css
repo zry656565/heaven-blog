@@ -120,13 +120,20 @@ a:visited { color: #205caa; }
 }
 
 .posts .post-link2 {
-  font-size: 11px;
+  font-size: 14px;
 }
 
 .posts .post-date {
-  display: block;
   font-size: 12px;
   color: #818181;
+}
+
+.posts .post-label {
+  color: #555;
+  background: #FFF5DE;
+  border: 1px solid #555;
+  border-radius: 2px;
+  padding: 1px 3px;
 }
 
 .posts .post-description {
@@ -134,6 +141,42 @@ a:visited { color: #205caa; }
   color: #555;
 }
 
+/* Article Styles */
+/* ----------------------------------------------------------*/
+
+.articles {
+  list-style-type: none;
+  font-size: 14px;
+}
+
+.articles .article-title {
+  line-height: 1;
+}
+
+.articles .article-date {
+  color: #818181;
+  padding-right: 5px;
+}
+
+.label-section {
+  margin-bottom: 20px;
+}
+
+.label-section .post-label {
+  display: inline-block;
+  font-size: 14px;
+  color: #555;
+  background: #FFEFD5;
+  border: 1px solid #555;
+  border-radius: 2px;
+  padding: 1px 3px;
+  margin: 0 5px 5px 0;
+}
+
+.label-section .post-label.select {
+  color: #fff;
+  background: #f59b4d;
+}
 
 /* Post styles */
 /* ----------------------------------------------------------*/

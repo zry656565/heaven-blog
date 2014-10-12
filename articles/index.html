@@ -42,6 +42,8 @@
     
     <!-- handle external js files -->
     
+    <script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
+    
     
     
 
@@ -90,108 +92,400 @@
     <div class="page-content">
       <div class="wrap">
         
-        <div class="central-part">
-        <div class="home">
-  <ul class="posts">
-    
-      <li>
-        <a class="post-link" href="/posts/sjtuBusFeedback/">上海交大校园巴士时刻表查询APP反馈信息入口</a>
-        <span class="post-date">Posted on Oct 3, 2014</span>
-      </li>
-    
-      <li>
-        <a class="post-link" href="/posts/sjtuBus/">使用百度地图API来完成交大校园巴士时刻表</a>
-        <span class="post-date">Posted on Sep 24, 2014</span>
-      </li>
-    
-      <li>
-        <a class="post-link" href="/posts/usePygments/">使用Pygments来实现代码高亮</a>
-        <span class="post-date">Posted on Sep 7, 2014</span>
-      </li>
-    
-      <li>
-        <a class="post-link" href="/posts/networkConfig/">小型局域网的多路由配置</a>
-        <span class="post-date">Posted on Aug 2, 2014</span>
-      </li>
-    
-      <li>
-        <a class="post-link" href="/posts/paperFormat/">IEEE论文PDF格式检测中的问题与解决</a>
-        <span class="post-date">Posted on Jun 2, 2014</span>
-      </li>
-    
-      <li>
-        <a class="post-link" href="/posts/jsmodular/">深入了解Javascript模块化编程</a>
-        <span class="post-date">Posted on Jun 1, 2014</span>
-      </li>
-    
-      <li>
-        <a class="post-link" href="/posts/deepcopy/">Javascript中的一种深复制实现</a>
-        <span class="post-date">Posted on May 11, 2014</span>
-      </li>
-    
-      <li>
-        <a class="post-link" href="/posts/jreparser/">一款在线Javascript正则表达式测试器</a>
-        <span class="post-date">Posted on May 6, 2014</span>
-      </li>
-    
-      <li>
-        <a class="post-link" href="/posts/learnjs/">如何循序渐进地学习Javascript</a>
-        <span class="post-date">Posted on Dec 21, 2013</span>
-      </li>
-    
-      <li>
-        <a class="post-link" href="/posts/opentopublic/">博客建立</a>
-        <span class="post-date">Posted on Dec 16, 2013</span>
-      </li>
-    
-      <li>
-        <a class="post-link" href="/posts/tipsforC/">C语言中可能被你忽视的小细节</a>
-        <span class="post-date">Posted on Jul 15, 2013</span>
-      </li>
-    
-      <li>
-        <a class="post-link" href="/posts/storageMethod/">搞清大数端小数端</a>
-        <span class="post-date">Posted on Jul 15, 2013</span>
-      </li>
-    
-  </ul>
+        <!-- Labels -->
+<section class="label-section">
+  <h6>所有标签</h6>
+  <hr />
+</section>
+<script type="text/javascript">
+(function($){
+  // usage: get param from url
+  $.urlParam = function(name){
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results==null){
+      return null;
+    }else{
+      return results[1] || 0;
+    } 
+  }
 
-</div>
+  var labels = [
+    
+      
+        "SJTU",
+      
+        "意见反馈",
+      
+    
+      
+        "javascript",
+      
+        "百度地图",
+      
+        "SJTU",
+      
+        "校园巴士时刻表",
+      
+    
+      
+        "highlight",
+      
+        "Pygments",
+      
+        "代码高亮",
+      
+        "博客",
+      
+    
+      
+        "network config",
+      
+        "局域网配置",
+      
+        "router",
+      
+    
+      
+        "IEEE",
+      
+        "paper",
+      
+    
+      
+        "javascript",
+      
+        "module pattern",
+      
+        "模块化",
+      
+    
+      
+        "javascript",
+      
+        "深复制",
+      
+        "JustJS",
+      
+    
+      
+        "javascript",
+      
+        "JRE Parser",
+      
+        "正则表达式",
+      
+    
+      
+        "javascript",
+      
+        "学习",
+      
+    
+      
+        "博客",
+      
+        "jekyll",
+      
+    
+      
+        "C语言",
+      
+        "细节",
+      
+    
+      
+        "大数端",
+      
+        "小数端",
+      
+        "EM64T",
+      
+    
+  ];
+  var tags = {};
+  for (var i = 0; i < labels.length; i++) {
+    var t = tags[labels[i]];
+    tags[labels[i]] = t ? t+1 : 1;
+  }
+  labels = [];
+  for (var tag in tags) {
+    labels.push({
+      name: tag,
+      value: tags[tag]
+    })
+  };
+  labels.sort(function(a, b){
+    return b.value - a.value;
+  });
+  var label = decodeURI($.urlParam("label"));
+  for (i = 0; i < labels.length; i++) {
+    $('.label-section').append('<a href="/articles/?label='+ labels[i].name +'"><span class="post-label'+ (label==labels[i].name?' select':'') +'">'+ labels[i].name +'</span></a>');
+  }
+})(jQuery);
+</script>
 
-        </div>
+<!-- end -->
 
-        <div class="side-part">
-          <!-- segmentfault card -->
-          <div class="sf-usercard" id="sf-usercard-1030000000491480"></div>
-          <script>
-            (function() {
-            var sf = document.createElement('script'); sf.type = 'text/javascript'; sf.async = true;
-            sf.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://w.segmentfault.com/card/1030000000491480.js?w=0&3rd=1&bg=0&bd=0&cl=333333&btn=eaeaea';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(sf, s);
-            })();
-          </script>
-          <!-- end -->
+<section class="articles-section">
+<h6>文章列表</h6>
+<hr />
+<ul class="articles">
+  
+    <li data-key="10014">
+      <p class="article">
+        <span class="article-date">2014-10-03</span>
+        <a class="article-title" href="/posts/sjtuBusFeedback/">上海交大校园巴士时刻表查询APP反馈信息入口</a>
+      </p>
+    </li>
+  
+    <li data-key="10013">
+      <p class="article">
+        <span class="article-date">2014-09-24</span>
+        <a class="article-title" href="/posts/sjtuBus/">使用百度地图API来完成交大校园巴士时刻表</a>
+      </p>
+    </li>
+  
+    <li data-key="10012">
+      <p class="article">
+        <span class="article-date">2014-09-07</span>
+        <a class="article-title" href="/posts/usePygments/">使用Pygments来实现代码高亮</a>
+      </p>
+    </li>
+  
+    <li data-key="10010">
+      <p class="article">
+        <span class="article-date">2014-08-02</span>
+        <a class="article-title" href="/posts/networkConfig/">小型局域网的多路由配置</a>
+      </p>
+    </li>
+  
+    <li data-key="10009">
+      <p class="article">
+        <span class="article-date">2014-06-02</span>
+        <a class="article-title" href="/posts/paperFormat/">IEEE论文PDF格式检测中的问题与解决</a>
+      </p>
+    </li>
+  
+    <li data-key="10008">
+      <p class="article">
+        <span class="article-date">2014-06-01</span>
+        <a class="article-title" href="/posts/jsmodular/">深入了解Javascript模块化编程</a>
+      </p>
+    </li>
+  
+    <li data-key="10011">
+      <p class="article">
+        <span class="article-date">2014-05-11</span>
+        <a class="article-title" href="/posts/deepcopy/">Javascript中的一种深复制实现</a>
+      </p>
+    </li>
+  
+    <li data-key="10007">
+      <p class="article">
+        <span class="article-date">2014-05-06</span>
+        <a class="article-title" href="/posts/jreparser/">一款在线Javascript正则表达式测试器</a>
+      </p>
+    </li>
+  
+    <li data-key="10004">
+      <p class="article">
+        <span class="article-date">2013-12-21</span>
+        <a class="article-title" href="/posts/learnjs/">如何循序渐进地学习Javascript</a>
+      </p>
+    </li>
+  
+    <li data-key="10003">
+      <p class="article">
+        <span class="article-date">2013-12-16</span>
+        <a class="article-title" href="/posts/opentopublic/">博客建立</a>
+      </p>
+    </li>
+  
+    <li data-key="10002">
+      <p class="article">
+        <span class="article-date">2013-11-18</span>
+        <a class="article-title" href="/posts/tipsforC/">C语言中可能被你忽视的小细节</a>
+      </p>
+    </li>
+  
+    <li data-key="10001">
+      <p class="article">
+        <span class="article-date">2013-11-04</span>
+        <a class="article-title" href="/posts/storageMethod/">搞清大数端小数端</a>
+      </p>
+    </li>
+  
+</ul>
+</section>
 
-          <!-- other sites -->
-          <div class="other-sites">
-            <h6>我在别处</h6>
-            <hr/>
-            <p>你可以在许多其他地方找到我：</p>
-            <a href="https://github.com/zry656565"><img class="icon" src="/images/github_icon.png" title="Github"/></a>
-            <a href="http://segmentfault.com/u/jerryzou"><img class="icon" src="/images/sf_icon.png" title="segmentfault" /></a>
-            <a href="http://stackoverflow.com/users/3152296/jerryddg"><img class="icon" src="/images/stackoverflow_icon.png" title="stackoverflow" /></a>
-            <a href="http://www.linkedin.com/profile/view?id=289040657"><img class="icon" src="/images/linkedin_icon.png" title="Linkedin" /></a>
-            <a href="http://weibo.com/u/1943775181"><img class="icon" src="/images/weibo_icon.png" title="微博" /></a>
-            <a href="http://www.douban.com/people/jerry_zou/"><img class="icon" src="/images/douban_icon.png" title="豆瓣" /></a>
-          </div>
-          <!-- end -->
+<script type="text/javascript">
+(function($){
+  var posts = [
+    
+    {
+      key: "10014",
+      labels: [
+      
+        "SJTU",
+      
+        "意见反馈",
+      
+      ]
+    },
+    
+    {
+      key: "10013",
+      labels: [
+      
+        "javascript",
+      
+        "百度地图",
+      
+        "SJTU",
+      
+        "校园巴士时刻表",
+      
+      ]
+    },
+    
+    {
+      key: "10012",
+      labels: [
+      
+        "highlight",
+      
+        "Pygments",
+      
+        "代码高亮",
+      
+        "博客",
+      
+      ]
+    },
+    
+    {
+      key: "10010",
+      labels: [
+      
+        "network config",
+      
+        "局域网配置",
+      
+        "router",
+      
+      ]
+    },
+    
+    {
+      key: "10009",
+      labels: [
+      
+        "IEEE",
+      
+        "paper",
+      
+      ]
+    },
+    
+    {
+      key: "10008",
+      labels: [
+      
+        "javascript",
+      
+        "module pattern",
+      
+        "模块化",
+      
+      ]
+    },
+    
+    {
+      key: "10011",
+      labels: [
+      
+        "javascript",
+      
+        "深复制",
+      
+        "JustJS",
+      
+      ]
+    },
+    
+    {
+      key: "10007",
+      labels: [
+      
+        "javascript",
+      
+        "JRE Parser",
+      
+        "正则表达式",
+      
+      ]
+    },
+    
+    {
+      key: "10004",
+      labels: [
+      
+        "javascript",
+      
+        "学习",
+      
+      ]
+    },
+    
+    {
+      key: "10003",
+      labels: [
+      
+        "博客",
+      
+        "jekyll",
+      
+      ]
+    },
+    
+    {
+      key: "10002",
+      labels: [
+      
+        "C语言",
+      
+        "细节",
+      
+      ]
+    },
+    
+    {
+      key: "10001",
+      labels: [
+      
+        "大数端",
+      
+        "小数端",
+      
+        "EM64T",
+      
+      ]
+    },
+    
+  ];
+  var label = $.urlParam("label");
+  if (label) {
+    label = decodeURI(label);
+    for (var i = 0; i < posts.length; i++) {
+      if (posts[i].labels.indexOf(label) == -1) {
+        $('[data-key='+ posts[i].key +']').hide();
+      }
+    }
+  }
+})(jQuery);
+</script>
 
-          <div>
-            <h6>RSS订阅</h6>
-            <hr/>
-            <p>你可以不仅可以直接浏览我的博客，也可以通过<a href="/feed.xml">订阅RSS</a>来进行实时关注！</p>
-          </div>
-        </div>
+
         
       </div>
     </div>
