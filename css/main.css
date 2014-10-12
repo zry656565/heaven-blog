@@ -129,11 +129,10 @@ a:visited { color: #205caa; }
 }
 
 .posts .post-label {
-  color: #555;
+  color: #777;
   background: #FFF5DE;
-  border: 1px solid #555;
-  border-radius: 2px;
-  padding: 1px 3px;
+  padding: 1px 5px;
+  margin: 0 0 0 4px;
 }
 
 .posts .post-description {
