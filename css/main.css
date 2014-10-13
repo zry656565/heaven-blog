@@ -119,10 +119,6 @@ a:visited { color: #205caa; }
   line-height: 1;
 }
 
-.posts .post-link2 {
-  font-size: 14px;
-}
-
 .posts .post-date {
   font-size: 12px;
   color: #818181;
@@ -195,6 +191,7 @@ a:visited { color: #205caa; }
   width: 170px;
   margin-left: 20px;
 }
+
 /* Post styles */
 /* ----------------------------------------------------------*/
 
@@ -403,5 +400,9 @@ a:visited { color: #205caa; }
 
 .other-sites img:hover {
   opacity: 1;
+}
+
+.friend-sites ul {
+  padding: 0 0 0 30px;
 }
 
