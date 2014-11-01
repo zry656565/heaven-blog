@@ -10,7 +10,7 @@
         <title>上海交大校园巴士时刻表查询APP反馈信息入口</title>
         <description>&lt;p&gt;上周上海交大校园巴士时刻表查询APP上线。为了更好地服务于同学，有任何建议和反馈都可以在本帖下留言。谢谢支持！&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/sjtubus.png&quot; alt=&quot;SJTU-Bus&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/sjtubus.png&quot; alt=&quot;SJTU-Bus&quot; /&gt;&lt;/p&gt;
 
 </description>
         <pubDate>Fri, 03 Oct 2014 20:31:10 +0000</pubDate>
@@ -22,7 +22,7 @@
         <title>使用百度地图API来完成交大校园巴士时刻表</title>
         <description>&lt;p&gt;交大的校园巴士时刻表都只能在车站的站牌上查看。这对于需要出行的学生来说非常不方便，无法合理做好出行的安排。为了解决这个问题，我和同一个套件的两位同学一起完成了这个简单的app。这篇博客将简要介绍这个web应用是如何实现的。以下是效果图，实际的效果请到&lt;a href=&quot;http://zry656565.github.io/SJTU-Bus/&quot;&gt;http://zry656565.github.io/SJTU-Bus&lt;/a&gt;查看。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/sjtubus.png&quot; alt=&quot;SJTU-Bus&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/sjtubus.png&quot; alt=&quot;SJTU-Bus&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;完成这个应用的主要步骤：&lt;/p&gt;
 
@@ -231,7 +231,7 @@
 
 &lt;p&gt;如此就可以得到如下结果：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/pygments1.png&quot; alt=&quot;请输入图片描述&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/pygments1.png&quot; alt=&quot;请输入图片描述&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;本博客采用的样式是&lt;code&gt;tango&lt;/code&gt;，如果你喜欢的话，也可以按这种方案给自己博客的代码如此着色。言归正传，接下来介绍生成css文件的指令：&lt;/p&gt;
 
@@ -281,7 +281,7 @@
 #情景
 从Modem出来的网线接到交换机A上，从交换机中接到2个路由器，并同时接上交换机B；从交换机B中再接到4个路由器上。下面是图示：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/netconfig.png&quot; alt=&quot;请输入图片描述&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/netconfig.png&quot; alt=&quot;请输入图片描述&quot; /&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;section-1&quot;&gt;解决&lt;/h1&gt;
 &lt;p&gt;其实在这个场景中，6个路由器是平级的，并不需要设置二级路由，所以设置非常简单。&lt;/p&gt;
@@ -311,7 +311,7 @@
         <title>IEEE论文PDF格式检测中的问题与解决</title>
         <description>&lt;p&gt;这两天要发一篇很酱油的论文了，根据格式的模板改了半天终于大功告成。结果发现在&lt;a href=&quot;www.pdf-express.org&quot;&gt;IEEE PDF Express&lt;/a&gt;网站上说我检验不通过，并给出了以下的错误信息。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/ieee_1.png&quot; alt=&quot;Error and Warnings&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/ieee_1.png&quot; alt=&quot;Error and Warnings&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;我瞬间摸不着头脑了，&lt;strong&gt;Font Times New Roman is not embedded (583x)&lt;/strong&gt;到底是什么错啊，还没有行号，这叫我如何定位这个错误！&lt;/p&gt;
 
@@ -328,9 +328,9 @@ Consult the support section on how to make sure that the required fonts are embe
 
 &lt;p&gt;只要以下三步你就可以通过检查啦！&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/ieee_2.png&quot; alt=&quot;1,2步&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/ieee_2.png&quot; alt=&quot;1,2步&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/ieee_3.png&quot; alt=&quot;第3步&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/ieee_3.png&quot; alt=&quot;第3步&quot; /&gt;&lt;/p&gt;
 
 </description>
         <pubDate>Mon, 02 Jun 2014 00:00:00 +0000</pubDate>
@@ -611,7 +611,7 @@ Consult the support section on how to make sure that the required fonts are embe
 
 &lt;p&gt;先展示一下0.1版本的效果图吧~&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/jre-parser.png&quot; width=&quot;700&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/jre-parser.png&quot; width=&quot;700&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;页面还比较简单，但是基本功能算是有了。可以正常使用~。&lt;/p&gt;
 
