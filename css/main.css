@@ -93,6 +93,25 @@ a:visited { color: #205caa; }
   padding: 15px 0;
 }
 
+.site-footer p.powerby {
+  text-align: center;
+}
+
+.site-footer div.powerby {
+  text-align: center;
+}
+
+.site-footer div.powerby img {
+  height: 45px;
+  border: 1px solid #999;
+}
+
+#github-pages-logo {
+  background: #000;
+  height: 29px;
+  padding: 8px;
+}
+
 /* Page Content styles */
 /* ----------------------------------------------------------*/
 
