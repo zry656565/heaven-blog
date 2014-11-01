@@ -11,7 +11,7 @@ labels: [javascript, "JRE Parser", 正则表达式]
 
 先展示一下0.1版本的效果图吧~
 
-<img src="/images/jre-parser.png" width="700">
+<img src="{{ site.static_url }}/jre-parser.png" width="700">
 
 页面还比较简单，但是基本功能算是有了。可以正常使用~。
 

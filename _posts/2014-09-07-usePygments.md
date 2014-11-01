@@ -106,4 +106,4 @@ pygmentize -f html -a .highlight -S default > pygments.css
 - [http://segmentfault.com/q/1010000000261050](http://segmentfault.com/q/1010000000261050)
 - [http://havee.me/internet/2013-07/jekyll-install.html](http://havee.me/internet/2013-07/jekyll-install.html)
 
-[1]: /images/pygments1.png
+[1]: {{ site.static_url }}/pygments1.png

@@ -11,4 +11,4 @@ labels: [SJTU, 意见反馈]
 
 ![SJTU-Bus][1]
 
-[1]: /images/sjtubus.png
+[1]: {{ site.static_url }}/sjtubus.png
