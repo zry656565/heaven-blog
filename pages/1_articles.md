@@ -61,7 +61,7 @@ requireJq: true
   <h6>文章列表</h6>
   <input class="search-box" type="text" placeholder="搜索包含在标题中的关键词" />
   <div class="search-icon">
-    <img src="/images/search_icon.png"/>
+    <img src="{{ site.static_url }}/search_icon.png"/>
   </div>
   <hr/>
   <ul class="articles">

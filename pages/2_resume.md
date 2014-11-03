@@ -3,8 +3,7 @@ title: 简历
 permalink: /resume/
 nav: true
 requireJq: true
-requireJs: [build/js/arbor.min.js]
-extCss: [assets/css/resume.css]
+requireJs: [/build/js/arbor.js, /build/js/arbor-tween.js, /build/js/graphics.js, /build/js/arbor_main.js]
 ---
 
 #教育经历
