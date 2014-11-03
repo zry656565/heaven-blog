@@ -10,12 +10,12 @@
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="{{ site.description }}">
     <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
-    <link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
-    <link rel="stylesheet" href="{{ "/css/typo.css" | prepend: site.baseurl }}">
-    <link rel="stylesheet" href="{{ "/css/pygments.css" | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{{ "/assets/css/main.css" | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{{ "/assets/css/typo.css" | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{{ "/assets/css/pygments.css" | prepend: site.baseurl }}">
 
     <!-- Baidu Analysis -->
     <script>
@@ -41,7 +41,7 @@
     
     <!-- handle external js files -->
     {% if page.requireJq %}
-    <script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="build/js/jquery.min.js"></script>
     {% endif %}
     
     {% if page.requireJs %}
@@ -53,7 +53,7 @@
     <!-- handle external css files -->
     {% if page.extCss %}
         {% for cssPath in page.extCss %}
-            <link rel="stylesheet" href="{{ cssPath | prepend: site.baseurl }}">
+            <link rel="stylesheet" href="{{ cssPath | prepend: site.baseurl }}/assets">
         {% endfor %}
     {% endif %}
 </head>
