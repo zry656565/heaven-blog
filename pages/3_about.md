@@ -4,7 +4,7 @@ permalink: /about/
 nav: true
 ---
 
-<img src="/images/monkey.jpg" width="220" height="220" style="padding-left:50px; float:right;">
+<img src="{{ site.static_url }}/monkey.jpg" width="220" height="220" style="padding-left:50px; float:right;">
 
 你们好，我叫邹润阳，是一名生活在上海的程序员。在我看来，编程不仅仅是我与生俱来的使命，也是我快乐的源泉。
 
