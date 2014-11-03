@@ -1,2 +1,6 @@
 _site
 _site/*
+Gruntfile.js
+node_modules
+node_modules/*
+package.json
