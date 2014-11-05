@@ -1,7 +1,7 @@
 ---
 title: 简历
 permalink: /resume/
-nav: true
+nav: false
 requireJq: true
 requireJs: [/build/js/arbor.js, /build/js/arbor-tween.js, /build/js/graphics.js, /build/js/arbor_main.js]
 ---
