@@ -4,7 +4,7 @@ title: 使用Pygments来实现代码高亮
 description: 今天我尝试更换了我个人博客jerryzou.com中的代码高亮样式，主要使用的就是Pygments。Pygments有许多各式各样的样式可供选择，而在这篇文章中，我将为大家讲解如何安装Pygments、以及如何生成代码高亮所需要的文件。
 permalink: /posts/usePygments/
 key: 10012
-labels: [highlight, Pygments, 代码高亮, 博客]
+labels: [highlight, Pygments, 代码高亮]
 ---
 
 今天我尝试更换了我个人博客jerryzou.com中的代码高亮样式，主要使用的就是`Pygments`。`Pygments`有许多各式各样的样式可供选择，而在这篇文章中，我将为大家讲解如何安装`Pygments`、以及如何生成代码高亮所需要的文件。
