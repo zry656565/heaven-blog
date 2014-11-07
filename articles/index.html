@@ -96,6 +96,7 @@
   <hr />
 </section>
 <script type="text/javascript">
+// add all labels to the page
 (function($){
   // usage: get param from url
   $.urlParam = function(name){
@@ -108,89 +109,108 @@
   }
 
   var labels = [
+    "显示全部",
     
-      
-        "php",
-      
-        "html",
-      
-        "BBCode",
-      
-        "正则表达式",
       
     
       
-        "交大",
+        
+          "交大",
+        
       
     
       
-        "javascript",
-      
-        "百度地图",
-      
-        "交大",
-      
-    
-      
-        "highlight",
-      
-        "Pygments",
-      
-        "代码高亮",
+        
+          "javascript",
+        
+          "百度地图",
+        
+          "交大",
+        
       
     
       
-        "network config",
-      
-        "局域网配置",
-      
-        "router",
-      
-    
-      
-        "IEEE",
+        
+          "highlight",
+        
+          "Pygments",
+        
+          "代码高亮",
+        
       
     
       
-        "javascript",
-      
-        "模块化",
-      
-    
-      
-        "javascript",
-      
-        "深复制",
-      
-        "JustJS",
+        
+          "network config",
+        
+          "局域网配置",
+        
+          "router",
+        
       
     
       
-        "javascript",
-      
-        "正则表达式",
-      
-    
-      
-        "javascript",
+        
+          "IEEE",
+        
       
     
       
-        "博客",
-      
-        "jekyll",
-      
-    
-      
-        "C",
+        
+          "javascript",
+        
+          "模块化",
+        
       
     
       
-        "大数端小数端",
+        
+          "javascript",
+        
+          "深复制",
+        
+          "JustJS",
+        
+      
+    
+      
+        
+          "javascript",
+        
+          "正则表达式",
+        
+      
+    
+      
+        
+          "javascript",
+        
+      
+    
+      
+        
+          "博客",
+        
+          "jekyll",
+        
+      
+    
+      
+        
+          "C",
+        
+      
+    
+      
+        
+          "大数端小数端",
+        
       
     
   ];
-  var tags = {};
+  var tags = {
+    "显示全部": 1000
+  };
   for (var i = 0; i < labels.length; i++) {
     var t = tags[labels[i]];
     tags[labels[i]] = t ? t+1 : 1;
@@ -224,12 +244,8 @@
   <hr />
   <ul class="articles">
     
-      <li data-key="10015" data-show="true">
-        <p class="article">
-          <span class="article-date">2014-11-06</span>
-          <a class="article-title" href="/posts/htmlToBBCode/">用正则将HTML转为BBCode</a>
-        </p>
-      </li>
+    
+    
     
       <li data-key="10014" data-show="true">
         <p class="article">
@@ -238,12 +254,16 @@
         </p>
       </li>
     
+    
+    
       <li data-key="10013" data-show="true">
         <p class="article">
           <span class="article-date">2014-09-24</span>
           <a class="article-title" href="/posts/sjtuBus/">使用百度地图API来完成交大校园巴士时刻表</a>
         </p>
       </li>
+    
+    
     
       <li data-key="10012" data-show="true">
         <p class="article">
@@ -252,12 +272,16 @@
         </p>
       </li>
     
+    
+    
       <li data-key="10010" data-show="true">
         <p class="article">
           <span class="article-date">2014-08-02</span>
           <a class="article-title" href="/posts/networkConfig/">小型局域网的多路由配置</a>
         </p>
       </li>
+    
+    
     
       <li data-key="10009" data-show="true">
         <p class="article">
@@ -266,12 +290,16 @@
         </p>
       </li>
     
+    
+    
       <li data-key="10008" data-show="true">
         <p class="article">
           <span class="article-date">2014-06-01</span>
           <a class="article-title" href="/posts/jsmodular/">深入了解Javascript模块化编程</a>
         </p>
       </li>
+    
+    
     
       <li data-key="10011" data-show="true">
         <p class="article">
@@ -280,12 +308,16 @@
         </p>
       </li>
     
+    
+    
       <li data-key="10007" data-show="true">
         <p class="article">
           <span class="article-date">2014-05-06</span>
           <a class="article-title" href="/posts/jreparser/">一款在线Javascript正则表达式测试器</a>
         </p>
       </li>
+    
+    
     
       <li data-key="10004" data-show="true">
         <p class="article">
@@ -294,12 +326,16 @@
         </p>
       </li>
     
+    
+    
       <li data-key="10003" data-show="true">
         <p class="article">
           <span class="article-date">2013-12-16</span>
           <a class="article-title" href="/posts/opentopublic/">博客建立</a>
         </p>
       </li>
+    
+    
     
       <li data-key="10002" data-show="true">
         <p class="article">
@@ -308,6 +344,8 @@
         </p>
       </li>
     
+    
+    
       <li data-key="10001" data-show="true">
         <p class="article">
           <span class="article-date">2013-11-04</span>
@@ -315,26 +353,15 @@
         </p>
       </li>
     
+    
   </ul>
 </section>
 <script type="text/javascript">
 (function($){
   var posts = [
     
-    {
-      key: "10015",
-      labels: [
-      
-        "php",
-      
-        "html",
-      
-        "BBCode",
-      
-        "正则表达式",
-      
-      ]
-    },
+    
+    
     
     {
       key: "10014",
@@ -344,6 +371,8 @@
       
       ]
     },
+    
+    
     
     {
       key: "10013",
@@ -358,6 +387,8 @@
       ]
     },
     
+    
+    
     {
       key: "10012",
       labels: [
@@ -370,6 +401,8 @@
       
       ]
     },
+    
+    
     
     {
       key: "10010",
@@ -384,6 +417,8 @@
       ]
     },
     
+    
+    
     {
       key: "10009",
       labels: [
@@ -392,6 +427,8 @@
       
       ]
     },
+    
+    
     
     {
       key: "10008",
@@ -403,6 +440,8 @@
       
       ]
     },
+    
+    
     
     {
       key: "10011",
@@ -417,6 +456,8 @@
       ]
     },
     
+    
+    
     {
       key: "10007",
       labels: [
@@ -428,6 +469,8 @@
       ]
     },
     
+    
+    
     {
       key: "10004",
       labels: [
@@ -436,6 +479,8 @@
       
       ]
     },
+    
+    
     
     {
       key: "10003",
@@ -448,6 +493,8 @@
       ]
     },
     
+    
+    
     {
       key: "10002",
       labels: [
@@ -456,6 +503,8 @@
       
       ]
     },
+    
+    
     
     {
       key: "10001",
@@ -466,28 +515,30 @@
       ]
     },
     
+    
   ];
   var label = $.urlParam("label");
   if (label) {
     label = decodeURI(label);
-    for (var i = 0; i < posts.length; i++) {
-      if (posts[i].labels.indexOf(label) == -1) {
-        $('[data-key='+ posts[i].key +']').removeAttr('data-show').hide();
+    if (label !== "显示全部") {
+      for (var i = 0; i < posts.length; i++) {
+        if (posts[i].labels.indexOf(label) == -1) {
+          $('[data-key='+ posts[i].key +']').removeAttr('data-show').hide();
+        }
       }
     }
   }
   // search box event
   var doSearch = function(){
     var text = $('.search-box').val();
-      $('.articles li').each(function(){
-        console.log($(this).data('show'));
-        if ($(this).data('show')===true) {
-          $(this).show();
-          var title = $(this).find('.article-title').text();
-          if (title.toLowerCase().search(text.toLowerCase()) == -1) {
-            $(this).hide();
-          }
+    $('.articles li').each(function(){
+      if ($(this).data('show')===true) {
+        $(this).show();
+        var title = $(this).find('.article-title').text();
+        if (title.toLowerCase().search(text.toLowerCase()) == -1) {
+          $(this).hide();
         }
+      }
     })
   };
   $('.search-box').change(doSearch);
