@@ -4,7 +4,10 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         shell: {
-            serve: {
+            jekyll_build: {
+                command: 'jekyll build'
+            },
+            jekyll_serve: {
                 command: 'jekyll serve --watch'
             }
         },
@@ -67,7 +70,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
     // Default task(s).
-    grunt.registerTask('build', ['jshint', 'concat', 'uglify', 'cssmin']);
-    grunt.registerTask('serve', ['jshint', 'concat', 'uglify', 'cssmin', 'shell:serve']);
+    grunt.registerTask('build', ['jshint', 'concat', 'uglify', 'cssmin', 'shell:jekyll_build']);
+    grunt.registerTask('serve', ['jshint', 'concat', 'uglify', 'cssmin', 'shell:jekyll_serve']);
     grunt.registerTask('debug', ['shell:serve']);
 };
