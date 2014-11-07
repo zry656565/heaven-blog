@@ -6,6 +6,7 @@ sidePart: true
 <div class="home">
   <ul class="posts">
     {% for post in site.posts %}
+      {% if post.release %}
       <li>
         <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
         <p class="post-date">Posted on {{ post.date | date: "%b %-d, %Y" }}
@@ -15,6 +16,7 @@ sidePart: true
         </p>
         <p class="post-description">{{ post.description }} <a class="post-link2" href="{{ post.url | prepend: site.baseurl }}">继续阅读...</a></p>
       </li>
+      {% endif %}
     {% endfor %}
   </ul>
 

@@ -27,3 +27,4 @@ defaults:
     values:
       layout: post
       duoshuo_comment: true
+      release: true

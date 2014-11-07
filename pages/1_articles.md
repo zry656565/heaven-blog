@@ -14,6 +14,7 @@ requireJq: true
   <hr/>
 </section>
 <script type="text/javascript">
+// add all labels to the page
 (function($){
   // usage: get param from url
   $.urlParam = function(name){
@@ -26,13 +27,18 @@ requireJq: true
   }
 
   var labels = [
+    "显示全部",
     {% for post in site.posts %}
-      {% for label in post.labels %}
-        "{{ label }}",
-      {% endfor %}
+      {% if post.release %}
+        {% for label in post.labels %}
+          "{{ label }}",
+        {% endfor %}
+      {% endif %}
     {% endfor %}
   ];
-  var tags = {};
+  var tags = {
+    "显示全部": 1000
+  };
   for (var i = 0; i < labels.length; i++) {
     var t = tags[labels[i]];
     tags[labels[i]] = t ? t+1 : 1;
@@ -66,12 +72,14 @@ requireJq: true
   <hr/>
   <ul class="articles">
     {% for post in site.posts %}
+    {% if post.release %}
       <li data-key="{{ post.key }}" data-show="true">
         <p class="article">
           <span class="article-date">{{ post.date | date: "%Y-%m-%d" }}</span>
           <a class="article-title" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
         </p>
       </li>
+    {% endif %}
     {% endfor %}
   </ul>
 </section>
@@ -79,6 +87,7 @@ requireJq: true
 (function($){
   var posts = [
     {% for post in site.posts %}
+    {% if post.release %}
     {
       key: "{{ post.key }}",
       labels: [
@@ -87,29 +96,31 @@ requireJq: true
       {% endfor %}
       ]
     },
+    {% endif %}
     {% endfor %}
   ];
   var label = $.urlParam("label");
   if (label) {
     label = decodeURI(label);
-    for (var i = 0; i < posts.length; i++) {
-      if (posts[i].labels.indexOf(label) == -1) {
-        $('[data-key='+ posts[i].key +']').removeAttr('data-show').hide();
+    if (label !== "显示全部") {
+      for (var i = 0; i < posts.length; i++) {
+        if (posts[i].labels.indexOf(label) == -1) {
+          $('[data-key='+ posts[i].key +']').removeAttr('data-show').hide();
+        }
       }
     }
   }
   // search box event
   var doSearch = function(){
     var text = $('.search-box').val();
-      $('.articles li').each(function(){
-        console.log($(this).data('show'));
-        if ($(this).data('show')===true) {
-          $(this).show();
-          var title = $(this).find('.article-title').text();
-          if (title.toLowerCase().search(text.toLowerCase()) == -1) {
-            $(this).hide();
-          }
+    $('.articles li').each(function(){
+      if ($(this).data('show')===true) {
+        $(this).show();
+        var title = $(this).find('.article-title').text();
+        if (title.toLowerCase().search(text.toLowerCase()) == -1) {
+          $(this).hide();
         }
+      }
     })
   };
   $('.search-box').change(doSearch);
