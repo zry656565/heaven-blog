@@ -4,7 +4,8 @@ email: zry656565@gmail.com
 description: "在我看来，编程不仅仅是我与生俱来的使命，也是我快乐的源泉。我正在上海交通大学攻读软件工程硕士学位，同时我作为一名实习生，为Microsoft GBS BI工作。"
 baseurl: ""
 url: "http://jerryzou.com"
-static_url: "http://static.jerryzou.com/blog"
+static_url: "/assets/images"
+#static_url: "http://static.jerryzou.com/blog"
 
 # Build settings
 markdown: kramdown
