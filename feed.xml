@@ -7,10 +7,81 @@
     <atom:link href="http://jerryzou.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>用正则将HTML转为BBCode</title>
+        <description>&lt;p&gt;为了防止富文本编辑器中用户的输入被不轨的人用于XSS攻击，一般的做法是只接受某种特定语法，比如markdown、BBCode。一般网站运营初始阶段对此考虑都不太周全，都是在网站发展到一定规模以后才会考虑到这个防XSS这个问题，所以就有将以前用户输入的html代码都转换为BBCode这一类的需求。接下来我将介绍一下，如何将已有的html代码通过正则表达式转换为BBCode。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;php&quot;&gt;&lt;span class=&quot;x&quot;&gt;//在block元素前的inline元素之后，填入一个换行符&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;$str = preg_replace(&amp;#39;/(&amp;lt;\/(strong|u|em|a|span)&amp;gt;|&amp;lt;img([^&amp;lt;]*?)&amp;gt;)([^&amp;lt;]*?)&amp;lt;(h\d|p|div|table|pre)(?:[^&amp;lt;]*?)&amp;gt;/i&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;quot;$1$4\r\n&amp;lt;$5&amp;gt;&amp;quot;, $str);&lt;/span&gt;
+
+&lt;span class=&quot;x&quot;&gt;$patterns = array(&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;/&amp;lt;!--(.*?)--&amp;gt;/i&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;/&amp;lt;strong(?:[^&amp;lt;]*?)&amp;gt;([^&amp;lt;]*?)&amp;lt;\/strong&amp;gt;/i&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;/&amp;lt;u(?:[^&amp;lt;]*?)&amp;gt;([^&amp;lt;]*?)&amp;lt;\/u&amp;gt;/i&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;/&amp;lt;em(?:[^&amp;lt;]*?)&amp;gt;([^&amp;lt;]*?)&amp;lt;\/em&amp;gt;/i&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;/&amp;lt;br\s*\/?&amp;gt;/i&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;/&amp;lt;img (?:[^&amp;lt;]*?)src=&amp;quot;([^&amp;lt;]*?)&amp;quot;(?:[^&amp;lt;]*?)\/&amp;gt;/i&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;/&amp;lt;a(?:[^&amp;lt;]*?)href=&amp;quot;([^&amp;lt;]*?)&amp;quot;(?:[^&amp;lt;]*?)&amp;gt;([^&amp;lt;]*?)&amp;lt;\/a&amp;gt;/i&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;/&amp;lt;span style=&amp;quot;font-size:([^&amp;lt;]*?)&amp;quot;&amp;gt;([^&amp;lt;]*?)&amp;lt;\/span&amp;gt;/i&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;/&amp;lt;span style=&amp;quot;color:([^&amp;lt;]*?)&amp;quot;&amp;gt;([^&amp;lt;]*?)&amp;lt;\/span&amp;gt;/i&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;/&amp;lt;span style=&amp;quot;background-color:([^&amp;lt;]*?)&amp;quot;&amp;gt;([^&amp;lt;]*?)&amp;lt;\/span&amp;gt;/i&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;/&amp;lt;span style=&amp;quot;line-height:([^&amp;lt;]*?)&amp;quot;&amp;gt;([^&amp;lt;]*?)&amp;lt;\/span&amp;gt;/i&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;/&amp;lt;div(?:[^&amp;lt;]*?)&amp;gt;([^&amp;lt;]*?)&amp;lt;\/div&amp;gt;/i&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;/&amp;lt;(p|table|td|tr|thead|tbody|s|pre)(?:[^&amp;lt;]*?)&amp;gt;([^&amp;lt;]*?)&amp;lt;\/\1&amp;gt;/i&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;/&amp;lt;(h\d)(?:[^&amp;lt;]*?)&amp;gt;([^&amp;lt;]*?)&amp;lt;\/\1&amp;gt;/i&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;/&amp;lt;(script)([^&amp;lt;]*?)&amp;gt;([^&amp;lt;]*?)&amp;lt;\/\1&amp;gt;/i&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;/&amp;lt;embed([^&amp;lt;]*?)\/?&amp;gt;/i&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;/&amp;lt;ol(?:[^&amp;lt;]*?)&amp;gt;([^&amp;lt;]*?)&amp;lt;\/ol&amp;gt;/i&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;/&amp;lt;ul(?:[^&amp;lt;]*?)&amp;gt;([^&amp;lt;]*?)&amp;lt;\/ul&amp;gt;/i&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;/&amp;lt;li(?:[^&amp;lt;]*?)&amp;gt;([^&amp;lt;]*?)&amp;lt;\/li&amp;gt;/i&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;/&amp;lt;font color=&amp;quot;([^&amp;lt;]*?)&amp;quot;(?:[^&amp;lt;]*?)&amp;gt;([^&amp;lt;]*?)&amp;lt;\/font&amp;gt;/i&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;$replacements = array(&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;[b]$1[/b]&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;[u]$1[/u]&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;[i]$1[/i]&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;quot;\r\n&amp;quot;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;[img]$1[/img]&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;[url=$1]$2[/url]&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;[size=$1]$2[/size]&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;[color=$1]$2[/color]&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;$2&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;$2&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;quot;$1\r\n&amp;quot;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;quot;$2&amp;quot;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;quot;[b][size=22px]$2[/size][/b]\r\n&amp;quot;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;[list=1]$1[/list]&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;[list]$1[/list]&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;[*]$1&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;$1&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;for ($i = 0; $i &amp;lt; 10; $i++) {&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    $str = preg_replace($patterns, $replacements, $str);&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;x&quot;&gt;//处理比较麻烦的size,color属性，他俩可能会参杂其他属性&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;$patterns = array(&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;/\[color=([^\[]*?); font-size:([^\[]*?)\]([^\[]*?)\[\/color\]/i&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;/\[size=([^\[]*?); color:([^\[]*?)\]([^\[]*?)\[\/size\]/i&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;$replacements = array(&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;[size=$2][color=$1]$3[/color][/size]&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;#39;[color=$2][size=$1]$3[/size][/color]&amp;#39;,&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;$str = preg_replace($patterns, $replacements, $str);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+</description>
+        <pubDate>Thu, 06 Nov 2014 20:06:47 +0000</pubDate>
+        <link>http://jerryzou.com/posts/htmlToBBCode/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/htmlToBBCode/</guid>
+      </item>
+    
+      <item>
         <title>上海交大校园巴士时刻表查询APP反馈信息入口</title>
         <description>&lt;p&gt;上周上海交大校园巴士时刻表查询APP上线。为了更好地服务于同学，有任何建议和反馈都可以在本帖下留言。谢谢支持！&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://static.jerryzou.com/blog/sjtubus.png&quot; alt=&quot;SJTU-Bus&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/sjtubus.png&quot; alt=&quot;SJTU-Bus&quot; /&gt;&lt;/p&gt;
 
 </description>
         <pubDate>Fri, 03 Oct 2014 20:31:10 +0000</pubDate>
@@ -22,7 +93,7 @@
         <title>使用百度地图API来完成交大校园巴士时刻表</title>
         <description>&lt;p&gt;交大的校园巴士时刻表都只能在车站的站牌上查看。这对于需要出行的学生来说非常不方便，无法合理做好出行的安排。为了解决这个问题，我和同一个套件的两位同学一起完成了这个简单的app。这篇博客将简要介绍这个web应用是如何实现的。以下是效果图，实际的效果请到&lt;a href=&quot;http://zry656565.github.io/SJTU-Bus/&quot;&gt;http://zry656565.github.io/SJTU-Bus&lt;/a&gt;查看。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://static.jerryzou.com/blog/sjtubus.png&quot; alt=&quot;SJTU-Bus&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/sjtubus.png&quot; alt=&quot;SJTU-Bus&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;完成这个应用的主要步骤：&lt;/p&gt;
 
@@ -231,7 +302,7 @@
 
 &lt;p&gt;如此就可以得到如下结果：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://static.jerryzou.com/blog/pygments1.png&quot; alt=&quot;请输入图片描述&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/pygments1.png&quot; alt=&quot;请输入图片描述&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;本博客采用的样式是&lt;code&gt;tango&lt;/code&gt;，如果你喜欢的话，也可以按这种方案给自己博客的代码如此着色。言归正传，接下来介绍生成css文件的指令：&lt;/p&gt;
 
@@ -281,7 +352,7 @@
 #情景
 从Modem出来的网线接到交换机A上，从交换机中接到2个路由器，并同时接上交换机B；从交换机B中再接到4个路由器上。下面是图示：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://static.jerryzou.com/blog/netconfig.png&quot; alt=&quot;请输入图片描述&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/netconfig.png&quot; alt=&quot;请输入图片描述&quot; /&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;section-1&quot;&gt;解决&lt;/h1&gt;
 &lt;p&gt;其实在这个场景中，6个路由器是平级的，并不需要设置二级路由，所以设置非常简单。&lt;/p&gt;
@@ -311,7 +382,7 @@
         <title>IEEE论文PDF格式检测中的问题与解决</title>
         <description>&lt;p&gt;这两天要发一篇很酱油的论文了，根据格式的模板改了半天终于大功告成。结果发现在&lt;a href=&quot;www.pdf-express.org&quot;&gt;IEEE PDF Express&lt;/a&gt;网站上说我检验不通过，并给出了以下的错误信息。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://static.jerryzou.com/blog/ieee_1.png&quot; alt=&quot;Error and Warnings&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/ieee_1.png&quot; alt=&quot;Error and Warnings&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;我瞬间摸不着头脑了，&lt;strong&gt;Font Times New Roman is not embedded (583x)&lt;/strong&gt;到底是什么错啊，还没有行号，这叫我如何定位这个错误！&lt;/p&gt;
 
@@ -328,9 +399,9 @@ Consult the support section on how to make sure that the required fonts are embe
 
 &lt;p&gt;只要以下三步你就可以通过检查啦！&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://static.jerryzou.com/blog/ieee_2.png&quot; alt=&quot;1,2步&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/ieee_2.png&quot; alt=&quot;1,2步&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://static.jerryzou.com/blog/ieee_3.png&quot; alt=&quot;第3步&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/ieee_3.png&quot; alt=&quot;第3步&quot; /&gt;&lt;/p&gt;
 
 </description>
         <pubDate>Mon, 02 Jun 2014 00:00:00 +0000</pubDate>
@@ -611,7 +682,7 @@ Consult the support section on how to make sure that the required fonts are embe
 
 &lt;p&gt;先展示一下0.1版本的效果图吧~&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://static.jerryzou.com/blog/jre-parser.png&quot; width=&quot;700&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/jre-parser.png&quot; width=&quot;700&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;页面还比较简单，但是基本功能算是有了。可以正常使用~。&lt;/p&gt;
 
@@ -673,29 +744,6 @@ Consult the support section on how to make sure that the required fonts are embe
         <pubDate>Sat, 21 Dec 2013 15:56:00 +0000</pubDate>
         <link>http://jerryzou.com/posts/learnjs/</link>
         <guid isPermaLink="true">http://jerryzou.com/posts/learnjs/</guid>
-      </item>
-    
-      <item>
-        <title>博客建立</title>
-        <description>&lt;p&gt;今天我的博客终于搞定了，首先要谢谢Rasmus Andersson开源了他的博客代码，我才能把博客做成现在这样。
-如果你喜爱这个博客，可以通过点击&lt;a href=&quot;https://github.com/zry656565/jblog/&quot;&gt;这里&lt;/a&gt;来获取源代码。&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;JerryBlog&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;nx&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Hello, world.&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;JerryBlog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;2014-08-23更新：&lt;/p&gt;
-
-&lt;p&gt;如今博客已经改版了，不再使用Rasmus Andersson的源码，而是在jekyll官方模版的基础上做了一定的修改，喜欢新博客样子的朋友可以前往&lt;a href=&quot;https://github.com/zry656565/heaven-blog/&quot;&gt;zry656565/heaven-blog&lt;/a&gt;来获得源码。&lt;/p&gt;
-</description>
-        <pubDate>Mon, 16 Dec 2013 10:00:00 +0000</pubDate>
-        <link>http://jerryzou.com/posts/opentopublic/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/opentopublic/</guid>
       </item>
     
   </channel>
