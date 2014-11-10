@@ -112,6 +112,11 @@ a:visited { color: #205caa; }
   padding: 8px;
 }
 
+#qiniu-logo {
+  height: 39px;
+  padding: 3px 0;
+}
+
 /* Page Content styles */
 /* ----------------------------------------------------------*/
 
