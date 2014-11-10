@@ -402,12 +402,13 @@ Consult the support section on how to make sure that the required fonts are embe
 &lt;span class=&quot;p&quot;&gt;}());&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;注意我们已经声明了一个叫做&lt;code&gt;MODULE&lt;/code&gt;的全局模块，它拥有2个公有的属性：一个叫做&lt;code&gt;MODULE.moduleMethod&lt;/code&gt;的方法和一个叫做&lt;code&gt;MODULE.moduleProperty&lt;/code&gt;的变量。另外，它还维护了一个利用匿名函数闭包的、&lt;strong&gt;私有的内置&lt;/strong&gt;状态。同时，我们可以很容易地导入需要的全局变量，并像之前我们所学到的那样来使用这个模块化模式。
-&lt;br /&gt;&lt;br /&gt;
-#进阶模式&lt;/p&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;section-4&quot;&gt;进阶模式&lt;/h1&gt;
 
 &lt;p&gt;上面一节所描述的基础已经足以应对许多情况，现在我们可以将这个模块化模式进一步的发展，创建更多强大的、可扩展的结构。让我们从&lt;code&gt;MODULE&lt;/code&gt;模块开始，一一介绍这些进阶模式。&lt;/p&gt;
 
-&lt;h3 id=&quot;section-4&quot;&gt;放大模式&lt;/h3&gt;
+&lt;h3 id=&quot;section-5&quot;&gt;放大模式&lt;/h3&gt;
 
 &lt;p&gt;整个模块必须在一个文件中是模块化模式的一个限制。任何一个参与大型项目的人都会明白将js拆分多个文件的价值。幸运的是，我们拥有一个很棒的实现来&lt;strong&gt;放大模块&lt;/strong&gt;。首先，我们导入一个模块，并为它添加属性，最后再导出它。下面是一个例子——从原本的&lt;code&gt;MODULE&lt;/code&gt;中放大它：&lt;/p&gt;
 
@@ -421,7 +422,7 @@ Consult the support section on how to make sure that the required fonts are embe
 
 &lt;p&gt;我们用var关键词来保证一致性，虽然它在此处不是必须的。在这段代码执行完之后，我们的模块就已经拥有了一个新的、叫做&lt;code&gt;MODULE.anotherMethod&lt;/code&gt;的公有方法。这个放大文件也会维护它自己的私有内置状态和导入的对象。&lt;/p&gt;
 
-&lt;h3 id=&quot;section-5&quot;&gt;宽放大模式&lt;/h3&gt;
+&lt;h3 id=&quot;section-6&quot;&gt;宽放大模式&lt;/h3&gt;
 
 &lt;p&gt;我们的上面例子需要我们的初始化模块最先被执行，然后放大模块才能执行，当然有时这可能也不一定是必需的。Javascript应用可以做到的、用来提升性能的、最棒的事之一就是异步执行脚本。我们可以创建灵活的多部分模块并通过&lt;strong&gt;宽放大模式&lt;/strong&gt;使它们可以以任意顺序加载。每一个文件都需要按下面的结构组织：&lt;/p&gt;
 
@@ -433,7 +434,7 @@ Consult the support section on how to make sure that the required fonts are embe
 
 &lt;p&gt;在这个模式中，&lt;code&gt;var&lt;/code&gt;表达式使必需的。注意如果MODULE还未初始化过，这句导入语句会创建&lt;code&gt;MODULE&lt;/code&gt;。这意味着你可以用一个像LABjs的工具来并行加载你所有的模块文件，而不会被阻塞。&lt;/p&gt;
 
-&lt;h3 id=&quot;section-6&quot;&gt;紧放大模式&lt;/h3&gt;
+&lt;h3 id=&quot;section-7&quot;&gt;紧放大模式&lt;/h3&gt;
 &lt;p&gt;宽放大模式非常不错，但它也会给你的模块带来一些限制。最重要的是，你不能安全地覆盖模块的属性。你也无法在初始化的时候，使用其他文件中的属性（但你可以在运行的时候用）。&lt;strong&gt;紧放大模式&lt;/strong&gt;包含了一个加载的顺序序列，并且允许&lt;strong&gt;覆盖属性&lt;/strong&gt;。这儿是一个简单的例子（放大我们的原始&lt;code&gt;MODULE&lt;/code&gt;）：&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;MODULE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -448,7 +449,7 @@ Consult the support section on how to make sure that the required fonts are embe
 
 &lt;p&gt;我们在上面的例子中覆盖了&lt;code&gt;MODULE.moduleMethod&lt;/code&gt;的实现，但在需要的时候，可以维护一个对原来方法的引用。&lt;/p&gt;
 
-&lt;h3 id=&quot;section-7&quot;&gt;克隆与继承&lt;/h3&gt;
+&lt;h3 id=&quot;section-8&quot;&gt;克隆与继承&lt;/h3&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;MODULE_TWO&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;old&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{},&lt;/span&gt;
@@ -470,7 +471,7 @@ Consult the support section on how to make sure that the required fonts are embe
 
 &lt;p&gt;这个模式可能是&lt;strong&gt;最缺乏灵活性&lt;/strong&gt;的一种选择了。它确实使得代码显得很整洁，但那是用灵活性的代价换来的。正如我上面写的这段代码，如果某个属性是对象或者函数，它将不会被复制，而是会成为这个对象或函数的第二个引用。修改了其中的某一个就会同时修改另一个（译者注：因为它们根本就是一个啊！）。这可以通过递归克隆过程来解决这个对象克隆问题，但函数克隆可能无法解决，也许用eval可以解决吧。因此，我在这篇文章中讲述这个方法仅仅是考虑到文章的完整性。&lt;/p&gt;
 
-&lt;h3 id=&quot;section-8&quot;&gt;跨文件私有变量&lt;/h3&gt;
+&lt;h3 id=&quot;section-9&quot;&gt;跨文件私有变量&lt;/h3&gt;
 &lt;p&gt;把一个模块分到多个文件中有一个重大的限制：每一个文件都维护了各自的私有变量，并且无法访问到其他文件的私有变量。但这个问题是可以解决的。这里有一个维护跨文件私有变量的、宽放大模块的例子：&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;MODULE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -493,7 +494,7 @@ Consult the support section on how to make sure that the required fonts are embe
 
 &lt;p&gt;所有文件可以在它们各自的&lt;code&gt;_private&lt;/code&gt;变量上设置属性，并且它理解可以被其他文件访问。一旦这个模块加载完成，应用程序可以调用&lt;code&gt;MODULE._seal()&lt;/code&gt;来防止外部对内部&lt;code&gt;_private&lt;/code&gt;的调用。如果这个模块需要被重新放大，在任何一个文件中的内部方法可以在加载新的文件前调用&lt;code&gt;_unseal()&lt;/code&gt;，并在新文件执行好以后再次调用&lt;code&gt;_seal()&lt;/code&gt;。我如今在工作中使用这种模式，而且我在其他地方还没有见过这种方法。我觉得这是一种非常有用的模式，很值得就这个模式本身写一篇文章。&lt;/p&gt;
 
-&lt;h3 id=&quot;section-9&quot;&gt;子模块&lt;/h3&gt;
+&lt;h3 id=&quot;section-10&quot;&gt;子模块&lt;/h3&gt;
 &lt;p&gt;我们的最后一种进阶模式是显而易见最简单的。创建子模块有许多优秀的实例。这就像是创建一般的模块一样：&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;MODULE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sub&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -504,9 +505,10 @@ Consult the support section on how to make sure that the required fonts are embe
 &lt;span class=&quot;p&quot;&gt;}());&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;虽然这看上去很简单，但我觉得还是值得在这里提一提。子模块拥有一切一般模块的进阶优势，包括了放大模式和私有化状态。
-&lt;br /&gt;&lt;br /&gt;
-#结论
-大多数进阶模式可以结合到一起来创建一个更为有用的模式。如果实在要我推荐一种设计复杂应用程序的模块化模式的化，我会选择结合宽放大模式、私有变量和子模块。&lt;/p&gt;
+&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;section-11&quot;&gt;结论&lt;/h1&gt;
+&lt;p&gt;大多数进阶模式可以结合到一起来创建一个更为有用的模式。如果实在要我推荐一种设计复杂应用程序的模块化模式的化，我会选择结合宽放大模式、私有变量和子模块。&lt;/p&gt;
 
 &lt;p&gt;我还未考虑过这些模式的性能问题，但我宁愿把这转化为一个更简单的思考方式：如果一个模块化模式有很好的性能，那么它能够把最小化做的很棒，使得下载这个脚本文件更快。使用宽放大模式可以允许简单的非阻塞并行下载，这就会加快下载速度。初始化时间可能会稍慢于其他方法，但权衡利弊后这还是值得的。只要全局变量导入准确，运行时性能应该会不会受到影响，而且还有可能在子模块中通过用私有变量缩短引用链来得到更快的运行速度。&lt;/p&gt;
 
