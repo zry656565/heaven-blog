@@ -10,9 +10,9 @@ local_url: "/assets/images"
 #github source
 #static_url: "/assets/images"
 #upyun source
-#static_url: "http://static.jerryzou.com/blog"
+static_url: "http://jerryblog-image.b0.upaiyun.com/blog"
 #qiniu source
-static_url: "http://jerryblog.qiniudn.com"
+#static_url: "http://jerryblog.qiniudn.com"
 
 # Build settings
 markdown: kramdown
