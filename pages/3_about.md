@@ -2,6 +2,8 @@
 title: 关于我
 permalink: /about/
 nav: true
+key: 10016
+duoshuo_comment: true
 ---
 
 <img src="{{ site.static_url }}/monkey.jpg" width="220" height="220" style="padding-left:50px; float:right;">
