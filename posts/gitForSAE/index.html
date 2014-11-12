@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+        
+            Jerry的乐园 | 极速地将git项目部署到SAE的svn服务器上
+        </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="在我看来，编程不仅仅是我与生俱来的使命，也是我快乐的源泉。我正在上海交通大学攻读软件工程硕士学位，同时我作为一名实习生，为Microsoft GBS BI工作。">
+    <link rel="canonical" href="http://jerryzou.com/posts/gitForSAE/">
+    <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/build/css/style.min.css">
+
+    <!-- Baidu Analysis -->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?2744fd74aa568e064f9986394a60ead1";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-47842677-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    
+    <!-- handle external js files -->
+    
+    
+    
+
+    <!-- handle external css files -->
+    
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+  <div class="wrap">
+    <a class="site-title" href="/">Jerry的乐园</a>
+    <nav class="site-nav">
+      <div class="trigger">
+        <a class="page-link" href="/">首页</a>
+        
+          
+          <a class="page-link" href="/articles/">所有文章</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/about/">关于我</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+  </div>
+  <!-- fork me on github -->
+  <a href="https://github.com/zry656565/heaven-blog"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://jerryblog-image.b0.upaiyun.com/blog/forkme.png" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+        
+        <div class="post typo">
+
+  <header class="post-header">
+    <h1>极速地将git项目部署到SAE的svn服务器上</h1>
+    <p class="meta">Nov 7, 2014</p>
+  </header>
+
+  <article class="post-content">
+  <p>我花了一些时间自己写了一个能够极速地将一个git项目部署到SAE的svn服务器上的脚本。代码不是复杂，也没有很深的技术。但确实是个好用的小工具，至少对我来说，不用把我的git项目打包成zip再上传了，确实提高了超多效率！我将首先介绍一下脚本如何使用，再介绍我是如何实现这个shell脚本的。项目地址：<a href="https://github.com/zry656565/git-for-SAE">https://github.com/zry656565/git-for-SAE</a></p>
+
+<h1 id="section">功能</h1>
+<ul>
+  <li>一个脚本搞定将git项目部署到SAE的svn服务器上</li>
+  <li>可以很方便地管理SAE上的1-10版本</li>
+  <li>自动将缓存文件夹 <code>.svn</code> 加入 <code>.gitignore</code></li>
+</ul>
+
+<h1 id="section-1">安装</h1>
+<ul>
+  <li>第一步，将本项目clone到本地并checkout到release分支，这么做的话你在想要更新到最新版本时可以随时获得更新。或者你直接<a href="https://github.com/zry656565/git-for-SAE/archive/release.zip">下载zip包</a>。假设你将项目放到了如<code>/Users/Jerry/Dev/git-for-SAE/</code>这样的路径下。</li>
+  <li>第二步，将以下内容添加到<code>~/.bash_profile</code>下</li>
+</ul>
+
+<div class="highlight"><pre><code class="bash"><span class="c"># Git for SAE</span>
+<span class="nb">export </span><span class="nv">GIT_FOR_SAE_ROOT</span><span class="o">=</span>/Users/Jerry/Dev/git-for-SAE/ <span class="c">#此处就是你刚刚放置clone下来的项目路径</span>
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$GIT_FOR_SAE_ROOT</span>:<span class="nv">$PATH</span></code></pre></div>
+
+<ul>
+  <li>第三步，应用新的<code>.bash_profile</code></li>
+</ul>
+
+<div class="highlight"><pre><code class="bash">Terminal<span class="nv">$ </span><span class="nb">source</span> ~/.bash_profile</code></pre></div>
+
+<h1 id="section-2">如何使用</h1>
+<p>如果svn服务器是:<code>https://svn.sinaapp.com/sjtubus/</code>，那么下面的第一个参数请填写: <code>sjtubus</code>
+如果通过上面那种方式安装好后，你可以进入你自己项目的根目录，接着这样使用：</p>
+
+<div class="highlight"><pre><code class="bash"><span class="c">#部署</span>
+<span class="c">#第一个参数是SAE上的项目名</span>
+<span class="c">#第二个数字表示版本号，SAE支持1-10</span>
+Terminal<span class="nv">$ </span>sae-push.sh sjtubus 1
+
+<span class="c">#清空本地svn缓存</span>
+Terminal<span class="nv">$ </span>sae-clean.sh</code></pre></div>
+
+<h1 id="section-3">成功案例</h1>
+<ul>
+  <li>将交大校园巴士时刻表部署到SAE上</li>
+  <li>Github: <a href="https://github.com/zry656565/SJTU-Bus">https://github.com/zry656565/SJTU-Bus</a></li>
+  <li>SAE: <a href="http://sjtubus.sinaapp.com/">http://sjtubus.sinaapp.com/</a></li>
+</ul>
+
+<h1 id="section-4">如何实现</h1>
+<p>简单来说就分为以上四步:
+1. checkout SAE上的svn项目
+2. 清除svn项目中的文件
+3. 将git项目中的文件拷贝到svn项目中
+4. 提交至SAE服务器</p>
+
+<h3 id="checkout-saesvn">1.checkout SAE上的svn项目</h3>
+<p>首先，我在git项目的根目录下创建<code>.svn</code>文件夹用于存放SAE的svn项目，如果识别到已经创建了就跳过这个步骤，否则创建好<code>.svn</code> 后，执行 <code>svn checkout $svn_repo_url</code> (地址由参数生成)。</p>
+
+<h3 id="svn">2.清除svn项目中的文件</h3>
+<p>接着为了防止之前的文件对git项目产生影响，我会将它们全部删除。反正既然采用这种管理手段，代码版本管理都在git项目中，所以应该不会造成不好的影响。但有一点需要注意的是根目录下的<code>config.yaml</code>文件是不能删除的，必须保留下来。需要执行的指令如下：</p>
+
+<div class="highlight"><pre><code class="bash">mv config.yaml ../config.yaml
+rm -rf *
+mv ../config.yaml config.yaml
+svn st <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> xargs svn delete
+svn commit -m <span class="s2">&quot;clean&quot;</span></code></pre></div>
+
+<h3 id="gitsvn">3.将git项目中的文件拷贝到svn项目中</h3>
+<p>接着就把git项目中的所有文件拷贝到<code>.svn</code>文件夹下的项目中，执行如下指令：</p>
+
+<div class="highlight"><pre><code class="bash">mv -f .svn ../.svn
+cp -rf * <span class="s2">&quot;../.svn/$svn_dir_name&quot;</span>
+mv -f ../.svn .svn</code></pre></div>
+
+<h3 id="sae">4.提交至SAE服务器</h3>
+<p>通过<code>awk</code>判断svn项目中所有文件的状态，对所有<code>?</code>状态的文件，将它们加入到svn的版本管理中，并提交。</p>
+
+<div class="highlight"><pre><code class="bash">svn st <span class="p">|</span> awk <span class="s1">&#39;{if ( $1 == &quot;?&quot;) { print $2 }}&#39;</span> <span class="p">|</span> xargs svn add
+svn commit -m <span class="s2">&quot;modify&quot;</span></code></pre></div>
+
+<p>就这样大功告成啦，总共源码也只有60多行，有兴趣的朋友可以去看看源码，也可以fork<a href="https://github.com/zry656565/git-for-SAE">我的项目</a>并做一些贡献。</p>
+
+  </article>
+
+  
+    <div class="ds-thread" data-thread-key="10016" data-title="极速地将git项目部署到SAE的svn服务器上" data-url="http://jerryzou.com/posts/gitForSAE/"></div>
+<script>
+var duoshuoQuery = {short_name:"jerryzou"};
+(function() {
+  var ds = document.createElement('script');
+  ds.type = 'text/javascript';ds.async = true;
+  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  ds.charset = 'UTF-8';
+  (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+  
+</div>
+        
+      </div>
+    </div>
+
+    <footer class="site-footer">
+  <div class="wrap">
+    <p class="powerby">Powered by <a href="http://jekyllrb.com/">Jekyll</a> , <a href="https://pages.github.com/">Github Pages</a> and <a href="https://www.upyun.com/">UPYUN</a>.</p>
+    <div class="powerby">
+    	<a href="http://jekyllrb.com/"><img src="http://jerryblog-image.b0.upaiyun.com/blog/jekyll.png" alt="jekyll_logo"></a>
+    	<a href="https://pages.github.com/"><img id="github-pages-logo" src="/assets/images/github_pages.svg" alt="github_pages_logo"></a>
+    	<!--<a href="https://www.qiniu.com/"><img id="qiniu-logo" src="http://jerryblog-image.b0.upaiyun.com/blog/qiniu.jpg" alt="QINIU_LOGO"></a>-->
+    	<a href="https://www.upyun.com/"><img src="http://jerryblog-image.b0.upaiyun.com/blog/upyun.png" alt="UPYUN_LOGO"></a>
+    </div>
+  </div>
+</footer>
+
+
+    </body>
+</html>
