@@ -1,0 +1,74 @@
+---
+date: 2014-11-14 22:12:10 UTC
+title: 发生在升级Yosemite后：修复各种开发环境
+description: 终于还是忍不住升级了，促使我升级的原动力居然是Alfred的Yosemite theme居然比初始theme好看很多！在升级前就预想到我的开发环境是一定会被破坏的，所以升级好系统以后还是赶快看下发生了什么吧！
+permalink: /posts/getDevEnvironmentBack/
+key: 10016
+labels: [Mac, Yosemite, phpstorm, brew]
+---
+
+终于还是忍不住升级了，促使我升级的原动力居然是`Alfred`的Yosemite theme居然比初始theme好看很多！在升级前就预想到我的开发环境是一定会被破坏的，所以升级好系统以后还是赶快看下发生了什么吧！
+
+##问题
+
+一进新系统就发现`phpstorm`跪了，提示要装`jre6`才能用。好吧，然后陆陆续续逐渐发现好多东西都跪了。只能一个一个慢慢修复啦。目前可见的发生错误的环境有：
+
+1. PhpStorm
+2. Homebrew
+3. node.js
+
+##逐个击破
+
+###1. PhpStorm
+
+升级了Yosemite以后，按一般的尿性，苹果肯定会升级所有运行环境的版本的，其中少不了Java，因此PhpStorm躺枪。肯定有同学要问啊，为什么`JetBrains`这种被誉为史上最屌霸天的IDE厂商所使用的jdk版本这么低！
+
+`JetBrains`如是说：
+
+> Current JDK 1.7 and 1.8 versions have several critical issues. We can’t default to the new JDK version until these issues are resolved.
+
+好了，解决方法就是下个jre6嘛！结果我在oracle的网站上找了半天却只能找到提供给OS X的jre7和jre8。好吧，其实直接在苹果官网上就可以找到下载链接：[http://support.apple.com/kb/DL1572](http://support.apple.com/kb/DL1572)
+
+###2. Homebrew
+
+Homebrew的运行离不开Ruby，升级后运行不了的原因其实也就是内置于Yosemite的Ruby版本更新啦：`1.8 => 2.0`。想要运行brew就会得到如下错误信息：
+
+{% highlight bash %}
+/usr/local/Library/brew.rb: /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin/ruby: bad interpreter: No such file or directory
+{% endhighlight %}
+
+然后在网上找到解决办法如下：
+
+#####2.1 更新`brew`脚本
+用你喜欢的编辑器打开`/usr/local/bin/brew`，然后将`brew`检测系统的一段代码注释掉，具体如下所示：
+
+{% highlight ruby %}
+#BREW_SYSTEM=$(uname -s | tr "[:upper:]" "[:lower:]")
+#if [ "$BREW_SYSTEM" = "darwin" ]
+#then
+#    exec "$BREW_LIBRARY_DIRECTORY/brew.rb" "$@"
+#else
+    exec ruby -W0 "$BREW_LIBRARY_DIRECTORY/brew.rb" "$@"
+#fi
+{% endhighlight %}
+
+#####2.2 创建软链接
+
+Homebrew会通过`Ruby 1.8`的路径去找Ruby的运行环境，可惜在Yosemite里它再也找不到了。所以在Homebrew做出一定的改变以前，我们需要骗骗它，建立一个假的`Ruby 1.8`的地址，其实指向系统的`Ruby 2.0`运行环境。
+
+{% highlight bash %}
+sudo mkdir -p /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin
+sudo ln -s /usr/bin/ruby /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin/ruby
+{% endhighlight %}
+
+###3. node.js
+
+好吧，其实写这篇博客的时候只发现前面两个问题。可是当我用`grunt`来自动生成我的博客时，却收到了`env: node: No such file or directory`这样的错误信息。看来node也在这次升级中惨烈牺牲了啊。
+
+在`/usr/local/bin/`下已经找到`node`和`npm`却发现是无法打开的，依旧会提示`No such file or directory`。目前还是不太清楚是什么原因造成的，最后解决的办法也比较暴力：直接到node官网上下了个最新的pkg直接重新安装一下就好了。
+
+
+##参考资料：
+
+1. [Homebrew, Ruby, and Rails on OS X 10.10](http://www.tuicool.com/articles/iIvy2e)
+2. [Fix the PhpStorm Java Error with Yosemite](http://laravel-news.com/2014/10/fix-phpstorm-java-error-yosemite/)
