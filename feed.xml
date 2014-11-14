@@ -7,13 +7,75 @@
     <atom:link href="http://jerryzou.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
-        <title>用正则将HTML转为BBCode</title>
-        <description>&lt;p&gt;为了防止富文本编辑器中用户的输入被不轨的人用于XSS攻击，一般的做法是只接受某种特定语法，比如markdown、BBCode。一般网站运营初始阶段对此考虑都不太周全，都是在网站发展到一定规模以后才会考虑到这个防XSS这个问题，所以就有将以前用户输入的html代码都转换为BBCode这一类的需求。接下来我将介绍一下，如何将已有的html代码通过正则表达式转换为BBCode。&lt;/p&gt;
+        <title>发生在升级Yosemite后：修复各种开发环境</title>
+        <description>&lt;p&gt;终于还是忍不住升级了，促使我升级的原动力居然是&lt;code&gt;Alfred&lt;/code&gt;的Yosemite theme居然比初始theme好看很多！在升级前就预想到我的开发环境是一定会被破坏的，所以升级好系统以后还是赶快看下发生了什么吧！&lt;/p&gt;
 
+&lt;h2 id=&quot;section&quot;&gt;问题&lt;/h2&gt;
+
+&lt;p&gt;一进新系统就发现&lt;code&gt;phpstorm&lt;/code&gt;跪了，提示要装&lt;code&gt;jre6&lt;/code&gt;才能用。好吧，然后陆陆续续逐渐发现好多东西都跪了。只能一个一个慢慢修复啦。目前可见的发生错误的环境有：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;PhpStorm&lt;/li&gt;
+  &lt;li&gt;Homebrew&lt;/li&gt;
+  &lt;li&gt;node.js&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;逐个击破&lt;/h2&gt;
+
+&lt;h3 id=&quot;phpstorm&quot;&gt;1. PhpStorm&lt;/h3&gt;
+
+&lt;p&gt;升级了Yosemite以后，按一般的尿性，苹果肯定会升级所有运行环境的版本的，其中少不了Java，因此PhpStorm躺枪。肯定有同学要问啊，为什么&lt;code&gt;JetBrains&lt;/code&gt;这种被誉为史上最屌霸天的IDE厂商所使用的jdk版本这么低！&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;JetBrains&lt;/code&gt;如是说：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Current JDK 1.7 and 1.8 versions have several critical issues. We can’t default to the new JDK version until these issues are resolved.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;好了，解决方法就是下个jre6嘛！结果我在oracle的网站上找了半天却只能找到提供给OS X的jre7和jre8。好吧，其实直接在苹果官网上就可以找到下载链接：&lt;a href=&quot;http://support.apple.com/kb/DL1572&quot;&gt;http://support.apple.com/kb/DL1572&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;homebrew&quot;&gt;2. Homebrew&lt;/h3&gt;
+
+&lt;p&gt;Homebrew的运行离不开Ruby，升级后运行不了的原因其实也就是内置于Yosemite的Ruby版本更新啦：&lt;code&gt;1.8 =&amp;gt; 2.0&lt;/code&gt;。想要运行brew就会得到如下错误信息：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;/usr/local/Library/brew.rb: /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin/ruby: bad interpreter: No such file or directory&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;然后在网上找到解决办法如下：&lt;/p&gt;
+
+&lt;h5 id=&quot;brew&quot;&gt;2.1 更新&lt;code&gt;brew&lt;/code&gt;脚本&lt;/h5&gt;
+&lt;p&gt;用你喜欢的编辑器打开&lt;code&gt;/usr/local/bin/brew&lt;/code&gt;，然后将&lt;code&gt;brew&lt;/code&gt;检测系统的一段代码注释掉，具体如下所示：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;ruby&quot;&gt;&lt;span class=&quot;c1&quot;&gt;#BREW_SYSTEM=$(uname -s | tr &amp;quot;[:upper:]&amp;quot; &amp;quot;[:lower:]&amp;quot;)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#if [ &amp;quot;$BREW_SYSTEM&amp;quot; = &amp;quot;darwin&amp;quot; ]&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#then&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#    exec &amp;quot;$BREW_LIBRARY_DIRECTORY/brew.rb&amp;quot; &amp;quot;$@&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#else&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;exec&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ruby&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;W0&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;$BREW_LIBRARY_DIRECTORY/brew.rb&amp;quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;$@&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#fi&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;section-2&quot;&gt;2.2 创建软链接&lt;/h5&gt;
+
+&lt;p&gt;Homebrew会通过&lt;code&gt;Ruby 1.8&lt;/code&gt;的路径去找Ruby的运行环境，可惜在Yosemite里它再也找不到了。所以在Homebrew做出一定的改变以前，我们需要骗骗它，建立一个假的&lt;code&gt;Ruby 1.8&lt;/code&gt;的地址，其实指向系统的&lt;code&gt;Ruby 2.0&lt;/code&gt;运行环境。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;sudo mkdir -p /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin
+sudo ln -s /usr/bin/ruby /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin/ruby&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;nodejs&quot;&gt;3. node.js&lt;/h3&gt;
+
+&lt;p&gt;好吧，其实写这篇博客的时候只发现前面两个问题。可是当我用&lt;code&gt;grunt&lt;/code&gt;来自动生成我的博客时，却收到了&lt;code&gt;env: node: No such file or directory&lt;/code&gt;这样的错误信息。看来node也在这次升级中惨烈牺牲了啊。&lt;/p&gt;
+
+&lt;p&gt;在&lt;code&gt;/usr/local/bin/&lt;/code&gt;下已经找到&lt;code&gt;node&lt;/code&gt;和&lt;code&gt;npm&lt;/code&gt;却发现是无法打开的，依旧会提示&lt;code&gt;No such file or directory&lt;/code&gt;。目前还是不太清楚是什么原因造成的，最后解决的办法也比较暴力：直接到node官网上下了个最新的pkg直接重新安装一下就好了。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-3&quot;&gt;参考资料：&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.tuicool.com/articles/iIvy2e&quot;&gt;Homebrew, Ruby, and Rails on OS X 10.10&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://laravel-news.com/2014/10/fix-phpstorm-java-error-yosemite/&quot;&gt;Fix the PhpStorm Java Error with Yosemite&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
 </description>
-        <pubDate>Fri, 07 Nov 2014 20:21:10 +0000</pubDate>
-        <link>http://jerryzou.com/posts/htmlToBBCode/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/htmlToBBCode/</guid>
+        <pubDate>Fri, 14 Nov 2014 22:12:10 +0000</pubDate>
+        <link>http://jerryzou.com/posts/getDevEnvironmentBack/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/getDevEnvironmentBack/</guid>
       </item>
     
       <item>
@@ -96,9 +158,19 @@ svn commit -m &lt;span class=&quot;s2&quot;&gt;&amp;quot;modify&amp;quot;&lt;/sp
 
 &lt;p&gt;就这样大功告成啦，总共源码也只有60多行，有兴趣的朋友可以去看看源码，也可以fork&lt;a href=&quot;https://github.com/zry656565/git-for-SAE&quot;&gt;我的项目&lt;/a&gt;并做一些贡献。&lt;/p&gt;
 </description>
-        <pubDate>Fri, 07 Nov 2014 20:21:10 +0000</pubDate>
+        <pubDate>Thu, 13 Nov 2014 02:15:10 +0000</pubDate>
         <link>http://jerryzou.com/posts/gitForSAE/</link>
         <guid isPermaLink="true">http://jerryzou.com/posts/gitForSAE/</guid>
+      </item>
+    
+      <item>
+        <title>用正则将HTML转为BBCode</title>
+        <description>&lt;p&gt;为了防止富文本编辑器中用户的输入被不轨的人用于XSS攻击，一般的做法是只接受某种特定语法，比如markdown、BBCode。一般网站运营初始阶段对此考虑都不太周全，都是在网站发展到一定规模以后才会考虑到这个防XSS这个问题，所以就有将以前用户输入的html代码都转换为BBCode这一类的需求。接下来我将介绍一下，如何将已有的html代码通过正则表达式转换为BBCode。&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 07 Nov 2014 20:21:10 +0000</pubDate>
+        <link>http://jerryzou.com/posts/htmlToBBCode/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/htmlToBBCode/</guid>
       </item>
     
       <item>
@@ -700,35 +772,6 @@ Consult the support section on how to make sure that the required fonts are embe
         <pubDate>Sun, 11 May 2014 21:33:00 +0000</pubDate>
         <link>http://jerryzou.com/posts/deepcopy/</link>
         <guid isPermaLink="true">http://jerryzou.com/posts/deepcopy/</guid>
-      </item>
-    
-      <item>
-        <title>一款在线Javascript正则表达式测试器</title>
-        <description>&lt;p&gt;昨天在看《&lt;a href=&quot;http://deerchao.net/tutorials/regex/regex.htm&quot;&gt;正则表达式30分钟入门教程&lt;/a&gt;》的时候，看到博主自己实现了一个C#写的正则测试器，看上去挺方便的样子。但是我自己又不太喜欢乱装东西，所以寻思着能不能自己实现一个javascript正则表达式测试器。于是几十行代码实现了这样一个正则测试器。&lt;/p&gt;
-
-&lt;p&gt;先展示一下0.1版本的效果图吧~&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/jre-parser.png&quot; width=&quot;700&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;页面还比较简单，但是基本功能算是有了。可以正常使用~。&lt;/p&gt;
-
-&lt;p&gt;关于怎么从用户的输入中提取正则表达式的过程多亏segmentfault的依云提点（&lt;a href=&quot;http://segmentfault.com/q/1010000000494735&quot;&gt;传送门&lt;/a&gt;），有了如下的解决办法：&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;c1&quot;&gt;//r是用户输入的字符串&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;JTester&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;begin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;indexOf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;lastIndexOf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;flags&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;match&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/\/([igm]{0,3})$/i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;RegExp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;substring&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;begin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;如果有什么更好的想法也可以随时和我说，或者干脆Fork我在Github上创建的repo，给我pull request~。（&lt;a href=&quot;https://github.com/zry656565/JRE-Parser&quot;&gt;Github上项目的传送门&lt;/a&gt;）&lt;/p&gt;
-
-&lt;p&gt;最后附上这款测试工具的地址：&lt;a href=&quot;http://zry656565.github.io/JRE-Parser/&quot;&gt;http://zry656565.github.io/JRE-Parser/&lt;/a&gt;&lt;/p&gt;
-</description>
-        <pubDate>Tue, 06 May 2014 00:00:00 +0000</pubDate>
-        <link>http://jerryzou.com/posts/jreparser/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/jreparser/</guid>
       </item>
     
   </channel>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+        
+            Jerry的乐园 | 发生在升级Yosemite后：修复各种开发环境
+        </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="在我看来，编程不仅仅是我与生俱来的使命，也是我快乐的源泉。我正在上海交通大学攻读软件工程硕士学位，同时我作为一名实习生，为Microsoft GBS BI工作。">
+    <link rel="canonical" href="http://jerryzou.com/posts/getDevEnvironmentBack/">
+    <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/build/css/style.min.css">
+
+    <!-- Baidu Analysis -->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            if (window.location.href.substr(7, 9) !== 'localhost') {
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?2744fd74aa568e064f9986394a60ead1";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+            }
+        })();
+    </script>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-47842677-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    
+    <!-- handle external js files -->
+    
+    
+    
+
+    <!-- handle external css files -->
+    
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+  <div class="wrap">
+    <a class="site-title" href="/">Jerry的乐园</a>
+    <nav class="site-nav">
+      <div class="trigger">
+        <a class="page-link" href="/">首页</a>
+        
+          
+          <a class="page-link" href="/articles/">所有文章</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/about/">关于我</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+  </div>
+  <!-- fork me on github -->
+  <a href="https://github.com/zry656565/heaven-blog"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://jerryblog-image.b0.upaiyun.com/blog/forkme.png" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+        
+        <div class="post typo">
+
+  <header class="post-header">
+    <h1>发生在升级Yosemite后：修复各种开发环境</h1>
+    <p class="meta">Nov 14, 2014</p>
+  </header>
+
+  <article class="post-content">
+  <p>终于还是忍不住升级了，促使我升级的原动力居然是<code>Alfred</code>的Yosemite theme居然比初始theme好看很多！在升级前就预想到我的开发环境是一定会被破坏的，所以升级好系统以后还是赶快看下发生了什么吧！</p>
+
+<h2 id="section">问题</h2>
+
+<p>一进新系统就发现<code>phpstorm</code>跪了，提示要装<code>jre6</code>才能用。好吧，然后陆陆续续逐渐发现好多东西都跪了。只能一个一个慢慢修复啦。目前可见的发生错误的环境有：</p>
+
+<ol>
+  <li>PhpStorm</li>
+  <li>Homebrew</li>
+  <li>node.js</li>
+</ol>
+
+<h2 id="section-1">逐个击破</h2>
+
+<h3 id="phpstorm">1. PhpStorm</h3>
+
+<p>升级了Yosemite以后，按一般的尿性，苹果肯定会升级所有运行环境的版本的，其中少不了Java，因此PhpStorm躺枪。肯定有同学要问啊，为什么<code>JetBrains</code>这种被誉为史上最屌霸天的IDE厂商所使用的jdk版本这么低！</p>
+
+<p><code>JetBrains</code>如是说：</p>
+
+<blockquote>
+  <p>Current JDK 1.7 and 1.8 versions have several critical issues. We can’t default to the new JDK version until these issues are resolved.</p>
+</blockquote>
+
+<p>好了，解决方法就是下个jre6嘛！结果我在oracle的网站上找了半天却只能找到提供给OS X的jre7和jre8。好吧，其实直接在苹果官网上就可以找到下载链接：<a href="http://support.apple.com/kb/DL1572">http://support.apple.com/kb/DL1572</a></p>
+
+<h3 id="homebrew">2. Homebrew</h3>
+
+<p>Homebrew的运行离不开Ruby，升级后运行不了的原因其实也就是内置于Yosemite的Ruby版本更新啦：<code>1.8 =&gt; 2.0</code>。想要运行brew就会得到如下错误信息：</p>
+
+<div class="highlight"><pre><code class="bash">/usr/local/Library/brew.rb: /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin/ruby: bad interpreter: No such file or directory</code></pre></div>
+
+<p>然后在网上找到解决办法如下：</p>
+
+<h5 id="brew">2.1 更新<code>brew</code>脚本</h5>
+<p>用你喜欢的编辑器打开<code>/usr/local/bin/brew</code>，然后将<code>brew</code>检测系统的一段代码注释掉，具体如下所示：</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="c1">#BREW_SYSTEM=$(uname -s | tr &quot;[:upper:]&quot; &quot;[:lower:]&quot;)</span>
+<span class="c1">#if [ &quot;$BREW_SYSTEM&quot; = &quot;darwin&quot; ]</span>
+<span class="c1">#then</span>
+<span class="c1">#    exec &quot;$BREW_LIBRARY_DIRECTORY/brew.rb&quot; &quot;$@&quot;</span>
+<span class="c1">#else</span>
+    <span class="nb">exec</span> <span class="n">ruby</span> <span class="o">-</span><span class="no">W0</span> <span class="s2">&quot;$BREW_LIBRARY_DIRECTORY/brew.rb&quot;</span> <span class="s2">&quot;$@&quot;</span>
+<span class="c1">#fi</span></code></pre></div>
+
+<h5 id="section-2">2.2 创建软链接</h5>
+
+<p>Homebrew会通过<code>Ruby 1.8</code>的路径去找Ruby的运行环境，可惜在Yosemite里它再也找不到了。所以在Homebrew做出一定的改变以前，我们需要骗骗它，建立一个假的<code>Ruby 1.8</code>的地址，其实指向系统的<code>Ruby 2.0</code>运行环境。</p>
+
+<div class="highlight"><pre><code class="bash">sudo mkdir -p /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin
+sudo ln -s /usr/bin/ruby /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin/ruby</code></pre></div>
+
+<h3 id="nodejs">3. node.js</h3>
+
+<p>好吧，其实写这篇博客的时候只发现前面两个问题。可是当我用<code>grunt</code>来自动生成我的博客时，却收到了<code>env: node: No such file or directory</code>这样的错误信息。看来node也在这次升级中惨烈牺牲了啊。</p>
+
+<p>在<code>/usr/local/bin/</code>下已经找到<code>node</code>和<code>npm</code>却发现是无法打开的，依旧会提示<code>No such file or directory</code>。目前还是不太清楚是什么原因造成的，最后解决的办法也比较暴力：直接到node官网上下了个最新的pkg直接重新安装一下就好了。</p>
+
+<h2 id="section-3">参考资料：</h2>
+
+<ol>
+  <li><a href="http://www.tuicool.com/articles/iIvy2e">Homebrew, Ruby, and Rails on OS X 10.10</a></li>
+  <li><a href="http://laravel-news.com/2014/10/fix-phpstorm-java-error-yosemite/">Fix the PhpStorm Java Error with Yosemite</a></li>
+</ol>
+
+  </article>
+
+  
+    <div class="ds-thread" data-thread-key="10016" data-title="发生在升级Yosemite后：修复各种开发环境" data-url="http://jerryzou.com/posts/getDevEnvironmentBack/"></div>
+<script>
+var duoshuoQuery = {short_name:"jerryzou"};
+(function() {
+  var ds = document.createElement('script');
+  ds.type = 'text/javascript';ds.async = true;
+  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  ds.charset = 'UTF-8';
+  (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+  
+</div>
+        
+      </div>
+    </div>
+
+    <footer class="site-footer">
+  <div class="wrap">
+    <p class="powerby">Powered by <a href="http://jekyllrb.com/">Jekyll</a> , <a href="https://pages.github.com/">Github Pages</a> and <a href="https://www.upyun.com/">UPYUN</a>.</p>
+    <div class="powerby">
+    	<a href="http://jekyllrb.com/"><img src="http://jerryblog-image.b0.upaiyun.com/blog/jekyll.png" alt="jekyll_logo"></a>
+    	<a href="https://pages.github.com/"><img id="github-pages-logo" src="/assets/images/github_pages.svg" alt="github_pages_logo"></a>
+    	<!--<a href="https://www.qiniu.com/"><img id="qiniu-logo" src="http://jerryblog-image.b0.upaiyun.com/blog/qiniu.jpg" alt="QINIU_LOGO"></a>-->
+    	<a href="https://www.upyun.com/"><img src="http://jerryblog-image.b0.upaiyun.com/blog/upyun.png" alt="UPYUN_LOGO"></a>
+    </div>
+  </div>
+</footer>
+
+
+    </body>
+</html>

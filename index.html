@@ -20,10 +20,12 @@
     <script>
         var _hmt = _hmt || [];
         (function() {
-            var hm = document.createElement("script");
-            hm.src = "//hm.baidu.com/hm.js?2744fd74aa568e064f9986394a60ead1";
-            var s = document.getElementsByTagName("script")[0]; 
-            s.parentNode.insertBefore(hm, s);
+            if (window.location.href.substr(7, 9) !== 'localhost') {
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?2744fd74aa568e064f9986394a60ead1";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+            }
         })();
     </script>
 
@@ -91,11 +93,27 @@
   <ul class="posts">
     
       
+      <li>
+        <a class="post-link" href="/posts/getDevEnvironmentBack/">发生在升级Yosemite后：修复各种开发环境</a>
+        <p class="post-date">Posted on Nov 14, 2014
+        	
+        	<a href="/articles/?label=Mac"><span class="post-label">Mac</span></a>
+        	
+        	<a href="/articles/?label=Yosemite"><span class="post-label">Yosemite</span></a>
+        	
+        	<a href="/articles/?label=phpstorm"><span class="post-label">phpstorm</span></a>
+        	
+        	<a href="/articles/?label=brew"><span class="post-label">brew</span></a>
+        	
+        </p>
+        <p class="post-description">终于还是忍不住升级了，促使我升级的原动力居然是Alfred的Yosemite theme居然比初始theme好看很多！在升级前就预想到我的开发环境是一定会被破坏的，所以升级好系统以后还是赶快看下发生了什么吧！ <a class="post-link2" href="/posts/getDevEnvironmentBack/">继续阅读...</a></p>
+      </li>
+      
     
       
       <li>
         <a class="post-link" href="/posts/gitForSAE/">极速地将git项目部署到SAE的svn服务器上</a>
-        <p class="post-date">Posted on Nov 7, 2014
+        <p class="post-date">Posted on Nov 13, 2014
         	
         	<a href="/articles/?label=SAE"><span class="post-label">SAE</span></a>
         	
@@ -108,6 +126,8 @@
         </p>
         <p class="post-description">我花了一些时间自己写了一个能够极速地将一个git项目部署到SAE的svn服务器上的脚本。代码不是复杂，也没有很深的技术。但确实是个好用的小工具，至少对我来说，不用把我的git项目打包成zip再上传了，确实提高了超多效率！我将首先介绍一下脚本如何使用，再介绍我是如何实现这个shell脚本的。 <a class="post-link2" href="/posts/gitForSAE/">继续阅读...</a></p>
       </li>
+      
+    
       
     
       

@@ -20,10 +20,12 @@
     <script>
         var _hmt = _hmt || [];
         (function() {
-            var hm = document.createElement("script");
-            hm.src = "//hm.baidu.com/hm.js?2744fd74aa568e064f9986394a60ead1";
-            var s = document.getElementsByTagName("script")[0]; 
-            s.parentNode.insertBefore(hm, s);
+            if (window.location.href.substr(7, 9) !== 'localhost') {
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?2744fd74aa568e064f9986394a60ead1";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+            }
         })();
     </script>
 

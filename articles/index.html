@@ -20,10 +20,12 @@
     <script>
         var _hmt = _hmt || [];
         (function() {
-            var hm = document.createElement("script");
-            hm.src = "//hm.baidu.com/hm.js?2744fd74aa568e064f9986394a60ead1";
-            var s = document.getElementsByTagName("script")[0]; 
-            s.parentNode.insertBefore(hm, s);
+            if (window.location.href.substr(7, 9) !== 'localhost') {
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?2744fd74aa568e064f9986394a60ead1";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+            }
         })();
     </script>
 
@@ -112,6 +114,16 @@
     "显示全部",
     
       
+        
+          "Mac",
+        
+          "Yosemite",
+        
+          "phpstorm",
+        
+          "brew",
+        
+      
     
       
         
@@ -123,6 +135,8 @@
         
           "svn",
         
+      
+    
       
     
       
@@ -257,14 +271,23 @@
   <ul class="articles">
     
     
+      <li data-key="10016" data-show="true">
+        <p class="article">
+          <span class="article-date">2014-11-14</span>
+          <a class="article-title" href="/posts/getDevEnvironmentBack/">发生在升级Yosemite后：修复各种开发环境</a>
+        </p>
+      </li>
+    
     
     
       <li data-key="10016" data-show="true">
         <p class="article">
-          <span class="article-date">2014-11-07</span>
+          <span class="article-date">2014-11-13</span>
           <a class="article-title" href="/posts/gitForSAE/">极速地将git项目部署到SAE的svn服务器上</a>
         </p>
       </li>
+    
+    
     
     
     
@@ -382,6 +405,21 @@
   var posts = [
     
     
+    {
+      key: "10016",
+      labels: [
+      
+        "Mac",
+      
+        "Yosemite",
+      
+        "phpstorm",
+      
+        "brew",
+      
+      ]
+    },
+    
     
     
     {
@@ -398,6 +436,8 @@
       
       ]
     },
+    
+    
     
     
     
