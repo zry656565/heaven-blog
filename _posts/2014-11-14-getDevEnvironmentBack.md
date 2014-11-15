@@ -67,6 +67,12 @@ sudo ln -s /usr/bin/ruby /System/Library/Frameworks/Ruby.framework/Versions/1.8/
 
 在`/usr/local/bin/`下已经找到`node`和`npm`却发现是无法打开的，依旧会提示`No such file or directory`。目前还是不太清楚是什么原因造成的，最后解决的办法也比较暴力：直接到node官网上下了个最新的pkg直接重新安装一下就好了。
 
+##结语
+
+其实本来还会发上第四条的：git。因为我发现我想把这篇博文发到github的博客上去却失败了！找了半天原因却摸不着头脑。后来突发奇想在gitcafe上创建了个项目居然push成功了，说明不是本地的git的问题，而是github的问题。过了一天才成功发上来还真是蛋疼！
+
+以上这些解决方案在我本地都能够解决问题，如果你还有什么疑问，可以在博文下留言，说不定能帮到你。
+
 
 ##参考资料：
 
