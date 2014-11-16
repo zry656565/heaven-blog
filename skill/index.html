@@ -6,11 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>
         
-            Jerry的乐园 | 博客建立
+            Jerry的乐园 | 技能图谱
         </title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="在我看来，编程不仅仅是我与生俱来的使命，也是我快乐的源泉。我正在上海交通大学攻读软件工程硕士学位，同时我作为一名实习生，为Microsoft GBS BI工作。">
-    <link rel="canonical" href="http://jerryzou.com/posts/opentopublic/">
+    <link rel="canonical" href="http://jerryzou.com/skill/">
     <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     <!-- Custom CSS -->
@@ -42,7 +42,19 @@
     
     <!-- handle external js files -->
     
+    <script type="text/javascript" src="/build/js/jquery.min.js"></script>
     
+    
+    
+        
+            <script type="text/javascript" src="/build/js/arbor.js"></script>
+        
+            <script type="text/javascript" src="/build/js/arbor-tween.js"></script>
+        
+            <script type="text/javascript" src="/build/js/graphics.js"></script>
+        
+            <script type="text/javascript" src="/build/js/arbor_main.js"></script>
+        
     
 
     <!-- handle external css files -->
@@ -92,47 +104,8 @@
     <div class="page-content">
       <div class="wrap">
         
-        <div class="post typo">
+        <canvas id="skillboard" width="950" height="450"></canvas>
 
-  <header class="post-header">
-    <h1>博客建立</h1>
-    <p class="meta">Dec 16, 2013</p>
-  </header>
-
-  <article class="post-content">
-  <p>今天我的博客终于搞定了，首先要谢谢Rasmus Andersson开源了他的博客代码，我才能把博客做成现在这样。
-如果你喜爱这个博客，可以通过点击<a href="https://github.com/zry656565/jblog/">这里</a>来获取源代码。</p>
-
-<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">JerryBlog</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="nx">print</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Hello, world.&quot;</span><span class="p">);</span>
-  <span class="p">}</span>
-<span class="p">};</span>
-<span class="nx">JerryBlog</span><span class="p">.</span><span class="nx">print</span><span class="p">();</span></code></pre></div>
-
-<hr />
-
-<p>2014-08-23更新：</p>
-
-<p>如今博客已经改版了，不再使用Rasmus Andersson的源码，而是在jekyll官方模版的基础上做了一定的修改，喜欢新博客样子的朋友可以前往<a href="https://github.com/zry656565/heaven-blog/">zry656565/heaven-blog</a>来获得源码。</p>
-
-  </article>
-
-  
-    <div class="ds-thread" data-thread-key="10003" data-title="博客建立" data-url="http://jerryzou.com/posts/opentopublic/"></div>
-<script>
-var duoshuoQuery = {short_name:"jerryzou"};
-(function() {
-  var ds = document.createElement('script');
-  ds.type = 'text/javascript';ds.async = true;
-  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-  ds.charset = 'UTF-8';
-  (document.getElementsByTagName('head')[0] 
-    || document.getElementsByTagName('body')[0]).appendChild(ds);
-})();
-</script>
-  
-</div>
         
       </div>
     </div>
