@@ -1,6 +1,6 @@
 ---
 date: 2014-11-14 22:12:10 UTC
-title: 发生在升级Yosemite后：修复各种开发环境
+title: 发生在升级OS X Yosemite后：修复各种开发环境
 description: 终于还是忍不住升级了，促使我升级的原动力居然是Alfred的Yosemite theme居然比初始theme好看很多！在升级前就预想到我的开发环境是一定会被破坏的，所以升级好系统以后还是赶快看下发生了什么吧！
 permalink: /posts/getDevEnvironmentBack/
 key: 10016
@@ -16,6 +16,8 @@ labels: [Mac, Yosemite, phpstorm, brew]
 1. PhpStorm
 2. Homebrew
 3. node.js
+4. Apache
+5. MySQL
 
 ##逐个击破
 
@@ -67,14 +69,83 @@ sudo ln -s /usr/bin/ruby /System/Library/Frameworks/Ruby.framework/Versions/1.8/
 
 在`/usr/local/bin/`下已经找到`node`和`npm`却发现是无法打开的，依旧会提示`No such file or directory`。目前还是不太清楚是什么原因造成的，最后解决的办法也比较暴力：直接到node官网上下了个最新的pkg直接重新安装一下就好了。
 
+###4. Apache
+
+要本地调试代码的时候发现`Apache`也不能幸免地跪了。执行`apachectl -v`发现Apache已经更新到`2.4.9`版本了。一定又是因为版本更新出了什么差错。
+
+#####4.1 修改httpd.conf
+
+首先打开`/private/etc/apache2/httpd.conf`发现似乎恢复默认的设置了。重新将以下两行代码解注：
+
+```
+Include /private/etc/apache2/extra/httpd-vhosts.conf
+...
+LoadModule php5_module libexec/apache2/libphp5.so
+```
+
+#####4.2 修改httpd-vhosts.conf
+
+打开`private/etc/apache2/extra/httpd-vhosts.conf`发现之前设好的虚拟主机似乎没有被修改掉嘛！但因为升级到`Apache 2.4`以上设置需要一定的调整，不然就会得到`403 Forbidden You don't have permission to access / on this server`错误啦。
+
+将原本的
+{% highlight xml %}
+<VirtualHost *:80>
+    ServerAdmin zry656565@gmail.com
+    DocumentRoot "/Users/Jerry/Dev/apache/php_tester"
+    ServerName php_tester
+    ErrorLog "/Users/Jerry/Dev/apache/php_tester/log/sites-error_log"
+    CustomLog "/Users/Jerry/Dev/apache/php_tester/log/sites-access_log" common
+    <Directory />
+        Options Indexes FollowSymLinks Includes ExecCGI
+        AllowOverride None
+        Order deny,allow
+        Allow from all
+    </Directory>
+</VirtualHost>
+{% endhighlight %}
+改成
+{% highlight xml %}
+<VirtualHost *:80>
+    ServerAdmin zry656565@gmail.com
+    DocumentRoot "/Users/Jerry/Dev/apache/php_tester"
+    ServerName php_tester
+    ErrorLog "/Users/Jerry/Dev/apache/php_tester/log/sites-error_log"
+    CustomLog "/Users/Jerry/Dev/apache/php_tester/log/sites-access_log" common
+    <Directory />
+        Options Indexes FollowSymLinks Includes ExecCGI
+        AllowOverride None
+        Require all granted
+    </Directory>
+</VirtualHost>
+{% endhighlight %}
+其实就是将`Order deny,allow, Allow from all`改成`Require all granted`。
+
+###5. MySQL
+
+MySQL目前还没有正式支持OS X Yosemite，所以在升级系统后会发现，MySQL的服务居然没有在后台启动。要解决这个问题只有手动启动MySQL的服务，建议在`~/.bash_profile`中加入如下脚本，然后用`source ~/.bash_profile`启用脚本。
+
+{% highlight bash %}
+export MYSQL_HOME=/usr/local/mysql/bin
+alias start_mysql='sudo $MYSQL_HOME/mysqld_safe &'
+alias stop_mysql='sudo $MYSQL_HOME/mysqladmin shutdown'
+{% endhighlight %}
+
+接下来，你只需要使用`start_mysql`和`stop_mysql`指令就可以开关mysql服务啦！
+
 ##结语
 
-其实本来还会发上第四条的：git。因为我发现我想把这篇博文发到github的博客上去却失败了！找了半天原因却摸不着头脑。后来突发奇想在gitcafe上创建了个项目居然push成功了，说明不是本地的git的问题，而是github的问题。过了一天才成功发上来还真是蛋疼！
+其实本来还会发上第六条的：git。因为我发现我想把这篇博文发到github的博客上去却失败了！找了半天原因却摸不着头脑。后来突发奇想在gitcafe上创建了个项目居然push成功了，说明不是本地的git的问题，而是github的问题。过了一天才成功发上来还真是蛋疼！
 
 以上这些解决方案在我本地都能够解决问题，如果你还有什么疑问，可以在博文下留言，说不定能帮到你。
 
 
-##参考资料：
+##参考资料
 
 1. [Homebrew, Ruby, and Rails on OS X 10.10](http://www.tuicool.com/articles/iIvy2e)
 2. [Fix the PhpStorm Java Error with Yosemite](http://laravel-news.com/2014/10/fix-phpstorm-java-error-yosemite/)
+3. [Error message “Forbidden You don't have permission to access / on this server”](http://stackoverflow.com/questions/10873295/error-message-forbidden-you-dont-have-permission-to-access-on-this-server#)
+4. [start mySQL server from command line on Mac OS Lion](http://stackoverflow.com/questions/7927854/start-mysql-server-from-command-line-on-mac-os-lion)
+
+##更新
+
+- 2014.11.16 添加apache、mysql的恢复
