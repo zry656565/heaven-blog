@@ -7,7 +7,7 @@
     <atom:link href="http://jerryzou.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
-        <title>发生在升级Yosemite后：修复各种开发环境</title>
+        <title>发生在升级OS X Yosemite后：修复各种开发环境</title>
         <description>&lt;p&gt;终于还是忍不住升级了，促使我升级的原动力居然是&lt;code&gt;Alfred&lt;/code&gt;的Yosemite theme居然比初始theme好看很多！在升级前就预想到我的开发环境是一定会被破坏的，所以升级好系统以后还是赶快看下发生了什么吧！&lt;/p&gt;
 
 &lt;h2 id=&quot;section&quot;&gt;问题&lt;/h2&gt;
@@ -18,6 +18,8 @@
   &lt;li&gt;PhpStorm&lt;/li&gt;
   &lt;li&gt;Homebrew&lt;/li&gt;
   &lt;li&gt;node.js&lt;/li&gt;
+  &lt;li&gt;Apache&lt;/li&gt;
+  &lt;li&gt;MySQL&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;h2 id=&quot;section-1&quot;&gt;逐个击破&lt;/h2&gt;
@@ -66,18 +68,87 @@ sudo ln -s /usr/bin/ruby /System/Library/Frameworks/Ruby.framework/Versions/1.8/
 
 &lt;p&gt;在&lt;code&gt;/usr/local/bin/&lt;/code&gt;下已经找到&lt;code&gt;node&lt;/code&gt;和&lt;code&gt;npm&lt;/code&gt;却发现是无法打开的，依旧会提示&lt;code&gt;No such file or directory&lt;/code&gt;。目前还是不太清楚是什么原因造成的，最后解决的办法也比较暴力：直接到node官网上下了个最新的pkg直接重新安装一下就好了。&lt;/p&gt;
 
+&lt;h3 id=&quot;apache&quot;&gt;4. Apache&lt;/h3&gt;
+
+&lt;p&gt;要本地调试代码的时候发现&lt;code&gt;Apache&lt;/code&gt;也不能幸免地跪了。执行&lt;code&gt;apachectl -v&lt;/code&gt;发现Apache已经更新到&lt;code&gt;2.4.9&lt;/code&gt;版本了。一定又是因为版本更新出了什么差错。&lt;/p&gt;
+
+&lt;h5 id=&quot;httpdconf&quot;&gt;4.1 修改httpd.conf&lt;/h5&gt;
+
+&lt;p&gt;首先打开&lt;code&gt;/private/etc/apache2/httpd.conf&lt;/code&gt;发现似乎恢复默认的设置了。重新将以下两行代码解注：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;
+Include /private/etc/apache2/extra/httpd-vhosts.conf
+...
+LoadModule php5_module libexec/apache2/libphp5.so
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;h5 id=&quot;httpd-vhostsconf&quot;&gt;4.2 修改httpd-vhosts.conf&lt;/h5&gt;
+
+&lt;p&gt;打开&lt;code&gt;private/etc/apache2/extra/httpd-vhosts.conf&lt;/code&gt;发现之前设好的虚拟主机似乎没有被修改掉嘛！但因为升级到&lt;code&gt;Apache 2.4&lt;/code&gt;以上设置需要一定的调整，不然就会得到&lt;code&gt;403 Forbidden You don&#39;t have permission to access / on this server&lt;/code&gt;错误啦。&lt;/p&gt;
+
+&lt;p&gt;将原本的&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;VirtualHost&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;*:80&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    ServerAdmin zry656565@gmail.com
+    DocumentRoot &amp;quot;/Users/Jerry/Dev/apache/php_tester&amp;quot;
+    ServerName php_tester
+    ErrorLog &amp;quot;/Users/Jerry/Dev/apache/php_tester/log/sites-error_log&amp;quot;
+    CustomLog &amp;quot;/Users/Jerry/Dev/apache/php_tester/log/sites-access_log&amp;quot; common
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;Directory&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+        Options Indexes FollowSymLinks Includes ExecCGI
+        AllowOverride None
+        Order deny,allow
+        Allow from all
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/Directory&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/VirtualHost&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;改成&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;VirtualHost&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;*:80&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    ServerAdmin zry656565@gmail.com
+    DocumentRoot &amp;quot;/Users/Jerry/Dev/apache/php_tester&amp;quot;
+    ServerName php_tester
+    ErrorLog &amp;quot;/Users/Jerry/Dev/apache/php_tester/log/sites-error_log&amp;quot;
+    CustomLog &amp;quot;/Users/Jerry/Dev/apache/php_tester/log/sites-access_log&amp;quot; common
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;Directory&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+        Options Indexes FollowSymLinks Includes ExecCGI
+        AllowOverride None
+        Require all granted
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/Directory&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/VirtualHost&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;其实就是将&lt;code&gt;Order deny,allow, Allow from all&lt;/code&gt;改成&lt;code&gt;Require all granted&lt;/code&gt;。&lt;/p&gt;
+
+&lt;h3 id=&quot;mysql&quot;&gt;5. MySQL&lt;/h3&gt;
+
+&lt;p&gt;MySQL目前还没有正式支持OS X Yosemite，所以在升级系统后会发现，MySQL的服务居然没有在后台启动。要解决这个问题只有手动启动MySQL的服务，建议在&lt;code&gt;~/.bash_profile&lt;/code&gt;中加入如下脚本，然后用&lt;code&gt;source ~/.bash_profile&lt;/code&gt;启用脚本。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;MYSQL_HOME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/mysql/bin
+&lt;span class=&quot;nb&quot;&gt;alias &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;start_mysql&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;sudo $MYSQL_HOME/mysqld_safe &amp;amp;&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;alias &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;stop_mysql&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;sudo $MYSQL_HOME/mysqladmin shutdown&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;接下来，你只需要使用&lt;code&gt;start_mysql&lt;/code&gt;和&lt;code&gt;stop_mysql&lt;/code&gt;指令就可以开关mysql服务啦！&lt;/p&gt;
+
 &lt;h2 id=&quot;section-3&quot;&gt;结语&lt;/h2&gt;
 
-&lt;p&gt;其实本来还会发上第四条的：git。因为我发现我想把这篇博文发到github的博客上去却失败了！找了半天原因却摸不着头脑。后来突发奇想在gitcafe上创建了个项目居然push成功了，说明不是本地的git的问题，而是github的问题。过了一天才成功发上来还真是蛋疼！&lt;/p&gt;
+&lt;p&gt;其实本来还会发上第六条的：git。因为我发现我想把这篇博文发到github的博客上去却失败了！找了半天原因却摸不着头脑。后来突发奇想在gitcafe上创建了个项目居然push成功了，说明不是本地的git的问题，而是github的问题。过了一天才成功发上来还真是蛋疼！&lt;/p&gt;
 
 &lt;p&gt;以上这些解决方案在我本地都能够解决问题，如果你还有什么疑问，可以在博文下留言，说不定能帮到你。&lt;/p&gt;
 
-&lt;h2 id=&quot;section-4&quot;&gt;参考资料：&lt;/h2&gt;
+&lt;h2 id=&quot;section-4&quot;&gt;参考资料&lt;/h2&gt;
 
 &lt;ol&gt;
   &lt;li&gt;&lt;a href=&quot;http://www.tuicool.com/articles/iIvy2e&quot;&gt;Homebrew, Ruby, and Rails on OS X 10.10&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;http://laravel-news.com/2014/10/fix-phpstorm-java-error-yosemite/&quot;&gt;Fix the PhpStorm Java Error with Yosemite&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/questions/10873295/error-message-forbidden-you-dont-have-permission-to-access-on-this-server#&quot;&gt;Error message “Forbidden You don’t have permission to access / on this server”&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/questions/7927854/start-mysql-server-from-command-line-on-mac-os-lion&quot;&gt;start mySQL server from command line on Mac OS Lion&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
+
+&lt;h2 id=&quot;section-5&quot;&gt;更新&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;2014.11.16 添加apache、mysql的恢复&lt;/li&gt;
+&lt;/ul&gt;
 </description>
         <pubDate>Fri, 14 Nov 2014 22:12:10 +0000</pubDate>
         <link>http://jerryzou.com/posts/getDevEnvironmentBack/</link>

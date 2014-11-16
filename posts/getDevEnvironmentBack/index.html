@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>
         
-            Jerry的乐园 | 发生在升级Yosemite后：修复各种开发环境
+            Jerry的乐园 | 发生在升级OS X Yosemite后：修复各种开发环境
         </title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="在我看来，编程不仅仅是我与生俱来的使命，也是我快乐的源泉。我正在上海交通大学攻读软件工程硕士学位，同时我作为一名实习生，为Microsoft GBS BI工作。">
@@ -91,7 +91,7 @@
         <div class="post typo">
 
   <header class="post-header">
-    <h1>发生在升级Yosemite后：修复各种开发环境</h1>
+    <h1>发生在升级OS X Yosemite后：修复各种开发环境</h1>
     <p class="meta">Nov 14, 2014</p>
   </header>
 
@@ -106,6 +106,8 @@
   <li>PhpStorm</li>
   <li>Homebrew</li>
   <li>node.js</li>
+  <li>Apache</li>
+  <li>MySQL</li>
 </ol>
 
 <h2 id="section-1">逐个击破</h2>
@@ -154,23 +156,92 @@ sudo ln -s /usr/bin/ruby /System/Library/Frameworks/Ruby.framework/Versions/1.8/
 
 <p>在<code>/usr/local/bin/</code>下已经找到<code>node</code>和<code>npm</code>却发现是无法打开的，依旧会提示<code>No such file or directory</code>。目前还是不太清楚是什么原因造成的，最后解决的办法也比较暴力：直接到node官网上下了个最新的pkg直接重新安装一下就好了。</p>
 
+<h3 id="apache">4. Apache</h3>
+
+<p>要本地调试代码的时候发现<code>Apache</code>也不能幸免地跪了。执行<code>apachectl -v</code>发现Apache已经更新到<code>2.4.9</code>版本了。一定又是因为版本更新出了什么差错。</p>
+
+<h5 id="httpdconf">4.1 修改httpd.conf</h5>
+
+<p>首先打开<code>/private/etc/apache2/httpd.conf</code>发现似乎恢复默认的设置了。重新将以下两行代码解注：</p>
+
+<p><code>
+Include /private/etc/apache2/extra/httpd-vhosts.conf
+...
+LoadModule php5_module libexec/apache2/libphp5.so
+</code></p>
+
+<h5 id="httpd-vhostsconf">4.2 修改httpd-vhosts.conf</h5>
+
+<p>打开<code>private/etc/apache2/extra/httpd-vhosts.conf</code>发现之前设好的虚拟主机似乎没有被修改掉嘛！但因为升级到<code>Apache 2.4</code>以上设置需要一定的调整，不然就会得到<code>403 Forbidden You don't have permission to access / on this server</code>错误啦。</p>
+
+<p>将原本的</p>
+
+<div class="highlight"><pre><code class="xml"><span class="nt">&lt;VirtualHost</span> <span class="err">*:80</span><span class="nt">&gt;</span>
+    ServerAdmin zry656565@gmail.com
+    DocumentRoot &quot;/Users/Jerry/Dev/apache/php_tester&quot;
+    ServerName php_tester
+    ErrorLog &quot;/Users/Jerry/Dev/apache/php_tester/log/sites-error_log&quot;
+    CustomLog &quot;/Users/Jerry/Dev/apache/php_tester/log/sites-access_log&quot; common
+    <span class="nt">&lt;Directory</span> <span class="nt">/&gt;</span>
+        Options Indexes FollowSymLinks Includes ExecCGI
+        AllowOverride None
+        Order deny,allow
+        Allow from all
+    <span class="nt">&lt;/Directory&gt;</span>
+<span class="nt">&lt;/VirtualHost&gt;</span></code></pre></div>
+
+<p>改成</p>
+
+<div class="highlight"><pre><code class="xml"><span class="nt">&lt;VirtualHost</span> <span class="err">*:80</span><span class="nt">&gt;</span>
+    ServerAdmin zry656565@gmail.com
+    DocumentRoot &quot;/Users/Jerry/Dev/apache/php_tester&quot;
+    ServerName php_tester
+    ErrorLog &quot;/Users/Jerry/Dev/apache/php_tester/log/sites-error_log&quot;
+    CustomLog &quot;/Users/Jerry/Dev/apache/php_tester/log/sites-access_log&quot; common
+    <span class="nt">&lt;Directory</span> <span class="nt">/&gt;</span>
+        Options Indexes FollowSymLinks Includes ExecCGI
+        AllowOverride None
+        Require all granted
+    <span class="nt">&lt;/Directory&gt;</span>
+<span class="nt">&lt;/VirtualHost&gt;</span></code></pre></div>
+
+<p>其实就是将<code>Order deny,allow, Allow from all</code>改成<code>Require all granted</code>。</p>
+
+<h3 id="mysql">5. MySQL</h3>
+
+<p>MySQL目前还没有正式支持OS X Yosemite，所以在升级系统后会发现，MySQL的服务居然没有在后台启动。要解决这个问题只有手动启动MySQL的服务，建议在<code>~/.bash_profile</code>中加入如下脚本，然后用<code>source ~/.bash_profile</code>启用脚本。</p>
+
+<div class="highlight"><pre><code class="bash"><span class="nb">export </span><span class="nv">MYSQL_HOME</span><span class="o">=</span>/usr/local/mysql/bin
+<span class="nb">alias </span><span class="nv">start_mysql</span><span class="o">=</span><span class="s1">&#39;sudo $MYSQL_HOME/mysqld_safe &amp;&#39;</span>
+<span class="nb">alias </span><span class="nv">stop_mysql</span><span class="o">=</span><span class="s1">&#39;sudo $MYSQL_HOME/mysqladmin shutdown&#39;</span></code></pre></div>
+
+<p>接下来，你只需要使用<code>start_mysql</code>和<code>stop_mysql</code>指令就可以开关mysql服务啦！</p>
+
 <h2 id="section-3">结语</h2>
 
-<p>其实本来还会发上第四条的：git。因为我发现我想把这篇博文发到github的博客上去却失败了！找了半天原因却摸不着头脑。后来突发奇想在gitcafe上创建了个项目居然push成功了，说明不是本地的git的问题，而是github的问题。过了一天才成功发上来还真是蛋疼！</p>
+<p>其实本来还会发上第六条的：git。因为我发现我想把这篇博文发到github的博客上去却失败了！找了半天原因却摸不着头脑。后来突发奇想在gitcafe上创建了个项目居然push成功了，说明不是本地的git的问题，而是github的问题。过了一天才成功发上来还真是蛋疼！</p>
 
 <p>以上这些解决方案在我本地都能够解决问题，如果你还有什么疑问，可以在博文下留言，说不定能帮到你。</p>
 
-<h2 id="section-4">参考资料：</h2>
+<h2 id="section-4">参考资料</h2>
 
 <ol>
   <li><a href="http://www.tuicool.com/articles/iIvy2e">Homebrew, Ruby, and Rails on OS X 10.10</a></li>
   <li><a href="http://laravel-news.com/2014/10/fix-phpstorm-java-error-yosemite/">Fix the PhpStorm Java Error with Yosemite</a></li>
+  <li><a href="http://stackoverflow.com/questions/10873295/error-message-forbidden-you-dont-have-permission-to-access-on-this-server#">Error message “Forbidden You don’t have permission to access / on this server”</a></li>
+  <li><a href="http://stackoverflow.com/questions/7927854/start-mysql-server-from-command-line-on-mac-os-lion">start mySQL server from command line on Mac OS Lion</a></li>
 </ol>
+
+<h2 id="section-5">更新</h2>
+
+<ul>
+  <li>2014.11.16 添加apache、mysql的恢复</li>
+</ul>
 
   </article>
 
   
-    <div class="ds-thread" data-thread-key="10016" data-title="发生在升级Yosemite后：修复各种开发环境" data-url="http://jerryzou.com/posts/getDevEnvironmentBack/"></div>
+    <div class="ds-thread" data-thread-key="10016" data-title="发生在升级OS X Yosemite后：修复各种开发环境" data-url="http://jerryzou.com/posts/getDevEnvironmentBack/"></div>
 <script>
 var duoshuoQuery = {short_name:"jerryzou"};
 (function() {
