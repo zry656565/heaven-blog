@@ -9,6 +9,9 @@ module.exports = function(grunt) {
             },
             jekyll_serve: {
                 command: 'jekyll serve --watch'
+            },
+            clean_tmp: {
+                command: 'rm -r _tmp'
             }
         },
         concat: {
@@ -70,7 +73,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
     // Default task(s).
-    grunt.registerTask('build', ['jshint', 'concat', 'uglify', 'cssmin', 'shell:jekyll_build']);
-    grunt.registerTask('serve', ['jshint', 'concat', 'uglify', 'cssmin', 'shell:jekyll_serve']);
+    grunt.registerTask('build', ['jshint', 'concat', 'uglify', 'cssmin', 'shell:clean_tmp', 'shell:jekyll_build']);
+    grunt.registerTask('serve', ['jshint', 'concat', 'uglify', 'cssmin', 'shell:clean_tmp', 'shell:jekyll_serve']);
     grunt.registerTask('debug', ['shell:serve']);
 };
