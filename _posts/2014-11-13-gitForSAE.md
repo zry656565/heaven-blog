@@ -3,7 +3,7 @@ date: 2014-11-13 2:15:10 UTC
 title: 极速地将git项目部署到SAE的svn服务器上
 description: 我花了一些时间自己写了一个能够极速地将一个git项目部署到SAE的svn服务器上的脚本。代码不是复杂，也没有很深的技术。但确实是个好用的小工具，至少对我来说，不用把我的git项目打包成zip再上传了，确实提高了超多效率！我将首先介绍一下脚本如何使用，再介绍我是如何实现这个shell脚本的。
 permalink: /posts/gitForSAE/
-key: 10016
+key: 10017
 labels: [SAE, git, shell, svn]
 ---
 

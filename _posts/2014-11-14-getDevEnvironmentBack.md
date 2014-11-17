@@ -3,7 +3,7 @@ date: 2014-11-14 22:12:10 UTC
 title: 发生在升级OS X Yosemite后：修复各种开发环境
 description: 终于还是忍不住升级了，促使我升级的原动力居然是Alfred的Yosemite theme居然比初始theme好看很多！在升级前就预想到我的开发环境是一定会被破坏的，所以升级好系统以后还是赶快看下发生了什么吧！
 permalink: /posts/getDevEnvironmentBack/
-key: 10016
+key: 10018
 labels: [Mac, Yosemite, phpstorm, brew]
 ---
 
