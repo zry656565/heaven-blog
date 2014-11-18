@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+        
+            Jerry的乐园 | 来，让我们谈一谈 Normalize.css
+        </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="在我看来，编程不仅仅是我与生俱来的使命，也是我快乐的源泉。我正在上海交通大学攻读软件工程硕士学位，同时我作为一名实习生，为Microsoft GBS BI工作。">
+    <link rel="canonical" href="http://jerryzou.com/posts/aboutNormalizeCss/">
+    <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/build/css/style.min.css">
+
+    <!-- Baidu Analysis -->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            if (window.location.href.substr(7, 9) !== 'localhost') {
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?2744fd74aa568e064f9986394a60ead1";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+            }
+        })();
+    </script>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-47842677-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    
+    <!-- handle external js files -->
+    
+    
+    
+
+    <!-- handle external css files -->
+    
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+  <div class="wrap">
+    <a class="site-title" href="/">Jerry的乐园</a>
+    <nav class="site-nav">
+      <div class="trigger">
+        <a class="page-link" href="/">首页</a>
+        
+          
+          <a class="page-link" href="/articles/">所有文章</a>
+          
+        
+          
+          <a class="page-link" href="/skill/">技能图谱</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/about/">关于我</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+  </div>
+  <!-- fork me on github -->
+  <a href="https://github.com/zry656565/heaven-blog"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://jerryblog-image.b0.upaiyun.com/blog/forkme.png" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+        
+        <div class="post typo">
+
+  <header class="post-header">
+    <h1>来，让我们谈一谈 Normalize.css</h1>
+    <p class="meta">Nov 18, 2014</p>
+  </header>
+
+  <article class="post-content">
+  <blockquote>
+  <p>本文译自Normalize.css官网: <a href="http://nicolasgallagher.com/about-normalize-css/">http://nicolasgallagher.com/about-normalize-css/</a></p>
+</blockquote>
+
+<p><a href="http://necolas.github.io/normalize.css/">Normalize.css</a> 只是一个很小的CSS文件，但它在默认的HTML元素样式上提供了跨浏览器的高度一致性。相比于传统的<code>CSS reset</code>，<code>Normalize.css</code>是一种现代的、为HTML5准备的优质替代方案。<code>Normalize.css</code>现在已经被用于<a href="http://getbootstrap.com/">Twitter Bootstrap</a>、<a href="http://html5boilerplate.com/">HTML5 Boilerplate</a>、<a href="http://www.gov.uk/">GOV.UK</a>、<a href="http://www.rdio.com/">Rdio</a>、<a href="http://css-tricks.com/">CSS Tricks</a> 以及许许多多其他框架、工具和网站上。</p>
+
+<ul>
+  <li><a href="http://necolas.github.io/normalize.css/">Normalize.css 项目地址</a></li>
+  <li><a href="https://github.com/necolas/normalize.css">Normalize.css 在GitHub上的源码</a></li>
+</ul>
+
+<h2 id="section">综述</h2>
+
+<p><code>Normalize.css</code>是一种<code>CSS reset</code>的替代方案。经过<a href="https://twitter.com/necolas">@necolas</a>和<a href="https://twitter.com/jon_neal">@jon_neal</a>花了几百个小时来努力研究不同浏览器的默认样式的差异，这个项目终于变成了现在这样。</p>
+
+<p>我们创造<code>normalize.css</code>有下面这几个目的：</p>
+
+<ul>
+  <li><strong>保护有用的浏览器默认样式</strong>而不是完全去掉它们</li>
+  <li><strong>一般化的样式</strong>：为大部分HTML元素提供</li>
+  <li><strong>修复浏览器自身的bug</strong>并保证各浏览器的一致性</li>
+  <li><strong>优化CSS可用性</strong>：用一些小技巧</li>
+  <li><strong>解释代码</strong>：用注释和详细的文档来</li>
+</ul>
+
+<p><code>Normalize.css</code>支持包括手机浏览器在内的超多浏览器，同时对HTML5元素、排版、列表、嵌入的内容、表单和表格都进行了一般化。尽管这个项目基于一般化的原则，但我们还是在合适的地方使用了更实用的默认值。</p>
+
+<h2 id="normalize-vs-reset">Normalize vs Reset</h2>
+
+<p>知道<code>Normalize.css</code>和传统<code>Reset</code>的区别是非常有价值的。</p>
+
+<h5 id="normalizecss-">1. Normalize.css 保护了有价值的默认值</h5>
+
+<p><code>Reset</code>通过为几乎所有的元素施加默认样式，强行使得元素有相同的视觉效果。相比之下，<code>Normalize.css</code>保持了许多默认的浏览器样式。这就意味着你不用再为所有公共的排版元素重新设置样式。当一个元素在不同的浏览器中有不同的默认值时，<code>Normalize.css</code>会力求让这些样式保持一致并尽可能与现代标准相符合。</p>
+
+<h5 id="normalizecss-bug">2. Normalize.css 修复了浏览器的bug</h5>
+
+<p>它修复了常见的桌面端和移动端浏览器的bug。这往往超出了<code>Reset</code>所能做到的范畴。关于这一点，<code>Normalize.css</code>修复的问题包含了HTML5元素的显示设置、预格式化文字的<code>font-size</code>问题、在IE9中SVG的溢出、许多出现在各浏览器和操作系统中的与表单相关的bug。</p>
+
+<p>可以看以下这个例子，看看对于HTML5中新出现的<code>input</code>类型<code>search</code>，<code>Normalize.css</code>是如何保证跨浏览器的一致性的。</p>
+
+<div class="highlight"><pre><code class="css"><span class="c">/**</span>
+<span class="c"> * 1. Addresses appearance set to searchfield in S5, Chrome</span>
+<span class="c"> * 2. Addresses box-sizing set to border-box in S5, Chrome (include -moz to future-proof)</span>
+<span class="c"> */</span>
+
+<span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="s2">&quot;search&quot;</span><span class="o">]</span> <span class="p">{</span>
+  <span class="o">-</span><span class="n">webkit</span><span class="o">-</span><span class="n">appearance</span><span class="o">:</span> <span class="n">textfield</span><span class="p">;</span> <span class="c">/* 1 */</span>
+  <span class="o">-</span><span class="n">moz</span><span class="o">-</span><span class="n">box</span><span class="o">-</span><span class="n">sizing</span><span class="o">:</span> <span class="k">content</span><span class="o">-</span><span class="n">box</span><span class="p">;</span>
+  <span class="o">-</span><span class="n">webkit</span><span class="o">-</span><span class="n">box</span><span class="o">-</span><span class="n">sizing</span><span class="o">:</span> <span class="k">content</span><span class="o">-</span><span class="n">box</span><span class="p">;</span> <span class="c">/* 2 */</span>
+  <span class="n">box</span><span class="o">-</span><span class="n">sizing</span><span class="o">:</span> <span class="k">content</span><span class="o">-</span><span class="n">box</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c">/**</span>
+<span class="c"> * Removes inner padding and search cancel button in S5, Chrome on OS X</span>
+<span class="c"> */</span>
+
+<span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="s2">&quot;search&quot;</span><span class="o">]:</span><span class="nd">:-webkit-search-decoration</span><span class="o">,</span>
+<span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="s2">&quot;search&quot;</span><span class="o">]:</span><span class="nd">:-webkit-search-cancel-button</span> <span class="p">{</span>
+  <span class="o">-</span><span class="n">webkit</span><span class="o">-</span><span class="n">appearance</span><span class="o">:</span> <span class="k">none</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<h5 id="normalizecss--1">3. Normalize.css 不会让你的调试工具变的杂乱</h5>
+
+<p>使用Reset最让人困扰的地方莫过于在浏览器调试工具中大段大段的继承链，如下图所示。在<code>Normalize.css</code>中就不会有这样的问题，因为在我们的准则中对多选择器的使用时非常谨慎的，我们仅会有目的地对目标元素设置样式。</p>
+
+<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/css-reset-debugging.png" alt="A common sight in browser debugging tools when using a CSS reset" /></p>
+
+<h5 id="normalizecss--2">4. Normalize.css 是模块化的</h5>
+
+<p>这个项目已经被拆分为多个相关却又独立的部分，这使得你能够很容易也很清楚地知道哪些元素被设置了特定的值。因此这能让你自己选择性地移除掉某些永远不会用到部分（比如表单的一般化）。</p>
+
+<h5 id="normalizecss--3">5. Normalize.css 拥有详细的文档</h5>
+
+<p>Normalize.css的代码基于详细而全面的跨浏览器研究与测试。这个文件中拥有详细的代码说明并在<a href="https://github.com/necolas/normalize.css/wiki">Github Wiki</a>中有进一步的说明。这意味着你可以找到每一行代码具体完成了什么工作、为什么要写这句代码、浏览器之间的差异，并且你可以更容易地进行自己的测试。</p>
+
+<p>这个项目的目标是帮助人们了解浏览器默认是如何渲染元素的，同时也让人们很容易地明白如何改进浏览器渲染。</p>
+
+<h2 id="normalizecss">如何使用 normalize.css</h2>
+
+<p>首先，安装或从Github<a href="http://necolas.github.com/normalize.css/">下载Normalize.css</a>，接下来有两种主要途径去使用它。</p>
+
+<ul>
+  <li>策略一：将<code>normalize.css</code>作为你自己项目的基础CSS，自定义样式值以满足设计师的需求。</li>
+  <li>策略二：引入<code>normalize.css</code>源码并在此基础上构建，在必要的时候用你自己写的CSS覆盖默认值。</li>
+</ul>
+
+<h2 id="section-1">结语</h2>
+
+<p>无论从适用范畴还是实施上，<code>Normalize.css</code>与<code>Reset</code>都有极大的不同。尝试一下这两种方法并看看到底哪种更适合你的开发偏好是非常值得的。这个项目在Github上以开源的形式开发。任何人都能够提交问题报告或者提交补丁。整个项目发展的过程对所有人都是可见的，而每一次改动的原因也都写在commit信息中，这些都是有迹可循的。</p>
+
+<h2 id="section-2">相关阅读</h2>
+
+<p>关于更多默认UA样式的详细信息：</p>
+
+<ul>
+  <li><a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/rendering.html#the-css-user-agent-style-sheet-and-presentational-hints">WHATWG suggestions for rendering HTML documents</a></li>
+  <li><a href="http://iecss.com/">Internet Explorer User Agent Style Sheets</a></li>
+  <li><a href="http://css-class.com/test/css/defaults/UA-style-sheet-defaults.htm">CSS2.1 User Agent Style Sheet Defaults</a></li>
+</ul>
+
+
+  </article>
+
+  
+    <div class="ds-thread" data-thread-key="10019" data-title="来，让我们谈一谈 Normalize.css" data-url="http://jerryzou.com/posts/aboutNormalizeCss/"></div>
+<script>
+var duoshuoQuery = {short_name:"jerryzou"};
+(function() {
+  var ds = document.createElement('script');
+  ds.type = 'text/javascript';ds.async = true;
+  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  ds.charset = 'UTF-8';
+  (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+  
+</div>
+        
+      </div>
+    </div>
+
+    <footer class="site-footer">
+  <div class="wrap">
+    <p class="powerby">Powered by <a href="http://jekyllrb.com/">Jekyll</a> , <a href="https://pages.github.com/">Github Pages</a> and <a href="https://www.upyun.com/">UPYUN</a>.</p>
+    <div class="powerby">
+    	<a href="http://jekyllrb.com/"><img src="http://jerryblog-image.b0.upaiyun.com/blog/jekyll.png" alt="jekyll_logo"></a>
+    	<a href="https://pages.github.com/"><img id="github-pages-logo" src="/assets/images/github_pages.svg" alt="github_pages_logo"></a>
+    	<!--<a href="https://www.qiniu.com/"><img id="qiniu-logo" src="http://jerryblog-image.b0.upaiyun.com/blog/qiniu.jpg" alt="QINIU_LOGO"></a>-->
+    	<a href="https://www.upyun.com/"><img src="http://jerryblog-image.b0.upaiyun.com/blog/upyun.png" alt="UPYUN_LOGO"></a>
+    </div>
+  </div>
+</footer>
+
+
+    </body>
+</html>
