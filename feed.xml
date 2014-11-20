@@ -373,7 +373,7 @@ svn commit -m &lt;span class=&quot;s2&quot;&gt;&amp;quot;modify&amp;quot;&lt;/sp
     
       <item>
         <title>使用百度地图API来完成交大校园巴士时刻表</title>
-        <description>&lt;p&gt;交大的校园巴士时刻表都只能在车站的站牌上查看。这对于需要出行的学生来说非常不方便，无法合理做好出行的安排。为了解决这个问题，我和同一个套件的两位同学一起完成了这个简单的app。这篇博客将简要介绍这个web应用是如何实现的。以下是效果图，实际的效果请到&lt;a href=&quot;http://zry656565.github.io/SJTU-Bus/&quot;&gt;http://zry656565.github.io/SJTU-Bus&lt;/a&gt;查看。&lt;/p&gt;
+        <description>&lt;p&gt;交大的校园巴士时刻表都只能在车站的站牌上查看。这对于需要出行的学生来说非常不方便，无法合理做好出行的安排。为了解决这个问题，我和同一个套件的两位同学一起完成了这个简单的app。这篇博客将简要介绍这个web应用是如何实现的。以下是效果图，实际的效果请到&lt;a href=&quot;http://sjtubus.sinaapp.com&quot;&gt;http://sjtubus.sinaapp.com&lt;/a&gt;查看。&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/sjtubus.png&quot; alt=&quot;SJTU-Bus&quot; /&gt;&lt;/p&gt;
 

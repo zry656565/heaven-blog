@@ -315,6 +315,10 @@ a:visited { color: #205caa; }
   border-radius: 5px;
 }
 
+.highlight pre {
+  overflow: auto;
+}
+
 /* media queries */
 /* ----------------------------------------------------------*/
 
