@@ -14,7 +14,7 @@
     <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/build/css/style.min.css">
+    <link rel="stylesheet" href="/build/css/style.min.css?v=1.0.1">
 
     <!-- Baidu Analysis -->
     <script>
@@ -132,7 +132,7 @@
 
 <p>Homebrew的运行离不开Ruby，升级后运行不了的原因其实也就是内置于Yosemite的Ruby版本更新啦：<code>1.8 =&gt; 2.0</code>。想要运行brew就会得到如下错误信息：</p>
 
-<div class="highlight"><pre><code class="bash">/usr/local/Library/brew.rb: /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin/ruby: bad interpreter: No such file or directory</code></pre></div>
+<div class="highlight"><pre><code class="shell-session"><span class="go">/usr/local/Library/brew.rb: /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin/ruby: bad interpreter: No such file or directory</span></code></pre></div>
 
 <p>然后在网上找到解决办法如下：</p>
 
@@ -151,8 +151,8 @@
 
 <p>Homebrew会通过<code>Ruby 1.8</code>的路径去找Ruby的运行环境，可惜在Yosemite里它再也找不到了。所以在Homebrew做出一定的改变以前，我们需要骗骗它，建立一个假的<code>Ruby 1.8</code>的地址，其实指向系统的<code>Ruby 2.0</code>运行环境。</p>
 
-<div class="highlight"><pre><code class="bash">sudo mkdir -p /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin
-sudo ln -s /usr/bin/ruby /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin/ruby</code></pre></div>
+<div class="highlight"><pre><code class="shell-session"><span class="go">sudo mkdir -p /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin</span>
+<span class="go">sudo ln -s /usr/bin/ruby /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin/ruby</span></code></pre></div>
 
 <h3 id="nodejs">3. node.js</h3>
 
@@ -168,11 +168,9 @@ sudo ln -s /usr/bin/ruby /System/Library/Frameworks/Ruby.framework/Versions/1.8/
 
 <p>首先打开<code>/private/etc/apache2/httpd.conf</code>发现似乎恢复默认的设置了。重新将以下两行代码解注：</p>
 
-<p><code>
-Include /private/etc/apache2/extra/httpd-vhosts.conf
-...
-LoadModule php5_module libexec/apache2/libphp5.so
-</code></p>
+<div class="highlight"><pre><code class="shell-session"><span class="go">Include /private/etc/apache2/extra/httpd-vhosts.conf</span>
+<span class="go">...</span>
+<span class="go">LoadModule php5_module libexec/apache2/libphp5.so</span></code></pre></div>
 
 <h5 id="httpd-vhostsconf">4.2 修改httpd-vhosts.conf</h5>
 
