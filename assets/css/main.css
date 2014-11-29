@@ -288,10 +288,16 @@ a:visited { color: #205caa; }
 .post code {
   color: #c7254e;
   padding: 8px 12px;
-  font-size: 15px;
 }
 
-.post code { padding: 1px 5px; }
+.post pre code {
+  font-size: 12px;
+}
+
+.post code {
+  font-size: 15px;
+  padding: 1px 5px;
+}
 
 .post ul,
 .post ol { margin-left: 1.35em; }
@@ -317,6 +323,7 @@ a:visited { color: #205caa; }
 
 .highlight pre {
   overflow: auto;
+  font-size: 12px;
 }
 
 /* media queries */
