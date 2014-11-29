@@ -35,7 +35,7 @@ labels: [Mac, Yosemite, phpstorm, brew]
 
 Homebrew的运行离不开Ruby，升级后运行不了的原因其实也就是内置于Yosemite的Ruby版本更新啦：`1.8 => 2.0`。想要运行brew就会得到如下错误信息：
 
-{% highlight bash %}
+{% highlight shell-session %}
 /usr/local/Library/brew.rb: /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin/ruby: bad interpreter: No such file or directory
 {% endhighlight %}
 
@@ -58,7 +58,7 @@ Homebrew的运行离不开Ruby，升级后运行不了的原因其实也就是�
 
 Homebrew会通过`Ruby 1.8`的路径去找Ruby的运行环境，可惜在Yosemite里它再也找不到了。所以在Homebrew做出一定的改变以前，我们需要骗骗它，建立一个假的`Ruby 1.8`的地址，其实指向系统的`Ruby 2.0`运行环境。
 
-{% highlight bash %}
+{% highlight shell-session %}
 sudo mkdir -p /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin
 sudo ln -s /usr/bin/ruby /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin/ruby
 {% endhighlight %}
@@ -77,11 +77,11 @@ sudo ln -s /usr/bin/ruby /System/Library/Frameworks/Ruby.framework/Versions/1.8/
 
 首先打开`/private/etc/apache2/httpd.conf`发现似乎恢复默认的设置了。重新将以下两行代码解注：
 
-```
+{% highlight shell-session %}
 Include /private/etc/apache2/extra/httpd-vhosts.conf
 ...
 LoadModule php5_module libexec/apache2/libphp5.so
-```
+{% endhighlight %}
 
 #####4.2 修改httpd-vhosts.conf
 
