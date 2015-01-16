@@ -268,11 +268,15 @@ a:visited { color: #205caa; }
 .post-content blockquote {
   border-left: 4px solid #e8e8e8;
   padding-left: 20px;
-  font-size: 18px;
+  color: #787878;
+  font-size: 14px;
   opacity: .6;
   letter-spacing: -1px;
-  font-style: italic;
   margin: 30px 0;
+}
+
+.post-content blockquote p {
+  text-indent: 0;
 }
 
 .post-content ul,
