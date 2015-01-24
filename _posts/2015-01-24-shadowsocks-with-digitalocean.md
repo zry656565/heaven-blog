@@ -132,4 +132,4 @@ shadowsocks的客户端支持各大主流平台，而且客户端的配置一般
 - [Github Homepage for shadowsocks](https://github.com/shadowsocks/shadowsocks)
 - [Configuration via Config File](https://github.com/shadowsocks/shadowsocks/wiki/Configuration-via-Config-File)
 
-[1]: /assets/images/posts/DigitalOcean_sshkey.png
+[1]: {{ site.static_url }}/posts/DigitalOcean_sshkey.png
