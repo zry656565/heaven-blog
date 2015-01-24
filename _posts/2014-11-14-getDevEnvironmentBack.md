@@ -88,7 +88,7 @@ LoadModule php5_module libexec/apache2/libphp5.so
 打开`private/etc/apache2/extra/httpd-vhosts.conf`发现之前设好的虚拟主机似乎没有被修改掉嘛！但因为升级到`Apache 2.4`以上设置需要一定的调整，不然就会得到`403 Forbidden You don't have permission to access / on this server`错误啦。
 
 将原本的
-{% highlight xml %}
+{% highlight apacheconf %}
 <VirtualHost *:80>
     ServerAdmin zry656565@gmail.com
     DocumentRoot "/Users/Jerry/Dev/apache/php_tester"
@@ -104,7 +104,7 @@ LoadModule php5_module libexec/apache2/libphp5.so
 </VirtualHost>
 {% endhighlight %}
 改成
-{% highlight xml %}
+{% highlight apacheconf %}
 <VirtualHost *:80>
     ServerAdmin zry656565@gmail.com
     DocumentRoot "/Users/Jerry/Dev/apache/php_tester"

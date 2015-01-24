@@ -27,7 +27,7 @@ export PATH=$GIT_FOR_SAE_ROOT:$PATH
 
 - 第三步，应用新的`.bash_profile`
 
-{% highlight bash %}
+{% highlight console %}
 Terminal$ source ~/.bash_profile
 {% endhighlight %}
 
@@ -35,7 +35,7 @@ Terminal$ source ~/.bash_profile
 如果svn服务器是:`https://svn.sinaapp.com/sjtubus/`，那么下面的第一个参数请填写: `sjtubus`
 如果通过上面那种方式安装好后，你可以进入你自己项目的根目录，接着这样使用：
 
-{% highlight bash %}
+{% highlight console %}
 #部署
 #第一个参数是SAE上的项目名
 #第二个数字表示版本号，SAE支持1-10
