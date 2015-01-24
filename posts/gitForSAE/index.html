@@ -123,19 +123,19 @@
   <li>第三步，应用新的<code>.bash_profile</code></li>
 </ul>
 
-<div class="highlight"><pre><code class="bash">Terminal<span class="nv">$ </span><span class="nb">source</span> ~/.bash_profile</code></pre></div>
+<div class="highlight"><pre><code class="console"><span class="go">Terminal$ source ~/.bash_profile</span></code></pre></div>
 
 <h1 id="section-2">如何使用</h1>
 <p>如果svn服务器是:<code>https://svn.sinaapp.com/sjtubus/</code>，那么下面的第一个参数请填写: <code>sjtubus</code>
 如果通过上面那种方式安装好后，你可以进入你自己项目的根目录，接着这样使用：</p>
 
-<div class="highlight"><pre><code class="bash"><span class="c">#部署</span>
-<span class="c">#第一个参数是SAE上的项目名</span>
-<span class="c">#第二个数字表示版本号，SAE支持1-10</span>
-Terminal<span class="nv">$ </span>sae-push.sh sjtubus 1
+<div class="highlight"><pre><code class="console"><span class="gp">#</span>部署
+<span class="gp">#</span>第一个参数是SAE上的项目名
+<span class="gp">#</span>第二个数字表示版本号，SAE支持1-10
+<span class="go">Terminal$ sae-push.sh sjtubus 1</span>
 
-<span class="c">#清空本地svn缓存</span>
-Terminal<span class="nv">$ </span>sae-clean.sh</code></pre></div>
+<span class="gp">#</span>清空本地svn缓存
+<span class="go">Terminal$ sae-clean.sh</span></code></pre></div>
 
 <h1 id="section-3">成功案例</h1>
 <ul>

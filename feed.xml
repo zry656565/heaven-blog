@@ -7,6 +7,125 @@
     <atom:link href="http://jerryzou.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>使用Digital Ocean和shadowsocks来科学上网</title>
+        <description>&lt;p&gt;使用了各种不稳定的VPN服务以后，我还是觉得自己搭VPS比较靠谱。Digital Ocean提供了可伸缩的VPS，最便宜的服务器是每个月$5，虽然对于学生来说不算便宜，但好在一开始充$5送$10，而且成功申请到Github Student pack的话，还可以得到$100。ShadowSocks是科学上网的利器，在Github上已经得到了五千多个Star，使用的人极多、影响极深。而且它对各个平台的支持也非常好，目前我在Windows/Mac/iOS三个平台上都完成了科学上网环境的搭建。&lt;/p&gt;
+
+&lt;h2 id=&quot;digital-ocean&quot;&gt;Digital Ocean&lt;/h2&gt;
+
+&lt;p&gt;首先注册账号，激活邮箱自不必说。激活后就会收到$10的奖励，但是仅仅这样还是无法在Digital Ocean上创建虚拟主机。你需要绑定信用卡或者直接向你的账户里冲入$5才能正式开始使用。我的话，是在paypal账号上绑定了一张银联的卡来付款的，按这几天的汇率大概¥31左右吧。&lt;/p&gt;
+
+&lt;p&gt;然后你就可以创建你的云主机了，选择 $5/mon 的那一档来支撑shadowsocks的服务足矣。经过测试San Francisco的机房延迟最低，平均在230ms左右。而Singapore的机房延迟在280ms，还有5%左右的丢包率。所以经过几次创建后又销毁重新创建地倒腾，我最后还是选择了使用San Francisco的节点。另外操作系统的话，我选择的是&lt;code&gt;ubuntu 14.04 x64&lt;/code&gt;的。&lt;/p&gt;
+
+&lt;h3 id=&quot;ssh-key&quot;&gt;创建SSH key&lt;/h3&gt;
+
+&lt;p&gt;接下来可以添加SSH key，这一步不是必须的，但是我觉得使用SSH key比使用Digital Ocean为你创建的随机密码好一点。如果不想做这一步，或者你之前已经创建过SSH key的话，可以跳过这一部分。&lt;/p&gt;
+
+&lt;h4 id=&quot;ssh-key-1&quot;&gt;什么是SSH key&lt;/h4&gt;
+
+&lt;p&gt;SSH key是一个简单而又安全地连接到你的远端设备的方式，通过它你不需要在网络上传输你的密码。SSH key有public和private两部分，其中private部分存储在你的设备本地，而public部分则需要上传到远程设备上。当你通过ssh连接到远程设备上时，只有私钥和公钥匹配上才能登陆。&lt;/p&gt;
+
+&lt;h4 id=&quot;ssh-key-2&quot;&gt;如何创建SSH key&lt;/h4&gt;
+
+&lt;p&gt;第一步，首先查看你本地设备上是否有SSH keys。你可以运行以下指令：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;cd ~/.ssh&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;ls *.pub&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;如果没有任何输出，说明你需要创建一个新的SSH key：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;ssh-keygen -t rsa -C &amp;quot;email@example.com&amp;quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;后面的email请替换成你自己的email。接着你就会看到类似下面的信息：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;Generating public/private rsa key pair.&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;Enter file in which to save the key (/Users/you/.ssh/id_rsa): [Press enter]&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;Enter passphrase (empty for no passphrase): [Type a passphrase]&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;Enter same passphrase again: [Type passphrase again]&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;Now your SSH key will be generated.&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;Your identification has been saved in /Users/your_username/.ssh/id_rsa.&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;Your public key has been saved in /Users/your_username/.ssh/id_rsa.pub.&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;The key fingerprint is:&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;01:0f:f4:3b:ca:85:d6:17:a1:7d:f0:68:9d:f0:a2:db email@example.com&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;比如我的公钥就生成于：/Users/Jerry/.ssh/id_rsa.pub，接下来就可以把公钥内容传到Digital Ocean上了，如下图所示：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/DigitalOcean_sshkey.png&quot; alt=&quot;Digital Ocean SSH key&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;shadowsocks&quot;&gt;Shadowsocks&lt;/h2&gt;
+
+&lt;p&gt;其实在shadowsocks的&lt;a href=&quot;https://github.com/shadowsocks/shadowsocks&quot;&gt;github主页&lt;/a&gt;上有很详细地说明，但是为了本文的完整性，还是将这些操作放在本文中以供参考。&lt;/p&gt;
+
+&lt;h3 id=&quot;shadowsocks-1&quot;&gt;在服务器端安装shadowsocks&lt;/h3&gt;
+
+&lt;p&gt;首先需要远程登录到Digital Ocean的主机上，我租用的San Francisco的机房IP地址是104.236.177.232。而因为之前已经建好了SSH Key，所以直接用root用户登录即可：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;ssh root@104.236.177.232&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;在 Debian / Ubuntu 下 安装shadowsocks&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;apt-get install python-pip&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;pip install shadowsocks&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;我在实际安装下发现很多依赖缺失，所以需要先执行一下：apt-get update。另外也有一些同学会选择CentOS的服务器，附上在CentOS下安装shadowsocks的方法：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;yum install python-setuptools &amp;amp;&amp;amp; easy_install pip&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;pip install shadowsocks&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;shadowsocks-2&quot;&gt;启动shadowsocks服务&lt;/h3&gt;
+
+&lt;p&gt;安装好shadowsocks以后，启动shadowsocks服务可以通过以下指令：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;ssserver -p 8836 -k `password` -m rc4-md5&lt;/span&gt;
+
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;或者可以通过以下指令在后台启动shadowsocks的服务：
+&lt;span class=&quot;go&quot;&gt;ssserver -p 8836 -k `password` -m rc4-md5 -d start&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;ssserver -p 8836 -k `password` -m rc4-md5 -d stop&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;但上面的方法很不方便，我还是推荐使用配置文件的方法。首先创建一个文件：/etc/shadowsocks.json，示例如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;server&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;你的服务器ip地址&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;server_port&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8388&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;local_address&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;127.0.0.1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;local_port&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1080&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;password&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;你设置的密码&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;timeout&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;300&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;method&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;aes-256-cfb&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;fast_open&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;接下来你就可以使用下面这个指令启动服务&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;ssserver -c /etc/shadowsocks.json&lt;/span&gt;
+
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;或者在后台运行
+&lt;span class=&quot;go&quot;&gt;ssserver -c /etc/shadowsocks.json -d start&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;ssserver -c /etc/shadowsocks.json -d stop&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;shadowsocks-3&quot;&gt;使用shadowsocks客户端&lt;/h3&gt;
+
+&lt;p&gt;shadowsocks的客户端支持各大主流平台，而且客户端的配置一般都很简单，只需要配置一下服务器的ip地址和之前设置好的连接密码即可。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://sourceforge.net/projects/shadowsocksgui/files/dist/&quot;&gt;OS X&lt;/a&gt; / &lt;a href=&quot;https://sourceforge.net/projects/shadowsocksgui/files/dist/&quot;&gt;Windows&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/shadowsocks/shadowsocks/wiki/Ports-and-Clients#android&quot;&gt;Android&lt;/a&gt; / &lt;a href=&quot;https://github.com/shadowsocks/shadowsocks-iOS/wiki/Help&quot;&gt;iOS&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/shadowsocks/shadowsocks/wiki/Ports-and-Clients&quot;&gt;更多设备&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;参考资料&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/shadowsocks/shadowsocks&quot;&gt;Github Homepage for shadowsocks&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/shadowsocks/shadowsocks/wiki/Configuration-via-Config-File&quot;&gt;Configuration via Config File&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Sat, 24 Jan 2015 15:16:54 +0000</pubDate>
+        <link>http://jerryzou.com/posts/shadowsocks-with-digitalocean/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/shadowsocks-with-digitalocean/</guid>
+      </item>
+    
+      <item>
         <title>阿瞒究竟有没有杀伯奢？</title>
         <description>&lt;p&gt;阿瞒是曹操的小名，叫起来很亲切。我自幼喜欢孟德的雄才大略，小时候读《三国演义》一直把孟德当作主角，可惜他自古大多被演绎成奸恶之徒。&lt;/p&gt;
 
@@ -386,32 +505,32 @@
 
 &lt;p&gt;将原本的&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;VirtualHost&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;*:80&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    ServerAdmin zry656565@gmail.com
-    DocumentRoot &amp;quot;/Users/Jerry/Dev/apache/php_tester&amp;quot;
-    ServerName php_tester
-    ErrorLog &amp;quot;/Users/Jerry/Dev/apache/php_tester/log/sites-error_log&amp;quot;
-    CustomLog &amp;quot;/Users/Jerry/Dev/apache/php_tester/log/sites-access_log&amp;quot; common
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;Directory&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-        Options Indexes FollowSymLinks Includes ExecCGI
-        AllowOverride None
-        Order deny,allow
-        Allow from all
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;apacheconf&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;VirtualHost&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;*:80&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;ServerAdmin&lt;/span&gt; zry656565@gmail.com
+    &lt;span class=&quot;nb&quot;&gt;DocumentRoot&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;/Users/Jerry/Dev/apache/php_tester&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;ServerName&lt;/span&gt; php_tester
+    &lt;span class=&quot;nb&quot;&gt;ErrorLog&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;/Users/Jerry/Dev/apache/php_tester/log/sites-error_log&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;CustomLog&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;/Users/Jerry/Dev/apache/php_tester/log/sites-access_log&amp;quot;&lt;/span&gt; common
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;Directory&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nb&quot;&gt;Options&lt;/span&gt; Indexes FollowSymLinks Includes ExecCGI
+        &lt;span class=&quot;nb&quot;&gt;AllowOverride&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;None&lt;/span&gt;
+        &lt;span class=&quot;nb&quot;&gt;Order&lt;/span&gt; deny,allow
+        &lt;span class=&quot;nb&quot;&gt;Allow&lt;/span&gt; from &lt;span class=&quot;k&quot;&gt;all&lt;/span&gt;
     &lt;span class=&quot;nt&quot;&gt;&amp;lt;/Directory&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/VirtualHost&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;改成&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;VirtualHost&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;*:80&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    ServerAdmin zry656565@gmail.com
-    DocumentRoot &amp;quot;/Users/Jerry/Dev/apache/php_tester&amp;quot;
-    ServerName php_tester
-    ErrorLog &amp;quot;/Users/Jerry/Dev/apache/php_tester/log/sites-error_log&amp;quot;
-    CustomLog &amp;quot;/Users/Jerry/Dev/apache/php_tester/log/sites-access_log&amp;quot; common
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;Directory&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-        Options Indexes FollowSymLinks Includes ExecCGI
-        AllowOverride None
-        Require all granted
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;apacheconf&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;VirtualHost&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;*:80&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;ServerAdmin&lt;/span&gt; zry656565@gmail.com
+    &lt;span class=&quot;nb&quot;&gt;DocumentRoot&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;/Users/Jerry/Dev/apache/php_tester&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;ServerName&lt;/span&gt; php_tester
+    &lt;span class=&quot;nb&quot;&gt;ErrorLog&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;/Users/Jerry/Dev/apache/php_tester/log/sites-error_log&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;CustomLog&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;/Users/Jerry/Dev/apache/php_tester/log/sites-access_log&amp;quot;&lt;/span&gt; common
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;Directory&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nb&quot;&gt;Options&lt;/span&gt; Indexes FollowSymLinks Includes ExecCGI
+        &lt;span class=&quot;nb&quot;&gt;AllowOverride&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;None&lt;/span&gt;
+        &lt;span class=&quot;nb&quot;&gt;Require&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;all&lt;/span&gt; granted
     &lt;span class=&quot;nt&quot;&gt;&amp;lt;/Directory&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/VirtualHost&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
@@ -478,19 +597,19 @@
   &lt;li&gt;第三步，应用新的&lt;code&gt;.bash_profile&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;Terminal&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; ~/.bash_profile&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;Terminal$ source ~/.bash_profile&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h1 id=&quot;section-2&quot;&gt;如何使用&lt;/h1&gt;
 &lt;p&gt;如果svn服务器是:&lt;code&gt;https://svn.sinaapp.com/sjtubus/&lt;/code&gt;，那么下面的第一个参数请填写: &lt;code&gt;sjtubus&lt;/code&gt;
 如果通过上面那种方式安装好后，你可以进入你自己项目的根目录，接着这样使用：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;#部署&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#第一个参数是SAE上的项目名&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#第二个数字表示版本号，SAE支持1-10&lt;/span&gt;
-Terminal&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;sae-push.sh sjtubus 1
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;console&quot;&gt;&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;部署
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;第一个参数是SAE上的项目名
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;第二个数字表示版本号，SAE支持1-10
+&lt;span class=&quot;go&quot;&gt;Terminal$ sae-push.sh sjtubus 1&lt;/span&gt;
 
-&lt;span class=&quot;c&quot;&gt;#清空本地svn缓存&lt;/span&gt;
-Terminal&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;sae-clean.sh&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;清空本地svn缓存
+&lt;span class=&quot;go&quot;&gt;Terminal$ sae-clean.sh&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h1 id=&quot;section-3&quot;&gt;成功案例&lt;/h1&gt;
 &lt;ul&gt;
@@ -799,41 +918,6 @@ svn commit -m &lt;span class=&quot;s2&quot;&gt;&amp;quot;modify&amp;quot;&lt;/sp
         <pubDate>Sun, 07 Sep 2014 18:11:53 +0000</pubDate>
         <link>http://jerryzou.com/posts/usePygments/</link>
         <guid isPermaLink="true">http://jerryzou.com/posts/usePygments/</guid>
-      </item>
-    
-      <item>
-        <title>小型局域网的多路由配置</title>
-        <description>&lt;p&gt;今天刚回到家，我妈就找到我说公司里的几台无线路由用不了，在同一时刻只能用一个路由，其他的都得拔掉。我第一反应就是ip冲突了，但是感觉很麻烦的样子，因为要合理管理公司里的网络，肯定需要一个网管来分配网段嘛。可是老妈说急用啊，这次一定要搞好！没办法，硬着头皮上吧！&lt;/p&gt;
-
-&lt;h1 id=&quot;section&quot;&gt;问题&lt;/h1&gt;
-&lt;p&gt;使得6个无线路由可以同时正常工作。
-#情景
-从Modem出来的网线接到交换机A上，从交换机中接到2个路由器，并同时接上交换机B；从交换机B中再接到4个路由器上。下面是图示：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/netconfig.png&quot; alt=&quot;请输入图片描述&quot; /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;section-1&quot;&gt;解决&lt;/h1&gt;
-&lt;p&gt;其实在这个场景中，6个路由器是平级的，并不需要设置二级路由，所以设置非常简单。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;WAN口设置：&lt;/li&gt;
-  &lt;li&gt;IP: 192.168.1.x (x!=1 &amp;amp;&amp;amp; x &amp;gt;= 0 &amp;amp;&amp;amp; x &amp;lt;= 255) ——&amp;gt; 6个路由器的x不可重复，每个路由器对下都有一个各自的子网，对上需要有唯一的地址来收发数据，即IP地址。x!=1是为了防止和Modem的IP地址冲突。&lt;/li&gt;
-  &lt;li&gt;子网掩码: 255.255.255.0&lt;/li&gt;
-  &lt;li&gt;网关: 192.168.1.1 ——&amp;gt; Modem一般都是192.168.1.1，如果不是请修改成Modem的地址。&lt;/li&gt;
-  &lt;li&gt;LAN口设置：&lt;/li&gt;
-  &lt;li&gt;IP: 192.168.y.1 (y!=1 &amp;amp;&amp;amp; y &amp;gt;= 0 &amp;amp;&amp;amp; y &amp;lt;= 255) ——&amp;gt; LAN口是路由器对下的接口，Client可以通过LAN口的IP地址来访问路由器。&lt;/li&gt;
-  &lt;li&gt;子网掩码: 255.255.255.0&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;我觉得比较好的实践是使得 x === y。&lt;/strong&gt; &lt;/p&gt;
-
-&lt;h1 id=&quot;section-2&quot;&gt;总结&lt;/h1&gt;
-&lt;p&gt;第一次认真地思考了一下这个问题，肯定有理解不到位的地方，欢迎拍砖。另外了解了子网掩码、Modem和路由的一些常识后，感觉很有趣。可惜当初的计算机网络课没有好好上，有点后悔啊。&lt;/p&gt;
-
-</description>
-        <pubDate>Sat, 02 Aug 2014 00:00:00 +0000</pubDate>
-        <link>http://jerryzou.com/posts/networkConfig/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/networkConfig/</guid>
       </item>
     
   </channel>

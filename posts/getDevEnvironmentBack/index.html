@@ -178,32 +178,32 @@
 
 <p>将原本的</p>
 
-<div class="highlight"><pre><code class="xml"><span class="nt">&lt;VirtualHost</span> <span class="err">*:80</span><span class="nt">&gt;</span>
-    ServerAdmin zry656565@gmail.com
-    DocumentRoot &quot;/Users/Jerry/Dev/apache/php_tester&quot;
-    ServerName php_tester
-    ErrorLog &quot;/Users/Jerry/Dev/apache/php_tester/log/sites-error_log&quot;
-    CustomLog &quot;/Users/Jerry/Dev/apache/php_tester/log/sites-access_log&quot; common
-    <span class="nt">&lt;Directory</span> <span class="nt">/&gt;</span>
-        Options Indexes FollowSymLinks Includes ExecCGI
-        AllowOverride None
-        Order deny,allow
-        Allow from all
+<div class="highlight"><pre><code class="apacheconf"><span class="nt">&lt;VirtualHost</span> <span class="s">*:80</span><span class="nt">&gt;</span>
+    <span class="nb">ServerAdmin</span> zry656565@gmail.com
+    <span class="nb">DocumentRoot</span> <span class="s2">&quot;/Users/Jerry/Dev/apache/php_tester&quot;</span>
+    <span class="nb">ServerName</span> php_tester
+    <span class="nb">ErrorLog</span> <span class="s2">&quot;/Users/Jerry/Dev/apache/php_tester/log/sites-error_log&quot;</span>
+    <span class="nb">CustomLog</span> <span class="s2">&quot;/Users/Jerry/Dev/apache/php_tester/log/sites-access_log&quot;</span> common
+    <span class="nt">&lt;Directory</span> <span class="s">/</span><span class="nt">&gt;</span>
+        <span class="nb">Options</span> Indexes FollowSymLinks Includes ExecCGI
+        <span class="nb">AllowOverride</span> <span class="k">None</span>
+        <span class="nb">Order</span> deny,allow
+        <span class="nb">Allow</span> from <span class="k">all</span>
     <span class="nt">&lt;/Directory&gt;</span>
 <span class="nt">&lt;/VirtualHost&gt;</span></code></pre></div>
 
 <p>改成</p>
 
-<div class="highlight"><pre><code class="xml"><span class="nt">&lt;VirtualHost</span> <span class="err">*:80</span><span class="nt">&gt;</span>
-    ServerAdmin zry656565@gmail.com
-    DocumentRoot &quot;/Users/Jerry/Dev/apache/php_tester&quot;
-    ServerName php_tester
-    ErrorLog &quot;/Users/Jerry/Dev/apache/php_tester/log/sites-error_log&quot;
-    CustomLog &quot;/Users/Jerry/Dev/apache/php_tester/log/sites-access_log&quot; common
-    <span class="nt">&lt;Directory</span> <span class="nt">/&gt;</span>
-        Options Indexes FollowSymLinks Includes ExecCGI
-        AllowOverride None
-        Require all granted
+<div class="highlight"><pre><code class="apacheconf"><span class="nt">&lt;VirtualHost</span> <span class="s">*:80</span><span class="nt">&gt;</span>
+    <span class="nb">ServerAdmin</span> zry656565@gmail.com
+    <span class="nb">DocumentRoot</span> <span class="s2">&quot;/Users/Jerry/Dev/apache/php_tester&quot;</span>
+    <span class="nb">ServerName</span> php_tester
+    <span class="nb">ErrorLog</span> <span class="s2">&quot;/Users/Jerry/Dev/apache/php_tester/log/sites-error_log&quot;</span>
+    <span class="nb">CustomLog</span> <span class="s2">&quot;/Users/Jerry/Dev/apache/php_tester/log/sites-access_log&quot;</span> common
+    <span class="nt">&lt;Directory</span> <span class="s">/</span><span class="nt">&gt;</span>
+        <span class="nb">Options</span> Indexes FollowSymLinks Includes ExecCGI
+        <span class="nb">AllowOverride</span> <span class="k">None</span>
+        <span class="nb">Require</span> <span class="k">all</span> granted
     <span class="nt">&lt;/Directory&gt;</span>
 <span class="nt">&lt;/VirtualHost&gt;</span></code></pre></div>
 
