@@ -12,7 +12,7 @@
 
 &lt;h2 id=&quot;digital-ocean&quot;&gt;Digital Ocean&lt;/h2&gt;
 
-&lt;p&gt;首先注册账号，激活邮箱自不必说。激活后就会收到$10的奖励，但是仅仅这样还是无法在Digital Ocean上创建虚拟主机。你需要绑定信用卡或者直接向你的账户里冲入$5才能正式开始使用。我的话，是在paypal账号上绑定了一张银联的卡来付款的，按这几天的汇率大概¥31左右吧。&lt;/p&gt;
+&lt;p&gt;首先注册账号，激活邮箱自不必说。激活后就会收到$10的奖励，但是仅仅这样还是无法在Digital Ocean上创建虚拟主机。你需要绑定信用卡或者直接向你的账户里冲入$5才能正式开始使用。我的话，是在paypal账号上绑定了一张银联的卡来付款的，按这几天的汇率大概¥31左右吧。（另外附上我的邀请链接，嘿嘿：&lt;a href=&quot;https://www.digitalocean.com/?refcode=09e0142818aa&quot;&gt;https://www.digitalocean.com/?refcode=09e0142818aa&lt;/a&gt;）&lt;/p&gt;
 
 &lt;p&gt;然后你就可以创建你的云主机了，选择 $5/mon 的那一档来支撑shadowsocks的服务足矣。经过测试San Francisco的机房延迟最低，平均在230ms左右。而Singapore的机房延迟在280ms，还有5%左右的丢包率。所以经过几次创建后又销毁重新创建地倒腾，我最后还是选择了使用San Francisco的节点。另外操作系统的话，我选择的是&lt;code&gt;ubuntu 14.04 x64&lt;/code&gt;的。&lt;/p&gt;
 
