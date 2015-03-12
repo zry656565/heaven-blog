@@ -1,4 +1,8 @@
+#jekyll build
 _site
-_site/*
+
+#temporary files produced by grunt
 _tmp
-_tmp/*
+
+#PhpStorm configure files
+.idea
