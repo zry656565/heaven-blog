@@ -1,6 +1,13 @@
+#jekyll build
 _site
-_site/*
+
+#grunt
 Gruntfile.js
 node_modules
-node_modules/*
 package.json
+
+#temporary files produced by grunt
+_tmp
+
+#PhpStorm configure files
+.idea
