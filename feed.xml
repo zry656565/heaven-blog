@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Jerry的乐园</title>
-    <description>在我看来，编程不仅仅是我与生俱来的使命，也是我快乐的源泉。我正在上海交通大学攻读软件工程硕士学位，同时我作为一名实习生，为Microsoft GBS BI工作。</description>
+    <description>我是一名生活在上海的程序员，正在上海交通大学攻读软件工程硕士学位。我喜欢前端的技术、喜欢研究不同的编程语言之间的联系与差异，最爱的编程语言是 javascript，而我的梦想是成为一名独立游戏开发者。</description>
     <link>http://jerryzou.com/</link>
     <atom:link href="http://jerryzou.com/feed.xml" rel="self" type="application/rss+xml" />
     

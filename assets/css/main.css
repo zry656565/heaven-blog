@@ -1,4 +1,4 @@
-* Base */
+/* Base */
 /* ----------------------------------------------------------*/
 
 * {
@@ -41,12 +41,22 @@ a:visited { color: #205caa; }
 }
 
 .side-part {
-  float: left;
-  min-width: 150px;
-  width: 25%;
-  padding: 0 0 0 20px;
+    float: left;
+    min-width: 150px;
+    width: 25%;
+    padding: 0 0 0 20px;
 }
 
+@media (max-width: 840px) {
+    .central-part {
+        width: 100%;
+    }
+
+    .side-part {
+        width: 100%;
+        padding: 0;
+    }
+}
 
 /* Layout Styles */
 /* ----------------------------------------------------------*/
@@ -86,6 +96,20 @@ a:visited { color: #205caa; }
   letter-spacing: -.5px;
 }
 
+#fork-me img{
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 0;
+}
+
+
+@media(max-width: 1220px) {
+    #fork-me {
+        display: none;
+    }
+}
+
 /* Site footer */
 
 .site-footer {
@@ -104,6 +128,12 @@ a:visited { color: #205caa; }
 .site-footer div.powerby img {
   height: 45px;
   border: 1px solid #999;
+}
+
+@media (max-width: 480px) {
+    .site-footer div.powerby {
+        display: none;
+    }
 }
 
 #github-pages-logo {
@@ -342,7 +372,6 @@ a:visited { color: #205caa; }
     width: 45%; /*fallback*/
     width: -webkit-calc(50% - 10px);
     width: -moz-calc(50% - 10px);
-    width: -o-calc(50% - 10px);
     width: calc(50% - 10px);
     margin-right: 0;
   }
