@@ -659,7 +659,8 @@ svn commit -m &lt;span class=&quot;s2&quot;&gt;&amp;quot;modify&amp;quot;&lt;/sp
     
       <item>
         <title>上海交大校园巴士时刻表查询APP反馈信息入口</title>
-        <description>&lt;p&gt;上周上海交大校园巴士时刻表查询APP上线。为了更好地服务于同学，有任何建议和反馈都可以在本帖下留言。谢谢支持！&lt;/p&gt;
+        <description>&lt;p&gt;上周上海交大校园巴士时刻表查询APP上线（&lt;a href=&quot;http://sjtubus.sinaapp.com&quot;&gt;http://sjtubus.sinaapp.com&lt;/a&gt;）。为了更好地服务于同学，有任何建议和反馈都可以在本帖下留言。谢谢支持！
+另外本项目是开源项目，想查看源代码、提Issue或者做贡献，都可以访问：&lt;a href=&quot;https://github.com/zry656565/SJTU-Bus&quot;&gt;SJTU-Bus&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 03 Oct 2014 20:31:10 +0000</pubDate>
         <link>http://jerryzou.com/posts/sjtuBusFeedback/</link>
