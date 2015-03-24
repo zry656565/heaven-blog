@@ -6,3 +6,5 @@ _tmp
 
 #PhpStorm configure files
 .idea
+
+node_modules
