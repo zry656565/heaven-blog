@@ -471,3 +471,7 @@ a:visited { color: #205caa; }
   padding: 0 0 0 30px;
 }
 
+.ds-recent-comments {
+  font-size: 14px;
+}
+
