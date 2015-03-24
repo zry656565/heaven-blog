@@ -9,12 +9,13 @@
             Jerry的乐园 | 使用Digital Ocean和shadowsocks来科学上网
         </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="description" content="我是一名生活在上海的程序员，正在上海交通大学攻读软件工程硕士学位。我喜欢前端的技术、喜欢研究不同的编程语言之间的联系与差异，最爱的编程语言是 javascript，而我的梦想是成为一名独立游戏开发者。">
+    <meta name="description" content="我是一名生活在上海的程序员，正在上海交通大学攻读软件工程硕士学位。 我喜欢前端的技术、喜欢研究不同的编程语言之间的联系与差异，最爱的编程语言是 javascript， 而我的梦想是成为一名独立游戏开发者。
+">
     <link rel="canonical" href="http://jerryzou.com/posts/shadowsocks-with-digitalocean/">
     <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/build/css/style.min.css?v=1.0.2">
+    <link rel="stylesheet" href="/build/css/style.min.css?v=1.0.3">
 
     <!-- Baidu Analysis -->
     <script>
@@ -120,16 +121,16 @@
 
 <p>第一步，首先查看你本地设备上是否有SSH keys。你可以运行以下指令：</p>
 
-<div class="highlight"><pre><code class="console"><span class="go">cd ~/.ssh</span>
+<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">cd ~/.ssh</span>
 <span class="go">ls *.pub</span></code></pre></div>
 
 <p>如果没有任何输出，说明你需要创建一个新的SSH key：</p>
 
-<div class="highlight"><pre><code class="console"><span class="go">ssh-keygen -t rsa -C &quot;email@example.com&quot;</span></code></pre></div>
+<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">ssh-keygen -t rsa -C &quot;email@example.com&quot;</span></code></pre></div>
 
 <p>后面的email请替换成你自己的email。接着你就会看到类似下面的信息：</p>
 
-<div class="highlight"><pre><code class="console"><span class="go">Generating public/private rsa key pair.</span>
+<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">Generating public/private rsa key pair.</span>
 <span class="go">Enter file in which to save the key (/Users/you/.ssh/id_rsa): [Press enter]</span>
 <span class="go">Enter passphrase (empty for no passphrase): [Type a passphrase]</span>
 <span class="go">Enter same passphrase again: [Type passphrase again]</span>
@@ -151,23 +152,23 @@
 
 <p>首先需要远程登录到Digital Ocean的主机上，我租用的San Francisco的机房IP地址是104.236.177.232。而因为之前已经建好了SSH Key，所以直接用root用户登录即可：</p>
 
-<div class="highlight"><pre><code class="console"><span class="go">ssh root@104.236.177.232</span></code></pre></div>
+<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">ssh root@104.236.177.232</span></code></pre></div>
 
 <p>在 Debian / Ubuntu 下 安装shadowsocks</p>
 
-<div class="highlight"><pre><code class="console"><span class="go">apt-get install python-pip</span>
+<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">apt-get install python-pip</span>
 <span class="go">pip install shadowsocks</span></code></pre></div>
 
 <p>我在实际安装下发现很多依赖缺失，所以需要先执行一下：apt-get update。另外也有一些同学会选择CentOS的服务器，附上在CentOS下安装shadowsocks的方法：</p>
 
-<div class="highlight"><pre><code class="console"><span class="go">yum install python-setuptools &amp;&amp; easy_install pip</span>
+<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">yum install python-setuptools &amp;&amp; easy_install pip</span>
 <span class="go">pip install shadowsocks</span></code></pre></div>
 
 <h3 id="shadowsocks-2">启动shadowsocks服务</h3>
 
 <p>安装好shadowsocks以后，启动shadowsocks服务可以通过以下指令：</p>
 
-<div class="highlight"><pre><code class="console"><span class="go">ssserver -p 8836 -k `password` -m rc4-md5</span>
+<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">ssserver -p 8836 -k `password` -m rc4-md5</span>
 
 <span class="gp">#</span>或者可以通过以下指令在后台启动shadowsocks的服务：
 <span class="go">ssserver -p 8836 -k `password` -m rc4-md5 -d start</span>
@@ -175,7 +176,7 @@
 
 <p>但上面的方法很不方便，我还是推荐使用配置文件的方法。首先创建一个文件：/etc/shadowsocks.json，示例如下：</p>
 
-<div class="highlight"><pre><code class="json"><span class="p">{</span>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
     <span class="nt">&quot;server&quot;</span><span class="p">:</span><span class="s2">&quot;你的服务器ip地址&quot;</span><span class="p">,</span>
     <span class="nt">&quot;server_port&quot;</span><span class="p">:</span><span class="mi">8388</span><span class="p">,</span>
     <span class="nt">&quot;local_address&quot;</span><span class="p">:</span> <span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span>
@@ -188,7 +189,7 @@
 
 <p>接下来你就可以使用下面这个指令启动服务</p>
 
-<div class="highlight"><pre><code class="console"><span class="go">ssserver -c /etc/shadowsocks.json</span>
+<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">ssserver -c /etc/shadowsocks.json</span>
 
 <span class="gp">#</span>或者在后台运行
 <span class="go">ssserver -c /etc/shadowsocks.json -d start</span>

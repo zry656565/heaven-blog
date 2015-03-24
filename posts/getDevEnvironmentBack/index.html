@@ -9,12 +9,13 @@
             Jerry的乐园 | 发生在升级OS X Yosemite后：修复各种开发环境
         </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="description" content="我是一名生活在上海的程序员，正在上海交通大学攻读软件工程硕士学位。我喜欢前端的技术、喜欢研究不同的编程语言之间的联系与差异，最爱的编程语言是 javascript，而我的梦想是成为一名独立游戏开发者。">
+    <meta name="description" content="我是一名生活在上海的程序员，正在上海交通大学攻读软件工程硕士学位。 我喜欢前端的技术、喜欢研究不同的编程语言之间的联系与差异，最爱的编程语言是 javascript， 而我的梦想是成为一名独立游戏开发者。
+">
     <link rel="canonical" href="http://jerryzou.com/posts/getDevEnvironmentBack/">
     <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/build/css/style.min.css?v=1.0.2">
+    <link rel="stylesheet" href="/build/css/style.min.css?v=1.0.3">
 
     <!-- Baidu Analysis -->
     <script>
@@ -132,14 +133,14 @@
 
 <p>Homebrew的运行离不开Ruby，升级后运行不了的原因其实也就是内置于Yosemite的Ruby版本更新啦：<code>1.8 =&gt; 2.0</code>。想要运行brew就会得到如下错误信息：</p>
 
-<div class="highlight"><pre><code class="shell-session"><span class="go">/usr/local/Library/brew.rb: /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin/ruby: bad interpreter: No such file or directory</span></code></pre></div>
+<div class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">/usr/local/Library/brew.rb: /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin/ruby: bad interpreter: No such file or directory</span></code></pre></div>
 
 <p>然后在网上找到解决办法如下：</p>
 
 <h5 id="brew">2.1 更新<code>brew</code>脚本</h5>
 <p>用你喜欢的编辑器打开<code>/usr/local/bin/brew</code>，然后将<code>brew</code>检测系统的一段代码注释掉，具体如下所示：</p>
 
-<div class="highlight"><pre><code class="ruby"><span class="c1">#BREW_SYSTEM=$(uname -s | tr &quot;[:upper:]&quot; &quot;[:lower:]&quot;)</span>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#BREW_SYSTEM=$(uname -s | tr &quot;[:upper:]&quot; &quot;[:lower:]&quot;)</span>
 <span class="c1">#if [ &quot;$BREW_SYSTEM&quot; = &quot;darwin&quot; ]</span>
 <span class="c1">#then</span>
 <span class="c1">#    exec &quot;$BREW_LIBRARY_DIRECTORY/brew.rb&quot; &quot;$@&quot;</span>
@@ -151,7 +152,7 @@
 
 <p>Homebrew会通过<code>Ruby 1.8</code>的路径去找Ruby的运行环境，可惜在Yosemite里它再也找不到了。所以在Homebrew做出一定的改变以前，我们需要骗骗它，建立一个假的<code>Ruby 1.8</code>的地址，其实指向系统的<code>Ruby 2.0</code>运行环境。</p>
 
-<div class="highlight"><pre><code class="shell-session"><span class="go">sudo mkdir -p /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin</span>
+<div class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">sudo mkdir -p /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin</span>
 <span class="go">sudo ln -s /usr/bin/ruby /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin/ruby</span></code></pre></div>
 
 <h3 id="nodejs">3. node.js</h3>
@@ -168,7 +169,7 @@
 
 <p>首先打开<code>/private/etc/apache2/httpd.conf</code>发现似乎恢复默认的设置了。重新将以下两行代码解注：</p>
 
-<div class="highlight"><pre><code class="shell-session"><span class="go">Include /private/etc/apache2/extra/httpd-vhosts.conf</span>
+<div class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">Include /private/etc/apache2/extra/httpd-vhosts.conf</span>
 <span class="go">...</span>
 <span class="go">LoadModule php5_module libexec/apache2/libphp5.so</span></code></pre></div>
 
@@ -178,7 +179,7 @@
 
 <p>将原本的</p>
 
-<div class="highlight"><pre><code class="apacheconf"><span class="nt">&lt;VirtualHost</span> <span class="s">*:80</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><code class="language-apacheconf" data-lang="apacheconf"><span class="nt">&lt;VirtualHost</span> <span class="s">*:80</span><span class="nt">&gt;</span>
     <span class="nb">ServerAdmin</span> zry656565@gmail.com
     <span class="nb">DocumentRoot</span> <span class="s2">&quot;/Users/Jerry/Dev/apache/php_tester&quot;</span>
     <span class="nb">ServerName</span> php_tester
@@ -194,7 +195,7 @@
 
 <p>改成</p>
 
-<div class="highlight"><pre><code class="apacheconf"><span class="nt">&lt;VirtualHost</span> <span class="s">*:80</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><code class="language-apacheconf" data-lang="apacheconf"><span class="nt">&lt;VirtualHost</span> <span class="s">*:80</span><span class="nt">&gt;</span>
     <span class="nb">ServerAdmin</span> zry656565@gmail.com
     <span class="nb">DocumentRoot</span> <span class="s2">&quot;/Users/Jerry/Dev/apache/php_tester&quot;</span>
     <span class="nb">ServerName</span> php_tester
@@ -213,7 +214,7 @@
 
 <p>MySQL目前还没有正式支持OS X Yosemite，所以在升级系统后会发现，MySQL的服务居然没有在后台启动。要解决这个问题只有手动启动MySQL的服务，建议在<code>~/.bash_profile</code>中加入如下脚本，然后用<code>source ~/.bash_profile</code>启用脚本。</p>
 
-<div class="highlight"><pre><code class="bash"><span class="nb">export </span><span class="nv">MYSQL_HOME</span><span class="o">=</span>/usr/local/mysql/bin
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">export </span><span class="nv">MYSQL_HOME</span><span class="o">=</span>/usr/local/mysql/bin
 <span class="nb">alias </span><span class="nv">start_mysql</span><span class="o">=</span><span class="s1">&#39;sudo $MYSQL_HOME/mysqld_safe &amp;&#39;</span>
 <span class="nb">alias </span><span class="nv">stop_mysql</span><span class="o">=</span><span class="s1">&#39;sudo $MYSQL_HOME/mysqladmin shutdown&#39;</span></code></pre></div>
 

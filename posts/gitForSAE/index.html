@@ -9,12 +9,13 @@
             Jerry的乐园 | 极速地将git项目部署到SAE的svn服务器上
         </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="description" content="我是一名生活在上海的程序员，正在上海交通大学攻读软件工程硕士学位。我喜欢前端的技术、喜欢研究不同的编程语言之间的联系与差异，最爱的编程语言是 javascript，而我的梦想是成为一名独立游戏开发者。">
+    <meta name="description" content="我是一名生活在上海的程序员，正在上海交通大学攻读软件工程硕士学位。 我喜欢前端的技术、喜欢研究不同的编程语言之间的联系与差异，最爱的编程语言是 javascript， 而我的梦想是成为一名独立游戏开发者。
+">
     <link rel="canonical" href="http://jerryzou.com/posts/gitForSAE/">
     <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/build/css/style.min.css?v=1.0.2">
+    <link rel="stylesheet" href="/build/css/style.min.css?v=1.0.3">
 
     <!-- Baidu Analysis -->
     <script>
@@ -115,7 +116,7 @@
   <li>第二步，将以下内容添加到<code>~/.bash_profile</code>下</li>
 </ul>
 
-<div class="highlight"><pre><code class="bash"><span class="c"># Git for SAE</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># Git for SAE</span>
 <span class="nb">export </span><span class="nv">GIT_FOR_SAE_ROOT</span><span class="o">=</span>/Users/Jerry/Dev/git-for-SAE/ <span class="c">#此处就是你刚刚放置clone下来的项目路径</span>
 <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$GIT_FOR_SAE_ROOT</span>:<span class="nv">$PATH</span></code></pre></div>
 
@@ -123,13 +124,13 @@
   <li>第三步，应用新的<code>.bash_profile</code></li>
 </ul>
 
-<div class="highlight"><pre><code class="console"><span class="go">Terminal$ source ~/.bash_profile</span></code></pre></div>
+<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">Terminal$ source ~/.bash_profile</span></code></pre></div>
 
 <h1 id="section-2">如何使用</h1>
 <p>如果svn服务器是:<code>https://svn.sinaapp.com/sjtubus/</code>，那么下面的第一个参数请填写: <code>sjtubus</code>
 如果通过上面那种方式安装好后，你可以进入你自己项目的根目录，接着这样使用：</p>
 
-<div class="highlight"><pre><code class="console"><span class="gp">#</span>部署
+<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">#</span>部署
 <span class="gp">#</span>第一个参数是SAE上的项目名
 <span class="gp">#</span>第二个数字表示版本号，SAE支持1-10
 <span class="go">Terminal$ sae-push.sh sjtubus 1</span>
@@ -157,7 +158,7 @@
 <h3 id="svn">2.清除svn项目中的文件</h3>
 <p>接着为了防止之前的文件对git项目产生影响，我会将它们全部删除。反正既然采用这种管理手段，代码版本管理都在git项目中，所以应该不会造成不好的影响。但有一点需要注意的是根目录下的<code>config.yaml</code>文件是不能删除的，必须保留下来。需要执行的指令如下：</p>
 
-<div class="highlight"><pre><code class="bash">mv config.yaml ../config.yaml
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">mv config.yaml ../config.yaml
 rm -rf *
 mv ../config.yaml config.yaml
 svn st <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> xargs svn delete
@@ -166,14 +167,14 @@ svn commit -m <span class="s2">&quot;clean&quot;</span></code></pre></div>
 <h3 id="gitsvn">3.将git项目中的文件拷贝到svn项目中</h3>
 <p>接着就把git项目中的所有文件拷贝到<code>.svn</code>文件夹下的项目中，执行如下指令：</p>
 
-<div class="highlight"><pre><code class="bash">mv -f .svn ../.svn
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">mv -f .svn ../.svn
 cp -rf * <span class="s2">&quot;../.svn/$svn_dir_name&quot;</span>
 mv -f ../.svn .svn</code></pre></div>
 
 <h3 id="sae">4.提交至SAE服务器</h3>
 <p>通过<code>awk</code>判断svn项目中所有文件的状态，对所有<code>?</code>状态的文件，将它们加入到svn的版本管理中，并提交。</p>
 
-<div class="highlight"><pre><code class="bash">svn st <span class="p">|</span> awk <span class="s1">&#39;{if ( $1 == &quot;?&quot;) { print $2 }}&#39;</span> <span class="p">|</span> xargs svn add
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">svn st <span class="p">|</span> awk <span class="s1">&#39;{if ( $1 == &quot;?&quot;) { print $2 }}&#39;</span> <span class="p">|</span> xargs svn add
 svn commit -m <span class="s2">&quot;modify&quot;</span></code></pre></div>
 
 <p>就这样大功告成啦，总共源码也只有60多行，有兴趣的朋友可以去看看源码，也可以fork<a href="https://github.com/zry656565/git-for-SAE">我的项目</a>并做一些贡献。</p>

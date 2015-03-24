@@ -9,12 +9,13 @@
             Jerry的乐园 | Javascript中的一种深复制实现
         </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="description" content="我是一名生活在上海的程序员，正在上海交通大学攻读软件工程硕士学位。我喜欢前端的技术、喜欢研究不同的编程语言之间的联系与差异，最爱的编程语言是 javascript，而我的梦想是成为一名独立游戏开发者。">
+    <meta name="description" content="我是一名生活在上海的程序员，正在上海交通大学攻读软件工程硕士学位。 我喜欢前端的技术、喜欢研究不同的编程语言之间的联系与差异，最爱的编程语言是 javascript， 而我的梦想是成为一名独立游戏开发者。
+">
     <link rel="canonical" href="http://jerryzou.com/posts/deepcopy/">
     <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/build/css/style.min.css?v=1.0.2">
+    <link rel="stylesheet" href="/build/css/style.min.css?v=1.0.3">
 
     <!-- Baidu Analysis -->
     <script>
@@ -102,7 +103,7 @@
   <article class="post-content">
   <p>要实现深复制有很多办法，比如最简单的办法有：</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">cloneObj</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">obj</span><span class="p">));</span></code></pre></div>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">cloneObj</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">obj</span><span class="p">));</span></code></pre></div>
 
 <p>上面这种方法好处是非常简单易用，但是坏处也显而易见，这会抛弃对象的constructor，也就是深复制之后，无论这个对象原本的构造函数是什么，在深复制之后都会变成Object。另外诸如<code>RegExp</code>对象是无法通过这种方式深复制的。</p>
 
@@ -114,7 +115,7 @@
 
 <p>最重要的一个函数：</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">clone</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">clone</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">Constructor</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">constructor</span><span class="p">;</span>
     <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Constructor</span><span class="p">();</span>
 
@@ -135,7 +136,7 @@
 
 <p>定义在<code>Object.prototype</code>上的<code>clone()</code>函数是整个方法的核心，对于任意一个非js预定义的对象，都会调用这个函数。而对于所有js预定义的对象，如<code>Number</code>,<code>Array</code>等，我们就要实现一个<strong>辅助<code>clone()</code>函数</strong>来实现完整的克隆过程：</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="cm">/* Method of Array */</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="cm">/* Method of Array */</span>
 <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">clone</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">thisArr</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">valueOf</span><span class="p">();</span>
     <span class="kd">var</span> <span class="nx">newArr</span> <span class="o">=</span> <span class="p">[];</span>

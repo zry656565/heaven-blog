@@ -9,12 +9,13 @@
             Jerry的乐园 | 深入了解Javascript模块化编程
         </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="description" content="我是一名生活在上海的程序员，正在上海交通大学攻读软件工程硕士学位。我喜欢前端的技术、喜欢研究不同的编程语言之间的联系与差异，最爱的编程语言是 javascript，而我的梦想是成为一名独立游戏开发者。">
+    <meta name="description" content="我是一名生活在上海的程序员，正在上海交通大学攻读软件工程硕士学位。 我喜欢前端的技术、喜欢研究不同的编程语言之间的联系与差异，最爱的编程语言是 javascript， 而我的梦想是成为一名独立游戏开发者。
+">
     <link rel="canonical" href="http://jerryzou.com/posts/jsmodular/">
     <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/build/css/style.min.css?v=1.0.2">
+    <link rel="stylesheet" href="/build/css/style.min.css?v=1.0.3">
 
     <!-- Baidu Analysis -->
     <script>
@@ -115,7 +116,7 @@
 
 <p>这是一种让一切变为可能的基本结构，同时它也是Javascript<strong>最棒的特性</strong>。我们将简单地创建一个匿名函数并立即执行它。所有的代码将跑在这个函数内，生存在一个提供<strong>私有化</strong>的闭包中，它足以使得这些闭包中的变量能够贯穿我们的应用的整个生命周期。</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="c1">// ... all vars and functions are in this scope only</span>
     <span class="c1">// still maintains access to all globals</span>
 <span class="p">}());</span></code></pre></div>
@@ -128,14 +129,14 @@
 
 <p>幸运的是，我们的匿名函数提供了简单的变通方法。只要将全局变量作为参数传递到我们的匿名函数中，就可以得到比隐式全局变量更<strong>清晰</strong>又<strong>快速</strong>的代码了。下面是示例：</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">,</span> <span class="nx">YAHOO</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">,</span> <span class="nx">YAHOO</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// now have access to globals jQuery (as $) and YAHOO in this code</span>
 <span class="p">}(</span><span class="nx">jQuery</span><span class="p">,</span> <span class="nx">YAHOO</span><span class="p">));</span></code></pre></div>
 
 <h3 id="section-3">模块导出</h3>
 <p>有时你不仅想要使用全局变量，你还想要声明它们，以供反复使用。我们可以很容易地通过导出它们来做到这一点——通过匿名函数的<strong>返回值</strong>。这样做将会完成一个基本的模块化模式雏形，接下来会是一个完整的例子：</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">MODULE</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">MODULE</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">my</span> <span class="o">=</span> <span class="p">{},</span>
         <span class="nx">privateVariable</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 
@@ -162,7 +163,7 @@
 
 <p>整个模块必须在一个文件中是模块化模式的一个限制。任何一个参与大型项目的人都会明白将js拆分多个文件的价值。幸运的是，我们拥有一个很棒的实现来<strong>放大模块</strong>。首先，我们导入一个模块，并为它添加属性，最后再导出它。下面是一个例子——从原本的<code>MODULE</code>中放大它：</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">MODULE</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">my</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">MODULE</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">my</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">my</span><span class="p">.</span><span class="nx">anotherMethod</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
         <span class="c1">// added method...</span>
     <span class="p">};</span>
@@ -176,7 +177,7 @@
 
 <p>我们的上面例子需要我们的初始化模块最先被执行，然后放大模块才能执行，当然有时这可能也不一定是必需的。Javascript应用可以做到的、用来提升性能的、最棒的事之一就是异步执行脚本。我们可以创建灵活的多部分模块并通过<strong>宽放大模式</strong>使它们可以以任意顺序加载。每一个文件都需要按下面的结构组织：</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">MODULE</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">my</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">MODULE</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">my</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// add capabilities...</span>
 
     <span class="k">return</span> <span class="nx">my</span><span class="p">;</span>
@@ -187,7 +188,7 @@
 <h3 id="section-7">紧放大模式</h3>
 <p>宽放大模式非常不错，但它也会给你的模块带来一些限制。最重要的是，你不能安全地覆盖模块的属性。你也无法在初始化的时候，使用其他文件中的属性（但你可以在运行的时候用）。<strong>紧放大模式</strong>包含了一个加载的顺序序列，并且允许<strong>覆盖属性</strong>。这儿是一个简单的例子（放大我们的原始<code>MODULE</code>）：</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">MODULE</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">my</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">MODULE</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">my</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">old_moduleMethod</span> <span class="o">=</span> <span class="nx">my</span><span class="p">.</span><span class="nx">moduleMethod</span><span class="p">;</span>
 
     <span class="nx">my</span><span class="p">.</span><span class="nx">moduleMethod</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
@@ -201,7 +202,7 @@
 
 <h3 id="section-8">克隆与继承</h3>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">MODULE_TWO</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">old</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">MODULE_TWO</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">old</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">my</span> <span class="o">=</span> <span class="p">{},</span>
         <span class="nx">key</span><span class="p">;</span>
 
@@ -224,7 +225,7 @@
 <h3 id="section-9">跨文件私有变量</h3>
 <p>把一个模块分到多个文件中有一个重大的限制：每一个文件都维护了各自的私有变量，并且无法访问到其他文件的私有变量。但这个问题是可以解决的。这里有一个维护跨文件私有变量的、宽放大模块的例子：</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">MODULE</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">my</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">MODULE</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">my</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">_private</span> <span class="o">=</span> <span class="nx">my</span><span class="p">.</span><span class="nx">_private</span> <span class="o">=</span> <span class="nx">my</span><span class="p">.</span><span class="nx">_private</span> <span class="o">||</span> <span class="p">{},</span>
         <span class="nx">_seal</span> <span class="o">=</span> <span class="nx">my</span><span class="p">.</span><span class="nx">_seal</span> <span class="o">=</span> <span class="nx">my</span><span class="p">.</span><span class="nx">_seal</span> <span class="o">||</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
             <span class="k">delete</span> <span class="nx">my</span><span class="p">.</span><span class="nx">_private</span><span class="p">;</span>
@@ -247,7 +248,7 @@
 <h3 id="section-10">子模块</h3>
 <p>我们的最后一种进阶模式是显而易见最简单的。创建子模块有许多优秀的实例。这就像是创建一般的模块一样：</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="nx">MODULE</span><span class="p">.</span><span class="nx">sub</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">MODULE</span><span class="p">.</span><span class="nx">sub</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">my</span> <span class="o">=</span> <span class="p">{};</span>
     <span class="c1">// ...</span>
 
@@ -264,7 +265,7 @@
 
 <p>作为结束，这里是一个子模块动态地把自身加载到它的父模块的例子（如果父模块不存在则创建它）。为了简洁，我把私有变量给去除了，当然加上私有变量也是很简单的啦。这种编程模式允许一整个复杂层级结构代码库通过子模块并行地完成加载。</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">UTIL</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">parent</span><span class="p">,</span> <span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">UTIL</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">parent</span><span class="p">,</span> <span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">my</span> <span class="o">=</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">ajax</span> <span class="o">=</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">ajax</span> <span class="o">||</span> <span class="p">{};</span>
 
     <span class="nx">my</span><span class="p">.</span><span class="nx">get</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">params</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>

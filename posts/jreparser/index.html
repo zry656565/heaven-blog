@@ -9,12 +9,13 @@
             Jerry的乐园 | 一款在线Javascript正则表达式测试器
         </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="description" content="我是一名生活在上海的程序员，正在上海交通大学攻读软件工程硕士学位。我喜欢前端的技术、喜欢研究不同的编程语言之间的联系与差异，最爱的编程语言是 javascript，而我的梦想是成为一名独立游戏开发者。">
+    <meta name="description" content="我是一名生活在上海的程序员，正在上海交通大学攻读软件工程硕士学位。 我喜欢前端的技术、喜欢研究不同的编程语言之间的联系与差异，最爱的编程语言是 javascript， 而我的梦想是成为一名独立游戏开发者。
+">
     <link rel="canonical" href="http://jerryzou.com/posts/jreparser/">
     <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/build/css/style.min.css?v=1.0.2">
+    <link rel="stylesheet" href="/build/css/style.min.css?v=1.0.3">
 
     <!-- Baidu Analysis -->
     <script>
@@ -110,7 +111,7 @@
 
 <p>关于怎么从用户的输入中提取正则表达式的过程多亏segmentfault的依云提点（<a href="http://segmentfault.com/q/1010000000494735">传送门</a>），有了如下的解决办法：</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="c1">//r是用户输入的字符串</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//r是用户输入的字符串</span>
 <span class="kd">var</span> <span class="nx">JTester</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">r</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">begin</span> <span class="o">=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">);</span>
     <span class="kd">var</span> <span class="nx">end</span> <span class="o">=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">lastIndexOf</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">);</span>
