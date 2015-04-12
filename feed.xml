@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>咀嚼</title>
+    <title>咀嚼之味</title>
     <description>我是一名生活在上海的程序员，正在上海交通大学攻读软件工程硕士学位。 我喜欢前端的技术、喜欢研究不同的编程语言之间的联系与差异，最爱的编程语言是 javascript， 而我的梦想是成为一名独立游戏开发者。
 </description>
     <link>http://jerryzou.com/</link>
     <atom:link href="http://jerryzou.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
-        <title>咀嚼</title>
-        <description>&lt;p&gt;今天起，本博客更名为咀嚼。&lt;/p&gt;
+        <title>咀嚼之味</title>
+        <description>&lt;p&gt;今天起，本博客更名为《咀嚼之味》。&lt;/p&gt;
 
 &lt;p&gt;最近实在忙得不行，都好久没有发博文了，看了看上一次po文已经是三个月之前的事了。我不太喜欢生活的一切被各种事情占满，因为我有更多自己想做的事情，自己想研究的东西。我喜欢去思考一些感兴趣的东西，而繁忙却把这一切都夺走了。各种跳出来的杂事不断逼迫我不得不东奔西走，为了应付好我生活中的各种事情，我感到精疲力尽。用操作系统的概念来说，就是频繁的进程调度是极其消耗资源的。&lt;/p&gt;
 
