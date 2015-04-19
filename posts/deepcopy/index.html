@@ -9,13 +9,12 @@
             Javascript中的一种深复制实现 | 咀嚼之味
         </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="description" content="我是一名生活在上海的程序员，正在上海交通大学攻读软件工程硕士学位。 我喜欢前端的技术、喜欢研究不同的编程语言之间的联系与差异，最爱的编程语言是 javascript， 而我的梦想是成为一名独立游戏开发者。
-">
+    <meta name="description" content="要实现深复制有很多办法，比如最简单的办法有：var cloneObj = JSON.parse(JSON.stringify(obj));上面这种方法好处是非常简单易用，但是坏处也显而易见，这会抛弃对象的constructor，也就是深复制之后，无论这个对象原本的构造函数是什么，在深复制之后都会变成Object。另外诸如`RegExp`对象是无法通过这种方式深复制的。所以这里我将介绍一种，我自认为很优美的深复制方法，当然可能也存在问题。如果你发现了我的实现方法有什么问题，请及时让我知道~ ">
     <link rel="canonical" href="http://jerryzou.com/posts/deepcopy/">
     <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/build/css/style.min.css?v=1.0.3">
+    <link rel="stylesheet" href="/release/style.02faf838.css">
 
     <!-- Baidu Analysis -->
     <script>
@@ -43,11 +42,6 @@
     
     <!-- handle external js files -->
     
-    
-    
-
-    <!-- handle external css files -->
-    
 </head>
 
 
@@ -69,9 +63,9 @@
           
         
           
-        
-          
           <a class="page-link" href="/about/">关于我</a>
+          
+        
           
         
           
