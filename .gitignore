@@ -1,6 +1,7 @@
 #jekyll & grunt build
 _site
 release
+_includes/head.html
 
 #temporary files produced by grunt
 .tmp
