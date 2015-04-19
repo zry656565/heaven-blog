@@ -3,6 +3,31 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        copy: {
+            includes: {
+                src: '_includes/head.raw.html',
+                dest: '_includes/head.html'
+            }
+        },
+        useminPrepare: {
+            html: '_includes/head.html',
+            options: {
+                root: '.',
+                dest: '.tmp'
+            }
+        },
+        filerev: {
+            files: {
+                src: ['<%= pkg.srcRoot %>/js/**/*.js', '.tmp/<%= pkg.dstRoot %>/style.css'],
+                dest: '<%= pkg.dstRoot %>'
+            }
+        },
+        usemin: {
+            html: '_includes/head.html',
+            options: {
+                assetsDirs: ['.tmp']
+            }
+        },
         shell: {
             jekyll_build: {
                 command: 'jekyll build'
@@ -11,56 +36,7 @@ module.exports = function(grunt) {
                 command: 'jekyll serve --watch'
             },
             clean_tmp: {
-                command: 'rm -r _tmp'
-            }
-        },
-        concat: {
-            options: {
-                separator: ';'
-            },
-            js: {
-                files: {
-                    '<%= pkg.dstRoot %>/js/jquery.min.js': '<%= pkg.srcRoot %>/js/lib/jquery-1.11.1.min.js',
-                    '<%= pkg.dstRoot %>/js/arbor.js': '<%= pkg.srcRoot %>/js/arbor.js',
-                    '<%= pkg.dstRoot %>/js/arbor-tween.js': '<%= pkg.srcRoot %>/js/arbor-tween.js',
-                    '<%= pkg.dstRoot %>/js/graphics.js': '<%= pkg.srcRoot %>/js/graphics.js',
-                    '<%= pkg.dstRoot %>/js/arbor_main.js': '<%= pkg.srcRoot %>/js/arbor_main.js'
-                }
-            },
-            css: {
-                files: {
-                    '_tmp/css/style.css': ['<%= pkg.srcRoot %>/css/*.css']
-                }
-            }
-        },
-        uglify: {
-            options: {
-                banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
-            },
-            targets: {
-                files: {
-                    
-                }
-            }
-        },
-        jshint: {
-            files: [],
-            options: {
-                //console: true,
-                //module: true
-            }
-        },
-        watch: {
-            files: ['<%= jshint.files %>'],
-            tasks: ['jshint', 'qunit']
-        },
-        cssmin: {
-            minify: {
-                expand: true,
-                cwd: '_tmp/css/',
-                src: ['*.css', '!*.min.css'],
-                dest: 'build/css/',
-                ext: '.min.css'
+                command: 'rm -r .tmp'
             }
         }
     });
@@ -68,12 +44,45 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-usemin');
+    grunt.loadNpmTasks('grunt-filerev');
 
-    // Default task(s).
-    grunt.registerTask('build', ['jshint', 'concat', 'uglify', 'cssmin', 'shell:clean_tmp', 'shell:jekyll_build']);
-    grunt.registerTask('serve', ['jshint', 'concat', 'uglify', 'cssmin', 'shell:clean_tmp', 'shell:jekyll_serve']);
-    grunt.registerTask('debug', ['shell:serve']);
+    grunt.task.registerTask('debug_test', 'A sample task that logs stuff.', function(arg1, arg2) {
+        //console.log(grunt.config('cssmin.generated'));
+        console.log(grunt.filerev.summary);
+    });
+
+    grunt.registerTask('build', [
+        'copy:includes',
+        'shell:jekyll_build'
+    ]);
+
+    grunt.registerTask('debug', [
+        'copy:includes',
+        'shell:jekyll_serve'
+    ]);
+
+    grunt.registerTask('release', [
+        'copy:includes',
+        'useminPrepare',
+        'concat:generated',
+        'cssmin:generated',
+        'filerev',
+        'usemin',
+        'shell:clean_tmp',
+        'shell:jekyll_build'
+    ]);
+
+    grunt.registerTask('serve', [
+        'copy:includes',
+        'useminPrepare',
+        'concat:generated',
+        'cssmin:generated',
+        'filerev',
+        'usemin',
+        'shell:clean_tmp',
+        'shell:jekyll_serve'
+    ]);
 };

@@ -8,7 +8,7 @@ duoshuo_comment: true
 
 <img src="{{ site.static_url }}/monkey.jpg" width="220" height="220" style="padding-left:50px; float:right;">
 
-你们好，我是邹润阳，英文名很朴素，叫做Jerry。我是一名生活在上海的程序员，正在上海交通大学攻读软件工程硕士学位。我喜欢前端的技术、喜欢研究不同的编程语言之间的联系与差异，最爱的编程语言是 **javascript**，而我的梦想是成为一名独立游戏开发者。
+你们好，我是邹润阳，英文名很朴素，叫做Jerry。我是一名生活在上海的程序员，正在上海交通大学攻读软件工程硕士学位。我喜欢前端的技术、喜欢研究不同的编程语言之间的联系与差异，最爱的编程语言是 **JavaScript**，而我的梦想是成为一名独立游戏开发者。
 
 我曾经在 **Microsoft GBS** 和 **[一起网](http://www.yiqixxx.com)** 担任前端实习生。
 

@@ -3,7 +3,6 @@ title: 简历
 permalink: /resume/
 nav: false
 requireJq: true
-requireJs: [/build/js/arbor.js, /build/js/arbor-tween.js, /build/js/graphics.js, /build/js/arbor_main.js]
 ---
 
 #教育经历
@@ -59,3 +58,7 @@ requireJs: [/build/js/arbor.js, /build/js/arbor-tween.js, /build/js/graphics.js,
 ##技能图谱
 
 <canvas id="skillboard" width="800" height="400"></canvas>
+<script src="/assets/js/lib/arbor/arbor.js"></script>
+<script src="/assets/js/lib/arbor/arbor-tween.js"></script>
+<script src="/assets/js/lib/arbor/graphics.js"></script>
+<script src="/assets/js/arbor_main.js"></script>
