@@ -21,6 +21,7 @@ static_url: "http://jerryblog-image.b0.upaiyun.com/blog"
 markdown: kramdown
 permalink: pretty
 highlighter: pygments
+exclude: [node_modules, .tmp, Gruntfile.js, _config, package.json]
 
 # default Front matter
 defaults:
