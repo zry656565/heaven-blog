@@ -8,7 +8,7 @@
             {{ site.title }}
         {% endif %}</title>
     <meta name="viewport" content="width=device-width">
-    <meta name="description" content="{{ site.description }}">
+    <meta name="description" content="{% if page.description %}{{ page.description }} {% else %} {{ site.description }} {% endif %}">
     <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
     <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
