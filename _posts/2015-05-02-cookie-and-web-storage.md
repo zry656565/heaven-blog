@@ -54,7 +54,8 @@ sessionStorage 与 localStorage 的接口类似，但保存数据的生命周期
 		<tr>
 			<td>与服务器端通信</td>
 			<td>每次都会携带在HTTP头中，如果使用cookie保存过多数据会带来性能问题</td>
-			<td colspan="2">仅在当前会话下有效，关闭页面或浏览器后被清除</td>
+			<td>在被显式清除前是永久存在的</td>
+			<td>仅在当前会话下有效，关闭页面或浏览器后被清除</td>
 		</tr>
 		<tr>
 			<td>易用性</td>
