@@ -1,5 +1,6 @@
 #jekyll build
 _site
+_includes
 
 #grunt
 Gruntfile.js
