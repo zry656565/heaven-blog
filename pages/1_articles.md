@@ -41,8 +41,6 @@ var $J = {
 };
 </script>
 
-<script src="/pages/articles.js"></script>
-
 <section class="label-section">
   <h2>标签列表</h2>
   <hr/>
@@ -51,10 +49,12 @@ var $J = {
 
 <section class="articles-section">
   <h2>文章列表</h2>
-  <input class="search-box" type="text" placeholder="搜索包含在标题中的关键词" />
+  <!--<input class="search-box" type="text" placeholder="搜索包含在标题中的关键词" />
   <div class="search-icon">
     <img src="{{ site.static_url }}/search_icon.png"/>
-  </div>
+  </div>-->
   <hr/>
   <div id="articles-list"></div>
 </section>
+
+<script src="/build/articles.js"></script>

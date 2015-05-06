@@ -35,21 +35,22 @@
      =====================================*/
 
     var Label = React.createClass({displayName: "Label",
-        getInitialState: function() {
-            return {selected: false};
-        },
-        handleClick: function(event) {
-            this.state.selected = true;
-            React.render(React.createElement(LabelList, {labels: $J.labels}), document.getElementById('label-list'));
-        },
+        //getInitialState: function() {
+        //    return {selected: false};
+        //},
+        //handleClick: function(event) {
+        //    this.state.selected = true;
+        //    React.render(<LabelList labels={$J.labels} />, document.getElementById('label-list'));
+        //},
         render: function() {
             var selected = '',
                 name = this.props.label.name;
-            if (name === $J.currentLabel || this.state.selected) {
+            if (name === $J.currentLabel) {
                 selected = 'select'
             }
             return (
-                React.createElement("span", {onClick: this.handleClick, className: "post-label " + selected}, name)
+                //<span onClick={this.handleClick} className={"post-label " + selected}>{name}</span>
+                React.createElement("a", {href: $J.baseUrl + name}, React.createElement("span", {className: "post-label " + selected}, name))
             );
         }
     });
