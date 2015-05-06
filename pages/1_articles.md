@@ -6,8 +6,7 @@ nav: true
 requireJq: true
 ---
 
-<script src="/assets/js/lib/react/react.js"></script>
-<script src="/assets/js/lib/react/JSXTransformer.js"></script>
+<script src="/assets/js/lib/react/react.min.js"></script>
 
 <script type="text/javascript">
 // prepare data from jekyll
@@ -42,7 +41,7 @@ var $J = {
 };
 </script>
 
-<script type="text/jsx" src="/pages/articles.jsx"></script>
+<script src="/pages/articles.js"></script>
 
 <section class="label-section">
   <h2>标签列表</h2>
