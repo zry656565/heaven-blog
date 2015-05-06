@@ -14,6 +14,13 @@ a         { color: #1abc9c; text-decoration: none; }
 a:hover   { text-decoration: underline; }
 a:visited { color: #205caa; }
 
+hr{
+  border:none;
+  border-bottom:1px solid #cfcfcf;
+  margin-bottom:10px;
+  *margin:-7px 0 2px;
+}
+
 /* Utility */
 
 .wrap:before,
@@ -220,62 +227,6 @@ a:visited { color: #205caa; }
 
 .ds-recent-comments {
   font-size: 14px;
-}
-
-/* Article Styles */
-/* ----------------------------------------------------------*/
-
-.label-section {
-  margin-bottom: 20px;
-}
-
-.label-section .post-label {
-  display: inline-block;
-  font-size: 14px;
-  color: #555;
-  background: #FFEFD5;
-  border: 1px solid #555;
-  border-radius: 2px;
-  padding: 1px 6px;
-  margin: 0 7px 7px 0;
-}
-
-.label-section .post-label.select {
-  color: #fff;
-  background: #f59b4d;
-}
-
-.articles {
-  list-style-type: none;
-  font-size: 14px;
-}
-
-.articles .article-title {
-  line-height: 1;
-}
-
-.articles .article-date {
-  color: #818181;
-  padding-right: 5px;
-}
-
-.articles-section h6 {
-  display: inline-block;
-}
-.articles-section .search-icon {
-  display: inline-block;
-  margin-left: 4px;
-  cursor: pointer;
-}
-.articles-section .search-icon img {
-  width: 14px;
-  height: 14px;
-}
-.articles-section .search-box {
-  display: inline-block;
-  font-size: 14px;
-  width: 170px;
-  margin-left: 20px;
 }
 
 /* Post styles */

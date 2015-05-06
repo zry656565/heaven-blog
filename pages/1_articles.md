@@ -6,27 +6,14 @@ nav: true
 requireJq: true
 ---
 
-<!-- Labels -->
-<!--*****************************-->
+<script src="/assets/js/lib/react/react.js"></script>
+<script src="/assets/js/lib/react/JSXTransformer.js"></script>
 
-<section class="label-section">
-  <h6>标签列表</h6>
-  <hr/>
-</section>
 <script type="text/javascript">
-// add all labels to the page
-(function($){
-  // usage: get param from url
-  $.urlParam = function(name){
-    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-    if (results==null){
-      return null;
-    }else{
-      return results[1] || 0;
-    } 
-  }
-
-  var labels = [
+// prepare data from jekyll
+var $J = {
+  baseUrl: "{{ site.baseurl }}/articles/?label=",
+  labels: [
     "显示全部",
     {% for post in site.posts %}
       {% if post.release %}
@@ -35,95 +22,40 @@ requireJq: true
         {% endfor %}
       {% endif %}
     {% endfor %}
-  ];
-  var tags = {
-    "显示全部": 1000
-  };
-  for (var i = 0; i < labels.length; i++) {
-    var t = tags[labels[i]];
-    tags[labels[i]] = t ? t+1 : 1;
-  }
-  labels = [];
-  for (var tag in tags) {
-    labels.push({
-      name: tag,
-      value: tags[tag]
-    })
-  };
-  labels.sort(function(a, b){
-    return b.value - a.value;
-  });
-  var label = decodeURI($.urlParam("label"));
-  for (i = 0; i < labels.length; i++) {
-    $('.label-section').append('<a href="{{ site.baseurl }}/articles/?label='+ labels[i].name +'"><span class="post-label'+ (label==labels[i].name?' select':'') +'">'+ labels[i].name +'</span></a>');
-  }
-})(jQuery);
+  ],
+  posts: [
+    {% for post in site.posts %}
+      {% if post.release %}
+      {
+        title: "{{ post.title }}",
+        date: "{{ post.date | date: "%Y-%m-%d" }}",
+        link: "{{ post.url | prepend: site.baseurl }}",
+        labels: [
+        {% for label in post.labels %}
+          "{{ label }}",
+        {% endfor %}
+        ]
+      },
+      {% endif %}
+    {% endfor %}
+  ]
+};
 </script>
 
-<!-- article section-->
-<!--*****************************-->
+<script type="text/jsx" src="/pages/articles.jsx"></script>
+
+<section class="label-section">
+  <h2>标签列表</h2>
+  <hr/>
+  <div id="label-list"></div>
+</section>
 
 <section class="articles-section">
-  <h6>文章列表</h6>
+  <h2>文章列表</h2>
   <input class="search-box" type="text" placeholder="搜索包含在标题中的关键词" />
   <div class="search-icon">
     <img src="{{ site.static_url }}/search_icon.png"/>
   </div>
   <hr/>
-  <ul class="articles">
-    {% for post in site.posts %}
-    {% if post.release %}
-      <li data-key="{{ post.key }}" data-show="true">
-        <p class="article">
-          <span class="article-date">{{ post.date | date: "%Y-%m-%d" }}</span>
-          <a class="article-title" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </p>
-      </li>
-    {% endif %}
-    {% endfor %}
-  </ul>
+  <div id="articles-list"></div>
 </section>
-<script type="text/javascript">
-(function($){
-  var posts = [
-    {% for post in site.posts %}
-    {% if post.release %}
-    {
-      key: "{{ post.key }}",
-      labels: [
-      {% for label in post.labels %}
-        "{{ label }}",
-      {% endfor %}
-      ]
-    },
-    {% endif %}
-    {% endfor %}
-  ];
-  var label = $.urlParam("label");
-  if (label) {
-    label = decodeURI(label);
-    if (label !== "显示全部") {
-      for (var i = 0; i < posts.length; i++) {
-        if (posts[i].labels.indexOf(label) == -1) {
-          $('[data-key='+ posts[i].key +']').removeAttr('data-show').hide();
-        }
-      }
-    }
-  }
-  // search box event
-  var doSearch = function(){
-    var text = $('.search-box').val();
-    $('.articles li').each(function(){
-      if ($(this).data('show')===true) {
-        $(this).show();
-        var title = $(this).find('.article-title').text();
-        if (title.toLowerCase().search(text.toLowerCase()) == -1) {
-          $(this).hide();
-        }
-      }
-    })
-  };
-  $('.search-box').change(doSearch);
-  $('.search-icon').click(doSearch);
-})(jQuery);
-</script>
