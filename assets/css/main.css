@@ -1,26 +1,25 @@
 /* Base */
 /* ----------------------------------------------------------*/
 
-* {
-  margin: 0;
-  padding: 0;
+html {
+  font-size: 16px;
 }
 
-html, body { height: 100%; }
-
 body {
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
-  font-weight: 300;
+  font:400 1em/1.8 Avenir, 'Hiragino Sans GB', 'Microsoft Yahei', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;
   background-color: #fdfdfd;
 }
 
-h1, h2, h3, h4, h5, h6 { font-size: 100%; font-weight: 400; }
-
-a         { color: #2a7ae2; text-decoration: none; }
-a:hover   { color: #000; text-decoration: underline; }
+a         { color: #1abc9c; text-decoration: none; }
+a:hover   { text-decoration: underline; }
 a:visited { color: #205caa; }
+
+hr{
+  border:none;
+  border-bottom:1px solid #cfcfcf;
+  margin-bottom:10px;
+  *margin:-7px 0 2px;
+}
 
 /* Utility */
 
@@ -28,34 +27,10 @@ a:visited { color: #205caa; }
 .wrap:after { content:""; display:table; }
 .wrap:after { clear: both; }
 .wrap {
-  max-width: 950px;
+  max-width: 1050px;
   padding: 0 30px;
   margin: 0 auto;
   zoom: 1;
-}
-
-.central-part {
-  float: left;
-  max-width: 750px;
-  width: calc(75% - 20px);
-}
-
-.side-part {
-    float: left;
-    min-width: 150px;
-    width: 25%;
-    padding: 0 0 0 20px;
-}
-
-@media (max-width: 840px) {
-    .central-part {
-        width: 100%;
-    }
-
-    .side-part {
-        width: 100%;
-        padding: 0;
-    }
 }
 
 /* Layout Styles */
@@ -76,7 +51,6 @@ a:visited { color: #205caa; }
   display: block;
   color: #333;
   font-size: 26px;
-  letter-spacing: -1px;
   float: left;
   line-height: 56px;
   position: relative;
@@ -93,58 +67,56 @@ a:visited { color: #205caa; }
 .site-nav .page-link {
   margin-left: 20px;
   color: #727272;
-  letter-spacing: -.5px;
 }
 
 #fork-me img{
-    position: absolute;
-    top: 0;
-    right: 0;
-    border: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 0;
+  width: calc((100% - 1050px)/2);
+  max-width: 149px;
 }
 
-
-@media(max-width: 1220px) {
-    #fork-me {
-        display: none;
-    }
+@media(max-width: 1250px) {
+  #fork-me {
+    display: none;
+  }
 }
 
 /* Site footer */
 
 .site-footer {
   border-top: 1px solid #e8e8e8;
-  padding: 15px 0;
+  padding: 10px 0 15px;
 }
 
-.site-footer p.powerby {
+.friend-links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.friend-links li {
+  display: inline;
+  padding: 0 10px;
+  border-right: 1px solid #333;
+}
+
+.friend-links li:last-child {
+  border: 0;
+}
+
+.friend-links a,
+.friend-links a:hover,
+.friend-links a:active {
+  color: #333;
+}
+
+.footer-text {
+  font-size: 0.8em;
   text-align: center;
-}
-
-.site-footer div.powerby {
-  text-align: center;
-}
-
-.site-footer div.powerby img {
-  height: 45px;
-  border: 1px solid #999;
-}
-
-@media (max-width: 480px) {
-    .site-footer div.powerby {
-        display: none;
-    }
-}
-
-#github-pages-logo {
-  background: #000;
-  height: 29px;
-  padding: 8px;
-}
-
-#qiniu-logo {
-  height: 39px;
-  padding: 3px 0;
+  margin: 0;
 }
 
 /* Page Content styles */
@@ -155,21 +127,46 @@ a:visited { color: #205caa; }
   background-color: #fff;
 }
 
-
 /* Home styles */
 /* ----------------------------------------------------------*/
 
-.home h1 { margin-bottom: 25px; }
+.central-part {
+  float: left;
+  max-width: 880px;
+  width: calc(75% - 20px);
+}
 
-.posts { list-style-type: none; }
+.side-part {
+  float: left;
+  min-width: 150px;
+  width: 25%;
+  font-size: 13px;
+  padding: 0 0 0 20px;
+}
 
-.posts li { 
+@media (max-width: 840px) {
+  .central-part {
+    width: 100%;
+  }
+
+  .side-part {
+    width: 100%;
+    padding: 0;
+  }
+}
+
+.posts {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.posts li {
   margin-bottom: 30px;
 }
 
 .posts .post-link {
   font-size: 20px;
-  letter-spacing: -1px;
   line-height: 1;
 }
 
@@ -178,11 +175,17 @@ a:visited { color: #205caa; }
   color: #818181;
 }
 
+.posts .post-date a:hover {
+  text-decoration: none;
+}
+
 .posts .post-label {
   color: #777;
   background: #FFF5DE;
   padding: 1px 5px;
   margin: 0 0 0 4px;
+  border-radius: 2px;
+  border: 1px solid #aaa;
 }
 
 .posts .post-description {
@@ -190,60 +193,40 @@ a:visited { color: #205caa; }
   color: #555;
 }
 
-/* Article Styles */
-/* ----------------------------------------------------------*/
-
-.label-section {
-  margin-bottom: 20px;
+/* Sidebar */
+.side-part > div {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 3px;
 }
 
-.label-section .post-label {
-  display: inline-block;
-  font-size: 14px;
-  color: #555;
-  background: #FFEFD5;
-  border: 1px solid #555;
-  border-radius: 2px;
-  padding: 1px 6px;
-  margin: 0 7px 7px 0;
+.side-part h4 {
+  font-size: 1.1em;
+  font-weight: 400;
+  margin: 0;
 }
 
-.label-section .post-label.select {
-  color: #fff;
-  background: #f59b4d;
+.intro .avatar {
+  width: 40px;
+  height: 40px;
+  float: right;
 }
 
-.articles {
-  list-style-type: none;
-  font-size: 14px;
-}
-
-.articles .article-title {
-  line-height: 1;
-}
-
-.articles .article-date {
-  color: #818181;
-  padding-right: 5px;
-}
-
-.articles-section h6 {
-  display: inline-block;
-}
-.articles-section .search-icon {
-  display: inline-block;
-  margin-left: 4px;
+.other-sites img {
   cursor: pointer;
+  margin: 4px 6px 0 0;
+  width: 24px;
+  height: 24px;
+  opacity: 0.6;
 }
-.articles-section .search-icon img {
-  width: 14px;
-  height: 14px;
+
+.other-sites img:hover {
+  opacity: 1;
 }
-.articles-section .search-box {
-  display: inline-block;
+
+.ds-recent-comments {
   font-size: 14px;
-  width: 170px;
-  margin-left: 20px;
 }
 
 /* Post styles */
@@ -442,36 +425,5 @@ a:visited { color: #205caa; }
     margin: 0 0 15px; }
 }
 
-/* side part for default layout */
-/* ----------------------------------------------------------*/
 
-.side-part > div {
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin-bottom: 5px;
-}
-
-.side-part p {
-  font-size: 13px;
-}
-
-.other-sites img {
-  cursor: pointer;
-  margin: 10px 6px 0 0;
-  width: 24px;
-  height: 24px;
-  opacity: 0.6;
-}
-
-.other-sites img:hover {
-  opacity: 1;
-}
-
-.friend-sites ul {
-  padding: 0 0 0 30px;
-}
-
-.ds-recent-comments {
-  font-size: 14px;
-}
 
