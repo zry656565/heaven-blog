@@ -46,7 +46,7 @@
             var selected = '',
                 name = this.props.label.name;
             if (name === $J.currentLabel) {
-                selected = 'select'
+                selected = 'select';
             }
             return (
                 //<span onClick={this.handleClick} className={"post-label " + selected}>{name}</span>
@@ -92,7 +92,7 @@
             var rows = [];
             var previousDate = '9999-99-99';
             this.props.posts.forEach(function(post) {
-                if (!$J.currentLabel || $J.currentLabel === "显示全部" || post.labels.indexOf($J.currentLabel) >= 0) {
+                if ($J.currentLabel === "null" || $J.currentLabel === "显示全部" || post.labels.indexOf($J.currentLabel) >= 0) {
                     if (post.date.substr(0,7) < previousDate.substr(0,7)) {
                         rows.push(React.createElement(MonthHeader, {date: post.date}));
                         previousDate = post.date;

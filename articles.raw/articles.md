@@ -1,17 +1,15 @@
 ---
 title: 所有文章
-permalink: /articles/
+permalink: /all-articles/
 layout: default
 nav: true
 requireJq: true
 ---
 
-<script src="/assets/js/lib/react/react.min.js"></script>
-
 <script type="text/javascript">
 // prepare data from jekyll
 var $J = {
-  baseUrl: "{{ site.baseurl }}/articles/?label=",
+  baseUrl: "{{ site.baseurl }}/all-articles/?label=",
   labels: [
     "显示全部",
     {% for post in site.posts %}
@@ -57,4 +55,4 @@ var $J = {
   <div id="articles-list"></div>
 </section>
 
-<script src="/build/articles.js"></script>
+<!-- concat React JSX -->

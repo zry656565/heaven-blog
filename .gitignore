@@ -2,6 +2,7 @@
 _site
 release
 _includes/head.html
+pages/1_articles.html
 
 #temporary files produced by grunt
 .tmp

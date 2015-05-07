@@ -28,6 +28,16 @@ module.exports = function(grunt) {
                 assetsDirs: ['.tmp']
             }
         },
+        concat: {
+            react_debug: {
+                src: ['articles.raw/articles.md', 'articles.raw/debug.html'],
+                dest: 'pages/1_articles.md'
+            },
+            react_release: {
+                src: ['articles.raw/articles.md', 'articles.raw/release.html'],
+                dest: 'pages/1_articles.md'
+            }
+        },
         shell: {
             jekyll_build: {
                 command: 'jekyll build'
@@ -37,6 +47,9 @@ module.exports = function(grunt) {
             },
             clean_tmp: {
                 command: 'rm -r .tmp'
+            },
+            react_parse: {
+                command: 'jsx pages/ build/'
             }
         }
     });
@@ -46,6 +59,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-usemin');
     grunt.loadNpmTasks('grunt-filerev');
 
@@ -56,33 +70,39 @@ module.exports = function(grunt) {
 
     grunt.registerTask('build', [
         'copy:includes',
+        'concat:react_debug',
         'shell:jekyll_build'
     ]);
 
     grunt.registerTask('debug', [
         'copy:includes',
+        'concat:react_debug',
         'shell:jekyll_serve'
     ]);
 
     grunt.registerTask('release', [
         'copy:includes',
+        'concat:react_release',
         'useminPrepare',
         'concat:generated',
         'cssmin:generated',
         'filerev',
         'usemin',
         'shell:clean_tmp',
+        'shell:react_parse',
         'shell:jekyll_build'
     ]);
 
     grunt.registerTask('serve', [
         'copy:includes',
+        'concat:react_release',
         'useminPrepare',
         'concat:generated',
         'cssmin:generated',
         'filerev',
         'usemin',
         'shell:clean_tmp',
+        'shell:react_parse',
         'shell:jekyll_serve'
     ]);
 };
