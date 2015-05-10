@@ -14,7 +14,7 @@ duoshuo_comment: true
 
 在我看来，编程不仅仅是我与生俱来的使命，也是我快乐的源泉。在业余时间，我喜欢研究一些跟技术相关的东西。同时，我也喜欢做一些安静的事，比如看书、看电影、听音乐、一个人散步以及旅行。
 
-如果你有任何问题，请给我发送邮件：[zry656565@gmail.com](mailto:zry656565@gmail.com)
+如果你有任何问题，请给我发送邮件：[jerry.zry@outlook.com](mailto:jerry.zry@outlook.com)
 
 ## 我在别处
 
