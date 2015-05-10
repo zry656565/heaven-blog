@@ -39,20 +39,12 @@ var $J = {
 };
 </script>
 
-<section class="label-section">
-  <h2>标签列表</h2>
-  <hr/>
-  <div id="label-list"></div>
-</section>
 
-<section class="articles-section">
-  <h2>文章列表</h2>
   <!--<input class="search-box" type="text" placeholder="搜索包含在标题中的关键词" />
   <div class="search-icon">
     <img src="{{ site.static_url }}/search_icon.png"/>
   </div>-->
-  <hr/>
-  <div id="articles-list"></div>
-</section>
+
+<div id="main"></div>
 
 <!-- concat React JSX -->
