@@ -98,14 +98,24 @@
     var PostList = React.createClass({
         getInitialState: function() {
             return {
-                posts: simpleClone($J.posts)
+                posts: simpleClone($J.posts),
+                searchContent: ''
             };
+        },
+        searchHandler: function(e) {
+            var searchContent = e.target.value;
+            this.setState({
+                posts: this.state.posts,
+                searchContent: searchContent
+            });
         },
         render: function() {
             var previousDate = '9999-99-99',
                 selected = this.props.selected,
+                sContent = this.state.searchContent.toLowerCase(),
                 createPost = function(post) {
-                    if (selected === "显示全部" || post.labels.indexOf(selected) >= 0) {
+                    if ((selected === "显示全部" || post.labels.indexOf(selected) >= 0) &&
+                        (sContent === '' || post.title.toLowerCase().search(sContent) >= 0)) {
                         var postDOM = [];
                         if (post.date.substr(0,7) < previousDate.substr(0,7)) {
                             postDOM.push(<MonthHeader date={post.date} />);
@@ -119,6 +129,10 @@
             return (
                 <section className="articles-section">
                     <h2>文章列表</h2>
+                    <input onChange={this.searchHandler} className="search-box" type="text" placeholder="搜索包含在标题中的关键词" />
+                    <div className="search-icon">
+                        <img src={$J.staticUrl + "/search_icon.png"}/>
+                    </div>
                     <hr/>
                     <ul className="articles">{this.state.posts.map(createPost)}</ul>
                 </section>

@@ -10,6 +10,7 @@ requireJq: true
 // prepare data from jekyll
 var $J = {
   baseUrl: "{{ site.baseurl }}/all-articles/?label=",
+  staticUrl: "{{ site.static_url }}",
   labels: [
     "显示全部",
     {% for post in site.posts %}
@@ -38,12 +39,6 @@ var $J = {
   ]
 };
 </script>
-
-
-  <!--<input class="search-box" type="text" placeholder="搜索包含在标题中的关键词" />
-  <div class="search-icon">
-    <img src="{{ site.static_url }}/search_icon.png"/>
-  </div>-->
 
 <div id="main"></div>
 
