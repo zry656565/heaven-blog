@@ -4,7 +4,7 @@ title: 使用plupload绕过服务器，批量上传图片到又拍云
 description: 论坛或者贴吧经常会需要分享很多图片，上传图片比较差的做法是上传到中央服务器上，中央服务器再转发给静态图片服务器。而这篇文章讲介绍如何使用plupload对上传过程进行优化，并绕过服务器直接批量上传图片到又拍云上的方法。
 permalink: /posts/bulkUploadToUPYUN/
 key: 10020
-labels: [批量上传图片, 又拍云, plupload]
+labels: [批量上传图片, 又拍云, plupload, JavaScript]
 ---
 
 ##综述

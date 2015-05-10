@@ -4,7 +4,7 @@ title: 来，让我们谈一谈 Normalize.css
 description: Normalize.css 只是一个很小的CSS文件，但它在默认的HTML元素样式上提供了跨浏览器的高度一致性。相比于传统的CSS reset，Normalize.css 是一种现代的、为HTML5准备的优质替代方案。Normalize.css 现在已经被用于Twitter Bootstrap、HTML5 Boilerplate、GOV.UK、Rdio、CSS Tricks以及许许多多其他框架、工具和网站上。
 permalink: /posts/aboutNormalizeCss/
 key: 10019
-labels: [normalize.css, css]
+labels: [Normalize.css, CSS]
 ---
 
 > 本文译自Normalize.css官网: [http://nicolasgallagher.com/about-normalize-css/](http://nicolasgallagher.com/about-normalize-css/)
