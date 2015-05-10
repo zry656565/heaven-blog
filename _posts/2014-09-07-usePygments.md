@@ -102,8 +102,8 @@ pygmentize -f html -a .highlight -S default > pygments.css
 只要在使用到代码高亮的html文件中，引入这个css样式就大功告成了。
 
 ###参考资料：
-- [http://pygments.org/](http://pygments.org/)
-- [http://segmentfault.com/q/1010000000261050](http://segmentfault.com/q/1010000000261050)
-- [http://havee.me/internet/2013-07/jekyll-install.html](http://havee.me/internet/2013-07/jekyll-install.html)
+1. [http://pygments.org/](http://pygments.org/)
+2. [http://segmentfault.com/q/1010000000261050](http://segmentfault.com/q/1010000000261050)
+3. [http://havee.me/internet/2013-07/jekyll-install.html](http://havee.me/internet/2013-07/jekyll-install.html)
 
 [1]: {{ site.static_url }}/pygments1.png

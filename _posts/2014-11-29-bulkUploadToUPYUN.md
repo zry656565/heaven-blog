@@ -110,7 +110,7 @@ var uploader = new plupload.Uploader({
 
 ##参考资料
 
-- [又拍云文档 － HTTP FORM API](http://docs.upyun.com/api/form_api/)
-- [又拍云官方js调用demo](https://github.com/upyun/js-form-api/blob/master/demo.html)
-- [plupload - Upload to Amazon S3](http://www.plupload.com/docs/Upload-to-Amazon-S3)
-- [plupload - plupload ignores server side error messages](http://www.plupload.com/punbb/viewtopic.php?id=1681)
+1. [又拍云文档 － HTTP FORM API](http://docs.upyun.com/api/form_api/)
+2. [又拍云官方js调用demo](https://github.com/upyun/js-form-api/blob/master/demo.html)
+3. [plupload - Upload to Amazon S3](http://www.plupload.com/docs/Upload-to-Amazon-S3)
+4. [plupload - plupload ignores server side error messages](http://www.plupload.com/punbb/viewtopic.php?id=1681)
