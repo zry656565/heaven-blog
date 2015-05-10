@@ -1,0 +1,85 @@
+/* rewrite the style of duoshuo */
+
+/* 修改Like按钮的样式 */
+.post #ds-thread #ds-reset .ds-meta {
+  padding: 2em 0;
+  text-align: center;
+}
+
+.post #ds-thread #ds-reset .ds-meta .ds-like-thread-button {
+  background: #fff;
+  font-size: 1.2em;
+  line-height: 1.5em;
+}
+
+.post #ds-thread #ds-reset .ds-meta .ds-like-panel {
+  display: block;
+  padding: 10px 15px 0 0;
+  text-align: center;
+}
+
+.post #ds-thread #ds-reset .ds-meta .ds-icon-heart {
+  background: transparent url('//jerryblog-image.b0.upaiyun.com/blog/icons/unlike.png');
+  width: 1em;
+  height: 1em;
+  background-size: 1em 1em;
+  vertical-align: middle;
+}
+
+.post #ds-thread #ds-reset .ds-meta .ds-thread-liked .ds-icon-heart,
+.post #ds-thread #ds-reset .ds-meta .ds-icon-heart:hover {
+  background: transparent url('//jerryblog-image.b0.upaiyun.com/blog/icons/like.png');
+  background-size: 1em 1em;
+}
+
+/* 评论输入框样式重写 */
+
+.post #ds-thread #ds-reset .ds-textarea-wrapper {
+  background: #fff;
+}
+
+.post #ds-reset .ds-gradient-bg {
+  background: #f3f3f3;
+}
+
+.post #ds-thread #ds-reset .ds-post-button {
+  background: #1abc9c;
+  color: #fff;
+  text-shadow: none;
+}
+
+.post #ds-thread #ds-reset .ds-post-button:hover {
+  background: #205caa;
+  color: #fff;
+  text-shadow: none;
+}
+
+
+/* 颜色改为统一风格 */
+.post #ds-thread .ds-highlight,
+.post #ds-thread #ds-reset .ds-login-buttons .ds-more-services {
+  color: #1abc9c!important;
+}
+
+.post #ds-thread #ds-reset a.ds-unread-comments-count,
+.post #ds-thread #ds-reset .ds-sort a.ds-current,
+.post #ds-thread #ds-reset .ds-sort a:active,
+.post #ds-thread #ds-reset a.ds-comment-context:hover,
+.post #ds-thread #ds-reset #ds-bubble a:hover,
+.post #ds-thread #ds-reset .ds-post-liked a.ds-post-likes,
+.post #ds-thread #ds-reset .ds-paginator a.ds-current,
+.post #ds-wrapper #ds-reset .ds-unread-list li a,
+.post #ds-notify #ds-reset ul.ds-notify-unread li a,
+.post #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a:hover  {
+  color: #1abc9c;
+}
+
+.post #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a,
+.post #ds-thread #ds-reset a.ds-comment-context,
+.post #ds-thread #ds-reset #ds-bubble a {
+  color: #205caa;
+}
+
+.post #ds-thread #ds-reset .ds-login-buttons .ds-more-services:hover {
+  color: #205caa !important;
+}

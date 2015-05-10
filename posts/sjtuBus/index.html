@@ -15,7 +15,7 @@
     <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/release/style.49940437.css">
+    <link rel="stylesheet" href="/release/style.4bc83b20.css">
 
     <!-- Baidu Analysis -->
     <script>
@@ -87,11 +87,21 @@
     <div class="page-content">
       <div class="wrap">
         
-        <div class="post typo">
+        <div class="post">
 
   <header class="post-header">
     <h1>使用百度地图API来完成交大校园巴士时刻表</h1>
-    <p class="meta">Sep 24, 2014</p>
+    <p class="meta">Sep 24, 2014 <span class="pause"> | </span>
+        
+            
+                <a class="label" href="/all-articles/?label=JavaScript">JavaScript</a>
+            
+                <a class="label" href="/all-articles/?label=百度地图">百度地图</a>
+            
+                <a class="label" href="/all-articles/?label=交大校车">交大校车</a>
+            
+        
+    </p>
   </header>
 
   <article class="post-content">
@@ -101,14 +111,15 @@
 
 <p>完成这个应用的主要步骤：</p>
 
-<ul>
+<ol>
   <li>申请百度地图API访问权限</li>
   <li>添加校园巴士车站</li>
   <li>绘制校园巴士路径</li>
   <li>弹出校园巴士时刻表</li>
-</ul>
+</ol>
 
-<h3 id="api">申请百度地图API访问权限</h3>
+<h2 id="api">1.申请百度地图API访问权限</h2>
+
 <blockquote>
   <p>百度地图JavaScript API免费对外开放。自v1.5版本起，您需先申请密钥（ak）才可使用，接口（除发送短信功能外）无使用次数限制。</p>
 </blockquote>
@@ -138,7 +149,8 @@
     <span class="nx">map</span><span class="p">.</span><span class="nx">setCurrentCity</span><span class="p">(</span><span class="s2">&quot;北京&quot;</span><span class="p">);</span>          <span class="c1">// 设置地图显示的城市 此项是必须设置的</span>
 <span class="nt">&lt;/script&gt;</span></code></pre></div>
 
-<h3 id="section">添加校园巴士车站</h3>
+<h2 id="section">2.添加校园巴士车站</h2>
+
 <p>首先本应用所有的数据都存储在一个<code>data.json</code>文件中，其中校园巴士车站存储的数据结构如下。数组中每一个子数组代表一个车站，子数组的三个元素分别代表站点名和经纬度。</p>
 
 <div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
@@ -165,7 +177,7 @@
     <span class="nx">map</span><span class="p">.</span><span class="nx">addOverlay</span><span class="p">(</span><span class="nx">marker</span><span class="p">);</span>
 <span class="p">}</span></code></pre></div>
 
-<h3 id="section-1">绘制校园巴士路径</h3>
+<h2 id="section-1">3.绘制校园巴士路径</h2>
 <p>校园巴士行车路径存储的数据结构如下，就是由一堆点的经纬度构成的。</p>
 
 <div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
@@ -191,7 +203,7 @@
 <span class="kd">var</span> <span class="nx">polyline</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BMap</span><span class="p">.</span><span class="nx">Polyline</span><span class="p">(</span><span class="nx">pointArr</span><span class="p">,</span> <span class="p">{</span><span class="nx">strokeColor</span><span class="o">:</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="nx">strokeWeight</span><span class="o">:</span><span class="mi">5</span><span class="p">,</span> <span class="nx">strokeOpacity</span><span class="o">:</span><span class="mf">0.5</span><span class="p">});</span>
 <span class="nx">map</span><span class="p">.</span><span class="nx">addOverlay</span><span class="p">(</span><span class="nx">polyline</span><span class="p">);</span></code></pre></div>
 
-<h3 id="section-2">弹出校园巴士时刻表</h3>
+<h2 id="section-2">4.弹出校园巴士时刻表</h2>
 <p>校园巴士行车时刻表存储的数据结构如下，就是由一堆点的经纬度构成的。</p>
 
 <div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
@@ -217,25 +229,25 @@
 
 <p>在设计好了上面的数据结构后，对之前添加巴士站点的代码稍加修改以下就搞定了，具体要添加的内容还比较多，可以移步<a href="https://github.com/zry656565/SJTU-Bus/blob/master/res/main.js">源码</a>查看。</p>
 
-<h3 id="section-3">还有哪些工作？</h3>
+<h2 id="section-3">还有哪些工作？</h2>
 
-<ul>
+<ol>
   <li>东川路站的经纬度需要修正</li>
   <li>支持小屏手机的访问</li>
   <li>有兴趣的同学可以fork我的<a href="https://github.com/zry656565/SJTU-Bus/">项目</a></li>
-</ul>
+</ol>
 
-<h3 id="section-4">反馈与建议</h3>
-<ul>
+<h2 id="section-4">反馈与建议</h2>
+<ol>
   <li>本应用是由几位交大的同学利用课余时间制作，有什么问题可以及时反馈给我们。</li>
   <li>所有的反馈建议请在<a href="https://github.com/zry656565/SJTU-Bus/issues">issue版</a>提交</li>
   <li>或者直接在本博客留言</li>
-</ul>
+</ol>
 
-<h3 id="section-5">参考资料</h3>
-<ul>
+<h2 id="section-5">参考资料</h2>
+<ol>
   <li><a href="http://www.sjtu.edu.cn/info/1736/61107.htm">关于调整校园巴士运行线路及运行时刻的通知</a></li>
-</ul>
+</ol>
 
 
   </article>

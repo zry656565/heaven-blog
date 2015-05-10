@@ -13,11 +13,11 @@
 
 &lt;h2 id=&quot;section&quot;&gt;基本概念&lt;/h2&gt;
 
-&lt;h3 id=&quot;cookie&quot;&gt;Cookie&lt;/h3&gt;
+&lt;h4 id=&quot;cookie&quot;&gt;Cookie&lt;/h4&gt;
 
 &lt;p&gt;Cookie 是小甜饼的意思。顾名思义，cookie 确实非常小，它的大小限制为4KB左右，是网景公司的前雇员 Lou Montulli 在1993年3月的发明。它的主要用途有保存登录信息，比如你登录某个网站市场可以看到“记住密码”，这通常就是通过在 Cookie 中存入一段辨别用户身份的数据来实现的。&lt;/p&gt;
 
-&lt;h3 id=&quot;localstorage&quot;&gt;localStorage&lt;/h3&gt;
+&lt;h4 id=&quot;localstorage&quot;&gt;localStorage&lt;/h4&gt;
 
 &lt;p&gt;localStorage 是 HTML5 标准中新加入的技术，它并不是什么划时代的新东西。早在 IE 6 时代，就有一个叫 userData 的东西用于本地存储，而当时考虑到浏览器兼容性，更通用的方案是使用 Flash。而如今，localStorage 被大多数浏览器所支持，如果你的网站需要支持 IE6+，那以 userData 作为你的 polyfill 的方案是种不错的选择。&lt;/p&gt;
 
@@ -52,7 +52,7 @@
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;h3 id=&quot;sessionstorage&quot;&gt;sessionStorage&lt;/h3&gt;
+&lt;h4 id=&quot;sessionstorage&quot;&gt;sessionStorage&lt;/h4&gt;
 
 &lt;p&gt;sessionStorage 与 localStorage 的接口类似，但保存数据的生命周期与 localStorage 不同。做过后端开发的同学应该知道 Session 这个词的意思，直译过来是“会话”。而 sessionStorage 是一个前端的概念，它只是可以将一部分数据在当前会话中保存下来，刷新页面数据依旧存在。但当页面关闭后，sessionStorage 中的数据就会被清空。&lt;/p&gt;
 
@@ -435,12 +435,12 @@
 
 &lt;h2 id=&quot;section-5&quot;&gt;参考资料&lt;/h2&gt;
 
-&lt;ul&gt;
+&lt;ol&gt;
   &lt;li&gt;&lt;a href=&quot;http://docs.upyun.com/api/form_api/&quot;&gt;又拍云文档 － HTTP FORM API&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://github.com/upyun/js-form-api/blob/master/demo.html&quot;&gt;又拍云官方js调用demo&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;http://www.plupload.com/docs/Upload-to-Amazon-S3&quot;&gt;plupload - Upload to Amazon S3&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;http://www.plupload.com/punbb/viewtopic.php?id=1681&quot;&gt;plupload - plupload ignores server side error messages&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
+&lt;/ol&gt;
 </description>
         <pubDate>Sat, 29 Nov 2014 01:25:10 +0000</pubDate>
         <link>http://jerryzou.com/posts/bulkUploadToUPYUN/</link>
@@ -707,14 +707,14 @@
         <title>极速地将git项目部署到SAE的svn服务器上</title>
         <description>&lt;p&gt;我花了一些时间自己写了一个能够极速地将一个git项目部署到SAE的svn服务器上的脚本。代码不是复杂，也没有很深的技术。但确实是个好用的小工具，至少对我来说，不用把我的git项目打包成zip再上传了，确实提高了超多效率！我将首先介绍一下脚本如何使用，再介绍我是如何实现这个shell脚本的。项目地址：&lt;a href=&quot;https://github.com/zry656565/git-for-SAE&quot;&gt;https://github.com/zry656565/git-for-SAE&lt;/a&gt;&lt;/p&gt;
 
-&lt;h1 id=&quot;section&quot;&gt;功能&lt;/h1&gt;
+&lt;h2 id=&quot;section&quot;&gt;功能&lt;/h2&gt;
 &lt;ul&gt;
   &lt;li&gt;一个脚本搞定将git项目部署到SAE的svn服务器上&lt;/li&gt;
   &lt;li&gt;可以很方便地管理SAE上的1-10版本&lt;/li&gt;
   &lt;li&gt;自动将缓存文件夹 &lt;code&gt;.svn&lt;/code&gt; 加入 &lt;code&gt;.gitignore&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h1 id=&quot;section-1&quot;&gt;安装&lt;/h1&gt;
+&lt;h2 id=&quot;section-1&quot;&gt;安装&lt;/h2&gt;
 &lt;ul&gt;
   &lt;li&gt;第一步，将本项目clone到本地并checkout到release分支，这么做的话你在想要更新到最新版本时可以随时获得更新。或者你直接&lt;a href=&quot;https://github.com/zry656565/git-for-SAE/archive/release.zip&quot;&gt;下载zip包&lt;/a&gt;。假设你将项目放到了如&lt;code&gt;/Users/Jerry/Dev/git-for-SAE/&lt;/code&gt;这样的路径下。&lt;/li&gt;
   &lt;li&gt;第二步，将以下内容添加到&lt;code&gt;~/.bash_profile&lt;/code&gt;下&lt;/li&gt;
@@ -730,7 +730,7 @@
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;Terminal$ source ~/.bash_profile&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;h1 id=&quot;section-2&quot;&gt;如何使用&lt;/h1&gt;
+&lt;h2 id=&quot;section-2&quot;&gt;如何使用&lt;/h2&gt;
 &lt;p&gt;如果svn服务器是:&lt;code&gt;https://svn.sinaapp.com/sjtubus/&lt;/code&gt;，那么下面的第一个参数请填写: &lt;code&gt;sjtubus&lt;/code&gt;
 如果通过上面那种方式安装好后，你可以进入你自己项目的根目录，接着这样使用：&lt;/p&gt;
 
@@ -742,24 +742,24 @@
 &lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;清空本地svn缓存
 &lt;span class=&quot;go&quot;&gt;Terminal$ sae-clean.sh&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;h1 id=&quot;section-3&quot;&gt;成功案例&lt;/h1&gt;
+&lt;h2 id=&quot;section-3&quot;&gt;成功案例&lt;/h2&gt;
 &lt;ul&gt;
   &lt;li&gt;将交大校园巴士时刻表部署到SAE上&lt;/li&gt;
   &lt;li&gt;Github: &lt;a href=&quot;https://github.com/zry656565/SJTU-Bus&quot;&gt;https://github.com/zry656565/SJTU-Bus&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;SAE: &lt;a href=&quot;http://sjtubus.sinaapp.com/&quot;&gt;http://sjtubus.sinaapp.com/&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h1 id=&quot;section-4&quot;&gt;如何实现&lt;/h1&gt;
+&lt;h2 id=&quot;section-4&quot;&gt;如何实现&lt;/h2&gt;
 &lt;p&gt;简单来说就分为以上四步:
 1. checkout SAE上的svn项目
 2. 清除svn项目中的文件
 3. 将git项目中的文件拷贝到svn项目中
 4. 提交至SAE服务器&lt;/p&gt;
 
-&lt;h3 id=&quot;checkout-saesvn&quot;&gt;1.checkout SAE上的svn项目&lt;/h3&gt;
+&lt;h4 id=&quot;checkout-saesvn&quot;&gt;1.checkout SAE上的svn项目&lt;/h4&gt;
 &lt;p&gt;首先，我在git项目的根目录下创建&lt;code&gt;.svn&lt;/code&gt;文件夹用于存放SAE的svn项目，如果识别到已经创建了就跳过这个步骤，否则创建好&lt;code&gt;.svn&lt;/code&gt; 后，执行 &lt;code&gt;svn checkout $svn_repo_url&lt;/code&gt; (地址由参数生成)。&lt;/p&gt;
 
-&lt;h3 id=&quot;svn&quot;&gt;2.清除svn项目中的文件&lt;/h3&gt;
+&lt;h4 id=&quot;svn&quot;&gt;2.清除svn项目中的文件&lt;/h4&gt;
 &lt;p&gt;接着为了防止之前的文件对git项目产生影响，我会将它们全部删除。反正既然采用这种管理手段，代码版本管理都在git项目中，所以应该不会造成不好的影响。但有一点需要注意的是根目录下的&lt;code&gt;config.yaml&lt;/code&gt;文件是不能删除的，必须保留下来。需要执行的指令如下：&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;mv config.yaml ../config.yaml
@@ -768,14 +768,14 @@ mv ../config.yaml config.yaml
 svn st &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; awk &lt;span class=&quot;s1&quot;&gt;&amp;#39;{print $2}&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; xargs svn delete
 svn commit -m &lt;span class=&quot;s2&quot;&gt;&amp;quot;clean&amp;quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;h3 id=&quot;gitsvn&quot;&gt;3.将git项目中的文件拷贝到svn项目中&lt;/h3&gt;
+&lt;h4 id=&quot;gitsvn&quot;&gt;3.将git项目中的文件拷贝到svn项目中&lt;/h4&gt;
 &lt;p&gt;接着就把git项目中的所有文件拷贝到&lt;code&gt;.svn&lt;/code&gt;文件夹下的项目中，执行如下指令：&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;mv -f .svn ../.svn
 cp -rf * &lt;span class=&quot;s2&quot;&gt;&amp;quot;../.svn/$svn_dir_name&amp;quot;&lt;/span&gt;
 mv -f ../.svn .svn&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;h3 id=&quot;sae&quot;&gt;4.提交至SAE服务器&lt;/h3&gt;
+&lt;h4 id=&quot;sae&quot;&gt;4.提交至SAE服务器&lt;/h4&gt;
 &lt;p&gt;通过&lt;code&gt;awk&lt;/code&gt;判断svn项目中所有文件的状态，对所有&lt;code&gt;?&lt;/code&gt;状态的文件，将它们加入到svn的版本管理中，并提交。&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;svn st &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; awk &lt;span class=&quot;s1&quot;&gt;&amp;#39;{if ( $1 == &amp;quot;?&amp;quot;) { print $2 }}&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; xargs svn add
