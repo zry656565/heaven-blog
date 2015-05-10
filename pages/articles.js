@@ -53,7 +53,7 @@
             app.setState({
                 selected: nextSelected
             });
-            window.history.pushState({}, '', $J.baseUrl + nextSelected);
+            window.history.replaceState({}, '', $J.baseUrl + nextSelected);
         },
         render: function() {
             var list = this,
