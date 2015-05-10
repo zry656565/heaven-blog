@@ -30,39 +30,47 @@
         }
     };
     $J.currentLabel = decodeURI($.urlParam("label"));
+    if ($J.currentLabel === 'null') {
+        $J.currentLabel = null;
+    }
+
+    function simpleClone(obj) {
+        return JSON.parse(JSON.stringify(obj));
+    }
 
     /* define Components...
      =====================================*/
 
-    var Label = React.createClass({displayName: "Label",
-        //getInitialState: function() {
-        //    return {selected: false};
-        //},
-        //handleClick: function(event) {
-        //    this.state.selected = true;
-        //    React.render(<LabelList labels={$J.labels} />, document.getElementById('label-list'));
-        //},
-        render: function() {
-            var selected = '',
-                name = this.props.label.name;
-            if (name === $J.currentLabel) {
-                selected = 'select';
-            }
-            return (
-                //<span onClick={this.handleClick} className={"post-label " + selected}>{name}</span>
-                React.createElement("a", {href: $J.baseUrl + name}, React.createElement("span", {className: "post-label " + selected}, name))
-            );
-        }
-    });
-
     var LabelList = React.createClass({displayName: "LabelList",
-        render: function() {
-            var rows = [];
-            this.props.labels.forEach(function(label) {
-                rows.push(React.createElement(Label, {label: label}));
+        getInitialState: function() {
+            return {
+                labels: simpleClone($J.labels)
+            };
+        },
+        handleClick: function(i, app, e) {
+            e.preventDefault();
+            var nextSelected = this.state.labels[i].name;
+            app.setState({
+                selected: nextSelected
             });
+            window.history.replaceState({}, '', $J.baseUrl + nextSelected);
+        },
+        render: function() {
+            var list = this,
+                selected = this.props.selected,
+                createLabel = function(label, i) {
+                    if (label.name === selected) {
+                        return React.createElement("span", {onClick: list.handleClick.bind(list, i, list.props.app), className: "post-label select", key: i}, label.name);
+                    }
+                    return React.createElement("span", {onClick: list.handleClick.bind(list, i, list.props.app), className: "post-label", key: i}, label.name);
+                };
+
             return (
-                React.createElement("div", null, rows)
+                React.createElement("section", {className: "label-section"}, 
+                    React.createElement("h2", null, "标签列表"), 
+                    React.createElement("hr", null), 
+                    React.createElement("div", null, this.state.labels.map(createLabel))
+                )
             );
         }
     });
@@ -88,20 +96,62 @@
     });
 
     var PostList = React.createClass({displayName: "PostList",
-        render: function() {
-            var rows = [];
-            var previousDate = '9999-99-99';
-            this.props.posts.forEach(function(post) {
-                if ($J.currentLabel === "null" || $J.currentLabel === "显示全部" || post.labels.indexOf($J.currentLabel) >= 0) {
-                    if (post.date.substr(0,7) < previousDate.substr(0,7)) {
-                        rows.push(React.createElement(MonthHeader, {date: post.date}));
-                        previousDate = post.date;
-                    }
-                    rows.push(React.createElement(Post, {post: post}));
-                }
+        getInitialState: function() {
+            return {
+                posts: simpleClone($J.posts),
+                searchContent: ''
+            };
+        },
+        searchHandler: function(e) {
+            var searchContent = e.target.value;
+            this.setState({
+                posts: this.state.posts,
+                searchContent: searchContent
             });
+        },
+        render: function() {
+            var previousDate = '9999-99-99',
+                selected = this.props.selected,
+                sContent = this.state.searchContent.toLowerCase(),
+                createPost = function(post) {
+                    if ((selected === "显示全部" || post.labels.indexOf(selected) >= 0) &&
+                        (sContent === '' || post.title.toLowerCase().search(sContent) >= 0)) {
+                        var postDOM = [];
+                        if (post.date.substr(0,7) < previousDate.substr(0,7)) {
+                            postDOM.push(React.createElement(MonthHeader, {date: post.date}));
+                            previousDate = post.date;
+                        }
+                        postDOM.push(React.createElement(Post, {post: post}));
+                        return postDOM;
+                    }
+                };
+
             return (
-                React.createElement("ul", {className: "articles"}, rows)
+                React.createElement("section", {className: "articles-section"}, 
+                    React.createElement("h2", null, "文章列表"), 
+                    React.createElement("input", {onChange: this.searchHandler, className: "search-box", type: "text", placeholder: "搜索包含在标题中的关键词"}), 
+                    React.createElement("div", {className: "search-icon"}, 
+                        React.createElement("img", {src: $J.staticUrl + "/search_icon.png"})
+                    ), 
+                    React.createElement("hr", null), 
+                    React.createElement("ul", {className: "articles"}, this.state.posts.map(createPost))
+                )
+            );
+        }
+    });
+
+    var ArticlesApp = React.createClass({displayName: "ArticlesApp",
+        getInitialState: function() {
+            return {
+                selected: $J.currentLabel || '显示全部'
+            };
+        },
+        render: function() {
+            return (
+                React.createElement("div", null, 
+                    React.createElement(LabelList, {app: this, selected: this.state.selected}), 
+                    React.createElement(PostList, {selected: this.state.selected})
+                )
             );
         }
     });
@@ -109,7 +159,6 @@
     /* Rendering begin...
      =====================================*/
 
-    React.render(React.createElement(LabelList, {labels: $J.labels}), document.getElementById('label-list'));
-    React.render(React.createElement(PostList, {posts: $J.posts}), document.getElementById('articles-list'));
+    React.render(React.createElement(ArticlesApp, null), document.getElementById('main'));
 
 }(jQuery));

@@ -10,6 +10,7 @@
 - grunt: 用于网站的静态文件自动合并压缩，并部署
 - React: 用于组织“所有文章”的页面
 - 加速乐: DNS解析与线路优化
+- React: 使用React来组织“[所有文章](http://jerryzou.com/all-articles/)”页面
 
 ##编译与部署
 
