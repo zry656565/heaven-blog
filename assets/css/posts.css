@@ -108,6 +108,10 @@
   background:#f1f1f1;
 }
 
+.post-content .formula {
+  text-align: center;
+}
+
 /* Syntax highlighting styles */
 /* ----------------------------------------------------------*/
 
@@ -126,6 +130,10 @@
   font-size: 12px;
   margin: 0;
   padding: 8px 12px;
+}
+
+.post-content .highlight code {
+  padding: 0;
 }
 
 .post-content code {
