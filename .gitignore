@@ -3,12 +3,14 @@ _site
 _includes
 
 #grunt
-Gruntfile.js
 node_modules
-package.json
 
 #temporary files produced by grunt
 _tmp
 
 #PhpStorm configure files
 .idea
+
+#source files
+assets/css
+pages/articles.js

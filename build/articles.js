@@ -59,10 +59,19 @@
             var list = this,
                 selected = this.props.selected,
                 createLabel = function(label, i) {
+                    var classStr = 'post-label',
+                        count = label.value;
                     if (label.name === selected) {
-                        return React.createElement("span", {onClick: list.handleClick.bind(list, i, list.props.app), className: "post-label select", key: i}, label.name);
+                        classStr += ' select';
                     }
-                    return React.createElement("span", {onClick: list.handleClick.bind(list, i, list.props.app), className: "post-label", key: i}, label.name);
+                    if (count > 50000 || count === 1) {
+                        count = '';
+                    }
+                    return (
+                        React.createElement("span", {onClick: list.handleClick.bind(list, i, list.props.app), className: classStr, key: i}, 
+                            label.name, " ", React.createElement("sup", null, count)
+                        )
+                    );
                 };
 
             return (
@@ -80,18 +89,17 @@
             var post = this.props.post;
             return (
                 React.createElement("li", {className: "article"}, 
-                    React.createElement("span", {className: "article-date"}, post.date), 
+                    React.createElement("span", {className: "article-date"}, post.date.substr(5)), 
                     React.createElement("a", {className: "article-title", href: post.link}, post.title)
                 )
             );
         }
     });
 
-    var MonthHeader = React.createClass({displayName: "MonthHeader",
+    var YearHeader = React.createClass({displayName: "YearHeader",
         render: function() {
-            var year = this.props.date.substr(0,4),
-                month = this.props.date.substr(5,2);
-            return (React.createElement("li", null, React.createElement("h3", null, year, "年", month, "月")));
+            var year = this.props.date.substr(0,4);
+            return (React.createElement("li", null, React.createElement("h3", null, year, "年")));
         }
     });
 
@@ -117,8 +125,8 @@
                     if ((selected === "显示全部" || post.labels.indexOf(selected) >= 0) &&
                         (sContent === '' || post.title.toLowerCase().search(sContent) >= 0)) {
                         var postDOM = [];
-                        if (post.date.substr(0,7) < previousDate.substr(0,7)) {
-                            postDOM.push(React.createElement(MonthHeader, {date: post.date}));
+                        if (post.date.substr(0,4) < previousDate.substr(0,4)) {
+                            postDOM.push(React.createElement(YearHeader, {date: post.date}));
                             previousDate = post.date;
                         }
                         postDOM.push(React.createElement(Post, {post: post}));
