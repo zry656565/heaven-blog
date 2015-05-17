@@ -59,10 +59,19 @@
             var list = this,
                 selected = this.props.selected,
                 createLabel = function(label, i) {
+                    var classStr = 'post-label',
+                        count = label.value;
                     if (label.name === selected) {
-                        return <span onClick={list.handleClick.bind(list, i, list.props.app)} className="post-label select" key={i}>{label.name}</span>;
+                        classStr += ' select';
                     }
-                    return <span onClick={list.handleClick.bind(list, i, list.props.app)} className="post-label" key={i}>{label.name}</span>;
+                    if (count > 50000 || count === 1) {
+                        count = '';
+                    }
+                    return (
+                        <span onClick={list.handleClick.bind(list, i, list.props.app)} className={classStr} key={i}>
+                            {label.name} <sup>{count}</sup>
+                        </span>
+                    );
                 };
 
             return (
@@ -80,18 +89,17 @@
             var post = this.props.post;
             return (
                 <li className="article">
-                    <span className="article-date">{post.date}</span>
+                    <span className="article-date">{post.date.substr(5)}</span>
                     <a className="article-title" href={post.link}>{post.title}</a>
                 </li>
             );
         }
     });
 
-    var MonthHeader = React.createClass({
+    var YearHeader = React.createClass({
         render: function() {
-            var year = this.props.date.substr(0,4),
-                month = this.props.date.substr(5,2);
-            return (<li><h3>{year}年{month}月</h3></li>);
+            var year = this.props.date.substr(0,4);
+            return (<li><h3>{year}年</h3></li>);
         }
     });
 
@@ -117,8 +125,8 @@
                     if ((selected === "显示全部" || post.labels.indexOf(selected) >= 0) &&
                         (sContent === '' || post.title.toLowerCase().search(sContent) >= 0)) {
                         var postDOM = [];
-                        if (post.date.substr(0,7) < previousDate.substr(0,7)) {
-                            postDOM.push(<MonthHeader date={post.date} />);
+                        if (post.date.substr(0,4) < previousDate.substr(0,4)) {
+                            postDOM.push(<YearHeader date={post.date} />);
                             previousDate = post.date;
                         }
                         postDOM.push(<Post post={post} />);
