@@ -8,6 +8,90 @@
     <atom:link href="http://jerryzou.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>CSS 到底算不算编程语言？——论 CSS 中的逻辑</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;本文在征得原作者 &lt;a href=&quot;https://twitter.com/csswizardry&quot;&gt;@csswizardry&lt;/a&gt; 同意的情况下，翻译自他博客中的文章：&lt;a href=&quot;http://csswizardry.com/2015/04/cyclomatic-complexity-logic-in-css/&quot;&gt;Cyclomatic Complexity: Logic in CSS&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;在过去的很长一段时间中，我们都说 CSS 是不带有任何逻辑的，意思是在 CSS 中没有控制流，也没有某种类似于其他编程语言的方式来组织 CSS。CSS 天生缺乏逻辑性的问题导致了预处理器的出现。然而业界却对 CSS 预处理器褒贬不一，支持预处理器的人认为这弥补了 CSS 缺失的特性；而反对预处理器的人则认为 CSS 的设计初衷就不应该带有逻辑性，他们认为根本不应该引入预处理器这个概念。&lt;/p&gt;
+
+&lt;p&gt;然而，一种独特的思考方法最近突然蹦入了我的脑袋。它让我感到 CSS 确实拥有逻辑性！很少有人真正那么想过，这大概也是我们一直认为 CSS 的逻辑性匮乏的最大原因吧。&lt;/p&gt;
+
+&lt;p&gt;我发现我们可以将复合选择器理解为：主体部分 + &lt;strong&gt;条件部分&lt;/strong&gt;。首先来看一个例子：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;nt&quot;&gt;div&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;.sidebar&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;.login-box&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;.btn&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;span&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;/*...*/&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;在这个复合选择器由主体部分是 &lt;code&gt;span&lt;/code&gt;，而条件部分是 &lt;code&gt;IF (inside .btn) AND IF (on a) AND IF (inside .login-box) AND IF (inside .sidebar) AND IF (on div)&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;也就是说，一个选择器的每一部分都是一个 &lt;code&gt;if&lt;/code&gt; 语句，需要在解析选择器时被满足（或者不满足）。有了这种微妙的而又全新的认识，如今我们回头再看看自己曾经写出的 CSS 代码，我们将会意识到选择器写的好或者坏，会对效率产生直接的影响。我们真的会写出下面这段逻辑吗？（伪代码）：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell-session&quot; data-lang=&quot;shell-session&quot;&gt;&lt;span class=&quot;go&quot;&gt;@if exists(span) {&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;  @if is-inside(.btn) {&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;    @if is-on(a) {&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;      @if is-inside(.login-box) {&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;        @if is-inside(.sidebar) {&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;          @if is-on(div) {&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;            # Do this.&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;          }&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;        }&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;      }&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;    }&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;  }&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;也许不会。这看上去太不直接，也太啰嗦了。我们也许只需要这么写：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell-session&quot; data-lang=&quot;shell-session&quot;&gt;&lt;span class=&quot;go&quot;&gt;@if exists(.btn-text) {&lt;/span&gt;
+
+&lt;span class=&quot;go&quot;&gt;  # Do this.&lt;/span&gt;
+
+&lt;span class=&quot;go&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;每当为选择器添加一层限制，其实我们也就是添加了额外的一个 &lt;code&gt;if&lt;/code&gt; 语句。这会导致圈复杂度问题（Cyclomatic Complexity)。&lt;/p&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;圈复杂度&lt;/h2&gt;
+
+&lt;p&gt;在软件工程中，&lt;a href=&quot;http://en.wikipedia.org/wiki/Cyclomatic_complexity&quot;&gt;圈复杂度&lt;/a&gt;是一种程序复杂性的一种度量标准，它一般计算程序中的控制流的数量（如 &lt;code&gt;if&lt;/code&gt;, &lt;code&gt;else&lt;/code&gt;, &lt;code&gt;while&lt;/code&gt; 等）。程序中存在越多的控制流，则圈复杂度就越高。我们自然想要保证圈复杂度能够尽量地低，因为圈复杂度越高：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;代码就越难推导&lt;/li&gt;
+  &lt;li&gt;更多潜藏着的、可能会导致失败的问题&lt;/li&gt;
+  &lt;li&gt;代码更难以修改、维护以及复用&lt;/li&gt;
+  &lt;li&gt;你需要考虑更多代码执行的结果与其副作用&lt;/li&gt;
+  &lt;li&gt;编写测试代码的难度也会更高&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;从圈复杂度的角度来思考 CSS 的解析过程，我们可以看到浏览器在渲染样式之前需要做许多的决定。我们写的选择器中的 &lt;code&gt;if&lt;/code&gt; 语句越多，这个选择器的&lt;strong&gt;圈复杂度就越高&lt;/strong&gt;，这也意味着我们写的选择器越糟糕，为了使得这一条选择器规则满足，就有需要匹配更多的条件。同时，我们写的选择器也会&lt;strong&gt;缺乏清晰度和复用性&lt;/strong&gt;，因为引入了过多不必要的 &lt;code&gt;if&lt;/code&gt; 语句会导致不准确的匹配(false positive)。&lt;/p&gt;
+
+&lt;p&gt;相比于将 &lt;code&gt;span&lt;/code&gt; 嵌套于 &lt;code&gt;.btn&lt;/code&gt; 内部并写一大堆限制条件，更好地做法应该是创建一个新的类 &lt;code&gt;.btn-text&lt;/code&gt; 来描述这个 &lt;code&gt;span&lt;/code&gt;。这样做更加直截了当，同时也更为简洁和健壮（越多的 &lt;code&gt;@if&lt;/code&gt; 语句导致选择器规则越不容易被满足）。&lt;/p&gt;
+
+&lt;p&gt;值得注意的是浏览器解析你写的选择器的方式：从右向左。如果你在写你的选择器时，第一个想到的问题是：“这是一个 &lt;code&gt;span&lt;/code&gt; 元素吗？” 那你通常就会把选择器写的过于冗繁。你应该从另一个角度思考，写出清晰准确的选择器规则，彻底摒弃那些冗余的条件语句。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;请不要写过于宽泛的规则，导致你写的选择器在匹配开始时就选中大量的 DOM 元素——然后不得不逐步通过更多的条件语句来删减匹配的对象。从选择器的规则解析的一开始就匹配尽量少的元素才是一种更棒的方法。&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;圈复杂度对于 CSS 来说可能是一种比较高阶的原则，但如果我们通过它来考量那些蕴含在我们写的选择器中的逻辑性，那我们也许就能写出更加优秀的代码。&lt;/p&gt;
+
+&lt;p&gt;一些易于遵守的小规则，&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;让你的选择器最简化&lt;/strong&gt;：每一次你想要为选择器添加规则时，你都在添加额外的 &lt;code&gt;if&lt;/code&gt; 语句。将这些 &lt;code&gt;if&lt;/code&gt; 语句大声地读出来，仔细考虑它们是否有添加的必要。你需要时刻保持你写的选择器足够合理与简洁。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;保证圈复杂度最小化&lt;/strong&gt;: 使用像 &lt;a href=&quot;https://github.com/katiefenn/parker&quot;&gt;Parker&lt;/a&gt; 这样的工具来测试你写的选择器的圈复杂度（参考文档：&lt;a href=&quot;https://github.com/katiefenn/parker/tree/master/docs/metrics#identifiers-per-selector&quot;&gt;Identifiers Per Selector&lt;/a&gt;）&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;如果你不需要这个检验条件，那就不要把它放进选择器&lt;/strong&gt;: 有时在 CSS 中使用嵌套结构是有必要的，可在大多数时候并不是，你甚至不能完全相信&lt;a href=&quot;http://thesassway.com/beginner/the-inception-rule&quot;&gt;Inception Rule&lt;/a&gt;。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;从右边考虑选择器如何编写&lt;/strong&gt;: 从需要匹配的那类元素开始，写尽量少的额外的 CSS 代码来完成一次正确的匹配。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;写选择器时拥有&lt;a href=&quot;http://csswizardry.com/2012/07/shoot-to-kill-css-selector-intent/&quot;&gt;明确的目的性&lt;/a&gt;&lt;/strong&gt;: 确保你写的选择器确实是你想要的，而不是那些碰巧能使得页面正常显示的代码。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;你的选择器是你的 CSS 结构最基本的组成部分，一定要确保你写的代码足够合理而简练。&lt;/p&gt;
+
+</description>
+        <pubDate>Thu, 21 May 2015 08:55:25 +0000</pubDate>
+        <link>http://jerryzou.com/posts/cyclomatic-complexity-logic-in-css/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/cyclomatic-complexity-logic-in-css/</guid>
+      </item>
+    
+      <item>
         <title>为什么不要在 JavaScript 中使用位操作符？</title>
         <description>&lt;p&gt;如果你的第一门编程语言不是 JavaScript，而是 C++ 或 Java，那么一开始你大概会看不惯 JavaScript 的数字类型。在 JavaScript 中的数字类型是不区分什么 Int，Float，Double，Decimal 的。咳咳，我说的当然是在 ES6 之前的 JS，在 ES6 的新标准中提出了像 Int8Array 这样新的数据类型。不过这不是本文叙述的重点，暂且就不谈啦。本文将更着重地谈 JS 的数字类型以及作用于它的位操作符，而关于包装对象 Number 的更多了解可以看拔赤翻译的&lt;a href=&quot;https://github.com/lxj/javascript.patterns/blob/master/chapter3.markdown#%E5%8E%9F%E5%A7%8B%E5%80%BC%E7%9A%84%E5%8C%85%E8%A3%85%E5%AF%B9%E8%B1%A1&quot;&gt;《JavaScript设计模式》&lt;/a&gt;&lt;/p&gt;
 
@@ -816,91 +900,6 @@
         <pubDate>Fri, 14 Nov 2014 22:12:10 +0000</pubDate>
         <link>http://jerryzou.com/posts/getDevEnvironmentBack/</link>
         <guid isPermaLink="true">http://jerryzou.com/posts/getDevEnvironmentBack/</guid>
-      </item>
-    
-      <item>
-        <title>极速地将git项目部署到SAE的svn服务器上</title>
-        <description>&lt;p&gt;我花了一些时间自己写了一个能够极速地将一个git项目部署到SAE的svn服务器上的脚本。代码不是复杂，也没有很深的技术。但确实是个好用的小工具，至少对我来说，不用把我的git项目打包成zip再上传了，确实提高了超多效率！我将首先介绍一下脚本如何使用，再介绍我是如何实现这个shell脚本的。项目地址：&lt;a href=&quot;https://github.com/zry656565/git-for-SAE&quot;&gt;https://github.com/zry656565/git-for-SAE&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;section&quot;&gt;功能&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;一个脚本搞定将git项目部署到SAE的svn服务器上&lt;/li&gt;
-  &lt;li&gt;可以很方便地管理SAE上的1-10版本&lt;/li&gt;
-  &lt;li&gt;自动将缓存文件夹 &lt;code&gt;.svn&lt;/code&gt; 加入 &lt;code&gt;.gitignore&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;section-1&quot;&gt;安装&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;第一步，将本项目clone到本地并checkout到release分支，这么做的话你在想要更新到最新版本时可以随时获得更新。或者你直接&lt;a href=&quot;https://github.com/zry656565/git-for-SAE/archive/release.zip&quot;&gt;下载zip包&lt;/a&gt;。假设你将项目放到了如&lt;code&gt;/Users/Jerry/Dev/git-for-SAE/&lt;/code&gt;这样的路径下。&lt;/li&gt;
-  &lt;li&gt;第二步，将以下内容添加到&lt;code&gt;~/.bash_profile&lt;/code&gt;下&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;# Git for SAE&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;GIT_FOR_SAE_ROOT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/Users/Jerry/Dev/git-for-SAE/ &lt;span class=&quot;c&quot;&gt;#此处就是你刚刚放置clone下来的项目路径&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$GIT_FOR_SAE_ROOT&lt;/span&gt;:&lt;span class=&quot;nv&quot;&gt;$PATH&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;第三步，应用新的&lt;code&gt;.bash_profile&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;Terminal$ source ~/.bash_profile&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;section-2&quot;&gt;如何使用&lt;/h2&gt;
-&lt;p&gt;如果svn服务器是:&lt;code&gt;https://svn.sinaapp.com/sjtubus/&lt;/code&gt;，那么下面的第一个参数请填写: &lt;code&gt;sjtubus&lt;/code&gt;
-如果通过上面那种方式安装好后，你可以进入你自己项目的根目录，接着这样使用：&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;部署
-&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;第一个参数是SAE上的项目名
-&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;第二个数字表示版本号，SAE支持1-10
-&lt;span class=&quot;go&quot;&gt;Terminal$ sae-push.sh sjtubus 1&lt;/span&gt;
-
-&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;清空本地svn缓存
-&lt;span class=&quot;go&quot;&gt;Terminal$ sae-clean.sh&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;section-3&quot;&gt;成功案例&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;将交大校园巴士时刻表部署到SAE上&lt;/li&gt;
-  &lt;li&gt;Github: &lt;a href=&quot;https://github.com/zry656565/SJTU-Bus&quot;&gt;https://github.com/zry656565/SJTU-Bus&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;SAE: &lt;a href=&quot;http://sjtubus.sinaapp.com/&quot;&gt;http://sjtubus.sinaapp.com/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;section-4&quot;&gt;如何实现&lt;/h2&gt;
-&lt;p&gt;简单来说就分为以上四步:
-1. checkout SAE上的svn项目
-2. 清除svn项目中的文件
-3. 将git项目中的文件拷贝到svn项目中
-4. 提交至SAE服务器&lt;/p&gt;
-
-&lt;h4 id=&quot;checkout-saesvn&quot;&gt;1.checkout SAE上的svn项目&lt;/h4&gt;
-&lt;p&gt;首先，我在git项目的根目录下创建&lt;code&gt;.svn&lt;/code&gt;文件夹用于存放SAE的svn项目，如果识别到已经创建了就跳过这个步骤，否则创建好&lt;code&gt;.svn&lt;/code&gt; 后，执行 &lt;code&gt;svn checkout $svn_repo_url&lt;/code&gt; (地址由参数生成)。&lt;/p&gt;
-
-&lt;h4 id=&quot;svn&quot;&gt;2.清除svn项目中的文件&lt;/h4&gt;
-&lt;p&gt;接着为了防止之前的文件对git项目产生影响，我会将它们全部删除。反正既然采用这种管理手段，代码版本管理都在git项目中，所以应该不会造成不好的影响。但有一点需要注意的是根目录下的&lt;code&gt;config.yaml&lt;/code&gt;文件是不能删除的，必须保留下来。需要执行的指令如下：&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;mv config.yaml ../config.yaml
-rm -rf *
-mv ../config.yaml config.yaml
-svn st &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; awk &lt;span class=&quot;s1&quot;&gt;&amp;#39;{print $2}&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; xargs svn delete
-svn commit -m &lt;span class=&quot;s2&quot;&gt;&amp;quot;clean&amp;quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;gitsvn&quot;&gt;3.将git项目中的文件拷贝到svn项目中&lt;/h4&gt;
-&lt;p&gt;接着就把git项目中的所有文件拷贝到&lt;code&gt;.svn&lt;/code&gt;文件夹下的项目中，执行如下指令：&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;mv -f .svn ../.svn
-cp -rf * &lt;span class=&quot;s2&quot;&gt;&amp;quot;../.svn/$svn_dir_name&amp;quot;&lt;/span&gt;
-mv -f ../.svn .svn&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;sae&quot;&gt;4.提交至SAE服务器&lt;/h4&gt;
-&lt;p&gt;通过&lt;code&gt;awk&lt;/code&gt;判断svn项目中所有文件的状态，对所有&lt;code&gt;?&lt;/code&gt;状态的文件，将它们加入到svn的版本管理中，并提交。&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;svn st &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; awk &lt;span class=&quot;s1&quot;&gt;&amp;#39;{if ( $1 == &amp;quot;?&amp;quot;) { print $2 }}&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; xargs svn add
-svn commit -m &lt;span class=&quot;s2&quot;&gt;&amp;quot;modify&amp;quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;就这样大功告成啦，总共源码也只有60多行，有兴趣的朋友可以去看看源码，也可以fork&lt;a href=&quot;https://github.com/zry656565/git-for-SAE&quot;&gt;我的项目&lt;/a&gt;并做一些贡献。&lt;/p&gt;
-</description>
-        <pubDate>Thu, 13 Nov 2014 02:15:10 +0000</pubDate>
-        <link>http://jerryzou.com/posts/gitForSAE/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/gitForSAE/</guid>
       </item>
     
   </channel>

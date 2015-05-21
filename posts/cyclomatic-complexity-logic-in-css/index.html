@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+        
+            CSS 到底算不算编程语言？——论 CSS 中的逻辑 | 咀嚼之味
+        </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="在过去的很长一段时间中，我们都说 CSS 是不带有任何逻辑的，意思是在 CSS 中没有控制流，也没有某种类似于其他编程语言的方式来组织 CSS。CSS 天生缺乏逻辑性的问题导致了预处理器的出现。然而业界却对 CSS 预处理器褒贬不一，支持预处理器的人认为这弥补了 CSS 缺失的特性；而反对预处理器的人则认为 CSS 的设计初衷就不应该带有逻辑性，他们认为根本不应该引入预处理器这个概念... ">
+    <link rel="alternate" type="application/rss+xml" title="咀嚼之味 RSS" href="/feed.xml">
+    <link rel="canonical" href="http://jerryzou.com/posts/cyclomatic-complexity-logic-in-css/">
+    <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/release/style.71692290.css">
+
+    <!-- Baidu Analysis -->
+    <script>
+        if (window.location.href.substr(7, 9) !== 'localhost') {
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?2744fd74aa568e064f9986394a60ead1";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+            })();
+        }
+    </script>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-47842677-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    
+    <!-- handle external js files -->
+    
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+  <div class="wrap">
+    <a class="site-title" href="/">咀嚼之味</a>
+    <nav class="site-nav">
+      <div class="trigger">
+        <a class="page-link" href="/">首页</a>
+        
+          
+          <a class="page-link" href="/all-articles/">所有文章</a>
+          
+        
+          
+          <a class="page-link" href="/skill/">技能图谱</a>
+          
+        
+          
+          <a class="page-link" href="/about/">关于我</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          <a class="page-link" href="/feed.xml">RSS订阅</a>
+      </div>
+    </nav>
+  </div>
+  <!-- fork me on github -->
+  <a id="fork-me" href="https://github.com/zry656565/heaven-blog"><img src="http://jerryblog-image.b0.upaiyun.com/blog/forkme.png" alt="Fork me on GitHub"></a>
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+        
+        <div class="post">
+
+  <header class="post-header">
+    <h1>CSS 到底算不算编程语言？——论 CSS 中的逻辑</h1>
+    <p class="meta">May 21, 2015 <span class="pause"> | </span>
+        
+            
+                <a class="label" href="/all-articles/?label=CSS">CSS</a>
+            
+                <a class="label" href="/all-articles/?label=选择器">选择器</a>
+            
+                <a class="label" href="/all-articles/?label=圈复杂度">圈复杂度</a>
+            
+        
+    </p>
+  </header>
+
+  <article class="post-content">
+  <blockquote>
+  <p>本文在征得原作者 <a href="https://twitter.com/csswizardry">@csswizardry</a> 同意的情况下，翻译自他博客中的文章：<a href="http://csswizardry.com/2015/04/cyclomatic-complexity-logic-in-css/">Cyclomatic Complexity: Logic in CSS</a></p>
+</blockquote>
+
+<p>在过去的很长一段时间中，我们都说 CSS 是不带有任何逻辑的，意思是在 CSS 中没有控制流，也没有某种类似于其他编程语言的方式来组织 CSS。CSS 天生缺乏逻辑性的问题导致了预处理器的出现。然而业界却对 CSS 预处理器褒贬不一，支持预处理器的人认为这弥补了 CSS 缺失的特性；而反对预处理器的人则认为 CSS 的设计初衷就不应该带有逻辑性，他们认为根本不应该引入预处理器这个概念。</p>
+
+<p>然而，一种独特的思考方法最近突然蹦入了我的脑袋。它让我感到 CSS 确实拥有逻辑性！很少有人真正那么想过，这大概也是我们一直认为 CSS 的逻辑性匮乏的最大原因吧。</p>
+
+<p>我发现我们可以将复合选择器理解为：主体部分 + <strong>条件部分</strong>。首先来看一个例子：</p>
+
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">div</span><span class="nc">.sidebar</span> <span class="nc">.login-box</span> <span class="nt">a</span><span class="nc">.btn</span> <span class="nt">span</span> <span class="p">{</span>
+    <span class="c">/*...*/</span>
+<span class="p">}</span></code></pre></div>
+
+<p>在这个复合选择器由主体部分是 <code>span</code>，而条件部分是 <code>IF (inside .btn) AND IF (on a) AND IF (inside .login-box) AND IF (inside .sidebar) AND IF (on div)</code>。</p>
+
+<p>也就是说，一个选择器的每一部分都是一个 <code>if</code> 语句，需要在解析选择器时被满足（或者不满足）。有了这种微妙的而又全新的认识，如今我们回头再看看自己曾经写出的 CSS 代码，我们将会意识到选择器写的好或者坏，会对效率产生直接的影响。我们真的会写出下面这段逻辑吗？（伪代码）：</p>
+
+<div class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">@if exists(span) {</span>
+<span class="go">  @if is-inside(.btn) {</span>
+<span class="go">    @if is-on(a) {</span>
+<span class="go">      @if is-inside(.login-box) {</span>
+<span class="go">        @if is-inside(.sidebar) {</span>
+<span class="go">          @if is-on(div) {</span>
+<span class="go">            # Do this.</span>
+<span class="go">          }</span>
+<span class="go">        }</span>
+<span class="go">      }</span>
+<span class="go">    }</span>
+<span class="go">  }</span>
+<span class="go">}</span></code></pre></div>
+
+<p>也许不会。这看上去太不直接，也太啰嗦了。我们也许只需要这么写：</p>
+
+<div class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">@if exists(.btn-text) {</span>
+
+<span class="go">  # Do this.</span>
+
+<span class="go">}</span></code></pre></div>
+
+<p>每当为选择器添加一层限制，其实我们也就是添加了额外的一个 <code>if</code> 语句。这会导致圈复杂度问题（Cyclomatic Complexity)。</p>
+
+<h2 id="section">圈复杂度</h2>
+
+<p>在软件工程中，<a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity">圈复杂度</a>是一种程序复杂性的一种度量标准，它一般计算程序中的控制流的数量（如 <code>if</code>, <code>else</code>, <code>while</code> 等）。程序中存在越多的控制流，则圈复杂度就越高。我们自然想要保证圈复杂度能够尽量地低，因为圈复杂度越高：</p>
+
+<ul>
+  <li>代码就越难推导</li>
+  <li>更多潜藏着的、可能会导致失败的问题</li>
+  <li>代码更难以修改、维护以及复用</li>
+  <li>你需要考虑更多代码执行的结果与其副作用</li>
+  <li>编写测试代码的难度也会更高</li>
+</ul>
+
+<p>从圈复杂度的角度来思考 CSS 的解析过程，我们可以看到浏览器在渲染样式之前需要做许多的决定。我们写的选择器中的 <code>if</code> 语句越多，这个选择器的<strong>圈复杂度就越高</strong>，这也意味着我们写的选择器越糟糕，为了使得这一条选择器规则满足，就有需要匹配更多的条件。同时，我们写的选择器也会<strong>缺乏清晰度和复用性</strong>，因为引入了过多不必要的 <code>if</code> 语句会导致不准确的匹配(false positive)。</p>
+
+<p>相比于将 <code>span</code> 嵌套于 <code>.btn</code> 内部并写一大堆限制条件，更好地做法应该是创建一个新的类 <code>.btn-text</code> 来描述这个 <code>span</code>。这样做更加直截了当，同时也更为简洁和健壮（越多的 <code>@if</code> 语句导致选择器规则越不容易被满足）。</p>
+
+<p>值得注意的是浏览器解析你写的选择器的方式：从右向左。如果你在写你的选择器时，第一个想到的问题是：“这是一个 <code>span</code> 元素吗？” 那你通常就会把选择器写的过于冗繁。你应该从另一个角度思考，写出清晰准确的选择器规则，彻底摒弃那些冗余的条件语句。</p>
+
+<p><strong>请不要写过于宽泛的规则，导致你写的选择器在匹配开始时就选中大量的 DOM 元素——然后不得不逐步通过更多的条件语句来删减匹配的对象。从选择器的规则解析的一开始就匹配尽量少的元素才是一种更棒的方法。</strong></p>
+
+<p>圈复杂度对于 CSS 来说可能是一种比较高阶的原则，但如果我们通过它来考量那些蕴含在我们写的选择器中的逻辑性，那我们也许就能写出更加优秀的代码。</p>
+
+<p>一些易于遵守的小规则，</p>
+
+<ul>
+  <li><strong>让你的选择器最简化</strong>：每一次你想要为选择器添加规则时，你都在添加额外的 <code>if</code> 语句。将这些 <code>if</code> 语句大声地读出来，仔细考虑它们是否有添加的必要。你需要时刻保持你写的选择器足够合理与简洁。</li>
+  <li><strong>保证圈复杂度最小化</strong>: 使用像 <a href="https://github.com/katiefenn/parker">Parker</a> 这样的工具来测试你写的选择器的圈复杂度（参考文档：<a href="https://github.com/katiefenn/parker/tree/master/docs/metrics#identifiers-per-selector">Identifiers Per Selector</a>）</li>
+  <li><strong>如果你不需要这个检验条件，那就不要把它放进选择器</strong>: 有时在 CSS 中使用嵌套结构是有必要的，可在大多数时候并不是，你甚至不能完全相信<a href="http://thesassway.com/beginner/the-inception-rule">Inception Rule</a>。</li>
+  <li><strong>从右边考虑选择器如何编写</strong>: 从需要匹配的那类元素开始，写尽量少的额外的 CSS 代码来完成一次正确的匹配。</li>
+  <li><strong>写选择器时拥有<a href="http://csswizardry.com/2012/07/shoot-to-kill-css-selector-intent/">明确的目的性</a></strong>: 确保你写的选择器确实是你想要的，而不是那些碰巧能使得页面正常显示的代码。</li>
+</ul>
+
+<p>你的选择器是你的 CSS 结构最基本的组成部分，一定要确保你写的代码足够合理而简练。</p>
+
+
+  </article>
+
+  
+    <div class="ds-thread" data-thread-key="10027" data-title="CSS 到底算不算编程语言？——论 CSS 中的逻辑" data-url="http://jerryzou.com/posts/cyclomatic-complexity-logic-in-css/"></div>
+<script>
+var duoshuoQuery = {short_name:"jerryzou"};
+(function() {
+  var ds = document.createElement('script');
+  ds.type = 'text/javascript';ds.async = true;
+  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  ds.charset = 'UTF-8';
+  (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+  
+</div>
+        
+      </div>
+    </div>
+
+    <footer class="site-footer">
+    <div class="wrap">
+        <ul class="friend-links footer-text">
+            <li><a href="http://ysyjerry1992.github.io/">Yusiyuan</a></li>
+            <li><a href="http://blog.liqiang.me/">Jayce Li</a></li>
+            <li><a href="http://www.yiqixxx.com/">一起网</a></li>
+            <li><a href="http://efe.baidu.com/">Baidu EFE</a></li>
+            <li><a href="http://fex.baidu.com/">Baidu FEX</a></li>
+        </ul>
+        <p class="footer-text">Powered by <a href="http://jekyllrb.com/">Jekyll</a> , <a href="https://pages.github.com/">Github Pages</a> and <a href="https://www.upyun.com/">UPYUN</a>.</p>
+    </div>
+</footer>
+
+
+    </body>
+</html>
