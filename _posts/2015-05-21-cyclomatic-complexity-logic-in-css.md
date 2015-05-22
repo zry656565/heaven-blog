@@ -51,7 +51,7 @@ div.sidebar .login-box a.btn span {
 }
 {% endhighlight %}
 
-每当为选择器添加一层限制，其实我们也就是添加了额外的一个 `if` 语句。这会导致圈复杂度问题（Cyclomatic Complexity)。
+每当为选择器添加一层限制，其实我们也就是添加了额外的一个 `if` 语句。这会导致圈复杂度问题(Cyclomatic Complexity)。
 
 ##圈复杂度
 
