@@ -8,7 +8,7 @@
     <atom:link href="http://jerryzou.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
-        <title>CSS 到底算不算编程语言？——论 CSS 中的逻辑</title>
+        <title>论 CSS 中的逻辑</title>
         <description>&lt;blockquote&gt;
   &lt;p&gt;本文在征得原作者 &lt;a href=&quot;https://twitter.com/csswizardry&quot;&gt;@csswizardry&lt;/a&gt; 同意的情况下，翻译自他博客中的文章：&lt;a href=&quot;http://csswizardry.com/2015/04/cyclomatic-complexity-logic-in-css/&quot;&gt;Cyclomatic Complexity: Logic in CSS&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -49,7 +49,7 @@
 
 &lt;span class=&quot;go&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;每当为选择器添加一层限制，其实我们也就是添加了额外的一个 &lt;code&gt;if&lt;/code&gt; 语句。这会导致圈复杂度问题（Cyclomatic Complexity)。&lt;/p&gt;
+&lt;p&gt;每当为选择器添加一层限制，其实我们也就是添加了额外的一个 &lt;code&gt;if&lt;/code&gt; 语句。这会导致圈复杂度问题(Cyclomatic Complexity)。&lt;/p&gt;
 
 &lt;h2 id=&quot;section&quot;&gt;圈复杂度&lt;/h2&gt;
 
