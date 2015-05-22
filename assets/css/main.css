@@ -78,7 +78,7 @@ hr{
   max-width: 149px;
 }
 
-@media(max-width: 1250px) {
+@media (max-width: 1250px) {
   #fork-me {
     display: none;
   }
@@ -117,6 +117,12 @@ hr{
   font-size: 0.8em;
   text-align: center;
   margin: 0;
+}
+
+@media screen and (max-width: 600px) {
+  .footer-text {
+    font-size: 0.7em;
+  }
 }
 
 /* Page Content styles */
@@ -162,16 +168,21 @@ hr{
 }
 
 .posts li {
-  margin-bottom: 30px;
+  margin: 20px 0;
+  border-bottom: 1px #ccc dashed;
+}
+
+.posts li:first-of-type {
+  margin-top: 0;
 }
 
 .posts .post-link {
-  font-size: 20px;
+  font-size: 1.25em;
   line-height: 1;
 }
 
 .posts .post-date {
-  font-size: 12px;
+  font-size: 0.75em;
   color: #818181;
 }
 
@@ -183,9 +194,10 @@ hr{
   color: #777;
   background: #FFF5DE;
   padding: 1px 5px;
-  margin: 0 0 0 4px;
+  margin: 0 0 4px 4px;
   border-radius: 2px;
   border: 1px solid #aaa;
+  display: inline-block;
 }
 
 .posts .post-description {
@@ -205,6 +217,21 @@ hr{
   font-size: 1.1em;
   font-weight: 400;
   margin: 0;
+}
+
+#latest-comments {
+  margin-bottom: 8px;
+}
+
+.duoshuo-loading {
+  margin: 3px 0;
+  padding: 10px 0 0;
+  border-top: 1px solid #ccc;
+  color: #aaa;
+}
+
+.side-part #ds-recent-comments li.ds-comment .ds-excerpt{
+  word-break: break-all;
 }
 
 .intro .avatar {

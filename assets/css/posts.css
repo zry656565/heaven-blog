@@ -5,8 +5,14 @@
 
 .post-header h1 {
   font-size: 2em;
-  line-height: 1;
+  line-height: 1.4;
   font-weight: 600;
+}
+
+@media screen and (max-width: 600px) {
+  .post-header h1 {
+    font-size: 1.5em;
+  }
 }
 
 .post-header .meta {
@@ -92,6 +98,13 @@
   max-width: calc(100% - 4em);
 }
 
+@media screen and (max-width: 600px) {
+  .post-content img {
+    max-width: 100%;
+    margin: 0.5em 0 0.5em -2em;
+  }
+}
+
 .post-content table {
   margin: 0.7em 0;
 }
@@ -102,6 +115,14 @@
   border:1px solid #ddd;
   padding:0.5em 1em;
   color:#666;
+}
+
+@media screen and (max-width: 600px) {
+  .post-content table {
+    overflow-x: auto;
+    display: block;
+    border: 0;
+  }
 }
 
 .post-content th{
@@ -123,6 +144,13 @@
   max-width: calc(100% - 4em);
   margin: 0.8em 2em;
   border: 1px solid #ccc;
+}
+
+@media screen and (max-width: 600px) {
+  .post-content .highlight {
+    max-width: 100%;
+    margin: 0.8em 0;
+  }
 }
 
 .post-content .highlight pre {
