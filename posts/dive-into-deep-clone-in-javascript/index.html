@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+        
+            深入剖析 JavaScript 的深复制 | 咀嚼之味
+        </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="一年前我曾写过一篇 Javascript 中的一种深复制实现，当时写这篇文章的时候还比较稚嫩，有很多地方没有考虑仔细。为了不误人子弟，我决定结合 Underscore、lodash 和 jQuery 这些主流的第三方库来重新谈一谈在 JavaScript 中的深复制。 ">
+    <link rel="alternate" type="application/rss+xml" title="咀嚼之味 RSS" href="/feed.xml">
+    <link rel="canonical" href="http://jerryzou.com/posts/dive-into-deep-clone-in-javascript/">
+    <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/release/style.13f6ea6f.css">
+
+    <!-- Baidu Analysis -->
+    <script>
+        if (window.location.href.substr(7, 9) !== 'localhost') {
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?2744fd74aa568e064f9986394a60ead1";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+            })();
+        }
+    </script>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-47842677-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    
+    <!-- handle external js files -->
+    
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+  <div class="wrap">
+    <a class="site-title" href="/">咀嚼之味</a>
+    <nav class="site-nav">
+      <div class="trigger">
+        <a class="page-link" href="/">首页</a>
+        
+          
+          <a class="page-link" href="/all-articles/">所有文章</a>
+          
+        
+          
+          <a class="page-link" href="/skill/">技能图谱</a>
+          
+        
+          
+          <a class="page-link" href="/about/">关于我</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          <a class="page-link" href="/feed.xml">RSS订阅</a>
+      </div>
+    </nav>
+  </div>
+  <!-- fork me on github -->
+  <a id="fork-me" href="https://github.com/zry656565/heaven-blog"><img src="http://jerryblog-image.b0.upaiyun.com/blog/forkme.png" alt="Fork me on GitHub"></a>
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+        
+        <div class="post">
+
+  <header class="post-header">
+    <h1>深入剖析 JavaScript 的深复制</h1>
+    <p class="meta">May 27, 2015 <span class="pause"> | </span>
+        
+            
+                <a class="label" href="/all-articles/?label=JavaScript">JavaScript</a>
+            
+                <a class="label" href="/all-articles/?label=深复制">深复制</a>
+            
+                <a class="label" href="/all-articles/?label=Deep Clone">Deep Clone</a>
+            
+        
+    </p>
+  </header>
+
+  <article class="post-content">
+  <p>一年前我曾写过一篇 <a href="http://jerryzou.com/posts/deepcopy/">Javascript 中的一种深复制实现</a>，当时写这篇文章的时候还比较稚嫩，有很多地方没有考虑仔细。为了不误人子弟，我决定结合 Underscore、lodash 和 jQuery 这些主流的第三方库来重新谈一谈这个问题。</p>
+
+<h2 id="section">第三方库的实现</h2>
+
+<p>讲一句唯心主义的话，放之四海而皆准的方法是不存在的，不同的深复制实现方法和实现粒度有各自的优劣以及各自适合的应用场景，所以本文并不是在教大家改如何实现深复制，而是将一些在 JavaScript 中实现深复制所需要考虑的问题呈献给大家。我们首先从较为简单的 Underscore 开始：</p>
+
+<h3 id="underscore--clone">Underscore —— _.clone()</h3>
+
+<p>在 Underscore 中有这样一个方法：<code>_.clone()</code>，这个方法实际上是一种浅复制 (shallow-copy)，所有嵌套的对象和数组都是直接复制引用而并没有进行深复制。来看一下例子应该会更加直观：</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">a</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="nx">b</span><span class="o">:</span> <span class="p">{</span> <span class="nx">z</span><span class="o">:</span> <span class="mi">0</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">clone</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
+
+<span class="nx">y</span> <span class="o">===</span> <span class="nx">x</span>       <span class="c1">// false</span>
+<span class="nx">y</span><span class="p">.</span><span class="nx">b</span> <span class="o">===</span> <span class="nx">x</span><span class="p">.</span><span class="nx">b</span>   <span class="c1">// true</span>
+
+<span class="nx">x</span><span class="p">.</span><span class="nx">b</span><span class="p">.</span><span class="nx">z</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+<span class="nx">y</span><span class="p">.</span><span class="nx">b</span><span class="p">.</span><span class="nx">z</span>         <span class="c1">// 100</span></code></pre></div>
+
+<p>让我们来看一下 <a href="https://github.com/jashkenas/underscore/blob/e4743ab712b8ab42ad4ccb48b155034d02394e4d/underscore.js#L1068">Underscore 的源码</a>：</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// Create a (shallow-cloned) duplicate of an object.</span>
+<span class="nx">_</span><span class="p">.</span><span class="nx">clone</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">_</span><span class="p">.</span><span class="nx">isObject</span><span class="p">(</span><span class="nx">obj</span><span class="p">))</span> <span class="k">return</span> <span class="nx">obj</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nx">_</span><span class="p">.</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="o">?</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">slice</span><span class="p">()</span> <span class="o">:</span> <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">obj</span><span class="p">);</span>
+<span class="p">};</span></code></pre></div>
+
+<p>如果目标对象是一个数组，则直接调用数组的<code>slice()</code>方法，否则就是用<code>_.extend()</code>方法。想必大家对<code>extend()</code>方法不会陌生，它的作用主要是将从第二个参数开始的所有对象，按键值逐个赋给第一个对象。而在 jQuery 中也有类似的方法。关于 Underscore 中的 <code>_.extend()</code> 方法的实现可以参考 <a href="https://github.com/jashkenas/underscore/blob/e4743ab712b8ab42ad4ccb48b155034d02394e4d/underscore.js#L1006">underscore.js #L1006</a>。</p>
+
+<p>Underscore 的 <code>clone()</code> 不能算作深复制，但它至少比直接赋值来得“深”一些，它创建了一个新的对象。另外，你也可以通过以下比较 tricky 的方法来完成<strong>单层</strong>嵌套的深复制：</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">_</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;underscore&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">[{</span><span class="nx">f</span><span class="o">:</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="nx">f</span><span class="o">:</span><span class="mi">5</span><span class="p">},</span> <span class="p">{</span><span class="nx">f</span><span class="o">:</span><span class="mi">10</span><span class="p">}];</span>
+<span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">_</span><span class="p">.</span><span class="nx">clone</span><span class="p">);</span>       <span class="c1">// &lt;----</span>
+<span class="nx">b</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">f</span> <span class="o">=</span> <span class="mi">55</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">a</span><span class="p">));</span>  <span class="c1">// [{&quot;f&quot;:1},{&quot;f&quot;:5},{&quot;f&quot;:10}]</span></code></pre></div>
+
+<h3 id="jquery--clone--extend">jQuery —— $.clone() / $.extend()</h3>
+
+<p>在 jQuery 中也有这么一个叫 <code>$.clone()</code> 的方法，可是它并不是用于一般的 JS 对象的深复制，而是用于 DOM 对象。这不是这篇文章的重点，所以感兴趣的同学可以参考<a href="http://api.jquery.com/clone/">jQuery的文档</a>。与 Underscore 类似，我们也是可以通过 <code>$.extend()</code> 方法来完成深复制。值得庆幸的是，我们在 jQuery 中可以通过添加一个参数来实现<strong>递归extend</strong>。调用<code>$.extend(true, {}, ...)</code>就可以实现深复制啦，参考下面的例子：</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">a</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="nx">b</span><span class="o">:</span> <span class="p">{</span> <span class="nx">f</span><span class="o">:</span> <span class="p">{</span> <span class="nx">g</span><span class="o">:</span> <span class="mi">1</span> <span class="p">}</span> <span class="p">},</span>
+    <span class="nx">c</span><span class="o">:</span> <span class="p">[</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span> <span class="p">]</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">x</span><span class="p">),</span>          <span class="c1">//shallow copy</span>
+    <span class="nx">z</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span> <span class="p">{},</span> <span class="nx">x</span><span class="p">);</span>    <span class="c1">//deep copy</span>
+
+<span class="nx">y</span><span class="p">.</span><span class="nx">b</span><span class="p">.</span><span class="nx">f</span> <span class="o">===</span> <span class="nx">x</span><span class="p">.</span><span class="nx">b</span><span class="p">.</span><span class="nx">f</span>       <span class="c1">// true</span>
+<span class="nx">z</span><span class="p">.</span><span class="nx">b</span><span class="p">.</span><span class="nx">f</span> <span class="o">===</span> <span class="nx">x</span><span class="p">.</span><span class="nx">b</span><span class="p">.</span><span class="nx">f</span>       <span class="c1">// false</span></code></pre></div>
+
+<p>在 <a href="https://github.com/jquery/jquery/blob/1472290917f17af05e98007136096784f9051fab/src/core.js#L121">jQuery的源码 - src/core.js #L121</a> 文件中我们可以找到<code>$.extend()</code>的实现，也是实现得比较简洁，而且不太依赖于 jQuery 的内置函数，稍作修改就能拿出来单独使用。</p>
+
+<h3 id="lodash--clone--clonedeep">lodash —— _.clone() / _.cloneDeep()</h3>
+
+<p>在lodash中关于复制的方法有两个，分别是<code>_.clone()</code>和<code>_.cloneDeep()</code>。其中<code>_.clone(obj, true)</code>等价于<code>_.cloneDeep(obj)</code>。使用上，lodash和前两者并没有太大的区别，但看了源码会发现，Underscore 的实现只有30行左右，而 jQuery 也不过60多行。可 lodash 中与深复制相关的代码却有上百行，这是什么道理呢？</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">$</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;jquery&quot;</span><span class="p">),</span>
+    <span class="nx">_</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;lodash&quot;</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Int16Array</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>
+    <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">a</span><span class="o">:</span> <span class="nx">arr</span> <span class="p">},</span>
+    <span class="nx">obj2</span><span class="p">;</span>
+<span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="nx">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+
+<span class="c1">// 1. jQuery</span>
+<span class="nx">obj2</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span> <span class="p">{},</span> <span class="nx">obj</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj2</span><span class="p">.</span><span class="nx">a</span><span class="p">);</span>                            <span class="c1">// [5, 6, 0, 0, 0]</span>
+<span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">toString</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arr2</span><span class="p">);</span>           <span class="c1">// [object Int16Array]</span>
+<span class="nx">obj2</span><span class="p">.</span><span class="nx">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>                               <span class="c1">// [100, 6, 0, 0, 0]</span>
+
+<span class="c1">//此处jQuery不能正确处理Int16Array的深复制！！！</span>
+
+<span class="c1">// 2. lodash</span>
+<span class="nx">obj2</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">cloneDeep</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>                       
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj2</span><span class="p">.</span><span class="nx">a</span><span class="p">);</span>                            <span class="c1">// [5, 6, 0, 0, 0]</span>
+<span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">toString</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arr2</span><span class="p">);</span>           <span class="c1">// [object Int16Array]</span>
+<span class="nx">obj2</span><span class="p">.</span><span class="nx">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>                               <span class="c1">// [5, 6, 0, 0, 0]</span></code></pre></div>
+
+<p>通过上面这个例子可以初见端倪，jQuery 无法正确深复制 JSON 对象以外的对象，而我们可以从下面这段代码片段可以看出 lodash 花了大量的代码来实现 ES6 引入的大量新的标准对象。更厉害的是，lodash 针对<strong>存在环的对象</strong>的处理也是非常出色的。因此相较而言，lodash 在深复制上的行为反馈比前两个库好很多，是更拥抱未来的一个第三方库。</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="cm">/** `Object#toString` result references. */</span>
+<span class="kd">var</span> <span class="nx">argsTag</span> <span class="o">=</span> <span class="s1">&#39;[object Arguments]&#39;</span><span class="p">,</span>
+    <span class="nx">arrayTag</span> <span class="o">=</span> <span class="s1">&#39;[object Array]&#39;</span><span class="p">,</span>
+    <span class="nx">boolTag</span> <span class="o">=</span> <span class="s1">&#39;[object Boolean]&#39;</span><span class="p">,</span>
+    <span class="nx">dateTag</span> <span class="o">=</span> <span class="s1">&#39;[object Date]&#39;</span><span class="p">,</span>
+    <span class="nx">errorTag</span> <span class="o">=</span> <span class="s1">&#39;[object Error]&#39;</span><span class="p">,</span>
+    <span class="nx">funcTag</span> <span class="o">=</span> <span class="s1">&#39;[object Function]&#39;</span><span class="p">,</span>
+    <span class="nx">mapTag</span> <span class="o">=</span> <span class="s1">&#39;[object Map]&#39;</span><span class="p">,</span>
+    <span class="nx">numberTag</span> <span class="o">=</span> <span class="s1">&#39;[object Number]&#39;</span><span class="p">,</span>
+    <span class="nx">objectTag</span> <span class="o">=</span> <span class="s1">&#39;[object Object]&#39;</span><span class="p">,</span>
+    <span class="nx">regexpTag</span> <span class="o">=</span> <span class="s1">&#39;[object RegExp]&#39;</span><span class="p">,</span>
+    <span class="nx">setTag</span> <span class="o">=</span> <span class="s1">&#39;[object Set]&#39;</span><span class="p">,</span>
+    <span class="nx">stringTag</span> <span class="o">=</span> <span class="s1">&#39;[object String]&#39;</span><span class="p">,</span>
+    <span class="nx">weakMapTag</span> <span class="o">=</span> <span class="s1">&#39;[object WeakMap]&#39;</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">arrayBufferTag</span> <span class="o">=</span> <span class="s1">&#39;[object ArrayBuffer]&#39;</span><span class="p">,</span>
+    <span class="nx">float32Tag</span> <span class="o">=</span> <span class="s1">&#39;[object Float32Array]&#39;</span><span class="p">,</span>
+    <span class="nx">float64Tag</span> <span class="o">=</span> <span class="s1">&#39;[object Float64Array]&#39;</span><span class="p">,</span>
+    <span class="nx">int8Tag</span> <span class="o">=</span> <span class="s1">&#39;[object Int8Array]&#39;</span><span class="p">,</span>
+    <span class="nx">int16Tag</span> <span class="o">=</span> <span class="s1">&#39;[object Int16Array]&#39;</span><span class="p">,</span>
+    <span class="nx">int32Tag</span> <span class="o">=</span> <span class="s1">&#39;[object Int32Array]&#39;</span><span class="p">,</span>
+    <span class="nx">uint8Tag</span> <span class="o">=</span> <span class="s1">&#39;[object Uint8Array]&#39;</span><span class="p">,</span>
+    <span class="nx">uint8ClampedTag</span> <span class="o">=</span> <span class="s1">&#39;[object Uint8ClampedArray]&#39;</span><span class="p">,</span>
+    <span class="nx">uint16Tag</span> <span class="o">=</span> <span class="s1">&#39;[object Uint16Array]&#39;</span><span class="p">,</span>
+    <span class="nx">uint32Tag</span> <span class="o">=</span> <span class="s1">&#39;[object Uint32Array]&#39;</span><span class="p">;</span></code></pre></div>
+
+<h2 id="json-">借助 JSON 全局对象</h2>
+
+<p>相比于上面介绍的三个库的做法，针对纯 JSON 数据对象的深复制，使用 JSON 全局对象的 <code>parse</code> 和 <code>stringify</code> 方法来实现深复制也算是一个简单讨巧的方法。然而使用这种方法会有一些隐藏的坑，它能正确处理的对象只有 Number, String, Boolean, Array, 扁平对象，即那些能够被 json 直接表示的数据结构。</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">jsonClone</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">obj</span><span class="p">));</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">clone</span> <span class="o">=</span> <span class="nx">jsonClone</span><span class="p">({</span> <span class="nx">a</span><span class="o">:</span><span class="mi">1</span> <span class="p">});</span></code></pre></div>
+
+<h2 id="section-1">拥抱未来的深复制方法</h2>
+
+<p>我自己实现了一个深复制的方法，因为用到了<code>Object.create</code>、<code>Object.isPrototypeOf</code>等比较新的方法，所以基本只能在 IE9+ 中使用。而且，我的实现是<strong>直接定义在 prototype 上</strong>的，很有可能引起大多数的前端同行们的不适。(关于这个我还曾在知乎上提问过：<a href="http://www.zhihu.com/question/26924011">为什么不要直接在Object.prototype上定义方法？</a>）只是实验性质的，大家参考一下就好，改成非 prototype 版本也是很容易的，不过就是要不断地去<strong>判断对象的类型</strong>了。~</p>
+
+<p>这个实现方法具体可以看我写的一个小玩意儿——<a href="https://github.com/cherryjs/cherry.js">Cherry.js</a>，使用方法大概是这样的：</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">X</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">d</span><span class="o">:</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(),</span> <span class="nx">r</span><span class="o">:</span> <span class="sr">/abc/ig</span><span class="p">,</span> <span class="nx">x</span><span class="o">:</span> <span class="k">new</span> <span class="nx">X</span><span class="p">(),</span> <span class="nx">arr</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="p">},</span>
+    <span class="nx">obj2</span><span class="p">,</span>
+    <span class="nx">clone</span><span class="p">;</span>
+
+<span class="nx">obj</span><span class="p">.</span><span class="nx">x</span><span class="p">.</span><span class="nx">xx</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">X</span><span class="p">();</span>
+<span class="nx">obj</span><span class="p">.</span><span class="nx">arr</span><span class="p">.</span><span class="nx">testProp</span> <span class="o">=</span> <span class="s2">&quot;test&quot;</span><span class="p">;</span>
+<span class="nx">clone</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">$clone</span><span class="p">();</span>                  <span class="c1">//&lt;----</span></code></pre></div>
+
+<p>为了避免和源生方法冲突，我在方法名前加了一个 <code>$</code> 符号。而这个方法的具体实现很简单，就是递归深复制。其中我需要解释一下两个参数：<code>srcStack</code>和<code>dstStack</code>。它们的主要用途是对存在环的对象进行深复制。比如源对象中的子对象<code>srcStack[7]</code>在深复制以后，对应于<code>dstStack[7]</code>。该实现方法参考了 lodash 的实现。关于递归最重要的就是 Object 和 Array 对象：</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperties</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">&quot;$clone&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">enumerable</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="nx">configurable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nx">writable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nx">value</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">srcStack</span><span class="p">,</span> <span class="nx">dstStack</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">getPrototypeOf</span><span class="p">(</span><span class="k">this</span><span class="p">)),</span>
+                <span class="nx">keys</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="k">this</span><span class="p">),</span>
+                <span class="nx">index</span><span class="p">;</span>
+
+            <span class="nx">srcStack</span> <span class="o">=</span> <span class="nx">srcStack</span> <span class="o">||</span> <span class="p">[];</span>
+            <span class="nx">dstStack</span> <span class="o">=</span> <span class="nx">dstStack</span> <span class="o">||</span> <span class="p">[];</span>
+            <span class="nx">srcStack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+            <span class="nx">dstStack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>
+
+            <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">keys</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="k">this</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]])</span> <span class="o">!==</span> <span class="s2">&quot;function&quot;</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]]</span> <span class="o">===</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="nx">obj</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+                    <span class="p">}</span>
+                    <span class="k">else</span> <span class="p">{</span>
+                        <span class="nx">index</span> <span class="o">=</span> <span class="nx">srcStack</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="k">this</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]]);</span>
+                        <span class="k">if</span> <span class="p">(</span><span class="nx">index</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="nx">obj</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">dstStack</span><span class="p">[</span><span class="nx">index</span><span class="p">];</span>
+                        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                            <span class="nx">obj</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]]</span> <span class="o">=</span> <span class="k">this</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]].</span><span class="nx">$clone</span><span class="p">(</span><span class="nx">srcStack</span><span class="p">,</span> <span class="nx">dstStack</span><span class="p">);</span>
+                        <span class="p">}</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="nx">obj</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="cm">/*=====================================*</span>
+<span class="cm"> * Array.prototype *</span>
+<span class="cm"> *=====================================*/</span>
+
+<span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperties</span><span class="p">(</span><span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">&quot;$clone&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">enumerable</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="nx">configurable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nx">writable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nx">value</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">srcStack</span><span class="p">,</span> <span class="nx">dstStack</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">thisArr</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">valueOf</span><span class="p">(),</span>
+                <span class="nx">newArr</span> <span class="o">=</span> <span class="p">[],</span>
+                <span class="nx">keys</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">thisArr</span><span class="p">),</span>
+                <span class="nx">index</span><span class="p">;</span>
+
+            <span class="nx">srcStack</span> <span class="o">=</span> <span class="nx">srcStack</span> <span class="o">||</span> <span class="p">[];</span>
+            <span class="nx">dstStack</span> <span class="o">=</span> <span class="nx">dstStack</span> <span class="o">||</span> <span class="p">[];</span>
+            <span class="nx">srcStack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+            <span class="nx">dstStack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">newArr</span><span class="p">);</span>
+
+            <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">keys</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">index</span> <span class="o">=</span> <span class="nx">srcStack</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">thisArr</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]]);</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">index</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">newArr</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">dstStack</span><span class="p">[</span><span class="nx">index</span><span class="p">];</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                    <span class="nx">newArr</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">thisArr</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]].</span><span class="nx">$clone</span><span class="p">(</span><span class="nx">srcStack</span><span class="p">,</span> <span class="nx">dstStack</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="nx">newArr</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span></code></pre></div>
+
+<p>接下来要针对 Date 和 RegExp 对象的深复制进行一些特殊处理：</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="cm">/*=====================================*</span>
+<span class="cm"> * Date.prototype *</span>
+<span class="cm"> *=====================================*/</span>
+
+<span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperties</span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">&quot;$clone&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">enumerable</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="nx">configurable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nx">writable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nx">value</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">valueOf</span><span class="p">());</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="cm">/*=====================================*</span>
+<span class="cm"> * RegExp.prototype *</span>
+<span class="cm"> *=====================================*/</span>
+
+<span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperties</span><span class="p">(</span><span class="nb">RegExp</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">&quot;$clone&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">enumerable</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="nx">configurable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nx">writable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nx">value</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">pattern</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">valueOf</span><span class="p">();</span>
+            <span class="kd">var</span> <span class="nx">flags</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+            <span class="nx">flags</span> <span class="o">+=</span> <span class="nx">pattern</span><span class="p">.</span><span class="nx">global</span> <span class="o">?</span> <span class="s1">&#39;g&#39;</span> <span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+            <span class="nx">flags</span> <span class="o">+=</span> <span class="nx">pattern</span><span class="p">.</span><span class="nx">ignoreCase</span> <span class="o">?</span> <span class="s1">&#39;i&#39;</span> <span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+            <span class="nx">flags</span> <span class="o">+=</span> <span class="nx">pattern</span><span class="p">.</span><span class="nx">multiline</span> <span class="o">?</span> <span class="s1">&#39;m&#39;</span> <span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="nx">pattern</span><span class="p">.</span><span class="nx">source</span><span class="p">,</span> <span class="nx">flags</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span></code></pre></div>
+
+<p>接下来就是 Number, Boolean 和 String 的 <code>$clone</code> 方法，虽然很简单，但这也是必不可少的。这样就能防止像单个字符串这样的对象错误地去调用 <code>Object.prototype.$clone</code>。</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="cm">/*=====================================*</span>
+<span class="cm"> * Number / Boolean / String *</span>
+<span class="cm"> *=====================================*/</span>
+
+<span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperties</span><span class="p">(</span><span class="nb">Number</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">&quot;$clone&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">enumerable</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="nx">configurable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nx">writable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nx">value</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">valueOf</span><span class="p">();</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperties</span><span class="p">(</span><span class="nb">Boolean</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">&quot;$clone&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">enumerable</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="nx">configurable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nx">writable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nx">value</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">valueOf</span><span class="p">();</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperties</span><span class="p">(</span><span class="nb">String</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">&quot;$clone&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">enumerable</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="nx">configurable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nx">writable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nx">value</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">valueOf</span><span class="p">();</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span></code></pre></div>
+
+<h2 id="section-2">比较各个深复制方法</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>特性</th>
+      <th style="text-align: center">jQuery</th>
+      <th style="text-align: center">lodash</th>
+      <th style="text-align: center">JSON.parse</th>
+      <th style="text-align: center">所谓“拥抱未来的深复制实现”</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>浏览器兼容性</td>
+      <td style="text-align: center">IE6+ (1.x) &amp; IE9+ (2.x)</td>
+      <td style="text-align: center">IE6+</td>
+      <td style="text-align: center">IE8+</td>
+      <td style="text-align: center">IE9+</td>
+    </tr>
+    <tr>
+      <td>能够深复制存在环的对象</td>
+      <td style="text-align: center">抛出异常 RangeError: Maximum call stack size exceeded</td>
+      <td style="text-align: center">可以出色地处理</td>
+      <td style="text-align: center">抛出异常 TypeError: Converting circular structure to JSON</td>
+      <td style="text-align: center">支持</td>
+    </tr>
+    <tr>
+      <td>对 Date, RegExp 的深复制支持</td>
+      <td style="text-align: center">×</td>
+      <td style="text-align: center">支持</td>
+      <td style="text-align: center">×</td>
+      <td style="text-align: center">支持</td>
+    </tr>
+    <tr>
+      <td>对 ES6 新引入的标准对象的深复制支持</td>
+      <td style="text-align: center">×</td>
+      <td style="text-align: center">支持</td>
+      <td style="text-align: center">×</td>
+      <td style="text-align: center">×</td>
+    </tr>
+    <tr>
+      <td>复制数组的属性</td>
+      <td style="text-align: center">×</td>
+      <td style="text-align: center"><a href="https://github.com/lodash/lodash/blob/5166064453ed6164b76fb20f8dd340d23dd334e5/lodash._baseclone/index.js#215">仅支持RegExp#exec返回的数组结果</a></td>
+      <td style="text-align: center">×</td>
+      <td style="text-align: center">支持</td>
+    </tr>
+    <tr>
+      <td>是否保留非源生对象的类型</td>
+      <td style="text-align: center">×</td>
+      <td style="text-align: center">×</td>
+      <td style="text-align: center">×</td>
+      <td style="text-align: center">支持</td>
+    </tr>
+    <tr>
+      <td>复制不可枚举元素</td>
+      <td style="text-align: center">×</td>
+      <td style="text-align: center">×</td>
+      <td style="text-align: center">×</td>
+      <td style="text-align: center">×</td>
+    </tr>
+    <tr>
+      <td>复制函数</td>
+      <td style="text-align: center">×</td>
+      <td style="text-align: center">×</td>
+      <td style="text-align: center">×</td>
+      <td style="text-align: center">×</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="section-3">执行效率</h2>
+
+<p>为了测试各种深复制方法的执行效率，我使用了如下的测试用例：</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">x</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">{};</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">x</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">start</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">();</span>
+<span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="nx">clone</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span> <span class="o">-</span> <span class="nx">start</span><span class="p">);</span></code></pre></div>
+
+<p>下面来看看各个实现方法的具体效率如何，好吧，我承认看到下面的结果时，我是有些失望的。我猜测性能大量地消耗于从原型链中查找方法？具体原因等我有时间再慢慢探究吧，希望这篇文章对你们有帮助~</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>深复制方法</th>
+      <th style="text-align: center">jQuery</th>
+      <th style="text-align: center">lodash</th>
+      <th style="text-align: center">JSON.parse</th>
+      <th style="text-align: center">所谓“拥抱未来的深复制实现”</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Test 1</td>
+      <td style="text-align: center">475</td>
+      <td style="text-align: center">341</td>
+      <td style="text-align: center">630</td>
+      <td style="text-align: center">4801</td>
+    </tr>
+    <tr>
+      <td>Test 2</td>
+      <td style="text-align: center">505</td>
+      <td style="text-align: center">270</td>
+      <td style="text-align: center">690</td>
+      <td style="text-align: center">4298</td>
+    </tr>
+    <tr>
+      <td>Test 3</td>
+      <td style="text-align: center">456</td>
+      <td style="text-align: center">268</td>
+      <td style="text-align: center">650</td>
+      <td style="text-align: center">4658</td>
+    </tr>
+    <tr>
+      <td>Average</td>
+      <td style="text-align: center">478.7</td>
+      <td style="text-align: center">293</td>
+      <td style="text-align: center">656.7</td>
+      <td style="text-align: center">4585.7</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="section-4">参考资料</h2>
+
+<ul>
+  <li><a href="http://underscorejs.org/#clone">Underscore - clone</a></li>
+  <li><a href="http://stackoverflow.com/questions/21003059/how-do-you-clone-an-array-of-objects-using-underscore">Stackoverflow - How do you clone an array of objects using underscore?</a></li>
+  <li><a href="http://api.jquery.com/">jQuery API</a></li>
+  <li><a href="https://lodash.com/docs#clone">lodash docs #clone</a></li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify">MDN - JSON.stringify</a></li>
+</ul>
+
+  </article>
+
+  
+    <div class="ds-thread" data-thread-key="10028" data-title="深入剖析 JavaScript 的深复制" data-url="http://jerryzou.com/posts/dive-into-deep-clone-in-javascript/"></div>
+<script>
+var duoshuoQuery = {short_name:"jerryzou"};
+(function() {
+  var ds = document.createElement('script');
+  ds.type = 'text/javascript';ds.async = true;
+  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  ds.charset = 'UTF-8';
+  (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+  
+</div>
+        
+      </div>
+    </div>
+
+    <footer class="site-footer">
+    <div class="wrap">
+        <ul class="friend-links footer-text">
+            <li><a href="http://ysyjerry1992.github.io/">Yusiyuan</a></li>
+            <li><a href="http://blog.liqiang.me/">Jayce Li</a></li>
+            <li><a href="http://www.yiqixxx.com/">一起网</a></li>
+            <li><a href="http://efe.baidu.com/">Baidu EFE</a></li>
+            <li><a href="http://fex.baidu.com/">Baidu FEX</a></li>
+        </ul>
+        <p class="footer-text">Powered by <a href="http://jekyllrb.com/">Jekyll</a> , <a href="https://pages.github.com/">Github Pages</a> and <a href="https://www.upyun.com/">UPYUN</a>.</p>
+    </div>
+</footer>
+
+
+    </body>
+</html>
