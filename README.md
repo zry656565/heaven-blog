@@ -8,7 +8,6 @@
 - Github Pages: 挂载博客的服务器
 - UPYUN: 将静态图片都存放于又拍云上
 - grunt: 用于网站的静态文件自动合并压缩，并部署
-- React: 用于组织“所有文章”的页面
 - 加速乐: DNS解析与线路优化
 - React: 使用React来组织“[所有文章](http://jerryzou.com/all-articles/)”页面
 
@@ -20,7 +19,3 @@ grunt debug		#本地编译并启动测试服务器
 grunt release	#本地编译出线上版本（应用各种优化）
 grunt serve 	#本地编译并启动测试服务器（应用各种优化）
 ```
-
-##未来的工作
-- 按月份将文章分类显示
-- 更优秀的代码高亮方式
