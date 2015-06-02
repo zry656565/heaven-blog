@@ -248,142 +248,140 @@
 <span class="nx">obj</span><span class="p">.</span><span class="nx">arr</span><span class="p">.</span><span class="nx">testProp</span> <span class="o">=</span> <span class="s2">&quot;test&quot;</span><span class="p">;</span>
 <span class="nx">clone</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">$clone</span><span class="p">();</span>                  <span class="c1">//&lt;----</span></code></pre></div>
 
+<p>首先定义一个辅助函数，用于在预定义对象的 Prototype 上定义方法：</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">defineMethods</span><span class="p">(</span><span class="nx">protoArray</span><span class="p">,</span> <span class="nx">nameToFunc</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">protoArray</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">proto</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">names</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">nameToFunc</span><span class="p">),</span>
+            <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+        <span class="k">for</span> <span class="p">(;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">names</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">proto</span><span class="p">,</span> <span class="nx">names</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="p">{</span>
+                <span class="nx">enumerable</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+                <span class="nx">configurable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+                <span class="nx">writable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+                <span class="nx">value</span><span class="o">:</span> <span class="nx">nameToFunc</span><span class="p">[</span><span class="nx">names</span><span class="p">[</span><span class="nx">i</span><span class="p">]]</span>
+            <span class="p">});</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+<span class="p">}</span></code></pre></div>
+
 <p>为了避免和源生方法冲突，我在方法名前加了一个 <code>$</code> 符号。而这个方法的具体实现很简单，就是递归深复制。其中我需要解释一下两个参数：<code>srcStack</code>和<code>dstStack</code>。它们的主要用途是对存在环的对象进行深复制。比如源对象中的子对象<code>srcStack[7]</code>在深复制以后，对应于<code>dstStack[7]</code>。该实现方法参考了 lodash 的实现。关于递归最重要的就是 Object 和 Array 对象：</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperties</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="p">{</span>
-    <span class="s2">&quot;$clone&quot;</span><span class="o">:</span> <span class="p">{</span>
-        <span class="nx">enumerable</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-        <span class="nx">configurable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-        <span class="nx">writable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-        <span class="nx">value</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">srcStack</span><span class="p">,</span> <span class="nx">dstStack</span><span class="p">)</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">getPrototypeOf</span><span class="p">(</span><span class="k">this</span><span class="p">)),</span>
-                <span class="nx">keys</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="k">this</span><span class="p">),</span>
-                <span class="nx">index</span><span class="p">;</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="cm">/*=====================================*</span>
+<span class="cm"> * Object.prototype</span>
+<span class="cm"> * - $clone()</span>
+<span class="cm">*=====================================*/</span>
 
-            <span class="nx">srcStack</span> <span class="o">=</span> <span class="nx">srcStack</span> <span class="o">||</span> <span class="p">[];</span>
-            <span class="nx">dstStack</span> <span class="o">=</span> <span class="nx">dstStack</span> <span class="o">||</span> <span class="p">[];</span>
-            <span class="nx">srcStack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
-            <span class="nx">dstStack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>
+<span class="nx">defineMethods</span><span class="p">([</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span> <span class="p">],</span> <span class="p">{</span>
+    <span class="s1">&#39;$clone&#39;</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">srcStack</span><span class="p">,</span> <span class="nx">dstStack</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">getPrototypeOf</span><span class="p">(</span><span class="k">this</span><span class="p">)),</span>
+            <span class="nx">keys</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="k">this</span><span class="p">),</span>
+            <span class="nx">index</span><span class="p">,</span>
+            <span class="nx">prop</span><span class="p">;</span>
 
-            <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">keys</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="k">this</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]])</span> <span class="o">!==</span> <span class="s2">&quot;function&quot;</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]]</span> <span class="o">===</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="nx">obj</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-                    <span class="p">}</span>
-                    <span class="k">else</span> <span class="p">{</span>
-                        <span class="nx">index</span> <span class="o">=</span> <span class="nx">srcStack</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="k">this</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]]);</span>
-                        <span class="k">if</span> <span class="p">(</span><span class="nx">index</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-                            <span class="nx">obj</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">dstStack</span><span class="p">[</span><span class="nx">index</span><span class="p">];</span>
-                        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                            <span class="nx">obj</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]]</span> <span class="o">=</span> <span class="k">this</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]].</span><span class="nx">$clone</span><span class="p">(</span><span class="nx">srcStack</span><span class="p">,</span> <span class="nx">dstStack</span><span class="p">);</span>
-                        <span class="p">}</span>
+        <span class="nx">srcStack</span> <span class="o">=</span> <span class="nx">srcStack</span> <span class="o">||</span> <span class="p">[];</span>
+        <span class="nx">dstStack</span> <span class="o">=</span> <span class="nx">dstStack</span> <span class="o">||</span> <span class="p">[];</span>
+        <span class="nx">srcStack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+        <span class="nx">dstStack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">keys</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">prop</span> <span class="o">=</span> <span class="k">this</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]];</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">prop</span> <span class="o">===</span> <span class="kc">null</span> <span class="o">||</span> <span class="nx">prop</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">obj</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">prop</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">prop</span><span class="p">.</span><span class="nx">$isFunction</span><span class="p">())</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">prop</span><span class="p">.</span><span class="nx">$isPlainObject</span><span class="p">())</span> <span class="p">{</span>
+                    <span class="nx">index</span> <span class="o">=</span> <span class="nx">srcStack</span><span class="p">.</span><span class="nx">lastIndexOf</span><span class="p">(</span><span class="nx">prop</span><span class="p">);</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="nx">index</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="nx">obj</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">dstStack</span><span class="p">[</span><span class="nx">index</span><span class="p">];</span>
+                        <span class="k">continue</span><span class="p">;</span>
                     <span class="p">}</span>
                 <span class="p">}</span>
+                <span class="nx">obj</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">prop</span><span class="p">.</span><span class="nx">$clone</span><span class="p">(</span><span class="nx">srcStack</span><span class="p">,</span> <span class="nx">dstStack</span><span class="p">);</span>
             <span class="p">}</span>
-            <span class="k">return</span> <span class="nx">obj</span><span class="p">;</span>
         <span class="p">}</span>
+        <span class="k">return</span> <span class="nx">obj</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">});</span>
 
 <span class="cm">/*=====================================*</span>
-<span class="cm"> * Array.prototype *</span>
-<span class="cm"> *=====================================*/</span>
+<span class="cm"> * Array.prototype</span>
+<span class="cm"> * - $clone()</span>
+<span class="cm">*=====================================*/</span>
 
-<span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperties</span><span class="p">(</span><span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="p">{</span>
-    <span class="s2">&quot;$clone&quot;</span><span class="o">:</span> <span class="p">{</span>
-        <span class="nx">enumerable</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-        <span class="nx">configurable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-        <span class="nx">writable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-        <span class="nx">value</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">srcStack</span><span class="p">,</span> <span class="nx">dstStack</span><span class="p">)</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">thisArr</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">valueOf</span><span class="p">(),</span>
-                <span class="nx">newArr</span> <span class="o">=</span> <span class="p">[],</span>
-                <span class="nx">keys</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">thisArr</span><span class="p">),</span>
-                <span class="nx">index</span><span class="p">;</span>
-
-            <span class="nx">srcStack</span> <span class="o">=</span> <span class="nx">srcStack</span> <span class="o">||</span> <span class="p">[];</span>
-            <span class="nx">dstStack</span> <span class="o">=</span> <span class="nx">dstStack</span> <span class="o">||</span> <span class="p">[];</span>
-            <span class="nx">srcStack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
-            <span class="nx">dstStack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">newArr</span><span class="p">);</span>
-
-            <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">keys</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">index</span> <span class="o">=</span> <span class="nx">srcStack</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">thisArr</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]]);</span>
-                <span class="k">if</span> <span class="p">(</span><span class="nx">index</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="nx">newArr</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">dstStack</span><span class="p">[</span><span class="nx">index</span><span class="p">];</span>
-                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                    <span class="nx">newArr</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">thisArr</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]].</span><span class="nx">$clone</span><span class="p">(</span><span class="nx">srcStack</span><span class="p">,</span> <span class="nx">dstStack</span><span class="p">);</span>
+<span class="nx">defineMethods</span><span class="p">([</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span> <span class="p">],</span> <span class="p">{</span>
+    <span class="s1">&#39;$clone&#39;</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">srcStack</span><span class="p">,</span> <span class="nx">dstStack</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">thisArr</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">valueOf</span><span class="p">(),</span>
+            <span class="nx">newArr</span> <span class="o">=</span> <span class="p">[],</span>
+            <span class="nx">keys</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">thisArr</span><span class="p">),</span>
+            <span class="nx">index</span><span class="p">,</span>
+            <span class="nx">element</span><span class="p">;</span>
+    
+        <span class="nx">srcStack</span> <span class="o">=</span> <span class="nx">srcStack</span> <span class="o">||</span> <span class="p">[];</span>
+        <span class="nx">dstStack</span> <span class="o">=</span> <span class="nx">dstStack</span> <span class="o">||</span> <span class="p">[];</span>
+        <span class="nx">srcStack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+        <span class="nx">dstStack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">newArr</span><span class="p">);</span>
+    
+        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">keys</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">element</span> <span class="o">=</span> <span class="nx">thisArr</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]];</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">element</span> <span class="o">===</span> <span class="kc">undefined</span> <span class="o">||</span> <span class="nx">element</span> <span class="o">===</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">newArr</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">element</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">element</span><span class="p">.</span><span class="nx">$isFunction</span><span class="p">())</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">element</span><span class="p">.</span><span class="nx">$isPlainObject</span><span class="p">())</span> <span class="p">{</span>
+                    <span class="nx">index</span> <span class="o">=</span> <span class="nx">srcStack</span><span class="p">.</span><span class="nx">lastIndexOf</span><span class="p">(</span><span class="nx">element</span><span class="p">);</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="nx">index</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="nx">newArr</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">dstStack</span><span class="p">[</span><span class="nx">index</span><span class="p">];</span>
+                        <span class="k">continue</span><span class="p">;</span>
+                    <span class="p">}</span>
                 <span class="p">}</span>
             <span class="p">}</span>
-            <span class="k">return</span> <span class="nx">newArr</span><span class="p">;</span>
+            <span class="nx">newArr</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">element</span><span class="p">.</span><span class="nx">$clone</span><span class="p">(</span><span class="nx">srcStack</span><span class="p">,</span> <span class="nx">dstStack</span><span class="p">);</span>
         <span class="p">}</span>
+        <span class="k">return</span> <span class="nx">newArr</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">});</span></code></pre></div>
 
 <p>接下来要针对 Date 和 RegExp 对象的深复制进行一些特殊处理：</p>
 
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="cm">/*=====================================*</span>
-<span class="cm"> * Date.prototype *</span>
+<span class="cm"> * Date.prototype</span>
+<span class="cm"> * - $clone</span>
 <span class="cm"> *=====================================*/</span>
 
-<span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperties</span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="p">{</span>
-    <span class="s2">&quot;$clone&quot;</span><span class="o">:</span> <span class="p">{</span>
-        <span class="nx">enumerable</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-        <span class="nx">configurable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-        <span class="nx">writable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-        <span class="nx">value</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">valueOf</span><span class="p">());</span> <span class="p">}</span>
-    <span class="p">}</span>
+<span class="nx">defineMethods</span><span class="p">([</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">prototype</span> <span class="p">],</span> <span class="p">{</span>
+    <span class="s1">&#39;$clone&#39;</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">valueOf</span><span class="p">());</span> <span class="p">}</span>
 <span class="p">});</span>
 
 <span class="cm">/*=====================================*</span>
-<span class="cm"> * RegExp.prototype *</span>
+<span class="cm"> * RegExp.prototype</span>
+<span class="cm"> * - $clone</span>
 <span class="cm"> *=====================================*/</span>
 
-<span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperties</span><span class="p">(</span><span class="nb">RegExp</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="p">{</span>
-    <span class="s2">&quot;$clone&quot;</span><span class="o">:</span> <span class="p">{</span>
-        <span class="nx">enumerable</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-        <span class="nx">configurable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-        <span class="nx">writable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-        <span class="nx">value</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">pattern</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">valueOf</span><span class="p">();</span>
-            <span class="kd">var</span> <span class="nx">flags</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
-            <span class="nx">flags</span> <span class="o">+=</span> <span class="nx">pattern</span><span class="p">.</span><span class="nx">global</span> <span class="o">?</span> <span class="s1">&#39;g&#39;</span> <span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
-            <span class="nx">flags</span> <span class="o">+=</span> <span class="nx">pattern</span><span class="p">.</span><span class="nx">ignoreCase</span> <span class="o">?</span> <span class="s1">&#39;i&#39;</span> <span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
-            <span class="nx">flags</span> <span class="o">+=</span> <span class="nx">pattern</span><span class="p">.</span><span class="nx">multiline</span> <span class="o">?</span> <span class="s1">&#39;m&#39;</span> <span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
-            <span class="k">return</span> <span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="nx">pattern</span><span class="p">.</span><span class="nx">source</span><span class="p">,</span> <span class="nx">flags</span><span class="p">);</span>
-        <span class="p">}</span>
+<span class="nx">defineMethods</span><span class="p">([</span> <span class="nb">RegExp</span><span class="p">.</span><span class="nx">prototype</span> <span class="p">],</span> <span class="p">{</span>
+    <span class="s1">&#39;$clone&#39;</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">pattern</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">valueOf</span><span class="p">();</span>
+        <span class="kd">var</span> <span class="nx">flags</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+        <span class="nx">flags</span> <span class="o">+=</span> <span class="nx">pattern</span><span class="p">.</span><span class="nx">global</span> <span class="o">?</span> <span class="s1">&#39;g&#39;</span> <span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+        <span class="nx">flags</span> <span class="o">+=</span> <span class="nx">pattern</span><span class="p">.</span><span class="nx">ignoreCase</span> <span class="o">?</span> <span class="s1">&#39;i&#39;</span> <span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+        <span class="nx">flags</span> <span class="o">+=</span> <span class="nx">pattern</span><span class="p">.</span><span class="nx">multiline</span> <span class="o">?</span> <span class="s1">&#39;m&#39;</span> <span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="nx">pattern</span><span class="p">.</span><span class="nx">source</span><span class="p">,</span> <span class="nx">flags</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">});</span></code></pre></div>
 
 <p>接下来就是 Number, Boolean 和 String 的 <code>$clone</code> 方法，虽然很简单，但这也是必不可少的。这样就能防止像单个字符串这样的对象错误地去调用 <code>Object.prototype.$clone</code>。</p>
 
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="cm">/*=====================================*</span>
-<span class="cm"> * Number / Boolean / String *</span>
+<span class="cm"> * Number / Boolean / String.prototype</span>
+<span class="cm"> * - $clone()</span>
 <span class="cm"> *=====================================*/</span>
 
-<span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperties</span><span class="p">(</span><span class="nb">Number</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="p">{</span>
-    <span class="s2">&quot;$clone&quot;</span><span class="o">:</span> <span class="p">{</span>
-        <span class="nx">enumerable</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-        <span class="nx">configurable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-        <span class="nx">writable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-        <span class="nx">value</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">valueOf</span><span class="p">();</span> <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">});</span>
-
-<span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperties</span><span class="p">(</span><span class="nb">Boolean</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="p">{</span>
-    <span class="s2">&quot;$clone&quot;</span><span class="o">:</span> <span class="p">{</span>
-        <span class="nx">enumerable</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-        <span class="nx">configurable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-        <span class="nx">writable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-        <span class="nx">value</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">valueOf</span><span class="p">();</span> <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">});</span>
-
-<span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperties</span><span class="p">(</span><span class="nb">String</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="p">{</span>
-    <span class="s2">&quot;$clone&quot;</span><span class="o">:</span> <span class="p">{</span>
-        <span class="nx">enumerable</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-        <span class="nx">configurable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-        <span class="nx">writable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-        <span class="nx">value</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">valueOf</span><span class="p">();</span> <span class="p">}</span>
-    <span class="p">}</span>
+<span class="nx">defineMethods</span><span class="p">([</span>
+    <span class="nb">Number</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span>
+    <span class="nb">Boolean</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span>
+    <span class="nb">String</span><span class="p">.</span><span class="nx">prototype</span>
+<span class="p">],</span> <span class="p">{</span>
+    <span class="s1">&#39;$clone&#39;</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">valueOf</span><span class="p">();</span> <span class="p">}</span>
 <span class="p">});</span></code></pre></div>
 
 <h2 id="section-2">比较各个深复制方法</h2>
@@ -402,14 +400,14 @@
     <tr>
       <td>浏览器兼容性</td>
       <td style="text-align: center">IE6+ (1.x) &amp; IE9+ (2.x)</td>
-      <td style="text-align: center">IE6+</td>
+      <td style="text-align: center">IE6+ (Compatibility) &amp; IE9+ (Modern)</td>
       <td style="text-align: center">IE8+</td>
       <td style="text-align: center">IE9+</td>
     </tr>
     <tr>
       <td>能够深复制存在环的对象</td>
       <td style="text-align: center">抛出异常 RangeError: Maximum call stack size exceeded</td>
-      <td style="text-align: center">可以出色地处理</td>
+      <td style="text-align: center">支持</td>
       <td style="text-align: center">抛出异常 TypeError: Converting circular structure to JSON</td>
       <td style="text-align: center">支持</td>
     </tr>
@@ -474,7 +472,7 @@
 <span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="nx">clone</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span> <span class="o">-</span> <span class="nx">start</span><span class="p">);</span></code></pre></div>
 
-<p>下面来看看各个实现方法的具体效率如何，好吧，我承认看到下面的结果时，我是有些失望的。我猜测性能大量地消耗于从原型链中查找方法？具体原因等我有时间再慢慢探究吧，希望这篇文章对你们有帮助~</p>
+<p>下面来看看各个实现方法的具体效率如何，我所使用的浏览器是 Mac 上的 Chrome 43.0.2357.81 (64-bit) 版本，可以看出来在3次的实验中，我所实现的方法比 lodash 稍逊一筹，但比jQuery的效率也会高一些。希望这篇文章对你们有帮助~</p>
 
 <table>
   <thead>
@@ -492,28 +490,28 @@
       <td style="text-align: center">475</td>
       <td style="text-align: center">341</td>
       <td style="text-align: center">630</td>
-      <td style="text-align: center">4801</td>
+      <td style="text-align: center">320</td>
     </tr>
     <tr>
       <td>Test 2</td>
       <td style="text-align: center">505</td>
       <td style="text-align: center">270</td>
       <td style="text-align: center">690</td>
-      <td style="text-align: center">4298</td>
+      <td style="text-align: center">345</td>
     </tr>
     <tr>
       <td>Test 3</td>
       <td style="text-align: center">456</td>
       <td style="text-align: center">268</td>
       <td style="text-align: center">650</td>
-      <td style="text-align: center">4658</td>
+      <td style="text-align: center">332</td>
     </tr>
     <tr>
       <td>Average</td>
       <td style="text-align: center">478.7</td>
       <td style="text-align: center">293</td>
       <td style="text-align: center">656.7</td>
-      <td style="text-align: center">4585.7</td>
+      <td style="text-align: center">332.3</td>
     </tr>
   </tbody>
 </table>
