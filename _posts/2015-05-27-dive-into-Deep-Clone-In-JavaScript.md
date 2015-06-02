@@ -167,75 +167,101 @@ obj.arr.testProp = "test";
 clone = obj.$clone();                  //<----
 {% endhighlight %}
 
+首先定义一个辅助函数，用于在预定义对象的 Prototype 上定义方法：
+
+{% highlight javascript %}
+function defineMethods(protoArray, nameToFunc) {
+    protoArray.forEach(function(proto) {
+        var names = Object.keys(nameToFunc),
+            i = 0;
+
+        for (; i < names.length; i++) {
+            Object.defineProperty(proto, names[i], {
+                enumerable: false,
+                configurable: true,
+                writable: true,
+                value: nameToFunc[names[i]]
+            });
+        }
+    });
+}
+{% endhighlight %}
+
 为了避免和源生方法冲突，我在方法名前加了一个 `$` 符号。而这个方法的具体实现很简单，就是递归深复制。其中我需要解释一下两个参数：`srcStack`和`dstStack`。它们的主要用途是对存在环的对象进行深复制。比如源对象中的子对象`srcStack[7]`在深复制以后，对应于`dstStack[7]`。该实现方法参考了 lodash 的实现。关于递归最重要的就是 Object 和 Array 对象：
 
 {% highlight javascript %}
 
-Object.defineProperties(Object.prototype, {
-    "$clone": {
-        enumerable: false,
-        configurable: true,
-        writable: true,
-        value: function (srcStack, dstStack) {
-            var obj = Object.create(Object.getPrototypeOf(this)),
-                keys = Object.keys(this),
-                index;
+/*=====================================*
+ * Object.prototype
+ * - $clone()
+*=====================================*/
 
-            srcStack = srcStack || [];
-            dstStack = dstStack || [];
-            srcStack.push(this);
-            dstStack.push(obj);
+defineMethods([ Object.prototype ], {
+    '$clone': function (srcStack, dstStack) {
+        var obj = Object.create(Object.getPrototypeOf(this)),
+            keys = Object.keys(this),
+            index,
+            prop;
 
-            for (var i = 0; i < keys.length; i++) {
-                if (typeof(this[keys[i]]) !== "function") {
-                    if (this[keys[i]] === null) {
-                        obj[keys[i]] = null;
-                    }
-                    else {
-                        index = srcStack.indexOf(this[keys[i]]);
-                        if (index > 0) {
-                            obj[keys[i]] = dstStack[index];
-                        } else {
-                            obj[keys[i]] = this[keys[i]].$clone(srcStack, dstStack);
-                        }
+        srcStack = srcStack || [];
+        dstStack = dstStack || [];
+        srcStack.push(this);
+        dstStack.push(obj);
+
+        for (var i = 0; i < keys.length; i++) {
+            prop = this[keys[i]];
+            if (prop === null || prop === undefined) {
+                obj[keys[i]] = prop;
+            }
+            else if (!prop.$isFunction()) {
+                if (prop.$isPlainObject()) {
+                    index = srcStack.lastIndexOf(prop);
+                    if (index > 0) {
+                        obj[keys[i]] = dstStack[index];
+                        continue;
                     }
                 }
+                obj[keys[i]] = prop.$clone(srcStack, dstStack);
             }
-            return obj;
         }
+        return obj;
     }
 });
 
 /*=====================================*
- * Array.prototype *
- *=====================================*/
+ * Array.prototype
+ * - $clone()
+*=====================================*/
 
-Object.defineProperties(Array.prototype, {
-    "$clone": {
-        enumerable: false,
-        configurable: true,
-        writable: true,
-        value: function (srcStack, dstStack) {
-            var thisArr = this.valueOf(),
-                newArr = [],
-                keys = Object.keys(thisArr),
-                index;
-
-            srcStack = srcStack || [];
-            dstStack = dstStack || [];
-            srcStack.push(this);
-            dstStack.push(newArr);
-
-            for (var i = 0; i < keys.length; i++) {
-                index = srcStack.indexOf(thisArr[keys[i]]);
-                if (index > 0) {
-                    newArr[keys[i]] = dstStack[index];
-                } else {
-                    newArr[keys[i]] = thisArr[keys[i]].$clone(srcStack, dstStack);
+defineMethods([ Array.prototype ], {
+    '$clone': function (srcStack, dstStack) {
+        var thisArr = this.valueOf(),
+            newArr = [],
+            keys = Object.keys(thisArr),
+            index,
+            element;
+    
+        srcStack = srcStack || [];
+        dstStack = dstStack || [];
+        srcStack.push(this);
+        dstStack.push(newArr);
+    
+        for (var i = 0; i < keys.length; i++) {
+            element = thisArr[keys[i]];
+            if (element === undefined || element === null) {
+                newArr[keys[i]] = element;
+            } else if (!element.$isFunction()) {
+                if (element.$isPlainObject()) {
+                    index = srcStack.lastIndexOf(element);
+                    if (index > 0) {
+                        newArr[keys[i]] = dstStack[index];
+                        continue;
+                    }
                 }
             }
-            return newArr;
+            newArr[keys[i]] = element.$clone(srcStack, dstStack);
         }
+        return newArr;
     }
 });
 
@@ -246,35 +272,27 @@ Object.defineProperties(Array.prototype, {
 {% highlight javascript %}
 
 /*=====================================*
- * Date.prototype *
+ * Date.prototype
+ * - $clone
  *=====================================*/
 
-Object.defineProperties(Date.prototype, {
-    "$clone": {
-        enumerable: false,
-        configurable: true,
-        writable: true,
-        value: function () { return new Date(this.valueOf()); }
-    }
+defineMethods([ Date.prototype ], {
+    '$clone': function() { return new Date(this.valueOf()); }
 });
 
 /*=====================================*
- * RegExp.prototype *
+ * RegExp.prototype
+ * - $clone
  *=====================================*/
 
-Object.defineProperties(RegExp.prototype, {
-    "$clone": {
-        enumerable: false,
-        configurable: true,
-        writable: true,
-        value: function () {
-            var pattern = this.valueOf();
-            var flags = '';
-            flags += pattern.global ? 'g' : '';
-            flags += pattern.ignoreCase ? 'i' : '';
-            flags += pattern.multiline ? 'm' : '';
-            return new RegExp(pattern.source, flags);
-        }
+defineMethods([ RegExp.prototype ], {
+    '$clone': function () {
+        var pattern = this.valueOf();
+        var flags = '';
+        flags += pattern.global ? 'g' : '';
+        flags += pattern.ignoreCase ? 'i' : '';
+        flags += pattern.multiline ? 'm' : '';
+        return new RegExp(pattern.source, flags);
     }
 });
 
@@ -285,34 +303,16 @@ Object.defineProperties(RegExp.prototype, {
 {% highlight javascript %}
 
 /*=====================================*
- * Number / Boolean / String *
+ * Number / Boolean / String.prototype
+ * - $clone()
  *=====================================*/
 
-Object.defineProperties(Number.prototype, {
-    "$clone": {
-        enumerable: false,
-        configurable: true,
-        writable: true,
-        value: function () { return this.valueOf(); }
-    }
-});
-
-Object.defineProperties(Boolean.prototype, {
-    "$clone": {
-        enumerable: false,
-        configurable: true,
-        writable: true,
-        value: function () { return this.valueOf(); }
-    }
-});
-
-Object.defineProperties(String.prototype, {
-    "$clone": {
-        enumerable: false,
-        configurable: true,
-        writable: true,
-        value: function () { return this.valueOf(); }
-    }
+defineMethods([
+    Number.prototype,
+    Boolean.prototype,
+    String.prototype
+], {
+    '$clone': function() { return this.valueOf(); }
 });
 {% endhighlight %}
 
@@ -321,8 +321,8 @@ Object.defineProperties(String.prototype, {
 
 特性 | jQuery | lodash | JSON.parse | 所谓“拥抱未来的深复制实现”
 --- | :------: | :-----: | :-----: | :-------:
-浏览器兼容性 | IE6+ (1.x) & IE9+ (2.x) | IE6+ | IE8+ | IE9+
-能够深复制存在环的对象 | 抛出异常 RangeError: Maximum call stack size exceeded | 可以出色地处理 | 抛出异常 TypeError: Converting circular structure to JSON | 支持
+浏览器兼容性 | IE6+ (1.x) & IE9+ (2.x) | IE6+ (Compatibility) & IE9+ (Modern) | IE8+ | IE9+
+能够深复制存在环的对象 | 抛出异常 RangeError: Maximum call stack size exceeded | 支持 | 抛出异常 TypeError: Converting circular structure to JSON | 支持
 对 Date, RegExp 的深复制支持 | × | 支持 | × | 支持 |
 对 ES6 新引入的标准对象的深复制支持 | × | 支持 | × | × |
 复制数组的属性 | × | [仅支持RegExp#exec返回的数组结果](https://github.com/lodash/lodash/blob/5166064453ed6164b76fb20f8dd340d23dd334e5/lodash._baseclone/index.js#215) | × | 支持 |
@@ -348,14 +348,14 @@ var y = clone(x);
 console.log(Date.now() - start);
 {% endhighlight %}
 
-下面来看看各个实现方法的具体效率如何，好吧，我承认看到下面的结果时，我是有些失望的。我猜测性能大量地消耗于从原型链中查找方法？具体原因等我有时间再慢慢探究吧，希望这篇文章对你们有帮助~
+下面来看看各个实现方法的具体效率如何，我所使用的浏览器是 Mac 上的 Chrome 43.0.2357.81 (64-bit) 版本，可以看出来在3次的实验中，我所实现的方法比 lodash 稍逊一筹，但比jQuery的效率也会高一些。希望这篇文章对你们有帮助~
 
 深复制方法 | jQuery | lodash | JSON.parse | 所谓“拥抱未来的深复制实现”
 --- | :------: | :-----: | :-----: | :-------:
-Test 1 | 475 | 341 | 630 | 4801
-Test 2 | 505 | 270 | 690 | 4298
-Test 3 | 456 | 268 | 650 | 4658
-Average | 478.7 | 293 | 656.7 | 4585.7
+Test 1 | 475 | 341 | 630 | 320
+Test 2 | 505 | 270 | 690 | 345
+Test 3 | 456 | 268 | 650 | 332
+Average | 478.7 | 293 | 656.7 | 332.3
 
 ##参考资料
 
