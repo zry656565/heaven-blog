@@ -4,6 +4,10 @@ permalink: /about/
 nav: true
 key: 10016
 duoshuo_comment: true
+sitemap:
+    priority: 1.0
+    changefreq: 'monthly'
+    lastmod: 2015-06-02 20:37:00 UTC
 ---
 
 <img src="{{ site.static_url }}/monkey.jpg" width="220" height="220" style="padding-left:50px; float:right;">
