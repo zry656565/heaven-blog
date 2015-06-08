@@ -92,7 +92,7 @@ arr[1] = 6;
 // 1. jQuery
 obj2 = $.extend(true, {}, obj);
 console.log(obj2.a);                            // [5, 6, 0, 0, 0]
-Object.prototype.toString.call(arr2);           // [object Int16Array]
+Object.prototype.toString.call(obj2);           // [object Int16Array]
 obj2.a[0] = 100;
 console.log(obj);                               // [100, 6, 0, 0, 0]
 
