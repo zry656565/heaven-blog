@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+        
+            解决 Github Pages 禁止百度爬虫的方法与可行性分析 | 咀嚼之味
+        </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="我写技术博客有两个原因：一是总结自己近日的研究成果，二是将这些成果分享给大家。所以就我个人来说，还是比较希望写出来的文章有更多的人能够看到的。我最近注意到我的博客的流量大多来自于谷歌，而几乎没有来源于百度的。而本文就旨在提出这个问题，并尝试着去解决这个问题。 ">
+    <link rel="alternate" type="application/rss+xml" title="咀嚼之味 RSS" href="/feed.xml">
+    <link rel="canonical" href="http://jerryzou.com/posts/feasibility-of-allowing-baiduSpider-for-Github-Pages/">
+    <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/release/style.13f6ea6f.css">
+
+    <!-- Baidu Analysis -->
+    <script>
+        if (window.location.href.substr(7, 9) !== 'localhost') {
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?2744fd74aa568e064f9986394a60ead1";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+            })();
+        }
+    </script>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-47842677-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    
+    <!-- handle external js files -->
+    
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+  <div class="wrap">
+    <a class="site-title" href="/">咀嚼之味</a>
+    <nav class="site-nav">
+      <div class="trigger">
+        <a class="page-link" href="/">首页</a>
+        
+          
+          <a class="page-link" href="/all-articles/">所有文章</a>
+          
+        
+          
+          <a class="page-link" href="/skill/">技能图谱</a>
+          
+        
+          
+          <a class="page-link" href="/about/">关于我</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          <a class="page-link" href="/feed.xml">RSS订阅</a>
+      </div>
+    </nav>
+  </div>
+  <!-- fork me on github -->
+  <a id="fork-me" href="https://github.com/zry656565/heaven-blog"><img src="http://jerryblog-image.b0.upaiyun.com/blog/forkme.png" alt="Fork me on GitHub"></a>
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+        
+        <div class="post">
+
+  <header class="post-header">
+    <h1>解决 Github Pages 禁止百度爬虫的方法与可行性分析</h1>
+    <p class="meta">Jun 8, 2015 <span class="pause"> | </span>
+        
+            
+                <a class="label" href="/all-articles/?label=百度爬虫">百度爬虫</a>
+            
+                <a class="label" href="/all-articles/?label=Github Pages">Github Pages</a>
+            
+                <a class="label" href="/all-articles/?label=CDN">CDN</a>
+            
+                <a class="label" href="/all-articles/?label=SEO">SEO</a>
+            
+                <a class="label" href="/all-articles/?label=博客">博客</a>
+            
+        
+    </p>
+  </header>
+
+  <article class="post-content">
+  <p>我写技术博客有两个原因：一是总结自己近日的研究成果，二是将这些成果分享给大家。所以就我个人来说，还是比较希望写出来的文章有更多的人能够看到的。我最近注意到我的博客的流量大多来自于谷歌，而几乎没有来源于百度的。而本文就旨在提出这个问题，并尝试着去解决这个问题。当然，换一个云主机服务提供商能够很直接明了地解决这个问题，但这不是本文的重点，暂且不提。</p>
+
+<h2 id="github-pages-">为什么 Github Pages 禁用了百度爬虫？</h2>
+
+<p>就这个问题，我联系了 Github Support 部门，对方给我的答复是这样的：</p>
+
+<blockquote>
+  <p>Hi Jerry,</p>
+
+  <p>Sorry for the trouble with this. We are currently blocking the Baidu user agent from crawling GitHub Pages sites in response to this user agent being responsible for an excessive amount of requests, which was causing availability issues for other GitHub customers.</p>
+
+  <p>This is unlikely to change any time soon, so if you need the Baidu user agent to be able to crawl your site you will need to host it elsewhere.</p>
+
+  <p>Apologies again for the inconvenience.</p>
+
+  <p>Cheers,
+Alex</p>
+</blockquote>
+
+<p>简单地来说，就是百度爬虫爬得太猛烈，已经对很多 Github 用户造成了可用性的问题了，而禁用百度爬虫这一举措可能会一直持续下去。（不知道跟之前的 Great Cannon有没有关系）</p>
+
+<p>因此，只能自己动手丰衣足食了，下面来讨论一下解决这个问题的方式。</p>
+
+<h2 id="cdn">解决问题 —— CDN</h2>
+
+<p>我在知乎提了这样一个问题：<a href="http://www.zhihu.com/question/30898326">如何解决百度爬虫无法爬取搭建在Github上的个人博客的问题？</a>，并且 Stackoverflow 上也有类似的问题：<a href="http://stackoverflow.com/questions/29196845/github-blocks-baidu-spider-how-can-i-make-it-work-again">github blocks Baidu spider, how can I make it work again</a>。两位知乎答主和Stackoverflow的评论都比较推荐使用 CDN 来解决这个问题。</p>
+
+<p>那我们首先来了解一下 CDN 的原理。</p>
+
+<h3 id="cdn-">CDN 的原理</h3>
+
+<p>CDN 的全称是 <a href="http://en.wikipedia.org/wiki/Content_delivery_network">Content Delivery Network</a>，即内容分发网络，一般用于分发静态内容，比如图片、视频、CSS、JS文件。</p>
+
+<p><img src="http://jerryblog.qiniudn.com/cdn2.png" alt="CDN结构示意图" /></p>
+
+<p>如果不使用 CDN，那所有用户的请求都会直接导向单一的源服务器(Origin Server)。而如果启用了 CDN 服务，那么 CDN 服务提供商会分配给你若干个节点，这里以上图为例，比如分配给你的服务器 3 个东海岸的节点和 3 个西海岸的节点。</p>
+
+<p>此时用户就不会直接向源服务器发送请求，而是向边缘服务器(Edge Server)发送请求。再看下面这张示意图，当你第一次访问资源 foo.png 时，边缘服务器没有 foo.png 的缓存。所以会由它向源服务器发送请求，并获取到 foo.png。下一次所有经过这个节点的请求，因为存在缓存的缘故，都不用再次向源服务器发送请求，而是由边缘服务器直接返回该文件的缓存即可。这样一来就可以大大降低时延，也减小了源服务器的压力。</p>
+
+<p><img src="http://jerryblog.qiniudn.com/cdn3.png" alt="CDN访问示意图" /></p>
+
+<p>那 CDN 服务是如何决定你从哪个边缘服务器获取资源的呢？其实就是在发送 DNS 请求的时候，将你要访问的域名映射到最近的节点的 IP 上。具体判定哪个是最近的节点，最简单的策略就是根据 IP，但各个 CDN 的服务提供商的策略可能各不相同，这里就不展开讨论了。</p>
+
+<h3 id="cdn--1">CDN 的局限性</h3>
+
+<p>CDN 确实能够解决不少问题，但它本身也存在一定的局限性。其中最重要的一点是：<strong>决不能用 CDN 来缓存动态内容</strong>。</p>
+
+<p>来看一个例子，假设服务器端有这样一个PHP文件 hello.php：</p>
+
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="x">&lt;html&gt;</span>
+<span class="x">    &lt;head&gt;...&lt;/head&gt;</span>
+<span class="x">    &lt;body&gt;Hello, </span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$name</span> <span class="cp">?&gt;</span><span class="x"> &lt;/body&gt;</span>
+<span class="x">&lt;/html&gt;</span></code></pre></div>
+
+<p>如果 CDN 缓存了这个文件就会造成很糟糕的后果。比如 Jerry 先访问了 hello.php 页面，得到了 Hello, Jerry 的内容。此时这个内容已经被缓存到了节点 A，而 Tom 同学也是离节点 A 最近，那么 Tom 同学访问 hello.php 时，就会直接得到缓存内容：Hello, Jerry。这个时候 Tom 同学的内心一定是崩溃的。</p>
+
+<p>你还应该<strong>避免</strong>使用 CDN 的情况有：<strong>根据 user-agent 来选择返回移动版还是桌面版页面</strong>。UA 判断这对解决我们的问题很重要，下文会提及。当然，部署在 Github Pages 上的网站都是静态站点，所有用户进来看到的内容一般是相同的。所以通过 CDN 来对全站进行缓存没有什么问题。</p>
+
+<h2 id="section">可行性分析</h2>
+
+<p>Github是通过 UA 来判定百度爬虫并返回 403 Forbidden 的。而百度爬虫的 UA 一般是这样的：</p>
+
+<blockquote>
+  <p>Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)</p>
+</blockquote>
+
+<p>那么使用 CDN 来解决这个问题的关键就在于，让百度爬虫不要直接向 Github 的服务器发送请求，而是通过 CDN 边缘服务器的缓存来抓取网站的内容。边缘服务器本身是不会关心 UA 的，所以问题就迎刃而解了。</p>
+
+<p>可是问题真有这么简单吗？</p>
+
+<p><strong>并不是。</strong></p>
+
+<p>来看一下，我使用<a href="http://zhanzhang.baidu.com">百度站长工具</a>来进行抓取诊断的测试结果：</p>
+
+<p><img src="http://jerryblog.qiniudn.com/crawl_test.png-h400" alt="抓取诊断的测试结果" /></p>
+
+<p>结果是只有偶尔能够抓取成功，结果很让人失望吧？让我们来分析以下原因，首先罗列我目前可知的一些情况：</p>
+
+<ul>
+  <li>所有抓取成功的页面都访问了 209.9.130.5 节点</li>
+  <li>所有抓取失败的页面都访问了 209.9.130.6 节点</li>
+  <li>我本机<code>ping jerryzou.com</code>会 ping 到 209.9.130.8 节点</li>
+</ul>
+
+<p>好了，细心的同学应该已经发现问题所在了，百度爬虫大部分的请求被导到了 209.9.130.6 节点，但是<strong>这个节点上没有页面的缓存</strong>！！如果百度爬虫是某个页面的第一个访问者，CDN 的边缘服务器会用百度爬虫的 UA 去请求 Github 的服务器，得到的结果自然是被拒绝了。</p>
+
+<p>最终我们得到了通过 CDN 来解决这个问题的必要条件：<strong>你的博客必须有巨大的访问量！</strong>这样才能保证 CDN 的每一个边缘服务器上都有任何一个页面的缓存。我觉得除非像<a href="http://facebook.github.io/react/index.html">React主页</a>这样的网站，不然要达到这个要求几乎不可能的。</p>
+
+<p>最后，一句话总结：CDN 这一解决方案并不靠谱。</p>
+
+<p><br /><br /></p>
+
+<hr />
+
+<p>当然，不死心的我还是做了件奇怪的事……首先我在找到了<a href="http://forums.oscommerce.com/topic/382923-baiduspider-using-multiple-user-agents-how-to-stop-them/">所有 BaiduSpider 的 IP</a>，然后想要伪装成这些 IP 来请求内容，以此想在所有百度爬虫可能爬取的边缘服务器上都建立缓存。</p>
+
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="k">function</span> <span class="nf">Curl</span><span class="p">(</span><span class="nv">$url</span><span class="p">,</span> <span class="nv">$ip</span><span class="p">){</span>
+    <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
+    <span class="nb">curl_setopt_array</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="p">[</span>
+        <span class="nx">CURLOPT_URL</span> <span class="o">=&gt;</span> <span class="nv">$url</span><span class="p">,</span>
+        <span class="nx">CURLOPT_TIMEOUT</span> <span class="o">=&gt;</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="nx">CURLOPT_HEADER</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+        <span class="nx">CURLOPT_HTTPHEADER</span> <span class="o">=&gt;</span> <span class="p">[</span> <span class="s1">&#39;X-FORWARDED-FOR: &#39;</span><span class="o">.</span><span class="nv">$ip</span><span class="p">,</span> <span class="s1">&#39;CLIENT-IP: &#39;</span><span class="o">.</span><span class="nv">$ip</span> <span class="p">],</span>
+        <span class="nx">CURLOPT_RETURNTRANSFER</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+        <span class="nx">CURLOPT_FOLLOWLOCATION</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+        <span class="nx">CURLOPT_NOBODY</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+        <span class="nx">CURLOPT_REFERER</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://test.jerryzou.com&#39;</span><span class="p">,</span>
+        <span class="nx">CURLOPT_USERAGENT</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.66 Safari/537.36&#39;</span><span class="p">,</span>
+    <span class="p">]);</span>
+    <span class="nv">$response</span> <span class="o">=</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+    <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nv">$response</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nv">$ipList</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;203.125.234.1&#39;</span><span class="p">,</span>   <span class="s1">&#39;220.181.7.1&#39;</span><span class="p">,</span>     <span class="s1">&#39;123.125.66.1&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;123.125.71.1&#39;</span><span class="p">,</span>    <span class="s1">&#39;119.63.192.1&#39;</span><span class="p">,</span>    <span class="s1">&#39;119.63.193.1&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;119.63.194.1&#39;</span><span class="p">,</span>    <span class="s1">&#39;119.63.195.1&#39;</span><span class="p">,</span>    <span class="s1">&#39;119.63.196.1&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;119.63.197.1&#39;</span><span class="p">,</span>    <span class="s1">&#39;119.63.198.1&#39;</span><span class="p">,</span>    <span class="s1">&#39;119.63.199.1&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;180.76.5.1&#39;</span><span class="p">,</span>      <span class="s1">&#39;202.108.249.185&#39;</span><span class="p">,</span> <span class="s1">&#39;202.108.249.177&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;202.108.249.182&#39;</span><span class="p">,</span> <span class="s1">&#39;202.108.249.184&#39;</span><span class="p">,</span> <span class="s1">&#39;202.108.249.189&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;61.135.146.200&#39;</span><span class="p">,</span>  <span class="s1">&#39;61.135.145.221&#39;</span><span class="p">,</span>  <span class="s1">&#39;61.135.145.207&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;202.108.250.196&#39;</span><span class="p">,</span> <span class="s1">&#39;68.170.119.76&#39;</span><span class="p">,</span>   <span class="s1">&#39;207.46.199.52&#39;</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$ipList</span> <span class="k">as</span> <span class="nv">$ip</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">Curl</span><span class="p">(</span><span class="s1">&#39;http://jerryzou.com&#39;</span><span class="p">,</span> <span class="nv">$ip</span><span class="p">);</span>
+    <span class="k">echo</span> <span class="s2">&quot;</span><span class="si">$ip\n</span><span class="s2">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">echo</span> <span class="s2">&quot;Done</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span></code></pre></div>
+
+<p><br />
+然而并没有卵用……</p>
+
+<h2 id="section-1">参考资料</h2>
+<ul>
+  <li><a href="http://www.zhihu.com/question/30898326">如何解决百度爬虫无法爬取搭建在Github上的个人博客的问题？</a></li>
+  <li><a href="http://en.wikipedia.org/wiki/Content_delivery_network">Wikipedia: Content delivery network</a></li>
+  <li><a href="http://www.nczonline.net/blog/2011/11/29/how-content-delivery-networks-cdns-work/">How content delivery networks (CDNs) work</a></li>
+  <li><a href="http://forums.oscommerce.com/topic/382923-baiduspider-using-multiple-user-agents-how-to-stop-them/">Baiduspider using multiple User Agents how to stop them?</a></li>
+</ul>
+
+
+  </article>
+
+  
+    <div class="ds-thread" data-thread-key="10029" data-title="解决 Github Pages 禁止百度爬虫的方法与可行性分析" data-url="http://jerryzou.com/posts/feasibility-of-allowing-baiduSpider-for-Github-Pages/"></div>
+<script>
+var duoshuoQuery = {short_name:"jerryzou"};
+(function() {
+  var ds = document.createElement('script');
+  ds.type = 'text/javascript';ds.async = true;
+  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  ds.charset = 'UTF-8';
+  (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+  
+</div>
+        
+      </div>
+    </div>
+
+    <footer class="site-footer">
+    <div class="wrap">
+        <ul class="friend-links footer-text">
+            <li><a href="http://ysyjerry1992.github.io/">Yusiyuan</a></li>
+            <li><a href="http://blog.liqiang.me/">Jayce Li</a></li>
+            <li><a href="http://www.yiqixxx.com/">一起网</a></li>
+            <li><a href="http://efe.baidu.com/">Baidu EFE</a></li>
+            <li><a href="http://fex.baidu.com/">Baidu FEX</a></li>
+        </ul>
+        <p class="footer-text">Powered by <a href="http://jekyllrb.com/">Jekyll</a> , <a href="https://pages.github.com/">Github Pages</a> and <a href="https://www.upyun.com/">UPYUN</a>.</p>
+    </div>
+</footer>
+
+
+    </body>
+</html>

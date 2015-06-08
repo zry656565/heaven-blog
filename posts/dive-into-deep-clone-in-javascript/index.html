@@ -75,6 +75,8 @@
         
           
         
+          
+        
           <a class="page-link" href="/feed.xml">RSS订阅</a>
       </div>
     </nav>
@@ -180,7 +182,7 @@
 <span class="c1">// 1. jQuery</span>
 <span class="nx">obj2</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span> <span class="p">{},</span> <span class="nx">obj</span><span class="p">);</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj2</span><span class="p">.</span><span class="nx">a</span><span class="p">);</span>                            <span class="c1">// [5, 6, 0, 0, 0]</span>
-<span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">toString</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arr2</span><span class="p">);</span>           <span class="c1">// [object Int16Array]</span>
+<span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">toString</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">obj2</span><span class="p">);</span>           <span class="c1">// [object Int16Array]</span>
 <span class="nx">obj2</span><span class="p">.</span><span class="nx">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>                               <span class="c1">// [100, 6, 0, 0, 0]</span>
 

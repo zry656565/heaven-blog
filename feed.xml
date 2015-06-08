@@ -8,6 +8,158 @@
     <atom:link href="http://jerryzou.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>解决 Github Pages 禁止百度爬虫的方法与可行性分析</title>
+        <description>&lt;p&gt;我写技术博客有两个原因：一是总结自己近日的研究成果，二是将这些成果分享给大家。所以就我个人来说，还是比较希望写出来的文章有更多的人能够看到的。我最近注意到我的博客的流量大多来自于谷歌，而几乎没有来源于百度的。而本文就旨在提出这个问题，并尝试着去解决这个问题。当然，换一个云主机服务提供商能够很直接明了地解决这个问题，但这不是本文的重点，暂且不提。&lt;/p&gt;
+
+&lt;h2 id=&quot;github-pages-&quot;&gt;为什么 Github Pages 禁用了百度爬虫？&lt;/h2&gt;
+
+&lt;p&gt;就这个问题，我联系了 Github Support 部门，对方给我的答复是这样的：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Hi Jerry,&lt;/p&gt;
+
+  &lt;p&gt;Sorry for the trouble with this. We are currently blocking the Baidu user agent from crawling GitHub Pages sites in response to this user agent being responsible for an excessive amount of requests, which was causing availability issues for other GitHub customers.&lt;/p&gt;
+
+  &lt;p&gt;This is unlikely to change any time soon, so if you need the Baidu user agent to be able to crawl your site you will need to host it elsewhere.&lt;/p&gt;
+
+  &lt;p&gt;Apologies again for the inconvenience.&lt;/p&gt;
+
+  &lt;p&gt;Cheers,
+Alex&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;简单地来说，就是百度爬虫爬得太猛烈，已经对很多 Github 用户造成了可用性的问题了，而禁用百度爬虫这一举措可能会一直持续下去。（不知道跟之前的 Great Cannon有没有关系）&lt;/p&gt;
+
+&lt;p&gt;因此，只能自己动手丰衣足食了，下面来讨论一下解决这个问题的方式。&lt;/p&gt;
+
+&lt;h2 id=&quot;cdn&quot;&gt;解决问题 —— CDN&lt;/h2&gt;
+
+&lt;p&gt;我在知乎提了这样一个问题：&lt;a href=&quot;http://www.zhihu.com/question/30898326&quot;&gt;如何解决百度爬虫无法爬取搭建在Github上的个人博客的问题？&lt;/a&gt;，并且 Stackoverflow 上也有类似的问题：&lt;a href=&quot;http://stackoverflow.com/questions/29196845/github-blocks-baidu-spider-how-can-i-make-it-work-again&quot;&gt;github blocks Baidu spider, how can I make it work again&lt;/a&gt;。两位知乎答主和Stackoverflow的评论都比较推荐使用 CDN 来解决这个问题。&lt;/p&gt;
+
+&lt;p&gt;那我们首先来了解一下 CDN 的原理。&lt;/p&gt;
+
+&lt;h3 id=&quot;cdn-&quot;&gt;CDN 的原理&lt;/h3&gt;
+
+&lt;p&gt;CDN 的全称是 &lt;a href=&quot;http://en.wikipedia.org/wiki/Content_delivery_network&quot;&gt;Content Delivery Network&lt;/a&gt;，即内容分发网络，一般用于分发静态内容，比如图片、视频、CSS、JS文件。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jerryblog.qiniudn.com/cdn2.png&quot; alt=&quot;CDN结构示意图&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;如果不使用 CDN，那所有用户的请求都会直接导向单一的源服务器(Origin Server)。而如果启用了 CDN 服务，那么 CDN 服务提供商会分配给你若干个节点，这里以上图为例，比如分配给你的服务器 3 个东海岸的节点和 3 个西海岸的节点。&lt;/p&gt;
+
+&lt;p&gt;此时用户就不会直接向源服务器发送请求，而是向边缘服务器(Edge Server)发送请求。再看下面这张示意图，当你第一次访问资源 foo.png 时，边缘服务器没有 foo.png 的缓存。所以会由它向源服务器发送请求，并获取到 foo.png。下一次所有经过这个节点的请求，因为存在缓存的缘故，都不用再次向源服务器发送请求，而是由边缘服务器直接返回该文件的缓存即可。这样一来就可以大大降低时延，也减小了源服务器的压力。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jerryblog.qiniudn.com/cdn3.png&quot; alt=&quot;CDN访问示意图&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;那 CDN 服务是如何决定你从哪个边缘服务器获取资源的呢？其实就是在发送 DNS 请求的时候，将你要访问的域名映射到最近的节点的 IP 上。具体判定哪个是最近的节点，最简单的策略就是根据 IP，但各个 CDN 的服务提供商的策略可能各不相同，这里就不展开讨论了。&lt;/p&gt;
+
+&lt;h3 id=&quot;cdn--1&quot;&gt;CDN 的局限性&lt;/h3&gt;
+
+&lt;p&gt;CDN 确实能够解决不少问题，但它本身也存在一定的局限性。其中最重要的一点是：&lt;strong&gt;决不能用 CDN 来缓存动态内容&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;p&gt;来看一个例子，假设服务器端有这样一个PHP文件 hello.php：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;lt;head&amp;gt;...&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;    &amp;lt;body&amp;gt;Hello, &lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$name&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt; &amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;x&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;如果 CDN 缓存了这个文件就会造成很糟糕的后果。比如 Jerry 先访问了 hello.php 页面，得到了 Hello, Jerry 的内容。此时这个内容已经被缓存到了节点 A，而 Tom 同学也是离节点 A 最近，那么 Tom 同学访问 hello.php 时，就会直接得到缓存内容：Hello, Jerry。这个时候 Tom 同学的内心一定是崩溃的。&lt;/p&gt;
+
+&lt;p&gt;你还应该&lt;strong&gt;避免&lt;/strong&gt;使用 CDN 的情况有：&lt;strong&gt;根据 user-agent 来选择返回移动版还是桌面版页面&lt;/strong&gt;。UA 判断这对解决我们的问题很重要，下文会提及。当然，部署在 Github Pages 上的网站都是静态站点，所有用户进来看到的内容一般是相同的。所以通过 CDN 来对全站进行缓存没有什么问题。&lt;/p&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;可行性分析&lt;/h2&gt;
+
+&lt;p&gt;Github是通过 UA 来判定百度爬虫并返回 403 Forbidden 的。而百度爬虫的 UA 一般是这样的：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;那么使用 CDN 来解决这个问题的关键就在于，让百度爬虫不要直接向 Github 的服务器发送请求，而是通过 CDN 边缘服务器的缓存来抓取网站的内容。边缘服务器本身是不会关心 UA 的，所以问题就迎刃而解了。&lt;/p&gt;
+
+&lt;p&gt;可是问题真有这么简单吗？&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;并不是。&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;来看一下，我使用&lt;a href=&quot;http://zhanzhang.baidu.com&quot;&gt;百度站长工具&lt;/a&gt;来进行抓取诊断的测试结果：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jerryblog.qiniudn.com/crawl_test.png-h400&quot; alt=&quot;抓取诊断的测试结果&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;结果是只有偶尔能够抓取成功，结果很让人失望吧？让我们来分析以下原因，首先罗列我目前可知的一些情况：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;所有抓取成功的页面都访问了 209.9.130.5 节点&lt;/li&gt;
+  &lt;li&gt;所有抓取失败的页面都访问了 209.9.130.6 节点&lt;/li&gt;
+  &lt;li&gt;我本机&lt;code&gt;ping jerryzou.com&lt;/code&gt;会 ping 到 209.9.130.8 节点&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;好了，细心的同学应该已经发现问题所在了，百度爬虫大部分的请求被导到了 209.9.130.6 节点，但是&lt;strong&gt;这个节点上没有页面的缓存&lt;/strong&gt;！！如果百度爬虫是某个页面的第一个访问者，CDN 的边缘服务器会用百度爬虫的 UA 去请求 Github 的服务器，得到的结果自然是被拒绝了。&lt;/p&gt;
+
+&lt;p&gt;最终我们得到了通过 CDN 来解决这个问题的必要条件：&lt;strong&gt;你的博客必须有巨大的访问量！&lt;/strong&gt;这样才能保证 CDN 的每一个边缘服务器上都有任何一个页面的缓存。我觉得除非像&lt;a href=&quot;http://facebook.github.io/react/index.html&quot;&gt;React主页&lt;/a&gt;这样的网站，不然要达到这个要求几乎不可能的。&lt;/p&gt;
+
+&lt;p&gt;最后，一句话总结：CDN 这一解决方案并不靠谱。&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;当然，不死心的我还是做了件奇怪的事……首先我在找到了&lt;a href=&quot;http://forums.oscommerce.com/topic/382923-baiduspider-using-multiple-user-agents-how-to-stop-them/&quot;&gt;所有 BaiduSpider 的 IP&lt;/a&gt;，然后想要伪装成这些 IP 来请求内容，以此想在所有百度爬虫可能爬取的边缘服务器上都建立缓存。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Curl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$ip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+    &lt;span class=&quot;nv&quot;&gt;$ch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;curl_init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;curl_setopt_array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;CURLOPT_URL&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;CURLOPT_TIMEOUT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;CURLOPT_HEADER&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;CURLOPT_HTTPHEADER&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;X-FORWARDED-FOR: &amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;CLIENT-IP: &amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ip&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;CURLOPT_RETURNTRANSFER&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;CURLOPT_FOLLOWLOCATION&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;CURLOPT_NOBODY&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;CURLOPT_REFERER&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;http://test.jerryzou.com&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;CURLOPT_USERAGENT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.66 Safari/537.36&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
+    &lt;span class=&quot;nv&quot;&gt;$response&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;curl_exec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;curl_close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;$ipList&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+    &lt;span class=&quot;s1&quot;&gt;&amp;#39;203.125.234.1&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;   &lt;span class=&quot;s1&quot;&gt;&amp;#39;220.181.7.1&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;     &lt;span class=&quot;s1&quot;&gt;&amp;#39;123.125.66.1&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s1&quot;&gt;&amp;#39;123.125.71.1&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;    &lt;span class=&quot;s1&quot;&gt;&amp;#39;119.63.192.1&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;    &lt;span class=&quot;s1&quot;&gt;&amp;#39;119.63.193.1&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s1&quot;&gt;&amp;#39;119.63.194.1&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;    &lt;span class=&quot;s1&quot;&gt;&amp;#39;119.63.195.1&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;    &lt;span class=&quot;s1&quot;&gt;&amp;#39;119.63.196.1&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s1&quot;&gt;&amp;#39;119.63.197.1&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;    &lt;span class=&quot;s1&quot;&gt;&amp;#39;119.63.198.1&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;    &lt;span class=&quot;s1&quot;&gt;&amp;#39;119.63.199.1&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s1&quot;&gt;&amp;#39;180.76.5.1&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;      &lt;span class=&quot;s1&quot;&gt;&amp;#39;202.108.249.185&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;202.108.249.177&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s1&quot;&gt;&amp;#39;202.108.249.182&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;202.108.249.184&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;202.108.249.189&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s1&quot;&gt;&amp;#39;61.135.146.200&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;s1&quot;&gt;&amp;#39;61.135.145.221&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;s1&quot;&gt;&amp;#39;61.135.145.207&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s1&quot;&gt;&amp;#39;202.108.250.196&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;68.170.119.76&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;   &lt;span class=&quot;s1&quot;&gt;&amp;#39;207.46.199.52&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;foreach&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ipList&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$ip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;Curl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;http://jerryzou.com&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$ip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$ip\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Done&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;
+然而并没有卵用……&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;参考资料&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.zhihu.com/question/30898326&quot;&gt;如何解决百度爬虫无法爬取搭建在Github上的个人博客的问题？&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Content_delivery_network&quot;&gt;Wikipedia: Content delivery network&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.nczonline.net/blog/2011/11/29/how-content-delivery-networks-cdns-work/&quot;&gt;How content delivery networks (CDNs) work&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://forums.oscommerce.com/topic/382923-baiduspider-using-multiple-user-agents-how-to-stop-them/&quot;&gt;Baiduspider using multiple User Agents how to stop them?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Mon, 08 Jun 2015 11:26:25 +0000</pubDate>
+        <link>http://jerryzou.com/posts/feasibility-of-allowing-baiduSpider-for-Github-Pages/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/feasibility-of-allowing-baiduSpider-for-Github-Pages/</guid>
+      </item>
+    
+      <item>
         <title>深入剖析 JavaScript 的深复制</title>
         <description>&lt;p&gt;一年前我曾写过一篇 &lt;a href=&quot;http://jerryzou.com/posts/deepcopy/&quot;&gt;Javascript 中的一种深复制实现&lt;/a&gt;，当时写这篇文章的时候还比较稚嫩，有很多地方没有考虑仔细。为了不误人子弟，我决定结合 Underscore、lodash 和 jQuery 这些主流的第三方库来重新谈一谈这个问题。&lt;/p&gt;
 
@@ -84,7 +236,7 @@
 &lt;span class=&quot;c1&quot;&gt;// 1. jQuery&lt;/span&gt;
 &lt;span class=&quot;nx&quot;&gt;obj2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;extend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{},&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;obj2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;                            &lt;span class=&quot;c1&quot;&gt;// [5, 6, 0, 0, 0]&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;call&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;           &lt;span class=&quot;c1&quot;&gt;// [object Int16Array]&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;call&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;obj2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;           &lt;span class=&quot;c1&quot;&gt;// [object Int16Array]&lt;/span&gt;
 &lt;span class=&quot;nx&quot;&gt;obj2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;                               &lt;span class=&quot;c1&quot;&gt;// [100, 6, 0, 0, 0]&lt;/span&gt;
 
@@ -1072,115 +1224,6 @@
         <pubDate>Sat, 29 Nov 2014 01:25:10 +0000</pubDate>
         <link>http://jerryzou.com/posts/bulkUploadToUPYUN/</link>
         <guid isPermaLink="true">http://jerryzou.com/posts/bulkUploadToUPYUN/</guid>
-      </item>
-    
-      <item>
-        <title>来，让我们谈一谈 Normalize.css</title>
-        <description>&lt;blockquote&gt;
-  &lt;p&gt;本文译自Normalize.css官网: &lt;a href=&quot;http://nicolasgallagher.com/about-normalize-css/&quot;&gt;http://nicolasgallagher.com/about-normalize-css/&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://necolas.github.io/normalize.css/&quot;&gt;Normalize.css&lt;/a&gt; 只是一个很小的CSS文件，但它在默认的HTML元素样式上提供了跨浏览器的高度一致性。相比于传统的&lt;code&gt;CSS reset&lt;/code&gt;，&lt;code&gt;Normalize.css&lt;/code&gt;是一种现代的、为HTML5准备的优质替代方案。&lt;code&gt;Normalize.css&lt;/code&gt;现在已经被用于&lt;a href=&quot;http://getbootstrap.com/&quot;&gt;Twitter Bootstrap&lt;/a&gt;、&lt;a href=&quot;http://html5boilerplate.com/&quot;&gt;HTML5 Boilerplate&lt;/a&gt;、&lt;a href=&quot;http://www.gov.uk/&quot;&gt;GOV.UK&lt;/a&gt;、&lt;a href=&quot;http://www.rdio.com/&quot;&gt;Rdio&lt;/a&gt;、&lt;a href=&quot;http://css-tricks.com/&quot;&gt;CSS Tricks&lt;/a&gt; 以及许许多多其他框架、工具和网站上。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;http://necolas.github.io/normalize.css/&quot;&gt;Normalize.css 项目地址&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/necolas/normalize.css&quot;&gt;Normalize.css 在GitHub上的源码&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;section&quot;&gt;综述&lt;/h2&gt;
-
-&lt;p&gt;&lt;code&gt;Normalize.css&lt;/code&gt;是一种&lt;code&gt;CSS reset&lt;/code&gt;的替代方案。经过&lt;a href=&quot;https://twitter.com/necolas&quot;&gt;@necolas&lt;/a&gt;和&lt;a href=&quot;https://twitter.com/jon_neal&quot;&gt;@jon_neal&lt;/a&gt;花了几百个小时来努力研究不同浏览器的默认样式的差异，这个项目终于变成了现在这样。&lt;/p&gt;
-
-&lt;p&gt;我们创造&lt;code&gt;normalize.css&lt;/code&gt;有下面这几个目的：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;保护有用的浏览器默认样式&lt;/strong&gt;而不是完全去掉它们&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;一般化的样式&lt;/strong&gt;：为大部分HTML元素提供&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;修复浏览器自身的bug&lt;/strong&gt;并保证各浏览器的一致性&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;优化CSS可用性&lt;/strong&gt;：用一些小技巧&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;解释代码&lt;/strong&gt;：用注释和详细的文档来&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code&gt;Normalize.css&lt;/code&gt;支持包括手机浏览器在内的超多浏览器，同时对HTML5元素、排版、列表、嵌入的内容、表单和表格都进行了一般化。尽管这个项目基于一般化的原则，但我们还是在合适的地方使用了更实用的默认值。&lt;/p&gt;
-
-&lt;h2 id=&quot;normalize-vs-reset&quot;&gt;Normalize vs Reset&lt;/h2&gt;
-
-&lt;p&gt;知道&lt;code&gt;Normalize.css&lt;/code&gt;和传统&lt;code&gt;Reset&lt;/code&gt;的区别是非常有价值的。&lt;/p&gt;
-
-&lt;h5 id=&quot;normalizecss-&quot;&gt;1. Normalize.css 保护了有价值的默认值&lt;/h5&gt;
-
-&lt;p&gt;&lt;code&gt;Reset&lt;/code&gt;通过为几乎所有的元素施加默认样式，强行使得元素有相同的视觉效果。相比之下，&lt;code&gt;Normalize.css&lt;/code&gt;保持了许多默认的浏览器样式。这就意味着你不用再为所有公共的排版元素重新设置样式。当一个元素在不同的浏览器中有不同的默认值时，&lt;code&gt;Normalize.css&lt;/code&gt;会力求让这些样式保持一致并尽可能与现代标准相符合。&lt;/p&gt;
-
-&lt;h5 id=&quot;normalizecss-bug&quot;&gt;2. Normalize.css 修复了浏览器的bug&lt;/h5&gt;
-
-&lt;p&gt;它修复了常见的桌面端和移动端浏览器的bug。这往往超出了&lt;code&gt;Reset&lt;/code&gt;所能做到的范畴。关于这一点，&lt;code&gt;Normalize.css&lt;/code&gt;修复的问题包含了HTML5元素的显示设置、预格式化文字的&lt;code&gt;font-size&lt;/code&gt;问题、在IE9中SVG的溢出、许多出现在各浏览器和操作系统中的与表单相关的bug。&lt;/p&gt;
-
-&lt;p&gt;可以看以下这个例子，看看对于HTML5中新出现的&lt;code&gt;input&lt;/code&gt;类型&lt;code&gt;search&lt;/code&gt;，&lt;code&gt;Normalize.css&lt;/code&gt;是如何保证跨浏览器的一致性的。&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;c&quot;&gt;/**&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt; * 1. Addresses appearance set to searchfield in S5, Chrome&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt; * 2. Addresses box-sizing set to border-box in S5, Chrome (include -moz to future-proof)&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt; */&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;search&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;webkit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;appearance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;textfield&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;/* 1 */&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;moz&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;box&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sizing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;box&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;webkit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;box&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sizing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;box&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;/* 2 */&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;box&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sizing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;box&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;/**&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt; * Removes inner padding and search cancel button in S5, Chrome on OS X&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt; */&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;search&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]:&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:-webkit-search-decoration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;search&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]:&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:-webkit-search-cancel-button&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;webkit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;appearance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;none&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h5 id=&quot;normalizecss--1&quot;&gt;3. Normalize.css 不会让你的调试工具变的杂乱&lt;/h5&gt;
-
-&lt;p&gt;使用Reset最让人困扰的地方莫过于在浏览器调试工具中大段大段的继承链，如下图所示。在&lt;code&gt;Normalize.css&lt;/code&gt;中就不会有这样的问题，因为在我们的准则中对多选择器的使用时非常谨慎的，我们仅会有目的地对目标元素设置样式。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/css-reset-debugging.png&quot; alt=&quot;A common sight in browser debugging tools when using a CSS reset&quot; /&gt;&lt;/p&gt;
-
-&lt;h5 id=&quot;normalizecss--2&quot;&gt;4. Normalize.css 是模块化的&lt;/h5&gt;
-
-&lt;p&gt;这个项目已经被拆分为多个相关却又独立的部分，这使得你能够很容易也很清楚地知道哪些元素被设置了特定的值。因此这能让你自己选择性地移除掉某些永远不会用到部分（比如表单的一般化）。&lt;/p&gt;
-
-&lt;h5 id=&quot;normalizecss--3&quot;&gt;5. Normalize.css 拥有详细的文档&lt;/h5&gt;
-
-&lt;p&gt;Normalize.css的代码基于详细而全面的跨浏览器研究与测试。这个文件中拥有详细的代码说明并在&lt;a href=&quot;https://github.com/necolas/normalize.css/wiki&quot;&gt;Github Wiki&lt;/a&gt;中有进一步的说明。这意味着你可以找到每一行代码具体完成了什么工作、为什么要写这句代码、浏览器之间的差异，并且你可以更容易地进行自己的测试。&lt;/p&gt;
-
-&lt;p&gt;这个项目的目标是帮助人们了解浏览器默认是如何渲染元素的，同时也让人们很容易地明白如何改进浏览器渲染。&lt;/p&gt;
-
-&lt;h2 id=&quot;normalizecss&quot;&gt;如何使用 normalize.css&lt;/h2&gt;
-
-&lt;p&gt;首先，安装或从Github&lt;a href=&quot;http://necolas.github.com/normalize.css/&quot;&gt;下载Normalize.css&lt;/a&gt;，接下来有两种主要途径去使用它。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;策略一：将&lt;code&gt;normalize.css&lt;/code&gt;作为你自己项目的基础CSS，自定义样式值以满足设计师的需求。&lt;/li&gt;
-  &lt;li&gt;策略二：引入&lt;code&gt;normalize.css&lt;/code&gt;源码并在此基础上构建，在必要的时候用你自己写的CSS覆盖默认值。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;section-1&quot;&gt;结语&lt;/h2&gt;
-
-&lt;p&gt;无论从适用范畴还是实施上，&lt;code&gt;Normalize.css&lt;/code&gt;与&lt;code&gt;Reset&lt;/code&gt;都有极大的不同。尝试一下这两种方法并看看到底哪种更适合你的开发偏好是非常值得的。这个项目在Github上以开源的形式开发。任何人都能够提交问题报告或者提交补丁。整个项目发展的过程对所有人都是可见的，而每一次改动的原因也都写在commit信息中，这些都是有迹可循的。&lt;/p&gt;
-
-&lt;h2 id=&quot;section-2&quot;&gt;相关阅读&lt;/h2&gt;
-
-&lt;p&gt;关于更多默认UA样式的详细信息：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;http://www.whatwg.org/specs/web-apps/current-work/multipage/rendering.html#the-css-user-agent-style-sheet-and-presentational-hints&quot;&gt;WHATWG suggestions for rendering HTML documents&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://iecss.com/&quot;&gt;Internet Explorer User Agent Style Sheets&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://css-class.com/test/css/defaults/UA-style-sheet-defaults.htm&quot;&gt;CSS2.1 User Agent Style Sheet Defaults&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-</description>
-        <pubDate>Tue, 18 Nov 2014 22:23:10 +0000</pubDate>
-        <link>http://jerryzou.com/posts/aboutNormalizeCss/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/aboutNormalizeCss/</guid>
       </item>
     
   </channel>
