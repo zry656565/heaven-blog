@@ -93,7 +93,8 @@
 
   <header class="post-header">
     <h1>使用plupload绕过服务器，批量上传图片到又拍云</h1>
-    <p class="meta">Nov 29, 2014 <span class="pause"> | </span>
+    <p class="meta">Nov 29, 2014 <span class="pause"> - </span>
+        浏览量：<span id="visit-counter"></span>次<span class="pause"> | </span>
         
             
                 <a class="label" href="/all-articles/?label=批量上传图片">批量上传图片</a>
@@ -230,6 +231,24 @@ var duoshuoQuery = {short_name:"jerryzou"};
 </script>
   
 </div>
+<script>
+    var url = 'http://analytics1.sinaapp.com/page.php'
+            + '?type=increment'
+            + '&callback=jsonp_callback'
+            + '&domain=' + encodeURIComponent("http://jerryzou.com")
+            + '&url=' + encodeURIComponent("http://jerryzou.com/posts/bulkUploadToUPYUN/");
+
+    var head = document.getElementsByTagName('head')[0];
+    var jsonp = document.createElement("script");
+    jsonp.src= url;
+    head.appendChild(jsonp);
+
+    function jsonp_callback(result) {
+        var visitCounter = document.getElementById('visit-counter');
+        visitCounter.innerHTML = result.count;
+    }
+</script>
+
         
       </div>
     </div>
