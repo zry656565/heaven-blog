@@ -24,16 +24,12 @@ layout: default
   {% endif %}
 </div>
 <script>
-    var url = 'http://analytics1.sinaapp.com/page.php'
-            + '?type=increment'
-            + '&callback=jsonp_callback'
-            + '&domain=' + encodeURIComponent("http://jerryzou.com")
-            + '&url=' + encodeURIComponent("http://jerryzou.com{{ page.permalink }}");
-
-    var head = document.getElementsByTagName('head')[0];
-    var jsonp = document.createElement("script");
-    jsonp.src= url;
-    head.appendChild(jsonp);
+    jsonp('http://analytics1.sinaapp.com/page.php', {
+        callback: 'jsonp_callback',
+        type: 'increment',
+        domain: '{{ site.url }}',
+        url: '{{ page.permalink | prepend: site.url }}'
+    });
 
     function jsonp_callback(result) {
         var visitCounter = document.getElementById('visit-counter');

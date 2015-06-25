@@ -9,7 +9,8 @@ sidePart: true
       {% if post.release %}
       <li>
         <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        <p class="post-date">Posted on {{ post.date | date: "%b %-d, %Y" }}
+        <p class="post-date">Posted on {{ post.date | date: "%b %-d, %Y" }} ;
+            浏览量: <span class="visit-count" data-link="{{ post.url | prepend: site.url }}">0</span>次
         	{% for label in post.labels %}
         	<a href="{{ site.baseurl }}/all-articles/?label={{ label }}"><span class="post-label">{{ label }}</span></a>
         	{% endfor %}
@@ -19,5 +20,18 @@ sidePart: true
       {% endif %}
     {% endfor %}
   </ul>
-
 </div>
+
+<script>
+    jsonp('http://analytics1.sinaapp.com/page.php', {
+        callback: 'getCallback',
+        type: 'getByDomain',
+        domain: 'http://jerryzou.com'
+    });
+
+    function getCallback(result) {
+        for (var i = 0; i < result.length; i++) {
+            $('.visit-count[data-link="'+ result[i].url +'"]').html(result[i].count);
+        }
+    }
+</script>
