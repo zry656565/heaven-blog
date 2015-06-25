@@ -43,7 +43,27 @@
     </script>
     
     <!-- handle external js files -->
-    
+    <script type="text/javascript" src="/assets/js/lib/jquery/jquery-1.11.1.min.js"></script>
+
+    <!-- help function for jsonp -->
+    <script>
+        var jsonp = function(url, args) {
+            var head = document.getElementsByTagName('head')[0],
+                    script = document.createElement("script"),
+                    first = true,
+                    value;
+
+            for (var key in args) {
+                if (args.hasOwnProperty(key)) {
+                    value = encodeURIComponent(args[key]);
+                    url += first ? ('?' + key + '=' + value) : ('&' + key + '=' + value);
+                    first = false;
+                }
+            }
+            script.src= url;
+            head.appendChild(script);
+        }
+    </script>
 </head>
 
 
@@ -97,7 +117,8 @@
       
       <li>
         <a class="post-link" href="/posts/feasibility-of-allowing-baiduSpider-for-Github-Pages/">解决 Github Pages 禁止百度爬虫的方法与可行性分析</a>
-        <p class="post-date">Posted on Jun 8, 2015
+        <p class="post-date">Posted on Jun 8, 2015 ;
+            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/feasibility-of-allowing-baiduSpider-for-Github-Pages/">0</span>次
         	
         	<a href="/all-articles/?label=百度爬虫"><span class="post-label">百度爬虫</span></a>
         	
@@ -117,7 +138,8 @@
       
       <li>
         <a class="post-link" href="/posts/dive-into-deep-clone-in-javascript/">深入剖析 JavaScript 的深复制</a>
-        <p class="post-date">Posted on May 27, 2015
+        <p class="post-date">Posted on May 27, 2015 ;
+            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/dive-into-deep-clone-in-javascript/">0</span>次
         	
         	<a href="/all-articles/?label=JavaScript"><span class="post-label">JavaScript</span></a>
         	
@@ -133,7 +155,8 @@
       
       <li>
         <a class="post-link" href="/posts/cyclomatic-complexity-logic-in-css/">论 CSS 中的逻辑</a>
-        <p class="post-date">Posted on May 21, 2015
+        <p class="post-date">Posted on May 21, 2015 ;
+            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/cyclomatic-complexity-logic-in-css/">0</span>次
         	
         	<a href="/all-articles/?label=CSS"><span class="post-label">CSS</span></a>
         	
@@ -149,7 +172,8 @@
       
       <li>
         <a class="post-link" href="/posts/do-you-really-want-use-bit-operators-in-JavaScript/">为什么不要在 JavaScript 中使用位操作符？</a>
-        <p class="post-date">Posted on May 15, 2015
+        <p class="post-date">Posted on May 15, 2015 ;
+            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/do-you-really-want-use-bit-operators-in-JavaScript/">0</span>次
         	
         	<a href="/all-articles/?label=JavaScript"><span class="post-label">JavaScript</span></a>
         	
@@ -167,7 +191,8 @@
       
       <li>
         <a class="post-link" href="/posts/cookie-and-web-storage/">详说 Cookie, LocalStorage 与 SessionStorage</a>
-        <p class="post-date">Posted on May 2, 2015
+        <p class="post-date">Posted on May 2, 2015 ;
+            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/cookie-and-web-storage/">0</span>次
         	
         	<a href="/all-articles/?label=Cookie"><span class="post-label">Cookie</span></a>
         	
@@ -185,7 +210,8 @@
       
       <li>
         <a class="post-link" href="/posts/chew/">咀嚼之味</a>
-        <p class="post-date">Posted on Apr 11, 2015
+        <p class="post-date">Posted on Apr 11, 2015 ;
+            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/chew/">0</span>次
         	
         	<a href="/all-articles/?label=咀嚼之味"><span class="post-label">咀嚼之味</span></a>
         	
@@ -203,7 +229,8 @@
       
       <li>
         <a class="post-link" href="/posts/shadowsocks-with-digitalocean/">使用Digital Ocean和shadowsocks来科学上网</a>
-        <p class="post-date">Posted on Jan 24, 2015
+        <p class="post-date">Posted on Jan 24, 2015 ;
+            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/shadowsocks-with-digitalocean/">0</span>次
         	
         	<a href="/all-articles/?label=shadowsocks"><span class="post-label">shadowsocks</span></a>
         	
@@ -219,7 +246,8 @@
       
       <li>
         <a class="post-link" href="/posts/caocao01/">阿瞒究竟有没有杀伯奢？</a>
-        <p class="post-date">Posted on Jan 16, 2015
+        <p class="post-date">Posted on Jan 16, 2015 ;
+            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/caocao01/">0</span>次
         	
         	<a href="/all-articles/?label=曹操"><span class="post-label">曹操</span></a>
         	
@@ -237,7 +265,8 @@
       
       <li>
         <a class="post-link" href="/posts/dontBeEvil/">Don't be evil ?</a>
-        <p class="post-date">Posted on Jan 1, 2015
+        <p class="post-date">Posted on Jan 1, 2015 ;
+            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/dontBeEvil/">0</span>次
         	
         	<a href="/all-articles/?label=Google"><span class="post-label">Google</span></a>
         	
@@ -253,7 +282,8 @@
       
       <li>
         <a class="post-link" href="/posts/bulkUploadToUPYUN/">使用plupload绕过服务器，批量上传图片到又拍云</a>
-        <p class="post-date">Posted on Nov 29, 2014
+        <p class="post-date">Posted on Nov 29, 2014 ;
+            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/bulkUploadToUPYUN/">0</span>次
         	
         	<a href="/all-articles/?label=批量上传图片"><span class="post-label">批量上传图片</span></a>
         	
@@ -271,7 +301,8 @@
       
       <li>
         <a class="post-link" href="/posts/aboutNormalizeCss/">来，让我们谈一谈 Normalize.css</a>
-        <p class="post-date">Posted on Nov 18, 2014
+        <p class="post-date">Posted on Nov 18, 2014 ;
+            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/aboutNormalizeCss/">0</span>次
         	
         	<a href="/all-articles/?label=Normalize.css"><span class="post-label">Normalize.css</span></a>
         	
@@ -285,7 +316,8 @@
       
       <li>
         <a class="post-link" href="/posts/getDevEnvironmentBack/">发生在升级OS X Yosemite后：修复各种开发环境</a>
-        <p class="post-date">Posted on Nov 14, 2014
+        <p class="post-date">Posted on Nov 14, 2014 ;
+            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/getDevEnvironmentBack/">0</span>次
         	
         	<a href="/all-articles/?label=Mac"><span class="post-label">Mac</span></a>
         	
@@ -303,7 +335,8 @@
       
       <li>
         <a class="post-link" href="/posts/gitForSAE/">极速地将git项目部署到SAE的svn服务器上</a>
-        <p class="post-date">Posted on Nov 13, 2014
+        <p class="post-date">Posted on Nov 13, 2014 ;
+            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/gitForSAE/">0</span>次
         	
         	<a href="/all-articles/?label=SAE"><span class="post-label">SAE</span></a>
         	
@@ -321,7 +354,8 @@
       
       <li>
         <a class="post-link" href="/posts/sjtuBusFeedback/">上海交大校园巴士时刻表查询APP反馈信息入口</a>
-        <p class="post-date">Posted on Oct 3, 2014
+        <p class="post-date">Posted on Oct 3, 2014 ;
+            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/sjtuBusFeedback/">0</span>次
         	
         	<a href="/all-articles/?label=交大校车"><span class="post-label">交大校车</span></a>
         	
@@ -335,7 +369,8 @@
       
       <li>
         <a class="post-link" href="/posts/sjtuBus/">使用百度地图API来完成交大校园巴士时刻表</a>
-        <p class="post-date">Posted on Sep 24, 2014
+        <p class="post-date">Posted on Sep 24, 2014 ;
+            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/sjtuBus/">0</span>次
         	
         	<a href="/all-articles/?label=JavaScript"><span class="post-label">JavaScript</span></a>
         	
@@ -351,7 +386,8 @@
       
       <li>
         <a class="post-link" href="/posts/usePygments/">使用Pygments来实现代码高亮</a>
-        <p class="post-date">Posted on Sep 7, 2014
+        <p class="post-date">Posted on Sep 7, 2014 ;
+            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/usePygments/">0</span>次
         	
         	<a href="/all-articles/?label=highlight"><span class="post-label">highlight</span></a>
         	
@@ -369,7 +405,8 @@
       
       <li>
         <a class="post-link" href="/posts/networkConfig/">小型局域网的多路由配置</a>
-        <p class="post-date">Posted on Aug 2, 2014
+        <p class="post-date">Posted on Aug 2, 2014 ;
+            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/networkConfig/">0</span>次
         	
         	<a href="/all-articles/?label=network config"><span class="post-label">network config</span></a>
         	
@@ -385,7 +422,8 @@
       
       <li>
         <a class="post-link" href="/posts/paperFormat/">IEEE论文PDF格式检测中的问题与解决</a>
-        <p class="post-date">Posted on Jun 2, 2014
+        <p class="post-date">Posted on Jun 2, 2014 ;
+            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/paperFormat/">0</span>次
         	
         	<a href="/all-articles/?label=IEEE"><span class="post-label">IEEE</span></a>
         	
@@ -397,7 +435,8 @@
       
       <li>
         <a class="post-link" href="/posts/jsmodular/">深入了解JavaScript模块化编程</a>
-        <p class="post-date">Posted on Jun 1, 2014
+        <p class="post-date">Posted on Jun 1, 2014 ;
+            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/jsmodular/">0</span>次
         	
         	<a href="/all-articles/?label=JavaScript"><span class="post-label">JavaScript</span></a>
         	
@@ -411,7 +450,8 @@
       
       <li>
         <a class="post-link" href="/posts/deepcopy/">Javascript中的一种深复制实现</a>
-        <p class="post-date">Posted on May 11, 2014
+        <p class="post-date">Posted on May 11, 2014 ;
+            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/deepcopy/">0</span>次
         	
         	<a href="/all-articles/?label=JavaScript"><span class="post-label">JavaScript</span></a>
         	
@@ -427,7 +467,8 @@
       
       <li>
         <a class="post-link" href="/posts/jreparser/">一款在线JavaScript正则表达式测试器</a>
-        <p class="post-date">Posted on May 6, 2014
+        <p class="post-date">Posted on May 6, 2014 ;
+            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/jreparser/">0</span>次
         	
         	<a href="/all-articles/?label=JavaScript"><span class="post-label">JavaScript</span></a>
         	
@@ -441,7 +482,8 @@
       
       <li>
         <a class="post-link" href="/posts/learnjs/">如何循序渐进地学习JavaScript</a>
-        <p class="post-date">Posted on Dec 21, 2013
+        <p class="post-date">Posted on Dec 21, 2013 ;
+            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/learnjs/">0</span>次
         	
         	<a href="/all-articles/?label=JavaScript"><span class="post-label">JavaScript</span></a>
         	
@@ -455,7 +497,8 @@
       
       <li>
         <a class="post-link" href="/posts/opentopublic/">博客建立</a>
-        <p class="post-date">Posted on Dec 16, 2013
+        <p class="post-date">Posted on Dec 16, 2013 ;
+            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/opentopublic/">0</span>次
         	
         	<a href="/all-articles/?label=博客"><span class="post-label">博客</span></a>
         	
@@ -469,7 +512,8 @@
       
       <li>
         <a class="post-link" href="/posts/tipsforC/">C语言中可能被你忽视的小细节</a>
-        <p class="post-date">Posted on Nov 18, 2013
+        <p class="post-date">Posted on Nov 18, 2013 ;
+            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/tipsforC/">0</span>次
         	
         	<a href="/all-articles/?label=C"><span class="post-label">C</span></a>
         	
@@ -481,7 +525,8 @@
       
       <li>
         <a class="post-link" href="/posts/storageMethod/">搞清大数端小数端</a>
-        <p class="post-date">Posted on Nov 4, 2013
+        <p class="post-date">Posted on Nov 4, 2013 ;
+            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/storageMethod/">0</span>次
         	
         	<a href="/all-articles/?label=大数端小数端"><span class="post-label">大数端小数端</span></a>
         	
@@ -491,9 +536,21 @@
       
     
   </ul>
-
 </div>
 
+<script>
+    jsonp('http://analytics1.sinaapp.com/page.php', {
+        callback: 'getCallback',
+        type: 'getByDomain',
+        domain: 'http://jerryzou.com'
+    });
+
+    function getCallback(result) {
+        for (var i = 0; i < result.length; i++) {
+            $('.visit-count[data-link="'+ result[i].url +'"]').html(result[i].count);
+        }
+    }
+</script>
         </div>
 
         <div class="side-part">

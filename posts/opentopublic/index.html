@@ -42,7 +42,27 @@
     </script>
     
     <!-- handle external js files -->
-    
+    <script type="text/javascript" src="/assets/js/lib/jquery/jquery-1.11.1.min.js"></script>
+
+    <!-- help function for jsonp -->
+    <script>
+        var jsonp = function(url, args) {
+            var head = document.getElementsByTagName('head')[0],
+                    script = document.createElement("script"),
+                    first = true,
+                    value;
+
+            for (var key in args) {
+                if (args.hasOwnProperty(key)) {
+                    value = encodeURIComponent(args[key]);
+                    url += first ? ('?' + key + '=' + value) : ('&' + key + '=' + value);
+                    first = false;
+                }
+            }
+            script.src= url;
+            head.appendChild(script);
+        }
+    </script>
 </head>
 
 
@@ -140,16 +160,12 @@ var duoshuoQuery = {short_name:"jerryzou"};
   
 </div>
 <script>
-    var url = 'http://analytics1.sinaapp.com/page.php'
-            + '?type=increment'
-            + '&callback=jsonp_callback'
-            + '&domain=' + encodeURIComponent("http://jerryzou.com")
-            + '&url=' + encodeURIComponent("http://jerryzou.com/posts/opentopublic/");
-
-    var head = document.getElementsByTagName('head')[0];
-    var jsonp = document.createElement("script");
-    jsonp.src= url;
-    head.appendChild(jsonp);
+    jsonp('http://analytics1.sinaapp.com/page.php', {
+        callback: 'jsonp_callback',
+        type: 'increment',
+        domain: 'http://jerryzou.com',
+        url: 'http://jerryzou.com/posts/opentopublic/'
+    });
 
     function jsonp_callback(result) {
         var visitCounter = document.getElementById('visit-counter');
