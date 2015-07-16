@@ -8,6 +8,91 @@
     <atom:link href="http://jerryzou.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>给迷茫的自学者指一条路</title>
+        <description>&lt;p&gt;不管是从零开始接触编程，还是从大学踏入社会，一个人踏入一个全新的领域时总是会产生迷茫的感觉。这篇文章的目的不在于教授自学者们学习的方法，而仅仅是把我自己的一些学习和总结的方法分享出来以供参考，希望对你们有所帮助。&lt;/p&gt;
+
+&lt;p&gt;我会以四个角度给你们介绍四个工具，&lt;strong&gt;XMind&lt;/strong&gt;、&lt;strong&gt;Trello&lt;/strong&gt;、&lt;strong&gt;Pocket&lt;/strong&gt; 和 &lt;strong&gt;Evernote&lt;/strong&gt;；我相信这些工具大家也大多耳熟能详，而我会讲述我是如何使用这些工具，以及这些工具是如何相辅相成的。可能因为我接触前端领域的知识较多，例子中也会以前端为主，但知识和方法都是相通的，所以这应该也不会成为什么大问题。&lt;/p&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;1. 建立大局观：思维导图&lt;/h2&gt;
+
+&lt;p&gt;自学者们在没有得到指导的情况下通常会对未来行走的方向一片迷茫，此刻最重要的是建立起&lt;strong&gt;大局观&lt;/strong&gt;，也就是在宏观的角度建立起未来的蓝图。
+要做到这一点，思维导图 (Mind Map) 是个很好的工具。我自己比较常用的是 &lt;strong&gt;&lt;a href=&quot;http://www.xmind.net/cn/&quot;&gt;XMind&lt;/a&gt;&lt;/strong&gt;，免费版在大多数情况已经够用了。
+&lt;strong&gt;百度脑图&lt;/strong&gt; 是一个在线的思维导图工具，还支持同步到百度云；如果想用于分享的话，使用百度脑图也是不错的选择。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jerryblog.qiniudn.com/xmind.png-h400&quot; alt=&quot;xmind&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;在你使用的思维导图的工具中，千万不要给你的导图添加过多的细节信息。那些细节信息应该被记录在其他的工具中，这在下文中会提到，
+而思维导图的作用更多地体现在作为蓝图。通过它，你可以比较清晰地认识到你未来三个月，半年，甚至一两年内的大致的学习方向。&lt;/p&gt;
+
+&lt;p&gt;关于前端技术，有很多前人总结的导图，有一定的借鉴意义：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://camo.githubusercontent.com/6797bdc1a11d35369611c817bbd5dae9a162d775/68747470733a2f2f7261772e6769746875622e636f6d2f4a61636b736f6e5469616e2f666b732f6d61737465722f666967757265732f666b732e6a7067&quot;&gt;拔赤的总结&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/JacksonTian/fks&quot;&gt;朴灵的 fks&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.w3cplus.com/sites/default/files/blogs/2015/1506/js-in-one-pic.png&quot;&gt;大漠的总结&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;但最最重要的是，你必须建立&lt;strong&gt;属于你自己的&lt;/strong&gt;思维导图！也许它一开始并不那么完整，一开始你只能做出一张很小的图，但那也就够了。
+如果直接把别人的一大张图拿来作为自己的蓝图，那么你依旧是迷茫而不知所措的。任何领域的知识都是汪洋大海，你永远不能指望能够完全掌握所有知识。
+所以你只需要在你学习的过程中，不断添加、修正、完善的你的导图就好，最理想的学习状态就是&lt;strong&gt;保持自己的节奏&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;h2 id=&quot;trello&quot;&gt;2. 知道自己该做什么：Trello&lt;/h2&gt;
+
+&lt;p&gt;有了大局观，就要着眼于当下，踏踏实实地走出每一步了。这时我推荐你们使用 &lt;strong&gt;&lt;a href=&quot;https://trello.com/&quot;&gt;Trello&lt;/a&gt;&lt;/strong&gt;，
+它好处在于同时支持网页版和 App，不管在哪里都可以很方便的查看。而且 Trello 天然支持 4 层树状结构，很适合与思维导图的树状结构对应。
+这四层结构主要是：&lt;strong&gt;Organization - Board - List - Card&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jerryblog.qiniudn.com/trello-boards.png-h400&quot; alt=&quot;boards&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;我来举个例子可能比较直观，先来看第一层结构，把 Organization 作为根节点，创建一个新的 Organization “前端学习”。
+使用 Organization 作为树的根节点稍微有点 hack 的成分，不过对个人使用来说并没有大碍啦。如果你觉得你学习的终极目标只有一个根节点的话，也是可以不创建 Organization 的。&lt;/p&gt;
+
+&lt;p&gt;然后就可以在其中创建好多二层节点 Boards 了，就像上面这张图中，我大致创建了 7 个 Boards，大家也可以根据自己的实际情况来创建。
+接着我们随便打开一个 Board，比如 JavaScript：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jerryblog.qiniudn.com/trello-lists.png-h400&quot; alt=&quot;lists&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;类似于上图的做法，你可以将你需要做的事分成几类，以便于你真正想学习时有的放矢。在每一个 Card 中，你都能添加一些详细的信息，能添加标签、描述，还能加 Checklist！
+可我还是建议你不要赋予 Trello 太多的责任，我觉得 Trello 作用应该局限于梳理待办事项，而已经得到的知识或者想要总结的东西，应该借助于下面要介绍的两个工具。&lt;/p&gt;
+
+&lt;h2 id=&quot;pocket&quot;&gt;3. 对文章进行整理归类：Pocket&lt;/h2&gt;
+
+&lt;p&gt;在学习知识的过程中，你总是会参考不少的文章，而某些非常精彩的文章，你总是会想要记录下来的。有些人会使用书签，而这是最糟糕的做法。
+因为你想要检索内容的时候，你几乎没法从一堆书签的名字中找到你想要的内容，而且你也很难维护日益增长的书签数目。&lt;/p&gt;
+
+&lt;p&gt;我向你强烈推荐一个工具 &lt;a href=&quot;https://getpocket.com/chrome/&quot;&gt;Pocket&lt;/a&gt;。它支持网页版和各种移动平台，可以作为 Chrome 的扩展，使用起来也是相当的方便。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jerryblog.qiniudn.com/pocket.png-h400&quot; alt=&quot;pocket&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;当你读完在 Trello 中记录的文章链接又觉得这篇文章带来非常大的帮助时，你就可以把它加入到 Pocket 中，并给这篇文章加上一些便于检索的标签。
+也许有人会推荐使用 Evernote 的剪藏来保存网上的文章，我对此是不推荐的。&lt;/p&gt;
+
+&lt;p&gt;首先在我自己使用的体验上来说，Evernote 剪藏出来的文章比起 Pocket 剪辑出来的显示效果要糟糕很多；
+其次，我个人也不太喜欢赋予一个工具太多职责，在用过一段时间剪藏后，我发现我的 Evernote 变得愈加混乱，有时也很难把某一篇文章简单地归类到某本笔记本中，这让我非常困扰。&lt;/p&gt;
+
+&lt;h2 id=&quot;evernote&quot;&gt;4. 记录学习的体会：Evernote&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jerryblog.qiniudn.com/evernote.png-h100&quot; alt=&quot;evernote&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;最后登场的工具是大家非常熟悉的大象 &lt;a href=&quot;https://evernote.com/intl/zh-cn/&quot;&gt;Evernote&lt;/a&gt;，在国内的名字叫做印象笔记。其实前文也提到了，
+我并不喜欢在 Evernote 中保存网上的文章，因为这会使我的笔记们显得有些混乱。Evernote 支持笔记本组和笔记本，能构成 3 层的树状结构，
+因此 Evernote 也对应于思维导图的结构来创建笔记本组和笔记本。&lt;/p&gt;
+
+&lt;p&gt;在 Evernote 中，你可以记录你学习的过程，总结一些相似知识之间的关联，从而形成自己的观点。你还可以将一些你觉得写的比较不错的文章发布到你的博客上与大家一起分享。
+另外推荐一个付费的工具 &lt;a href=&quot;http://maxiang.info/&quot;&gt;马克飞象&lt;/a&gt;。依靠它，你就可以使用 Markdown 来编写你的笔记啦，没用过的同学打开试试吧！~&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;总结&lt;/h2&gt;
+
+&lt;p&gt;今天给大家介绍的是我个人的学习方法，主要就是借助了 &lt;strong&gt;XMind&lt;/strong&gt;、&lt;strong&gt;Trello&lt;/strong&gt;、&lt;strong&gt;Pocket&lt;/strong&gt; 和 &lt;strong&gt;Evernote&lt;/strong&gt; 四个工具来管理我的知识树。
+不管怎么样，希望对大家有所帮助吧！如果你有什么想法想要交流，欢迎直接在下面的评论框中留言。&lt;/p&gt;
+
+</description>
+        <pubDate>Thu, 16 Jul 2015 19:16:30 +0000</pubDate>
+        <link>http://jerryzou.com/posts/method-of-self-learning/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/method-of-self-learning/</guid>
+      </item>
+    
+      <item>
         <title>解决 Github Pages 禁止百度爬虫的方法与可行性分析</title>
         <description>&lt;p&gt;我写技术博客有两个原因：一是总结自己近日的研究成果，二是将这些成果分享给大家。所以就我个人来说，还是比较希望写出来的文章有更多的人能够看到的。我最近注意到我的博客的流量大多来自于谷歌，而几乎没有来源于百度的。而本文就旨在提出这个问题，并尝试着去解决这个问题。当然，换一个云主机服务提供商能够很直接明了地解决这个问题，但这不是本文的重点，暂且不提。&lt;/p&gt;
 
@@ -145,7 +230,17 @@ Alex&lt;/p&gt;
 &lt;p&gt;&lt;br /&gt;
 然而并没有卵用……&lt;/p&gt;
 
-&lt;h2 id=&quot;section-1&quot;&gt;参考资料&lt;/h2&gt;
+&lt;h2 id=&quot;section-1&quot;&gt;更新 (2015.7.12)&lt;/h2&gt;
+
+&lt;p&gt;通过 Dnspod 的&lt;strong&gt;智能 DNS 服务&lt;/strong&gt;可以变相解决这个问题，大概的设置如下图所示，只要为你所有的主机记录重复添加 A 记录，把线路类型设置为百度，并将记录值指向你自己的云主机即可。&lt;/p&gt;
+
+&lt;p&gt;你说什么？？等下！！自己的云主机？？没错，其实这种方式就是专门为百度的爬虫增开了一个小窗口，使得它可以在你自己的服务器上爬取内容，而不是直接去爬取 Github Pages的内容。你需要自己搭个服务器，并将你的静态网站架在上面，具体怎么做就不在这篇文章中赘述啦。有兴趣的同学可以自己尝试，或者发邮件咨询我也是可以的哦。&lt;/p&gt;
+
+&lt;p&gt;如果没有自己的服务器，而且又想要解决这个问题的同学，推荐大家看 Dozer 的一篇文章：&lt;a href=&quot;http://www.dozer.cc/2015/06/github-pages-and-cdn.html&quot;&gt;利用 CDN 解决百度爬虫被 Github Pages 拒绝的问题&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jerryblog.qiniudn.com/dnspod.png-h400&quot; alt=&quot;Dnspod的智能DNS服务&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;section-2&quot;&gt;参考资料&lt;/h2&gt;
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;http://www.zhihu.com/question/30898326&quot;&gt;如何解决百度爬虫无法爬取搭建在Github上的个人博客的问题？&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Content_delivery_network&quot;&gt;Wikipedia: Content delivery network&lt;/a&gt;&lt;/li&gt;
@@ -1113,117 +1208,6 @@ Alex&lt;/p&gt;
         <pubDate>Thu, 01 Jan 2015 02:29:10 +0000</pubDate>
         <link>http://jerryzou.com/posts/dontBeEvil/</link>
         <guid isPermaLink="true">http://jerryzou.com/posts/dontBeEvil/</guid>
-      </item>
-    
-      <item>
-        <title>使用plupload绕过服务器，批量上传图片到又拍云</title>
-        <description>&lt;h2 id=&quot;section&quot;&gt;综述&lt;/h2&gt;
-
-&lt;p&gt;论坛或者贴吧经常会需要分享很多图片，上传图片比较差的做法是上传到中央服务器上，中央服务器再转发给静态图片服务器。而这篇文章讲介绍如何使用plupload对上传过程进行优化，并绕过服务器直接批量上传图片到又拍云上的方法。我写了一个Demo，大家可以到&lt;a href=&quot;http://zry656565.github.io/bulk-upload-to-UPYUN/&quot;&gt;http://zry656565.github.io/bulk-upload-to-UPYUN/&lt;/a&gt;查看，而本文集中会讲到以下几个重点：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;plupload库&lt;/li&gt;
-  &lt;li&gt;图片的本地压缩&lt;/li&gt;
-  &lt;li&gt;多选图片&lt;/li&gt;
-  &lt;li&gt;绕过服务器直接批量上传图片到又拍云
-    &lt;ul&gt;
-      &lt;li&gt;使用又拍的HTTP FORM API&lt;/li&gt;
-      &lt;li&gt;plupload的配置&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;plupload&quot;&gt;plupload库&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.plupload.com/&quot;&gt;plupload&lt;/a&gt;是一个支持非常丰富的图片上传插件。可以对低版本的浏览器通过&lt;strong&gt;Flash/Silverligh/html4&lt;/strong&gt;支持批量上传，而在高版本浏览器中则会优先使用&lt;strong&gt;html5&lt;/strong&gt;接口上传，这一切的判定都是自动的，可以说使用起来非常方便！其次plupload还支持在&lt;strong&gt;客户端压缩图片、直接Drag&amp;amp;Drop&lt;/strong&gt;来上传等功能，具体大家就可以到它的官网上了解更多的信息。&lt;/p&gt;
-
-&lt;p&gt;在这里我们仅使用它的核心API，只需要引入一个文件即可。&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;lib/plupload-2.1.2/js/plupload.full.min.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;官方给出的核心API例子非常简单，可以直接移步&lt;a href=&quot;http://www.plupload.com/examples/core&quot;&gt;http://www.plupload.com/examples/core&lt;/a&gt;查看。核心API在理解上不存在什么困难，如果需要帮助可以在本文后面向我提问。&lt;/p&gt;
-
-&lt;h2 id=&quot;section-1&quot;&gt;图片的本地压缩&lt;/h2&gt;
-
-&lt;p&gt;一般在网页中浏览的图片质量需求不高，记得当初高中上课学PS，老师说网上的图片分辨率设72就好了，打印的图片的话得设300。所以用户在上传一张很大的照片时，比较好的做法是现在用户的客户端本地压缩好这张图片，并把压缩后较小的图片上传，既不影响浏览效果，同时也能加快上传速度，减小服务器的负担。&lt;/p&gt;
-
-&lt;p&gt;图片的本地压缩功能在plupload中是支持的，只要在初始化它的时候传入一个&lt;code&gt;resize&lt;/code&gt;参数就好了。其中，宽度和高度可以根据实际情况设置，而&lt;code&gt;quality&lt;/code&gt;是比较重要的一个参数，顾名思义，这个值设置得越小，图片越小，但显示的质量也会越差，这个就需要你自己权衡一下啦。&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;quot;resize&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;quot;width&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;quot;height&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;quot;quality&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;70&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;section-2&quot;&gt;多选图片&lt;/h2&gt;
-
-&lt;p&gt;批量上传图片的一个前置条件就是能够多选图片。多选文件是HTML5的一个标准特性，我们可以通过如下方式来开启多选模式：&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;form&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;action=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;xxx&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  Select images: &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;file&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;img&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;multiple&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- multiple 在这儿是关键！--&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;submit&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/form&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;根据一个非常优秀的jquery插件jQuery-File-Upload的&lt;a href=&quot;https://github.com/blueimp/jQuery-File-Upload/wiki/Browser-support&quot;&gt;浏览器支持&lt;/a&gt;中&lt;strong&gt;Multiple File selection&lt;/strong&gt;这个小节所写的那样，IE一直发展到&lt;code&gt;IE10&lt;/code&gt;才刚开始支持这个HTML5的特性，那么我们又不得不借助Flash神奇的力量来对低版本浏览器进行多选图片的支持。幸运的是plupload已经帮我们做到了这一点，而且这一开关是默认开启的。如果你觉得你不需要用到多选图片，你可以设置&lt;code&gt;multi_selection: false&lt;/code&gt;来关闭这个特性。&lt;/p&gt;
-
-&lt;h2 id=&quot;section-3&quot;&gt;绕过服务器直接批量上传图片到又拍云&lt;/h2&gt;
-
-&lt;p&gt;又拍云提供了HTTP FORM API。通过这个接口，我们就可以直接从浏览器端发起上传图片的请求，而不需要通过我们自己的服务器进行中转，大大降低了开销。&lt;/p&gt;
-
-&lt;h4 id=&quot;http-form-api&quot;&gt;使用又拍的HTTP FORM API&lt;/h4&gt;
-
-&lt;p&gt;使用这个接口，就需要向又拍云发送一个表单。这个表单包含你所要上传的文件，并且还需要包含&lt;code&gt;policy&lt;/code&gt;和&lt;code&gt;signature&lt;/code&gt;。Policy用于将上传请求相关的参数，例如保存路径，文件类型，预处理结果等，另外，也包含了上传请求授时间等。而Signature用于安全校验。&lt;/p&gt;
-
-&lt;p&gt;为了演示方便，此处直接使用javascript来生成Policy和Signature。&lt;strong&gt;但在实际使用中，为了安全性考虑，请在服务器端完成这个过程。&lt;/strong&gt;下面的代码在官方的demo基础上做了些许修改，主要是使用了官方的测试帐号，关于这两个参数的具体生成方法，请参考官方的文档：&lt;a href=&quot;http://docs.upyun.com/api/form_api/&quot;&gt;http://docs.upyun.com/api/form_api/&lt;/a&gt;。&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;options&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;s1&quot;&gt;&amp;#39;bucket&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;demonstration&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s1&quot;&gt;&amp;#39;save-key&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;/test/filename.txt&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s1&quot;&gt;&amp;#39;expiration&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;floor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getTime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;86400&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;// 查看更多参数：http://docs.upyun.com/api/form_api/#表单API接口简介&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;policy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;btoa&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;JSON&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;stringify&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;// 从 UPYUN 用户管理后台获取表单 API&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;form_api_secret&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;1+JY2ZqD5UVfw6hQ8EesYQO50Wo=&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;// 计算签名&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;signature&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;md5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;policy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;amp;&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;form_api_secret&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;plupload-1&quot;&gt;plupload的配置&lt;/h4&gt;
-
-&lt;p&gt;如何使得plupload可以配合又拍云的HTTP FORM API，着实让我头疼了一番。在查看plupload的文档中，无意中的发现却让我看到了曙光，&lt;a href=&quot;http://www.plupload.com/docs/Upload-to-Amazon-S3&quot;&gt;Upload to Amazon S3&lt;/a&gt;这个链接吸引了我。&lt;code&gt;Amazon S3&lt;/code&gt;的全称是Amazon Simple Storage Service，它提供的云存储服务多多少少和又拍云有些相似。&lt;/p&gt;
-
-&lt;p&gt;于是根据这篇文章中关于浏览器端配置的介绍，我琢磨出了上传到又拍云所需要的配置。其实说起来也很简单，主要就是对&lt;code&gt;url&lt;/code&gt;和&lt;code&gt;multipart_params&lt;/code&gt;两个参数进行配置。下面的例子中的&lt;code&gt;options.bucket&lt;/code&gt;、&lt;code&gt;policy&lt;/code&gt;和&lt;code&gt;signature&lt;/code&gt;直接使用上一节计算出来的值。&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;uploader&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;plupload&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Uploader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;http://v0.api.upyun.com/&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;bucket&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;multipart_params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;s1&quot;&gt;&amp;#39;Filename&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;${filename}&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// adding this to keep consistency across the runtimes&lt;/span&gt;
-        &lt;span class=&quot;s1&quot;&gt;&amp;#39;Content-Type&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        &lt;span class=&quot;s1&quot;&gt;&amp;#39;policy&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;policy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        &lt;span class=&quot;s1&quot;&gt;&amp;#39;signature&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;signature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;section-4&quot;&gt;总结&lt;/h2&gt;
-
-&lt;p&gt;如此这般，终于实现了通过plupload绕过服务器，向又拍云批量上传图片了。plupload真是一个很强大的库，不过它对商业使用可以需要收费的哦，具体还是到它的官网上去了解吧！虽然在开头已经提过了，这里还是在唠叨一句：最终的demo效果可以到我创建的项目中看到，丢下链接：&lt;a href=&quot;http://zry656565.github.io/bulk-upload-to-UPYUN/&quot;&gt;http://zry656565.github.io/bulk-upload-to-UPYUN/&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;section-5&quot;&gt;参考资料&lt;/h2&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;a href=&quot;http://docs.upyun.com/api/form_api/&quot;&gt;又拍云文档 － HTTP FORM API&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/upyun/js-form-api/blob/master/demo.html&quot;&gt;又拍云官方js调用demo&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://www.plupload.com/docs/Upload-to-Amazon-S3&quot;&gt;plupload - Upload to Amazon S3&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://www.plupload.com/punbb/viewtopic.php?id=1681&quot;&gt;plupload - plupload ignores server side error messages&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-        <pubDate>Sat, 29 Nov 2014 01:25:10 +0000</pubDate>
-        <link>http://jerryzou.com/posts/bulkUploadToUPYUN/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/bulkUploadToUPYUN/</guid>
       </item>
     
   </channel>
