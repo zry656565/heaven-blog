@@ -143,6 +143,18 @@ echo "Done\n";
 <br/>
 然而并没有卵用……
 
+
+##更新 (2015.7.12)
+
+通过 Dnspod 的**智能 DNS 服务**可以变相解决这个问题，大概的设置如下图所示，只要为你所有的主机记录重复添加 A 记录，把线路类型设置为百度，并将记录值指向你自己的云主机即可。
+
+你说什么？？等下！！自己的云主机？？没错，其实这种方式就是专门为百度的爬虫增开了一个小窗口，使得它可以在你自己的服务器上爬取内容，而不是直接去爬取 Github Pages的内容。你需要自己搭个服务器，并将你的静态网站架在上面，具体怎么做就不在这篇文章中赘述啦。有兴趣的同学可以自己尝试，或者发邮件咨询我也是可以的哦。
+
+如果没有自己的服务器，而且又想要解决这个问题的同学，推荐大家看 Dozer 的一篇文章：[利用 CDN 解决百度爬虫被 Github Pages 拒绝的问题](http://www.dozer.cc/2015/06/github-pages-and-cdn.html)
+
+![Dnspod的智能DNS服务][4]
+
+
 ## 参考资料
 - [如何解决百度爬虫无法爬取搭建在Github上的个人博客的问题？](http://www.zhihu.com/question/30898326)
 - [Wikipedia: Content delivery network](http://en.wikipedia.org/wiki/Content_delivery_network)
@@ -152,3 +164,4 @@ echo "Done\n";
 [1]: {{ site.qiniu_static_url }}/cdn2.png
 [2]: {{ site.qiniu_static_url }}/cdn3.png
 [3]: {{ site.qiniu_static_url }}/crawl_test.png-h400
+[4]: {{ site.qiniu_static_url }}/dnspod.png-h400
