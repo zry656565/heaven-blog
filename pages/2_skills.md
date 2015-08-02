@@ -3,7 +3,6 @@ title: 技能图谱
 permalink: /skill/
 layout: default
 nav: true
-requireJq: true
 ---
 
 <canvas id="skillboard" width="950" height="450"></canvas>

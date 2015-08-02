@@ -3,7 +3,6 @@ title: 所有文章
 permalink: /all-articles/
 layout: default
 nav: true
-requireJq: true
 ---
 
 <script type="text/javascript">
