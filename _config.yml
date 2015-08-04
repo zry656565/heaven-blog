@@ -20,7 +20,7 @@ markdown: kramdown
 permalink: pretty
 highlighter: pygments
 paginate: 7
-paginate_path: "page_:num/"
+paginate_path: ":num/"
 exclude: [node_modules, .tmp, Gruntfile.js, _config, package.json, articles.raw]
 
 # default Front matter
