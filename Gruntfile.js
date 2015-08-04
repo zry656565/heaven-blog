@@ -50,6 +50,13 @@ module.exports = function(grunt) {
             },
             react_parse: {
                 command: 'jsx pages/ build/'
+            },
+            deploy: {
+                command: [
+                    'git checkout gh-pages',
+                    'cd _site',
+                    'cp -r * ..'
+                ].join('&&')
             }
         }
     });
@@ -105,4 +112,6 @@ module.exports = function(grunt) {
         'shell:react_parse',
         'shell:jekyll_serve'
     ]);
+
+    grunt.registerTask('deploy', ['shell:deploy']);
 };
