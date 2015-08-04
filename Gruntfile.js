@@ -59,7 +59,7 @@ module.exports = function(grunt) {
                     'cd ..',
                     'git add .',
                     'git commit -m "rebuild"',
-                    'git push orgin gh-pages',
+                    'git push origin gh-pages',
                     'git checkout master'
                 ].join('&&')
             }
