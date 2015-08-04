@@ -1,52 +1,50 @@
 /* Base */
 /* ----------------------------------------------------------*/
+
 html {
   font-size: 16px;
 }
+
 body {
-  font: 400 1em/1.8 Avenir, 'Segoe UI', 'Hiragino Sans GB', 'STHeiti', 'Microsoft Yahei', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;
+  font:400 1em/1.8 Avenir, 'Segoe UI', 'Hiragino Sans GB', 'STHeiti', 'Microsoft Yahei', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;
   background-color: #fdfdfd;
 }
-a {
-  color: #1abc9c;
-  text-decoration: none;
+
+a         { color: #1abc9c; text-decoration: none; }
+a:hover   { text-decoration: underline; }
+a:visited { color: #205caa; }
+
+hr{
+  border:none;
+  border-bottom:1px solid #cfcfcf;
+  margin-bottom:10px;
+  *margin:-7px 0 2px;
 }
-a:hover {
-  text-decoration: underline;
-}
-a:visited {
-  color: #205caa;
-}
-hr {
-  border: none;
-  border-bottom: 1px solid #cfcfcf;
-  margin-bottom: 10px;
-  *margin: -7px 0 2px;
-}
+
 /* Utility */
+
 .wrap:before,
-.wrap:after {
-  content: "";
-  display: table;
-}
-.wrap:after {
-  clear: both;
-}
+.wrap:after { content:""; display:table; }
+.wrap:after { clear: both; }
 .wrap {
   max-width: 1050px;
   padding: 0 30px;
   margin: 0 auto;
   zoom: 1;
 }
+
 /* Layout Styles */
 /* ----------------------------------------------------------*/
+
 /* Site header */
+
 .site-header {
   border-top: 5px solid #333;
   border-bottom: 1px solid #e8e8e8;
   min-height: 56px;
   background-color: white;
 }
+
 .site-title,
 .site-title:hover,
 .site-title:visited {
@@ -58,76 +56,92 @@ hr {
   position: relative;
   z-index: 1;
 }
+
 .site-nav {
   float: right;
   line-height: 56px;
 }
-.site-nav .menu-icon {
-  display: none;
-}
+
+.site-nav .menu-icon { display: none; }
+
 .site-nav .page-link {
   margin-left: 20px;
   color: #727272;
 }
-#fork-me img {
+
+#fork-me img{
   position: absolute;
   top: 0;
   right: 0;
   border: 0;
-  width: calc((100% - 1050px)/2);
+  width: ~"calc((100% - 1050px)/2)";
   max-width: 149px;
 }
+
 @media (max-width: 1250px) {
   #fork-me {
     display: none;
   }
 }
+
 /* Site footer */
+
 .site-footer {
   border-top: 1px solid #e8e8e8;
   padding: 10px 0 15px;
 }
+
 .friend-links {
   margin: 0;
   padding: 0;
   list-style: none;
 }
+
 .friend-links li {
   display: inline;
   padding: 0 10px;
   border-right: 1px solid #333;
 }
+
 .friend-links li:last-child {
   border: 0;
 }
+
 .friend-links a,
 .friend-links a:hover,
 .friend-links a:active {
   color: #333;
 }
+
 .footer-text {
   font-size: 0.8em;
   text-align: center;
   margin: 0;
 }
+
 @media screen and (max-width: 600px) {
   .footer-text {
     font-size: 0.7em;
   }
 }
+
 /* Page Content styles */
 /* ----------------------------------------------------------*/
+
 .page-content {
   padding: 30px 0;
   background-color: #fff;
 }
+
 /* Home styles */
 /* ----------------------------------------------------------*/
+
 .central-part {
   float: left;
   max-width: 880px;
-  width: calc(75% - 20px);
+  width: ~"calc(75% - 20px)";
 }
+
 .side-part {
   float: left;
   min-width: 150px;
@@ -135,38 +149,47 @@ hr {
   font-size: 13px;
   padding: 0 0 0 20px;
 }
+
 @media (max-width: 840px) {
   .central-part {
     width: 100%;
   }
+
   .side-part {
     width: 100%;
     padding: 0;
   }
 }
+
 .posts {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
+
 .posts li {
   margin: 20px 0;
   border-bottom: 1px #ccc dashed;
 }
+
 .posts li:first-of-type {
   margin-top: 0;
 }
+
 .posts .post-link {
   font-size: 1.25em;
   line-height: 1;
 }
+
 .posts .post-date {
   font-size: 0.75em;
   color: #818181;
 }
+
 .posts .post-date a:hover {
   text-decoration: none;
 }
+
 .posts .post-label {
   color: #777;
   background: #FFF5DE;
@@ -176,13 +199,19 @@ hr {
   border: 1px solid #aaa;
   display: inline-block;
 }
+
 .posts .post-description {
   font-size: 14px;
   color: #555;
 }
+
 /*=================
   Pagination
 ===================*/
+
+@height: 24px;
+@width: 12px;
+
 .triangle {
   content: '';
   display: block;
@@ -190,79 +219,66 @@ hr {
   height: 0;
   position: absolute;
   border-style: solid;
-  border-width: calc(12px) calc(6px);
+  border-width: calc(@height/2) calc(@width/2);
   top: 0;
   transition: border-color 0.3s;
 }
+
 .pagination {
   text-align: right;
   font-size: 14px;
+
+  & a,
+  & span {
+    display: inline-block;
+    color: #fff;
+    background: #ccc;
+    padding: 0 10px;
+    text-decoration: none;
+    position: relative;
+    height: @height;
+    line-height: @height;
+    margin-left: @width;
+    transition: background 0.3s;
+
+    &:after {
+      .triangle;
+      border-color: #ccc transparent transparent #ccc;
+      right: -@width;
+    }
+
+    &:before {
+      .triangle;
+      border-color: transparent #ccc #ccc transparent;
+      left: -@width;
+    }
+  }
+
+  & a:hover {
+    background: #1abc9c;
+    &:before {  border-color: transparent #1abc9c #1abc9c transparent;  }
+    &:after {  border-color: #1abc9c transparent transparent #1abc9c;  }
+  }
+
+  & .current {
+    background: #205caa;
+    &:before {  border-color: transparent #205caa #205caa transparent;  }
+    &:after {  border-color: #205caa transparent transparent #205caa;  }
+  }
+
+  & .next {
+    &:after {
+      border: 0;
+    }
+  }
+
+  & .prev {
+    &:before {
+      border: 0;
+    }
+  }
 }
-.pagination a,
-.pagination span {
-  display: inline-block;
-  color: #fff;
-  background: #ccc;
-  padding: 0 10px;
-  text-decoration: none;
-  position: relative;
-  height: 24px;
-  line-height: 24px;
-  margin-left: 12px;
-  transition: background 0.3s;
-}
-.pagination a:after,
-.pagination span:after {
-  content: '';
-  display: block;
-  width: 0;
-  height: 0;
-  position: absolute;
-  border-style: solid;
-  border-width: calc(12px) calc(6px);
-  top: 0;
-  transition: border-color 0.3s;
-  border-color: #ccc transparent transparent #ccc;
-  right: -12px;
-}
-.pagination a:before,
-.pagination span:before {
-  content: '';
-  display: block;
-  width: 0;
-  height: 0;
-  position: absolute;
-  border-style: solid;
-  border-width: calc(12px) calc(6px);
-  top: 0;
-  transition: border-color 0.3s;
-  border-color: transparent #ccc #ccc transparent;
-  left: -12px;
-}
-.pagination a:hover {
-  background: #1abc9c;
-}
-.pagination a:hover:before {
-  border-color: transparent #1abc9c #1abc9c transparent;
-}
-.pagination a:hover:after {
-  border-color: #1abc9c transparent transparent #1abc9c;
-}
-.pagination .current {
-  background: #205caa;
-}
-.pagination .current:before {
-  border-color: transparent #205caa #205caa transparent;
-}
-.pagination .current:after {
-  border-color: #205caa transparent transparent #205caa;
-}
-.pagination .next:after {
-  border: 0;
-}
-.pagination .prev:before {
-  border: 0;
-}
+
 /*=================
   Sidebar
 ===================*/
@@ -272,28 +288,34 @@ hr {
   margin-bottom: 10px;
   border-radius: 3px;
 }
+
 .side-part h4 {
   font-size: 1.1em;
   font-weight: 400;
   margin: 0;
 }
+
 #latest-comments {
   margin-bottom: 8px;
 }
+
 .duoshuo-loading {
   margin: 3px 0;
   padding: 10px 0 0;
   border-top: 1px solid #ccc;
   color: #aaa;
 }
-.side-part #ds-recent-comments li.ds-comment .ds-excerpt {
+
+.side-part #ds-recent-comments li.ds-comment .ds-excerpt{
   word-break: break-all;
 }
+
 .intro .avatar {
   width: 40px;
   height: 40px;
   float: right;
 }
+
 .other-sites img {
   cursor: pointer;
   margin: 4px 6px 0 0;
@@ -301,29 +323,33 @@ hr {
   height: 24px;
   opacity: 0.6;
 }
+
 .other-sites img:hover {
   opacity: 1;
 }
+
 .ds-recent-comments {
   font-size: 14px;
 }
+
 /* media queries */
 /* ----------------------------------------------------------*/
+
 @media screen and (max-width: 600px) {
-  .wrap {
-    padding: 0 12px;
-  }
+
+  .wrap { padding: 0 12px; }
+
   .site-nav {
     position: fixed;
     z-index: 10;
-    top: 14px;
-    right: 8px;
+    top: 14px; right: 8px;
     background-color: white;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
     border: 1px solid #e8e8e8;
   }
+
   .site-nav .menu-icon {
     display: block;
     font-size: 24px;
@@ -333,18 +359,17 @@ hr {
     text-align: center;
     line-height: 36px;
   }
-  .site-nav .menu-icon svg {
-    width: 18px;
-    height: 16px;
-  }
+
+  .site-nav .menu-icon svg { width: 18px; height: 16px; }
+
   .site-nav .trigger {
     clear: both;
     margin-bottom: 5px;
     display: none;
   }
-  .site-nav:hover .trigger {
-    display: block;
-  }
+
+  .site-nav:hover .trigger { display: block; }
+
   .site-nav .page-link {
     display: block;
     text-align: right;
@@ -352,4 +377,5 @@ hr {
     padding: 5px 10px;
     margin: 0;
   }
+
 }
