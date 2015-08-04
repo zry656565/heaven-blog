@@ -40,7 +40,7 @@ sidePart: true
     {% endfor %}
 
     {% if paginator.next_page %}
-    <a href="/{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}" class="next">Next &raquo;</a>
+    <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}" class="next">Next &raquo;</a>
     {% else %}
     <span class="next">Next &raquo;</span>
     {% endif %}
