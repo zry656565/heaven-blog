@@ -56,7 +56,7 @@ module.exports = function(grunt) {
                     'git checkout gh-pages',
                     'cd _site',
                     'cp -r * ..',
-                    'cd..',
+                    'cd ..',
                     'git add .',
                     'git commit -m "rebuild"',
                     'git push orgin gh-pages',
