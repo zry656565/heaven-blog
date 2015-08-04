@@ -4,6 +4,7 @@ _includes
 
 #grunt
 node_modules
+build
 
 #temporary files produced by grunt
 _tmp
