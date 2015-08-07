@@ -1,6 +1,9 @@
 /* Base */
 /* ----------------------------------------------------------*/
 
+@main-coler: #1abc9c;
+@help-color: #205caa;
+
 html {
   font-size: 16px;
 }
@@ -10,9 +13,9 @@ body {
   background-color: #fdfdfd;
 }
 
-a         { color: #1abc9c; text-decoration: none; }
+a         { color: @main-coler; text-decoration: none; }
 a:hover   { text-decoration: underline; }
-a:visited { color: #205caa; }
+a:visited { color: @help-color; }
 
 hr{
   border:none;
@@ -255,15 +258,15 @@ hr{
   }
 
   & a:hover {
-    background: #1abc9c;
-    &:before {  border-color: transparent #1abc9c #1abc9c transparent;  }
-    &:after {  border-color: #1abc9c transparent transparent #1abc9c;  }
+    background: @main-coler;
+    &:before {  border-color: transparent @main-coler @main-coler transparent;  }
+    &:after {  border-color: @main-coler transparent transparent @main-coler;  }
   }
 
   & .current {
-    background: #205caa;
-    &:before {  border-color: transparent #205caa #205caa transparent;  }
-    &:after {  border-color: #205caa transparent transparent #205caa;  }
+    background: @help-color;
+    &:before {  border-color: transparent @help-color @help-color transparent;  }
+    &:after {  border-color: @help-color transparent transparent @help-color;  }
   }
 
   & .next {
