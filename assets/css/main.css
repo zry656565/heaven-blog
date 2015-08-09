@@ -1,5 +1,5 @@
-/* Base */
-/* ----------------------------------------------------------*/
+/* Base
+ *===========================================================*/
 html {
   font-size: 16px;
 }
@@ -11,11 +11,12 @@ a {
   color: #1abc9c;
   text-decoration: none;
 }
-a:hover {
-  text-decoration: underline;
-}
 a:visited {
   color: #205caa;
+}
+a:hover {
+  color: #444444;
+  transition: all 0.2s;
 }
 hr {
   border: none;
@@ -24,6 +25,12 @@ hr {
   *margin: -7px 0 2px;
 }
 /* Utility */
+.wrap {
+  margin: 0 auto;
+  padding: 0 30px;
+  max-width: 1050px;
+  zoom: 1;
+}
 .wrap:before,
 .wrap:after {
   content: "";
@@ -32,15 +39,15 @@ hr {
 .wrap:after {
   clear: both;
 }
-.wrap {
-  max-width: 1050px;
-  padding: 0 30px;
-  margin: 0 auto;
-  zoom: 1;
+@media screen and (max-width: 600px) {
+  .wrap {
+    padding: 0 12px;
+  }
 }
-/* Layout Styles */
-/* ----------------------------------------------------------*/
-/* Site header */
+/* Layout Style
+ *===========================================================*/
+/* Site Header
+ *===============================*/
 .site-header {
   border-top: 5px solid #333;
   border-bottom: 1px solid #e8e8e8;
@@ -48,15 +55,15 @@ hr {
   background-color: white;
 }
 .site-title,
-.site-title:hover,
-.site-title:visited {
+.site-title:visited,
+.site-title:hover {
   display: block;
+  position: relative;
+  float: left;
+  z-index: 1;
   color: #333;
   font-size: 26px;
-  float: left;
   line-height: 56px;
-  position: relative;
-  z-index: 1;
 }
 .site-nav {
   float: right;
@@ -69,6 +76,52 @@ hr {
   margin-left: 20px;
   color: #727272;
 }
+@media screen and (max-width: 600px) {
+  .site-nav {
+    position: fixed;
+    z-index: 10;
+    top: 14px;
+    right: 8px;
+    border: 1px solid #e8e8e8;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: white;
+  }
+  .site-nav .menu-icon {
+    display: block;
+    float: right;
+    width: 36px;
+    font-size: 24px;
+    color: #505050;
+    text-align: center;
+    line-height: 36px;
+  }
+  .site-nav .menu-icon svg {
+    width: 18px;
+    height: 16px;
+  }
+  .site-nav .trigger {
+    display: none;
+    clear: both;
+    margin-bottom: 5px;
+  }
+  .site-nav:hover .trigger {
+    display: block;
+  }
+  .site-nav .page-link {
+    display: block;
+    margin: 0;
+    padding: 5px 10px;
+    text-align: right;
+    line-height: 1.25;
+  }
+}
+@media (max-width: 1250px) {
+  #fork-me {
+    display: none;
+  }
+}
 #fork-me img {
   position: absolute;
   top: 0;
@@ -77,12 +130,8 @@ hr {
   width: calc((100% - 1050px)/2);
   max-width: 149px;
 }
-@media (max-width: 1250px) {
-  #fork-me {
-    display: none;
-  }
-}
-/* Site footer */
+/* Site Footer
+ *===============================*/
 .site-footer {
   border-top: 1px solid #e8e8e8;
   padding: 10px 0 15px;
@@ -94,10 +143,10 @@ hr {
 }
 .friend-links li {
   display: inline;
-  padding: 0 10px;
   border-right: 1px solid #333;
+  padding: 0 10px;
 }
-.friend-links li:last-child {
+.friend-links li :last-child {
   border: 0;
 }
 .friend-links a,
@@ -306,50 +355,4 @@ hr {
 }
 .ds-recent-comments {
   font-size: 14px;
-}
-/* media queries */
-/* ----------------------------------------------------------*/
-@media screen and (max-width: 600px) {
-  .wrap {
-    padding: 0 12px;
-  }
-  .site-nav {
-    position: fixed;
-    z-index: 10;
-    top: 14px;
-    right: 8px;
-    background-color: white;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    border: 1px solid #e8e8e8;
-  }
-  .site-nav .menu-icon {
-    display: block;
-    font-size: 24px;
-    color: #505050;
-    float: right;
-    width: 36px;
-    text-align: center;
-    line-height: 36px;
-  }
-  .site-nav .menu-icon svg {
-    width: 18px;
-    height: 16px;
-  }
-  .site-nav .trigger {
-    clear: both;
-    margin-bottom: 5px;
-    display: none;
-  }
-  .site-nav:hover .trigger {
-    display: block;
-  }
-  .site-nav .page-link {
-    display: block;
-    text-align: right;
-    line-height: 1.25;
-    padding: 5px 10px;
-    margin: 0;
-  }
 }
