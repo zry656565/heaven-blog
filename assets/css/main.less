@@ -1,7 +1,7 @@
 /* Base
  *===========================================================*/
 
-@main-coler: #1abc9c;
+@main-color: #1abc9c;
 @help-color: #205caa;
 @light-black: #444;
 
@@ -17,17 +17,16 @@ body {
   background-color: #fdfdfd;
 }
 
-a {
-  color: @main-coler; text-decoration: none;
-
-  &:visited {
-    color: @help-color;
-  }
-
+.link-hover {
   &:hover {
-    color: @light-black;
+    color: @main-color;
     transition: all 0.2s;
   }
+}
+
+a {
+  color: @help-color; text-decoration: none;
+  .link-hover
 }
 
 hr{
@@ -67,15 +66,15 @@ hr{
 }
 
 .site-title {
-  &, &:visited, &:hover {
-    display: block;
-    position: relative;
-    float: left;
-    z-index: 1;
-    color: #333;
-    font-size: 26px;
-    line-height: 56px;
-  }
+  display: block;
+  position: relative;
+  float: left;
+  z-index: 1;
+  color: #333;
+  font-size: 26px;
+  line-height: 56px;
+
+  .link-hover
 }
 
 .site-nav {
@@ -86,6 +85,8 @@ hr{
   & .page-link {
     margin-left: 20px;
     color: #727272;
+
+    .link-hover
   }
 
   @media screen and (max-width: @media-diverge-small) {
@@ -163,15 +164,15 @@ hr{
     border-right: 1px solid #333;
     padding: 0 10px;
 
-    & :last-child {
+    &:last-child {
       border: 0;
     }
   }
 
-  & a,
-  & a:hover,
-  & a:active {
+  & a {
     color: #333;
+
+    .link-hover
   }
 }
 
@@ -317,9 +318,9 @@ hr{
   }
 
   & a:hover {
-    background: @main-coler;
-    &:before {  border-color: transparent @main-coler @main-coler transparent;  }
-    &:after {  border-color: @main-coler transparent transparent @main-coler;  }
+    background: @main-color;
+    &:before {  border-color: transparent @main-color @main-color transparent;  }
+    &:after {  border-color: @main-color transparent transparent @main-color;  }
   }
 
   & .current {

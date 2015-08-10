@@ -15,7 +15,7 @@ sidePart: true
         	<a href="{{ site.baseurl }}/all-articles/?label={{ label }}"><span class="post-label">{{ label }}</span></a>
         	{% endfor %}
         </p>
-        <p class="post-description">{{ post.description }} <a class="post-link2" href="{{ post.url | prepend: site.baseurl }}">继续阅读...</a></p>
+        <p class="post-description">{{ post.description }} <a class="post-link2" href="{{ post.url | prepend: site.baseurl }}">[继续阅读...]</a></p>
       </li>
       {% endif %}
     {% endfor %}

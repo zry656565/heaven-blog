@@ -7,15 +7,16 @@ body {
   font: 400 1em/1.8 Avenir, 'Segoe UI', 'Hiragino Sans GB', 'STHeiti', 'Microsoft Yahei', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;
   background-color: #fdfdfd;
 }
-a {
+.link-hover:hover {
   color: #1abc9c;
+  transition: all 0.2s;
+}
+a {
+  color: #205caa;
   text-decoration: none;
 }
-a:visited {
-  color: #205caa;
-}
 a:hover {
-  color: #444444;
+  color: #1abc9c;
   transition: all 0.2s;
 }
 hr {
@@ -54,9 +55,7 @@ hr {
   min-height: 56px;
   background-color: white;
 }
-.site-title,
-.site-title:visited,
-.site-title:hover {
+.site-title {
   display: block;
   position: relative;
   float: left;
@@ -64,6 +63,10 @@ hr {
   color: #333;
   font-size: 26px;
   line-height: 56px;
+}
+.site-title:hover {
+  color: #1abc9c;
+  transition: all 0.2s;
 }
 .site-nav {
   float: right;
@@ -75,6 +78,10 @@ hr {
 .site-nav .page-link {
   margin-left: 20px;
   color: #727272;
+}
+.site-nav .page-link:hover {
+  color: #1abc9c;
+  transition: all 0.2s;
 }
 @media screen and (max-width: 600px) {
   .site-nav {
@@ -146,13 +153,15 @@ hr {
   border-right: 1px solid #333;
   padding: 0 10px;
 }
-.friend-links li :last-child {
+.friend-links li:last-child {
   border: 0;
 }
-.friend-links a,
-.friend-links a:hover,
-.friend-links a:active {
+.friend-links a {
   color: #333;
+}
+.friend-links a:hover {
+  color: #1abc9c;
+  transition: all 0.2s;
 }
 .footer-text {
   font-size: 0.8em;
