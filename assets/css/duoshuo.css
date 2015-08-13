@@ -48,6 +48,10 @@
 .post #ds-thread #ds-reset .ds-login-buttons .ds-more-services {
   color: #205caa !important;
 }
+.post #ds-thread .ds-highlight:hover,
+.post #ds-thread #ds-reset .ds-login-buttons .ds-more-services:hover {
+  color: #1abc9c !important;
+}
 .post #ds-thread #ds-reset a.ds-unread-comments-count,
 .post #ds-thread #ds-reset .ds-sort a.ds-current,
 .post #ds-thread #ds-reset .ds-sort a:active,
@@ -74,6 +78,7 @@
 .post #ds-thread #ds-reset #ds-bubble a:hover {
   color: #1abc9c;
 }
+#ds-thread #ds-reset .ds-sort a:hover,
 .post #ds-thread #ds-reset .ds-login-buttons .ds-more-services:hover {
   color: #1abc9c !important;
 }
