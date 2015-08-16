@@ -33,7 +33,7 @@ layout: default
         callback: 'jsonp_callback',
         type: 'increment',
         domain: '{{ site.url }}',
-        title: '{{ site.title }}',
+        title: '{{ page.title }}',
         url: '{{ page.permalink | prepend: site.url }}'
     });
 
