@@ -272,6 +272,11 @@ hr{
 
 @height: 24px;
 @width: 12px;
+.parallelogram-color(@color) {
+  background: @color;
+  &:before { border-color: transparent @color @color transparent; }
+  &:after { border-color: @color transparent transparent @color; }
+}
 
 .triangle {
   content: '';
@@ -293,7 +298,6 @@ hr{
   & span {
     display: inline-block;
     color: #fff;
-    background: #ccc;
     padding: 0 10px;
     text-decoration: none;
     position: relative;
@@ -304,27 +308,23 @@ hr{
 
     &:after {
       .triangle;
-      border-color: #ccc transparent transparent #ccc;
       right: -@width;
     }
 
     &:before {
       .triangle;
-      border-color: transparent #ccc #ccc transparent;
       left: -@width;
     }
+
+    .parallelogram-color(#ccc);
   }
 
   & a:hover {
-    background: @main-color;
-    &:before {  border-color: transparent @main-color @main-color transparent;  }
-    &:after {  border-color: @main-color transparent transparent @main-color;  }
+    .parallelogram-color(@main-color);
   }
 
   & .current {
-    background: @help-color;
-    &:before {  border-color: transparent @help-color @help-color transparent;  }
-    &:after {  border-color: @help-color transparent transparent @help-color;  }
+    .parallelogram-color(@help-color);
   }
 
   & .next {

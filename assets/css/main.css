@@ -260,7 +260,6 @@ hr {
 .pagination span {
   display: inline-block;
   color: #fff;
-  background: #ccc;
   padding: 0 10px;
   text-decoration: none;
   position: relative;
@@ -268,6 +267,7 @@ hr {
   line-height: 24px;
   margin-left: 12px;
   transition: background 0.3s;
+  background: #cccccc;
 }
 .pagination a:after,
 .pagination span:after {
@@ -280,7 +280,6 @@ hr {
   border-width: calc(12px) calc(6px);
   top: 0;
   transition: border-color 0.3s;
-  border-color: #ccc transparent transparent #ccc;
   right: -12px;
 }
 .pagination a:before,
@@ -294,8 +293,15 @@ hr {
   border-width: calc(12px) calc(6px);
   top: 0;
   transition: border-color 0.3s;
-  border-color: transparent #ccc #ccc transparent;
   left: -12px;
+}
+.pagination a:before,
+.pagination span:before {
+  border-color: transparent #cccccc #cccccc transparent;
+}
+.pagination a:after,
+.pagination span:after {
+  border-color: #cccccc transparent transparent #cccccc;
 }
 .pagination a:hover {
   background: #1abc9c;
