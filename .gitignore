@@ -14,6 +14,7 @@ _tmp
 #source files
 assets/css
 pages/articles.js
+pages/1_articles.md
 
 #react
 build/.module-cache
