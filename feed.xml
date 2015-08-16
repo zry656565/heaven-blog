@@ -8,6 +8,162 @@
     <atom:link href="http://jerryzou.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>用 CSS 实现三角形与平行四边形</title>
+        <description>&lt;p&gt;最近在逛某个技术网站的时候，感觉文章关键词上的样式好酷炫啊。于是我将那种写法照搬到了我的博客中，也许最近逛过我博客的小伙伴已经发现了它出现在哪儿了——分页的样式。来张截图：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/pagination.png!0.5&quot; alt=&quot;分页样式的截图&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;你在首页的底部也可以看到这样一个分页栏；是不是看上去还不错？下面就来看看这是如何实现的吧~&lt;/p&gt;
+
+&lt;h2 id=&quot;border&quot;&gt;第一种方法：利用&lt;code&gt;border&lt;/code&gt;&lt;/h2&gt;
+
+&lt;p&gt;第一种方法是借助&lt;code&gt;border&lt;/code&gt;属性 hack 出三角形，然后通过一个矩形拼接两个三角形最终制造出一个平行四边形。为什么使用&lt;code&gt;border&lt;/code&gt;可以产生三角形呢？先来看看一张图片：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/triangle.png!0.5&quot; alt=&quot;CSS triangle&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;看了图中的三个小图形的变化过程，你应该已经清楚了一半。其实 hack 出三角形只需要两个条件，第一，元素本身的长宽为0；其次，将不需要的部分通过 border-color 来设置隐藏。通过类似的方法，你还可以创造出梯形，上图中的三个图形的代码如下。（另附 &lt;a href=&quot;http://codepen.io/jerryzou/pen/mJYJym&quot;&gt;CodePen 示例&lt;/a&gt;）&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;nf&quot;&gt;#first&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;20px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;20px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;border-width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;border-style&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;solid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;border-color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;red&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;green&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;blue&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;brown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;nf&quot;&gt;#second&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;border-width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;border-style&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;solid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;border-color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;red&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;green&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;blue&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;brown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;nf&quot;&gt;#third&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;border-width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;border-style&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;solid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;border-color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;red&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;transparent&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;transparent&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;transparent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;接下来就要考虑如何拼接出一个平行四边形了。在&lt;code&gt;border&lt;/code&gt;法中，它由三部分组成，分别是左三角形、矩形、右三角形。如果每次绘制平行四边形都要创建三个元素显然过于麻烦了，所以在这里&lt;code&gt;:before&lt;/code&gt;和&lt;code&gt;:after&lt;/code&gt;伪元素是个不错的选择。下面我们实现一下这样的效果：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/parallelogram.png!0.5&quot; alt=&quot;three parallelogram&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;为了将三角形与矩形无缝拼接到一起，多处属性要保持一致，所以使用类似 Less, Sass, Stylus 等 CSS 预处理器来写这段代码会更容易维护，下面给出 Scss 版本的代码。（另附 &lt;a href=&quot;http://codepen.io/jerryzou/pen/ZGNGWZ?editors=110&quot;&gt;CodePen 链接&lt;/a&gt;）&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-scss&quot; data-lang=&quot;scss&quot;&gt;&lt;span class=&quot;c1&quot;&gt;//三角形的宽高&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;//对平行四边形三部分的颜色进行赋值&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;@mixin&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt; parallelogram-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;background&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:before&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;border-color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;transparent&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$color&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$color&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;transparent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:after&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;border-color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$color&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;transparent&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;transparent&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;//单个三角形的样式&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;@mixin&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt; triangle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;absolute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;border-style&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;solid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;border-width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;top&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;//平行四边形的样式&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;.para&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;inline&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;relative&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;line-height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;margin-left&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;#fff&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:after&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;@include&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt; triangle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:before&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;@include&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt; triangle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;@include&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt; parallelogram-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;需要注意的是，如果通过 &lt;code&gt;$height&lt;/code&gt;、&lt;code&gt;$width&lt;/code&gt; 设置的三角形斜率太小或太大都有可能造成渲染出锯齿，所以使用起来要多多测试一下不同的宽高所得到的视觉效果如何。&lt;/p&gt;
+
+&lt;h2 id=&quot;transform&quot;&gt;第二种方法：利用&lt;code&gt;transform&lt;/code&gt;&lt;/h2&gt;
+
+&lt;p&gt;使用&lt;code&gt;transform&lt;/code&gt;来实现平行四边形的方法是我在逛&lt;a href=&quot;http://www.alitrip.com/&quot;&gt;去啊&lt;/a&gt;的时候看到的，效果大概是这个样子：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/qua_parallelogram.png!0.5&quot; alt=&quot;去啊中的平行四边形&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;看到之后觉得好神奇啊，原来还可以只有平行四边形的外轮廓。（因为方法一只能创造填充效果的平行四边形）实现起来非常简单，主要是借助了&lt;code&gt;transform: skew(...)&lt;/code&gt;，下面就来看看源码吧。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;style&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;.city&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;inline&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;5px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;20px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;border&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1px&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;solid&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;#44a5fc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;#333&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;skew&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;-20&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/style&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;city&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;上海&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;于是我们得到了这样的效果：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/shanghai_skew.png!0.5&quot; alt=&quot;skew shanghai&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;看到图片的你一定是这样想的：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/damn.gif&quot; alt=&quot;坑爹呢这是&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;别着急嘛，我们的确是把整个 div 进行了歪曲，导致中间的文字也是倾斜的，而这显然不是我们所要的效果。所以我们需要加一个内层元素，并对内层元素做一次逆向的歪曲，从而得到我们想要的效果：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/shanghai_normal.png!0.5&quot; alt=&quot;normal shanghai&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;实现代码如下，另附 &lt;a href=&quot;http://codepen.io/jerryzou/pen/BNeNwV?editors=110&quot;&gt;CodePen 示例&lt;/a&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;style&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;.city&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;inline&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;5px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;20px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;border&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1px&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;solid&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;#44a5fc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;#333&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;skew&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;-20&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;nc&quot;&gt;.city&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;div&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;skew&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/style&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;city&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&amp;gt;&lt;/span&gt;上海&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;总结&lt;/h2&gt;
+
+&lt;p&gt;第一种方法使用 &lt;code&gt;border&lt;/code&gt; 属性 hack 出三角形，并通过对三个元素进行拼接最终实现了平行四边形；而第二种方法则通过 &lt;code&gt;transform: skew&lt;/code&gt; 来得到平行四边形。总体来说，第二种方法相对于第一种代码量小得多，而且也很好理解。唯一的不足是无法构造像本站的分页中所使用的梯形。希望本文对各位有所帮助。&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 16 Aug 2015 20:16:30 +0000</pubDate>
+        <link>http://jerryzou.com/posts/use-css-to-paint-triangle-and-parallelogram/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/use-css-to-paint-triangle-and-parallelogram/</guid>
+      </item>
+    
+      <item>
         <title>给迷茫的自学者指一条路</title>
         <description>&lt;p&gt;不管是从零开始接触编程，还是从大学踏入社会，一个人踏入一个全新的领域时总是会产生迷茫的感觉。这篇文章的目的不在于教授自学者们学习的方法，而仅仅是把我自己的一些学习和总结的方法分享出来以供参考，希望对你们有所帮助。&lt;/p&gt;
 
@@ -1173,41 +1329,6 @@ Alex&lt;/p&gt;
         <pubDate>Fri, 16 Jan 2015 22:33:54 +0000</pubDate>
         <link>http://jerryzou.com/posts/caocao01/</link>
         <guid isPermaLink="true">http://jerryzou.com/posts/caocao01/</guid>
-      </item>
-    
-      <item>
-        <title>Don&#39;t be evil ?</title>
-        <description>&lt;blockquote&gt;
-  &lt;p&gt;尽信书，则不如无书。 ———— 《孟子》&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;今天是2014年的最后一天，原本和欢欢说好一起吃晚饭。可是中行偏偏又要开什么新员工大会，从六点多一直开到九点多！结果只是不断地给新员工压力而已，于是就跟欢欢说起银行的各种恶性竞争与病态的价值观！然后～就扯到了谷歌的“不作恶”。&lt;/p&gt;
-
-&lt;p&gt;其实对于谷歌，我一直以来都是非常仰慕的。它在我印象中一直是一家走在科技最前沿的公司，并且有自己的节操底线——“不作恶”。谷歌是一家很伟大的科技公司是没错啦！但是我对“不作恶”的了解却甚少，关于这点欢欢与我就发生了分歧。她并不认为谷歌“不作恶”，而棱镜门的曝光更加是凸显了其“作恶”啊。&lt;/p&gt;
-
-&lt;p&gt;这让我陷入了思考。我一直以来关注地都是谷歌在技术方面的成就，而忽视了其他方面。所以说，谷歌曾经在我心目中的形象是被神化的，它并不真实！我觉得我应该从“don’t be evil”开始，重新审视一下这家公司。&lt;/p&gt;
-
-&lt;p&gt;Don’t be evil 是一句广为流传的体现谷歌价值观的话。在谷歌官网上的&lt;a href=&quot;http://www.google.com/about/company/philosophy/&quot;&gt;《Ten things we know to be true》&lt;/a&gt;第六条的正式描述是：”You can make money without doing evil”。我节选了几句核心的话放在下面，其实也就是每一段的第一句啦：&lt;/p&gt;
-
-&lt;blockquote&gt;
-
-  &lt;ul&gt;
-    &lt;li&gt;Google is a business…&lt;/li&gt;
-    &lt;li&gt;We don’t allow ads to be displayed on our results pages unless they are relevant where they are shown…&lt;/li&gt;
-    &lt;li&gt;We believe that advertising can be effective without being flashy…&lt;/li&gt;
-    &lt;li&gt;Advertising on Google is always clearly identified as a “Sponsored Link,” so it does not compromise the integrity of our search results…&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;“不作恶”在谷歌官方的解释最确切的说法是：我们不会用龌蹉的手段赚钱。仅这点来说，谷歌确实会比某度好些，毕竟某度搜索的推广铺天盖地、某度杀毒的各种流氓大家也是知道的。但是这样的说来，“不作恶”的含义就一直被我曲解了。我相信不只是我一个人放大了“不作恶”的含义。在这种“不作恶”的光环下，谷歌在我心中一直占据着比较神圣的地位。而这种想法又的确是很盲目的，因为随着我认知得不断成长，仅仅凭这3个字，它已经不能说服我了。&lt;/p&gt;
-
-&lt;p&gt;棱镜门中的谷歌，的确将“Google is a business”的事实暴露了出来。Google作为一家巨无霸级别的商业公司，在一定程度上配合政府是无法避免的。在棱镜事件中，谷歌只是声明他们并没有提供给政府直接访问数据库的权利。但这也恰恰证实了，谷歌的确向政府以某种其他方式间接地提供数据。这是否是有悖于“Don’t be evil”呢？至少从谷歌官方的价值观来看，是无法考量的，因为Google只是说“不在挣钱的时候作恶”啊。而在我看来，世界上所有的大型企业都会受到政府的管制。而马云曾经在谷歌退出中国的时候，还批评谷歌并声称会无条件配合政府的审查呢？那阿里是在“be evil”吗？&lt;/p&gt;
-
-&lt;p&gt;说到底这些公司只是顺应时代的大潮，迎合也好，无奈也罢，但无关作恶还是不作恶，因为真正能做到所谓“不作恶”的公司还没发展起来就完蛋了。不管怎么样，谷歌在我心目中还是很伟大的，当然我只是针对它那些优秀的技术与产品。同时我也要跟“Don’t be evil”那过于神圣的光环说再见了，你就留在2014年吧，拜拜。&lt;/p&gt;
-</description>
-        <pubDate>Thu, 01 Jan 2015 02:29:10 +0000</pubDate>
-        <link>http://jerryzou.com/posts/dontBeEvil/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/dontBeEvil/</guid>
       </item>
     
   </channel>

@@ -14,8 +14,9 @@
 ##编译与部署
 
 ```
-grunt build		#本地编译
-grunt debug		#本地编译并启动测试服务器
-grunt release	#本地编译出线上版本（应用各种优化）
-grunt serve 	#本地编译并启动测试服务器（应用各种优化）
+grunt build      #本地编译
+grunt debug      #本地编译并启动测试服务器
+grunt release    #本地编译出线上版本（应用各种优化）
+grunt serve      #本地编译并启动测试服务器（应用各种优化）
+grunt deploy     #将站点发布到 gh-pages 分支下
 ```

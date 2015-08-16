@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+        
+            用 CSS 实现三角形与平行四边形 | 咀嚼之味
+        </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="本文将介绍使用纯 CSS 来构造三角形与平行四边形的两种方法。 ">
+    <link rel="alternate" type="application/rss+xml" title="咀嚼之味 RSS" href="/feed.xml">
+    <link rel="canonical" href="http://jerryzou.com/posts/use-css-to-paint-triangle-and-parallelogram/">
+    <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/release/style.2ba3ed97.css">
+
+    <!-- Baidu Analysis -->
+    <script>
+        if (window.location.href.substr(7, 9) !== 'localhost') {
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?2744fd74aa568e064f9986394a60ead1";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+            })();
+        }
+    </script>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-47842677-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    
+    <!-- handle external js files -->
+    <script type="text/javascript" src="/assets/js/lib/jquery/jquery-1.11.1.min.js"></script>
+
+    <!-- help function for jsonp -->
+    <script>
+        var jsonp = function(url, args) {
+            var head = document.getElementsByTagName('head')[0],
+                    script = document.createElement("script"),
+                    first = true,
+                    value;
+
+            for (var key in args) {
+                if (args.hasOwnProperty(key)) {
+                    value = encodeURIComponent(args[key]);
+                    url += first ? ('?' + key + '=' + value) : ('&' + key + '=' + value);
+                    first = false;
+                }
+            }
+            script.src= url;
+            head.appendChild(script);
+        }
+    </script>
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+  <div class="wrap">
+    <a class="site-title" href="/">咀嚼之味</a>
+    <nav class="site-nav">
+      <div class="trigger">
+        <a class="page-link" href="/">首页</a>
+        
+          
+          <a class="page-link" href="/all-articles/">所有文章</a>
+          
+        
+          
+          <a class="page-link" href="/skill/">技能图谱</a>
+          
+        
+          
+          <a class="page-link" href="/about/">关于我</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          <a class="page-link" href="/feed.xml">RSS订阅</a>
+      </div>
+    </nav>
+  </div>
+  <!-- fork me on github -->
+  <a id="fork-me" href="https://github.com/zry656565/heaven-blog"><img src="http://jerryblog-image.b0.upaiyun.com/blog/forkme.png" alt="Fork me on GitHub"></a>
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+        
+        <div class="post">
+
+  <header class="post-header">
+    <h1>用 CSS 实现三角形与平行四边形</h1>
+    <p class="meta">Aug 16, 2015 <span class="pause"> - </span>
+        浏览量：<span id="visit-counter"></span>次<span class="pause"> | </span>
+        
+            
+                <a class="label" href="/all-articles/?label=CSS">CSS</a>
+            
+                <a class="label" href="/all-articles/?label=CSS3">CSS3</a>
+            
+        
+    </p>
+  </header>
+
+  <article class="post-content">
+  <p>最近在逛某个技术网站的时候，感觉文章关键词上的样式好酷炫啊。于是我将那种写法照搬到了我的博客中，也许最近逛过我博客的小伙伴已经发现了它出现在哪儿了——分页的样式。来张截图：</p>
+
+<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/pagination.png!0.5" alt="分页样式的截图" /></p>
+
+<p>你在首页的底部也可以看到这样一个分页栏；是不是看上去还不错？下面就来看看这是如何实现的吧~</p>
+
+<h2 id="border">第一种方法：利用<code>border</code></h2>
+
+<p>第一种方法是借助<code>border</code>属性 hack 出三角形，然后通过一个矩形拼接两个三角形最终制造出一个平行四边形。为什么使用<code>border</code>可以产生三角形呢？先来看看一张图片：</p>
+
+<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/triangle.png!0.5" alt="CSS triangle" /></p>
+
+<p>看了图中的三个小图形的变化过程，你应该已经清楚了一半。其实 hack 出三角形只需要两个条件，第一，元素本身的长宽为0；其次，将不需要的部分通过 border-color 来设置隐藏。通过类似的方法，你还可以创造出梯形，上图中的三个图形的代码如下。（另附 <a href="http://codepen.io/jerryzou/pen/mJYJym">CodePen 示例</a>）</p>
+
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nf">#first</span> <span class="p">{</span>
+  <span class="k">width</span><span class="o">:</span> <span class="m">20px</span><span class="p">;</span>
+  <span class="k">height</span><span class="o">:</span> <span class="m">20px</span><span class="p">;</span>
+  <span class="k">border-width</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span>
+  <span class="k">border-style</span><span class="o">:</span> <span class="k">solid</span><span class="p">;</span>
+  <span class="k">border-color</span><span class="o">:</span> <span class="nb">red</span> <span class="nb">green</span> <span class="nb">blue</span> <span class="nb">brown</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nf">#second</span> <span class="p">{</span>
+  <span class="k">width</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="k">height</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="k">border-width</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span>
+  <span class="k">border-style</span><span class="o">:</span> <span class="k">solid</span><span class="p">;</span>
+  <span class="k">border-color</span><span class="o">:</span> <span class="nb">red</span> <span class="nb">green</span> <span class="nb">blue</span> <span class="nb">brown</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nf">#third</span> <span class="p">{</span>
+  <span class="k">width</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="k">height</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="k">border-width</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span>
+  <span class="k">border-style</span><span class="o">:</span> <span class="k">solid</span><span class="p">;</span>
+  <span class="k">border-color</span><span class="o">:</span> <span class="nb">red</span> <span class="k">transparent</span> <span class="k">transparent</span> <span class="k">transparent</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>接下来就要考虑如何拼接出一个平行四边形了。在<code>border</code>法中，它由三部分组成，分别是左三角形、矩形、右三角形。如果每次绘制平行四边形都要创建三个元素显然过于麻烦了，所以在这里<code>:before</code>和<code>:after</code>伪元素是个不错的选择。下面我们实现一下这样的效果：</p>
+
+<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/parallelogram.png!0.5" alt="three parallelogram" /></p>
+
+<p>为了将三角形与矩形无缝拼接到一起，多处属性要保持一致，所以使用类似 Less, Sass, Stylus 等 CSS 预处理器来写这段代码会更容易维护，下面给出 Scss 版本的代码。（另附 <a href="http://codepen.io/jerryzou/pen/ZGNGWZ?editors=110">CodePen 链接</a>）</p>
+
+<div class="highlight"><pre><code class="language-scss" data-lang="scss"><span class="c1">//三角形的宽高</span>
+<span class="nv">$height</span><span class="o">:</span> <span class="mi">24</span><span class="kt">px</span><span class="p">;</span>
+<span class="nv">$width</span><span class="o">:</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+
+<span class="c1">//对平行四边形三部分的颜色进行赋值</span>
+<span class="k">@mixin</span><span class="nf"> parallelogram-color</span><span class="p">(</span><span class="nv">$color</span><span class="p">)</span> <span class="p">{</span>
+  <span class="na">background</span><span class="o">:</span> <span class="nv">$color</span><span class="p">;</span>
+  <span class="k">&amp;</span><span class="nd">:before</span> <span class="p">{</span> <span class="na">border-color</span><span class="o">:</span> <span class="no">transparent</span> <span class="nv">$color</span> <span class="nv">$color</span> <span class="no">transparent</span><span class="p">;</span> <span class="p">}</span>
+  <span class="k">&amp;</span><span class="nd">:after</span> <span class="p">{</span> <span class="na">border-color</span><span class="o">:</span> <span class="nv">$color</span> <span class="no">transparent</span> <span class="no">transparent</span> <span class="nv">$color</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">//单个三角形的样式</span>
+<span class="k">@mixin</span><span class="nf"> triangle</span><span class="p">()</span> <span class="p">{</span>
+  <span class="na">content</span><span class="o">:</span> <span class="s1">&#39;</span><span class="s2">&#39;</span><span class="p">;</span>
+  <span class="na">display</span><span class="o">:</span> <span class="no">block</span><span class="p">;</span>
+  <span class="na">width</span><span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="na">height</span><span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="na">position</span><span class="o">:</span> <span class="no">absolute</span><span class="p">;</span>
+  <span class="na">border-style</span><span class="o">:</span> <span class="no">solid</span><span class="p">;</span>
+  <span class="na">border-width</span><span class="o">:</span> <span class="nv">$height</span><span class="o">/</span><span class="mi">2</span> <span class="nv">$width</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+  <span class="na">top</span><span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">//平行四边形的样式</span>
+<span class="nc">.para</span> <span class="p">{</span>
+  <span class="na">display</span><span class="o">:</span> <span class="no">inline</span><span class="o">-</span><span class="no">block</span><span class="p">;</span>
+  <span class="na">position</span><span class="o">:</span> <span class="no">relative</span><span class="p">;</span>
+  <span class="na">padding</span><span class="o">:</span> <span class="mi">0</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+  <span class="na">height</span><span class="o">:</span> <span class="nv">$height</span><span class="p">;</span>
+  <span class="na">line-height</span><span class="o">:</span> <span class="nv">$height</span><span class="p">;</span>
+  <span class="na">margin-left</span><span class="o">:</span> <span class="nv">$width</span><span class="p">;</span>
+  <span class="na">color</span><span class="o">:</span> <span class="mh">#fff</span><span class="p">;</span>
+
+  <span class="k">&amp;</span><span class="nd">:after</span> <span class="p">{</span>
+    <span class="k">@include</span><span class="nd"> triangle</span><span class="p">();</span>
+    <span class="na">right</span><span class="o">:</span> <span class="o">-</span><span class="nv">$width</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">&amp;</span><span class="nd">:before</span> <span class="p">{</span>
+    <span class="k">@include</span><span class="nd"> triangle</span><span class="p">();</span>
+    <span class="na">left</span><span class="o">:</span> <span class="o">-</span><span class="nv">$width</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">@include</span><span class="nd"> parallelogram-color</span><span class="p">(</span><span class="nb">red</span><span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+
+<p>需要注意的是，如果通过 <code>$height</code>、<code>$width</code> 设置的三角形斜率太小或太大都有可能造成渲染出锯齿，所以使用起来要多多测试一下不同的宽高所得到的视觉效果如何。</p>
+
+<h2 id="transform">第二种方法：利用<code>transform</code></h2>
+
+<p>使用<code>transform</code>来实现平行四边形的方法是我在逛<a href="http://www.alitrip.com/">去啊</a>的时候看到的，效果大概是这个样子：</p>
+
+<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/qua_parallelogram.png!0.5" alt="去啊中的平行四边形" /></p>
+
+<p>看到之后觉得好神奇啊，原来还可以只有平行四边形的外轮廓。（因为方法一只能创造填充效果的平行四边形）实现起来非常简单，主要是借助了<code>transform: skew(...)</code>，下面就来看看源码吧。</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;style&gt;</span>
+<span class="nc">.city</span> <span class="p">{</span>
+  <span class="k">display</span><span class="o">:</span> <span class="k">inline</span><span class="o">-</span><span class="k">block</span><span class="p">;</span>
+  <span class="k">padding</span><span class="o">:</span> <span class="m">5px</span> <span class="m">20px</span><span class="p">;</span>
+  <span class="k">border</span><span class="o">:</span> <span class="m">1px</span> <span class="k">solid</span> <span class="m">#44a5fc</span><span class="p">;</span>
+  <span class="k">color</span><span class="o">:</span> <span class="m">#333</span><span class="p">;</span>
+  <span class="n">transform</span><span class="o">:</span> <span class="n">skew</span><span class="p">(</span><span class="m">-20</span><span class="n">deg</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
+
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;city&quot;</span><span class="nt">&gt;</span>上海<span class="nt">&lt;/div&gt;</span></code></pre></div>
+
+<p>于是我们得到了这样的效果：</p>
+
+<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/shanghai_skew.png!0.5" alt="skew shanghai" /></p>
+
+<p>看到图片的你一定是这样想的：</p>
+
+<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/damn.gif" alt="坑爹呢这是" /></p>
+
+<p>别着急嘛，我们的确是把整个 div 进行了歪曲，导致中间的文字也是倾斜的，而这显然不是我们所要的效果。所以我们需要加一个内层元素，并对内层元素做一次逆向的歪曲，从而得到我们想要的效果：</p>
+
+<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/shanghai_normal.png!0.5" alt="normal shanghai" /></p>
+
+<p>实现代码如下，另附 <a href="http://codepen.io/jerryzou/pen/BNeNwV?editors=110">CodePen 示例</a></p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;style&gt;</span>
+<span class="nc">.city</span> <span class="p">{</span>
+  <span class="k">display</span><span class="o">:</span> <span class="k">inline</span><span class="o">-</span><span class="k">block</span><span class="p">;</span>
+  <span class="k">padding</span><span class="o">:</span> <span class="m">5px</span> <span class="m">20px</span><span class="p">;</span>
+  <span class="k">border</span><span class="o">:</span> <span class="m">1px</span> <span class="k">solid</span> <span class="m">#44a5fc</span><span class="p">;</span>
+  <span class="k">color</span><span class="o">:</span> <span class="m">#333</span><span class="p">;</span>
+  <span class="n">transform</span><span class="o">:</span> <span class="n">skew</span><span class="p">(</span><span class="m">-20</span><span class="n">deg</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nc">.city</span> <span class="nt">div</span> <span class="p">{</span>
+  <span class="n">transform</span><span class="o">:</span> <span class="n">skew</span><span class="p">(</span><span class="m">20</span><span class="n">deg</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
+
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;city&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;div&gt;</span>上海<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span></code></pre></div>
+
+<h2 id="section">总结</h2>
+
+<p>第一种方法使用 <code>border</code> 属性 hack 出三角形，并通过对三个元素进行拼接最终实现了平行四边形；而第二种方法则通过 <code>transform: skew</code> 来得到平行四边形。总体来说，第二种方法相对于第一种代码量小得多，而且也很好理解。唯一的不足是无法构造像本站的分页中所使用的梯形。希望本文对各位有所帮助。</p>
+
+
+  </article>
+
+  <p class="copyright">
+    本文的版权归作者<a href="mailto:jerry.zry@outlook.com">邹润阳</a>所有，任何人可以进行转载、分享，但不可在未经允许的情况下用于商业用途。<br/>
+    转载请注明出处：<a href="http://jerryzou.com/posts/use-css-to-paint-triangle-and-parallelogram/">http://jerryzou.com/posts/use-css-to-paint-triangle-and-parallelogram/</a>。
+  </p>
+
+  
+    <div class="ds-thread" data-thread-key="10031" data-title="用 CSS 实现三角形与平行四边形" data-url="http://jerryzou.com/posts/use-css-to-paint-triangle-and-parallelogram/"></div>
+<script>
+var duoshuoQuery = {short_name:"jerryzou"};
+(function() {
+  var ds = document.createElement('script');
+  ds.type = 'text/javascript';ds.async = true;
+  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  ds.charset = 'UTF-8';
+  (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+  
+</div>
+<script>
+    jsonp('http://analytics1.sinaapp.com/page.php', {
+        callback: 'jsonp_callback',
+        type: 'increment',
+        domain: 'http://jerryzou.com',
+        title: '咀嚼之味',
+        url: 'http://jerryzou.com/posts/use-css-to-paint-triangle-and-parallelogram/'
+    });
+
+    function jsonp_callback(result) {
+        var visitCounter = document.getElementById('visit-counter');
+        visitCounter.innerHTML = result.count;
+    }
+</script>
+
+        
+      </div>
+    </div>
+
+    <footer class="site-footer">
+    <div class="wrap">
+        <ul class="friend-links footer-text">
+            <li><a href="http://ysyjerry1992.github.io/">Yusiyuan</a></li>
+            <li><a href="http://blog.liqiang.me/">Jayce Li</a></li>
+            <li><a href="http://www.dozer.cc/">Dozer</a></li>
+            <li><a href="http://leuisken.github.io/">LeuisKen</a></li>
+            <li><a href="http://www.yiqixxx.com/">一起网</a></li>
+            <li><a href="http://dianying.taobao.com">淘宝电影</a></li>
+            <li><a href="http://efe.baidu.com/">Baidu EFE</a></li>
+            <li><a href="http://fex.baidu.com/">Baidu FEX</a></li>
+        </ul>
+        <p class="footer-text">Powered by <a href="http://jekyllrb.com/">Jekyll</a> , <a href="https://pages.github.com/">Github Pages</a> and <a href="https://www.upyun.com/">UPYUN</a>.</p>
+    </div>
+</footer>
+
+    </body>
+</html>
