@@ -4,7 +4,7 @@ title: 深入剖析 JavaScript 的深复制
 description: 一年前我曾写过一篇 Javascript 中的一种深复制实现，当时写这篇文章的时候还比较稚嫩，有很多地方没有考虑仔细。为了不误人子弟，我决定结合 Underscore、lodash 和 jQuery 这些主流的第三方库来重新谈一谈在 JavaScript 中的深复制。
 permalink: /posts/dive-into-deep-clone-in-javascript/
 key: 10028
-labels: ["JavaScript", "深复制", "Deep Clone"]
+labels: ["JavaScript", "深复制"]
 ---
 
 一年前我曾写过一篇 [Javascript 中的一种深复制实现](http://jerryzou.com/posts/deepcopy/)，当时写这篇文章的时候还比较稚嫩，有很多地方没有考虑仔细。为了不误人子弟，我决定结合 Underscore、lodash 和 jQuery 这些主流的第三方库来重新谈一谈这个问题。

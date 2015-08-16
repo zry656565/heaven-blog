@@ -4,7 +4,7 @@ title: 论 CSS 中的逻辑
 description: 在过去的很长一段时间中，我们都说 CSS 是不带有任何逻辑的，意思是在 CSS 中没有控制流，也没有某种类似于其他编程语言的方式来组织 CSS。CSS 天生缺乏逻辑性的问题导致了预处理器的出现。然而业界却对 CSS 预处理器褒贬不一，支持预处理器的人认为这弥补了 CSS 缺失的特性；而反对预处理器的人则认为 CSS 的设计初衷就不应该带有逻辑性，他们认为根本不应该引入预处理器这个概念...
 permalink: /posts/cyclomatic-complexity-logic-in-css/
 key: 10027
-labels: ["CSS", "选择器", "圈复杂度"]
+labels: ["CSS", "选择器"]
 ---
 
 > 本文在征得原作者 [@csswizardry](https://twitter.com/csswizardry) 同意的情况下，翻译自他博客中的文章：[Cyclomatic Complexity: Logic in CSS](http://csswizardry.com/2015/04/cyclomatic-complexity-logic-in-css/)

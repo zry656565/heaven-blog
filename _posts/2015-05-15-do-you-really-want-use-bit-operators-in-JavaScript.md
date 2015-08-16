@@ -4,7 +4,7 @@ title: 为什么不要在 JavaScript 中使用位操作符？
 description: 如果你的第一门编程语言不是 JavaScript，而是 C++ 或 Java，那么一开始你大概会看不惯 JavaScript 的数字类型。在 JavaScript 中的数字类型是不区分什么 Int，Float，Double，Decimal 的。咳咳，我说的当然是在 ES6 之前的 JS，在 ES6 的新标准中提出了像 Int8Array 这样新的数据类型。不过这不是本文叙述的重点，暂且就不谈啦。本文将更着重地谈 JS 的数字类型以及作用于它的位操作符...
 permalink: /posts/do-you-really-want-use-bit-operators-in-JavaScript/
 key: 10026
-labels: ["JavaScript", "Number", 数字类型, "位操作符"]
+labels: ["JavaScript", "位操作符"]
 ---
 
 如果你的第一门编程语言不是 JavaScript，而是 C++ 或 Java，那么一开始你大概会看不惯 JavaScript 的数字类型。在 JavaScript 中的数字类型是不区分什么 Int，Float，Double，Decimal 的。咳咳，我说的当然是在 ES6 之前的 JS，在 ES6 的新标准中提出了像 Int8Array 这样新的数据类型。不过这不是本文叙述的重点，暂且就不谈啦。本文将更着重地谈 JS 的数字类型以及作用于它的位操作符，而关于包装对象 Number 的更多了解可以看拔赤翻译的[《JavaScript设计模式》](https://github.com/lxj/javascript.patterns/blob/master/chapter3.markdown#%E5%8E%9F%E5%A7%8B%E5%80%BC%E7%9A%84%E5%8C%85%E8%A3%85%E5%AF%B9%E8%B1%A1)

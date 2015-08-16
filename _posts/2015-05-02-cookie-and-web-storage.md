@@ -4,7 +4,7 @@ title: 详说 Cookie, LocalStorage 与 SessionStorage
 description: 最近在找暑期实习，其中百度、网易游戏、阿里的面试都问到一些关于HTML5的东西，问题大多是这样开头的：“你用过什么HTML5的技术呀？” 而后，每次都能扯到 Cookie 和 localStorage 有啥差别。这篇文章就旨在详细地阐述这部分内容。
 permalink: /posts/cookie-and-web-storage/
 key: 10025
-labels: ["Cookie", "SessionStorage", "LocalStorage", "HTML5"]
+labels: ["Cookie", "LocalStorage", "HTML5"]
 ---
 
 最近在找暑期实习，其中百度、网易游戏、阿里的面试都问到一些关于HTML5的东西，问题大多是这样开头的：“你用过什么HTML5的技术呀？” 而后，每次都能扯到 Cookie 和 localStorage 有啥差别。这篇文章就旨在详细地阐述这部分内容，而具体 Web Storage API 的使用可以参考[MDN的文档](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API)，就不在这篇文章中赘述了。

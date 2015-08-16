@@ -4,7 +4,7 @@ title: Don't be evil ?
 description: 今天是2014年的最后一天，原本和欢欢说好一起吃晚饭。可是中行偏偏又要开什么新员工大会，从六点多一直开到九点多！结果只是不断地给新员工压力而已，于是就跟欢欢说起中行的各种恶性竞争与病态的价值观！然后～就扯到了谷歌的“不作恶”。
 permalink: /posts/dontBeEvil/
 key: 10021
-labels: [Google, "Don't be evil", 生活]
+labels: [Google, 生活]
 ---
 
 > 尽信书，则不如无书。 ———— 《孟子》
