@@ -28,6 +28,7 @@ layout: default
         callback: 'jsonp_callback',
         type: 'increment',
         domain: '{{ site.url }}',
+        title: '{{ site.title }}',
         url: '{{ page.permalink | prepend: site.url }}'
     });
 
