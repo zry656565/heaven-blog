@@ -101,8 +101,74 @@ $width: 12px;
 }
 {% endhighlight %}
 
+需要注意的是，如果通过 `$height`、`$width` 设置的三角形斜率太小或太大都有可能造成渲染出锯齿，所以使用起来要多多测试一下不同的宽高所得到的视觉效果如何。
+
 ##第二种方法：利用`transform`
+
+使用`transform`来实现平行四边形的方法是我在逛[去啊](http://www.alitrip.com/)的时候看到的，效果大概是这个样子：
+
+![去啊中的平行四边形][4]
+
+看到之后觉得好神奇啊，原来还可以只有平行四边形的外轮廓。（因为方法一只能创造填充效果的平行四边形）实现起来非常简单，主要是借助了`transform: skew(...)`，下面就来看看源码吧。
+
+{% highlight html %}
+<style>
+.city {
+  display: inline-block;
+  padding: 5px 20px;
+  border: 1px solid #44a5fc;
+  color: #333;
+  transform: skew(-20deg);
+}
+</style>
+
+<div class="city">上海</div>
+{% endhighlight %}
+
+于是我们得到了这样的效果：
+
+![skew shanghai][5]
+
+看到图片的你一定是这样想的：
+
+![坑爹呢这是][6]
+
+别着急嘛，我们的确是把整个 div 进行了歪曲，导致中间的文字也是倾斜的，而这显然不是我们所要的效果。所以我们需要加一个内层元素，并对内层元素做一次逆向的歪曲，从而得到我们想要的效果：
+
+![normal shanghai][7]
+
+实现代码如下，另附 [CodePen 示例](http://codepen.io/jerryzou/pen/BNeNwV?editors=110)
+
+{% highlight html %}
+<style>
+.city {
+  display: inline-block;
+  padding: 5px 20px;
+  border: 1px solid #44a5fc;
+  color: #333;
+  transform: skew(-20deg);
+}
+
+.city div {
+  transform: skew(20deg);
+}
+</style>
+
+<div class="city">
+  <div>上海</div>
+</div>
+{% endhighlight %}
+
+
+##总结
+
+第一种方法使用 `border` 属性 hack 出三角形，并通过对三个元素进行拼接最终实现了平行四边形；而第二种方法则通过 `transform: skew` 来得到平行四边形。总体来说，第二种方法相对于第一种代码量小得多，而且也很好理解。唯一的不足是无法构造像本站的分页中所使用的梯形。希望本文对各位有所帮助。
+
 
 [1]: {{ site.static_url }}/posts/pagination.png!0.5
 [2]: {{ site.static_url }}/posts/triangle.png!0.5
 [3]: {{ site.static_url }}/posts/parallelogram.png!0.5
+[4]: {{ site.static_url }}/posts/qua_parallelogram.png!0.5
+[5]: {{ site.static_url }}/posts/shanghai_skew.png!0.5
+[6]: {{ site.static_url }}/posts/damn.gif
+[7]: {{ site.static_url }}/posts/shanghai_normal.png!0.5
