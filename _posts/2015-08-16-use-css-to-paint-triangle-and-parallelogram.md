@@ -1,7 +1,7 @@
 ---
 date: 2015-08-16 20:16:30 UTC
 title: 用 CSS 实现三角形与平行四边形
-description: 本文将介绍使用纯 CSS 来构造三角形与平行四边形的三种方法。
+description: 本文将介绍使用纯 CSS 来构造三角形与平行四边形的两种方法。
 permalink: /posts/use-css-to-paint-triangle-and-parallelogram/
 key: 10031
 labels: [CSS, CSS3]
