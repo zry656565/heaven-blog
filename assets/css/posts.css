@@ -156,10 +156,15 @@
 /* Copyright
  *==========================*/
 .copyright {
-  border: 2px dashed #92b8ea;
   padding: 15px 40px;
-  color: #777;
-  background: #f1fdfb;
+  color: #555;
+  border-radius: 10px;
+  background: #c5f7ed;
+}
+.copyright .overflow-hidden {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 @media (max-width: 600px) {
   .copyright {
