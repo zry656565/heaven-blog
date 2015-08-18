@@ -164,6 +164,10 @@ $width: 12px;
 
 第一种方法使用 `border` 属性 hack 出三角形，并通过对三个元素进行拼接最终实现了平行四边形；而第二种方法则通过 `transform: skew` 来得到平行四边形。总体来说，第二种方法相对于第一种代码量小得多，而且也很好理解。唯一的不足是无法构造像本站的分页中所使用的梯形。希望本文对各位有所帮助。
 
+###UPDATE
+
+- **2015.8.18**, [@前端农民工](http://weibo.com/fouber) 给出了一个 CSS-Tricks 的[链接](https://css-tricks.com/examples/ShapesOfCSS/)，是关于各种用 CSS 绘制几何图形的方法，浅显易懂，推荐大家看看！
+
 
 [1]: {{ site.static_url }}/posts/pagination.png!0.5
 [2]: {{ site.static_url }}/posts/triangle.png!0.5
