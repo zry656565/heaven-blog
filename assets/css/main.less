@@ -7,11 +7,13 @@
 @media-diverge-medium: 840px;
 
 html {
+  height: 100%;
   font-size: 16px;
 }
 
 body {
-  font:400 1em/1.8 Avenir, 'Segoe UI', 'Hiragino Sans GB', 'STHeiti', 'Microsoft Yahei', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;
+  height: 100%;
+  font: 400 1em/1.8 Avenir, 'Segoe UI', 'Hiragino Sans GB', 'STHeiti', 'Microsoft Yahei', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;
   background-color: #fdfdfd;
 }
 
@@ -79,8 +81,8 @@ hr{
   float: right;
   line-height: 56px;
 
-  & .menu-icon { display: none; }
-  & .page-link {
+  .menu-icon { display: none; }
+  .page-link {
     margin-left: 20px;
     color: #727272;
 
@@ -98,7 +100,7 @@ hr{
     border-radius: 5px;
     background-color: white;
 
-    & .menu-icon {
+    .menu-icon {
       display: block;
       float: right;
       width: 36px;
@@ -107,10 +109,10 @@ hr{
       text-align: center;
       line-height: 36px;
 
-      & svg { width: 18px; height: 16px; }
+      svg { width: 18px; height: 16px; }
     }
 
-    & .trigger {
+    .trigger {
       display: none;
       clear: both;
       margin-bottom: 5px;
@@ -118,7 +120,7 @@ hr{
 
     &:hover .trigger { display: block; }
 
-    & .page-link {
+    .page-link {
       display: block;
       margin: 0;
       padding: 5px 10px;
@@ -134,7 +136,7 @@ hr{
     display: none;
   }
 
-  & img {
+  img {
     position: absolute;
     top: 0;
     right: 0;
@@ -157,7 +159,7 @@ hr{
   padding: 0;
   list-style: none;
 
-  & li {
+  li {
     display: inline;
     border-right: 1px solid #333;
     padding: 0 10px;
@@ -167,7 +169,7 @@ hr{
     }
   }
 
-  & a {
+  a {
     color: #333;
 
     .link-hover
@@ -191,6 +193,8 @@ hr{
 
 .page-content {
   padding: 30px 0;
+  min-height: 0; // fallback
+  min-height: ~"calc(100% - 194px)";
   background-color: #fff;
 }
 
@@ -294,8 +298,8 @@ hr{
   text-align: right;
   font-size: 14px;
 
-  & a,
-  & span {
+  a,
+  span {
     display: inline-block;
     color: #fff;
     padding: 0 10px;
@@ -319,21 +323,21 @@ hr{
     .parallelogram-color(#ccc);
   }
 
-  & a:hover {
+  a:hover {
     .parallelogram-color(@main-color);
   }
 
-  & .current {
+  .current {
     .parallelogram-color(@help-color);
   }
 
-  & .next {
+  .next {
     &:after {
       border: 0;
     }
   }
 
-  & .prev {
+  .prev {
     &:before {
       border: 0;
     }
