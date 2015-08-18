@@ -156,10 +156,10 @@
 /* Copyright
  *==========================*/
 .copyright {
-  border: 2px dashed #fded21;
-  padding: 10px 40px;
+  border: 2px dashed #92b8ea;
+  padding: 15px 40px;
   color: #777;
-  background: #fffdeb;
+  background: #f1fdfb;
 }
 @media (max-width: 600px) {
   .copyright {

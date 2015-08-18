@@ -1,3 +1,5 @@
+@import "config";
+
 /* Post styles
  * Header
  *==========================*/
@@ -174,10 +176,10 @@
  *==========================*/
 
 .copyright {
-  border: 2px dashed #fded21;
-  padding: 10px 40px;
+  border: 2px dashed lighten(@help-color, 35%);
+  padding: 15px 40px;
   color: #777;
-  background: #fffdeb;
+  background: lighten(@main-color, 55%);
 
   @media (max-width: 600px) {
     padding: 10px 15px;
