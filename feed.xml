@@ -157,6 +157,12 @@
 
 &lt;p&gt;第一种方法使用 &lt;code&gt;border&lt;/code&gt; 属性 hack 出三角形，并通过对三个元素进行拼接最终实现了平行四边形；而第二种方法则通过 &lt;code&gt;transform: skew&lt;/code&gt; 来得到平行四边形。总体来说，第二种方法相对于第一种代码量小得多，而且也很好理解。唯一的不足是无法构造像本站的分页中所使用的梯形。希望本文对各位有所帮助。&lt;/p&gt;
 
+&lt;h3 id=&quot;update&quot;&gt;UPDATE&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;2015.8.18&lt;/strong&gt;, &lt;a href=&quot;http://weibo.com/fouber&quot;&gt;@前端农民工&lt;/a&gt; 给出了一个 CSS-Tricks 的&lt;a href=&quot;https://css-tricks.com/examples/ShapesOfCSS/&quot;&gt;链接&lt;/a&gt;，是关于各种用 CSS 绘制几何图形的方法，浅显易懂，推荐大家看看！&lt;/li&gt;
+&lt;/ul&gt;
+
 </description>
         <pubDate>Sun, 16 Aug 2015 20:16:30 +0000</pubDate>
         <link>http://jerryzou.com/posts/use-css-to-paint-triangle-and-parallelogram/</link>
