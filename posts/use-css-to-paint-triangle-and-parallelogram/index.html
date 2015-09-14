@@ -15,7 +15,7 @@
     <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/release/style.43e2c8b9.css">
+    <link rel="stylesheet" href="/release/style.e62825fc.css">
 
     <!-- Baidu Analysis -->
     <script>
@@ -278,9 +278,23 @@
 
 <h3 id="update">UPDATE</h3>
 
-<ul>
-  <li><strong>2015.8.18</strong>, <a href="http://weibo.com/fouber">@前端农民工</a> 给出了一个 CSS-Tricks 的<a href="https://css-tricks.com/examples/ShapesOfCSS/">链接</a>，是关于各种用 CSS 绘制几何图形的方法，浅显易懂，推荐大家看看！</li>
-</ul>
+<h4 id="section-1">2015.8.18</h4>
+
+<p><a href="http://weibo.com/fouber">@前端农民工</a> 给出了一个 CSS-Tricks 的<a href="https://css-tricks.com/examples/ShapesOfCSS/">链接</a>，是关于各种用 CSS 绘制几何图形的方法，浅显易懂，推荐大家看看！</p>
+
+<h4 id="section-2">2015.9.14</h4>
+
+<p>Groune 指出在缩放页面的情况下，本博客的分页均会出现白边。我自己重新了一下这个问题，截图如下。</p>
+
+<p>在 150% 放大倍率下，Safari 8 的显示效果：</p>
+
+<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/pagination_safari_scale.png" alt="pagination_safari_scale" /></p>
+
+<p>在 125% 放大倍率下，Chrome 45 的显示效果：</p>
+
+<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/pagination_chrome_scale.png" alt="pagination_chrome_scale" /></p>
+
+<p>此例暴露出不同浏览器在缩放的情况下对于伪元素 <code>:after</code> 和 <code>:before</code> 的渲染方式还是有一定的差异的。目前暂时没有找到解决这一问题的方法。所以还是采用了本文提到的第二种方法重新实现了一下本博客的分页；具体效果还请各位看官返回主页查看咯~</p>
 
 
   </article>
