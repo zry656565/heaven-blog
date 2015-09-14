@@ -24,25 +24,33 @@ sidePart: true
   {% if paginator.total_pages > 1 %}
   <div class="pagination">
     {% if paginator.previous_page %}
-    <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}" class="prev">&laquo; Prev</a>
+    <a class="parallelogram" href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">
+      <div>&laquo; Prev</div>
+    </a>
     {% else %}
-    <span class="prev">&laquo; Prev</span>
+    <div class="parallelogram"><div>&laquo; Prev</div></div>
     {% endif %}
 
     {% for page in (1..paginator.total_pages) %}
-    {% if page == paginator.page %}
-    <span class="current">{{ page }}</span>
-    {% elsif page == 1 %}
-    <a href="/">{{ page }}</a>
-    {% else %}
-    <a href="/{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a>
-    {% endif %}
+      {% if page == paginator.page %}
+      <div class="parallelogram current"><div>{{ page }}</div></div>
+      {% elsif page == 1 %}
+      <a class="parallelogram" href="/">
+        <div>{{ page }}</div>
+      </a>
+      {% else %}
+      <a class="parallelogram" href="/{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">
+        <div>{{ page }}</div>
+      </a>
+      {% endif %}
     {% endfor %}
 
     {% if paginator.next_page %}
-    <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}" class="next">Next &raquo;</a>
+    <a class="parallelogram" href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">
+        <div>Next &raquo;</div>
+    </a>
     {% else %}
-    <span class="next">Next &raquo;</span>
+    <div class="parallelogram"><div>Next &raquo;</div></div>
     {% endif %}
   </div>
   {% endif %}

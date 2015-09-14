@@ -245,91 +245,36 @@ hr {
 /*=================
   Pagination
 ===================*/
-.triangle {
-  content: '';
-  display: block;
-  width: 0;
-  height: 0;
-  position: absolute;
-  border-style: solid;
-  border-width: calc(12px) calc(6px);
-  top: 0;
-  transition: border-color 0.3s;
-}
 .pagination {
   text-align: right;
   font-size: 14px;
 }
-.pagination a,
-.pagination span {
-  display: inline-block;
-  color: #fff;
-  padding: 0 10px;
-  text-decoration: none;
+.pagination .parallelogram {
   position: relative;
+  display: inline-block;
+  padding: 0 10px;
   height: 24px;
   line-height: 24px;
-  margin-left: 12px;
   transition: background 0.3s;
-  background: #cccccc;
+  background: #ccc;
+  text-decoration: none;
+  color: #fff;
+  -webkit-transform: skewX(-20deg);
+  -moz-transform: skewX(-20deg);
+  -ms-transform: skewX(-20deg);
+  transform: skewX(-20deg);
 }
-.pagination a:after,
-.pagination span:after {
-  content: '';
-  display: block;
-  width: 0;
-  height: 0;
-  position: absolute;
-  border-style: solid;
-  border-width: calc(12px) calc(6px);
-  top: 0;
-  transition: border-color 0.3s;
-  right: -12px;
-}
-.pagination a:before,
-.pagination span:before {
-  content: '';
-  display: block;
-  width: 0;
-  height: 0;
-  position: absolute;
-  border-style: solid;
-  border-width: calc(12px) calc(6px);
-  top: 0;
-  transition: border-color 0.3s;
-  left: -12px;
-}
-.pagination a:before,
-.pagination span:before {
-  border-color: transparent #cccccc #cccccc transparent;
-}
-.pagination a:after,
-.pagination span:after {
-  border-color: #cccccc transparent transparent #cccccc;
-}
-.pagination a:hover {
-  background: #1abc9c;
-}
-.pagination a:hover:before {
-  border-color: transparent #1abc9c #1abc9c transparent;
-}
-.pagination a:hover:after {
-  border-color: #1abc9c transparent transparent #1abc9c;
-}
-.pagination .current {
+.pagination .parallelogram.current {
   background: #205caa;
 }
-.pagination .current:before {
-  border-color: transparent #205caa #205caa transparent;
+.pagination .parallelogram div {
+  -webkit-transform: skewX(20deg);
+  -moz-transform: skewX(20deg);
+  -ms-transform: skewX(20deg);
+  transform: skewX(20deg);
 }
-.pagination .current:after {
-  border-color: #205caa transparent transparent #205caa;
-}
-.pagination .next:after {
-  border: 0;
-}
-.pagination .prev:before {
-  border: 0;
+.pagination a.parallelogram:hover {
+  background: #1abc9c;
 }
 /*=================
   Sidebar

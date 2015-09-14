@@ -274,73 +274,40 @@ hr{
   Pagination
 ===================*/
 
-@height: 24px;
-@width: 12px;
-.parallelogram-color(@color) {
-  background: @color;
-  &:before { border-color: transparent @color @color transparent; }
-  &:after { border-color: @color transparent transparent @color; }
-}
-
-.triangle {
-  content: '';
-  display: block;
-  width: 0;
-  height: 0;
-  position: absolute;
-  border-style: solid;
-  border-width: calc(@height/2) calc(@width/2);
-  top: 0;
-  transition: border-color 0.3s;
+.transform(@value) {
+  -webkit-transform: @value;
+     -moz-transform: @value;
+      -ms-transform: @value;
+          transform: @value;
 }
 
 .pagination {
   text-align: right;
   font-size: 14px;
 
-  a,
-  span {
-    display: inline-block;
-    color: #fff;
-    padding: 0 10px;
-    text-decoration: none;
+  .parallelogram {
     position: relative;
-    height: @height;
-    line-height: @height;
-    margin-left: @width;
+    display: inline-block;
+    padding: 0 10px;
+    height: 24px;
+    line-height: 24px;
     transition: background 0.3s;
+    background: #ccc;
+    text-decoration: none;
+    color: #fff;
+    .transform(skewX(-20deg));
 
-    &:after {
-      .triangle;
-      right: -@width;
+    &.current{
+      background: @help-color;
     }
 
-    &:before {
-      .triangle;
-      left: -@width;
-    }
-
-    .parallelogram-color(#ccc);
-  }
-
-  a:hover {
-    .parallelogram-color(@main-color);
-  }
-
-  .current {
-    .parallelogram-color(@help-color);
-  }
-
-  .next {
-    &:after {
-      border: 0;
+    div {
+      .transform(skewX(20deg));
     }
   }
 
-  .prev {
-    &:before {
-      border: 0;
-    }
+  a.parallelogram:hover {
+    background: @main-color;
   }
 }
 
