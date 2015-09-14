@@ -166,7 +166,23 @@ $width: 12px;
 
 ###UPDATE
 
-- **2015.8.18**, [@前端农民工](http://weibo.com/fouber) 给出了一个 CSS-Tricks 的[链接](https://css-tricks.com/examples/ShapesOfCSS/)，是关于各种用 CSS 绘制几何图形的方法，浅显易懂，推荐大家看看！
+####2015.8.18
+
+[@前端农民工](http://weibo.com/fouber) 给出了一个 CSS-Tricks 的[链接](https://css-tricks.com/examples/ShapesOfCSS/)，是关于各种用 CSS 绘制几何图形的方法，浅显易懂，推荐大家看看！
+
+####2015.9.14
+
+Groune 指出在缩放页面的情况下，本博客的分页均会出现白边。我自己重新了一下这个问题，截图如下。
+
+在 150% 放大倍率下，Safari 8 的显示效果：
+
+![pagination_safari_scale][8]
+
+在 125% 放大倍率下，Chrome 45 的显示效果：
+
+![pagination_chrome_scale][9]
+
+此例暴露出不同浏览器在缩放的情况下对于伪元素 `:after` 和 `:before` 的渲染方式还是有一定的差异的。目前暂时没有找到解决这一问题的方法。所以还是采用了本文提到的第二种方法重新实现了一下本博客的分页；具体效果还请各位看官返回主页查看咯~
 
 
 [1]: {{ site.static_url }}/posts/pagination.png!0.5
@@ -176,3 +192,5 @@ $width: 12px;
 [5]: {{ site.static_url }}/posts/shanghai_skew.png!0.5
 [6]: {{ site.static_url }}/posts/damn.gif
 [7]: {{ site.static_url }}/posts/shanghai_normal.png!0.5
+[8]: {{ site.static_url }}/posts/pagination_safari_scale.png
+[9]: {{ site.static_url }}/posts/pagination_chrome_scale.png
