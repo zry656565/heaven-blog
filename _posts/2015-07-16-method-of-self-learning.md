@@ -82,6 +82,21 @@ labels: ["自学", "思维导图"]
 今天给大家介绍的是我个人的学习方法，主要就是借助了 **XMind**、**Trello**、**Pocket** 和 **Evernote** 四个工具来管理我的知识树。
 不管怎么样，希望对大家有所帮助吧！如果你有什么想法想要交流，欢迎直接在下面的评论框中留言。
 
+### UPDATE
+
+#### 2015.10.22
+
+根据 [@普罗米修斯君](http://weibo.com/u/3140194393) 与 [@Cuilei](http://www.zhihu.com/people/cuilei) 等朋友的建议，添加几个可以作为替代的同类软件：
+
+- Trello 的同类软件
+    - [Worktile](https://worktile.com/)
+    - [奇妙清单](https://www.wunderlist.com/zh/)
+    - [Doit.im](http://doit.im/cn/) (付费)
+    - [滴答清单](https://www.dida365.com)
+- Evernote 的同类软件
+    - [OneNote](http://www.onenote.com/)
+    - [为知笔记](http://www.wiz.cn/)
+    - [有道云笔记](http://note.youdao.com/)
 
 [1]: {{ site.qiniu_static_url }}/xmind.png-h400
 [2]: {{ site.qiniu_static_url }}/trello-boards.png-h400
