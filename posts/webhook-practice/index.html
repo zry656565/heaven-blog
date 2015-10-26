@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+        
+            Webhook 实践 —— 自动部署 | 咀嚼之味
+        </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="我目前正好面临了这样一个问题 —— 麻烦的人肉部署。也许有人看过我之前的一篇博文《解决 Github Pages 禁止百度爬虫的方法与可行性分析》。为了解决文章中的这个问题，我最后建立了一个只服务于百度爬虫的一个备份服务器。但是随之而来的问题是，每次我的博客有些更新，都不得不 ssh 到那台服务器上把代码 pull 下来。如此做了两三次以后，我觉得我不能再这么堕落下去，于是还是决定尝试一下 Webhook。 ">
+    <link rel="alternate" type="application/rss+xml" title="咀嚼之味 RSS" href="/feed.xml">
+    <link rel="canonical" href="http://jerryzou.com/posts/webhook-practice/">
+    <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/release/style.619b7be8.css">
+
+    <!-- Baidu Analysis -->
+    <script>
+        if (window.location.href.substr(7, 9) !== 'localhost') {
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?2744fd74aa568e064f9986394a60ead1";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+            })();
+        }
+    </script>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-47842677-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    
+    <!-- handle external js files -->
+    <script type="text/javascript" src="/assets/js/lib/jquery/jquery-1.11.1.min.js"></script>
+
+    <!-- help function for jsonp -->
+    <script>
+        var jsonp = function(url, args) {
+            var head = document.getElementsByTagName('head')[0],
+                    script = document.createElement("script"),
+                    first = true,
+                    value;
+
+            for (var key in args) {
+                if (args.hasOwnProperty(key)) {
+                    value = encodeURIComponent(args[key]);
+                    url += first ? ('?' + key + '=' + value) : ('&' + key + '=' + value);
+                    first = false;
+                }
+            }
+            script.src= url;
+            head.appendChild(script);
+        }
+    </script>
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+  <div class="wrap">
+    <a class="site-title" href="/">咀嚼之味</a>
+    <nav class="site-nav">
+      <div class="trigger">
+        <a class="page-link" href="/">首页</a>
+        
+          
+          <a class="page-link" href="/all-articles/">所有文章</a>
+          
+        
+          
+          <a class="page-link" href="/skill/">技能图谱</a>
+          
+        
+          
+          <a class="page-link" href="/about/">关于我</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          <a class="page-link" href="/feed.xml">RSS订阅</a>
+      </div>
+    </nav>
+  </div>
+  <!-- fork me on github -->
+  <a id="fork-me" href="https://github.com/zry656565/heaven-blog"><img src="http://jerryblog-image.b0.upaiyun.com/blog/forkme.png" alt="Fork me on GitHub"></a>
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+        
+        <div class="post">
+
+  <header class="post-header">
+    <h1>Webhook 实践 —— 自动部署</h1>
+    <p class="meta">Oct 25, 2015 <span class="pause"> - </span>
+        浏览量：<span id="visit-counter"></span>次<span class="pause"> | </span>
+        
+            
+                <a class="label" href="/all-articles/?label=Webhook">Webhook</a>
+            
+                <a class="label" href="/all-articles/?label=Nodejs">Nodejs</a>
+            
+        
+    </p>
+  </header>
+
+  <article class="post-content">
+  <p><a href="https://developer.github.com/webhooks/">Webhook</a>，也就是人们常说的钩子，是一个很有用的工具。你可以通过定制 Webhook 来监测你在 Github.com 上的各种事件，最常见的莫过于 <strong>push</strong> 事件。如果你设置了一个监测 push 事件的 Webhook，那么每当你的这个项目有了任何提交，这个 Webhook 都会被触发，这时 Github 就会发送一个 HTTP POST 请求到你配置好的地址。</p>
+
+<p>如此一来，你就可以通过这种方式去自动完成一些重复性工作；比如，你可以用 Webhook 来自动触发一些持续集成（CI）工具的运作，比如 Travis CI；又或者是通过 Webhook 去部署你的线上服务器。</p>
+
+<p>Github 开发者平台的文档中对 Webhook 的所能做的事是这样描述的：</p>
+
+<blockquote>
+  <p>You’re only limited by your imagination.</p>
+</blockquote>
+
+<h2 id="section">面临的问题</h2>
+
+<p>我目前正好面临了这样一个问题 —— 麻烦的人肉部署。也许有人看过我之前的一篇博文《<a href="http://jerryzou.com/posts/feasibility-of-allowing-baiduSpider-for-Github-Pages/">解决 Github Pages 禁止百度爬虫的方法与可行性分析</a>》。为了解决文章中的这个问题，我最后建立了一个只服务于百度爬虫的一个备份服务器。但是随之而来的问题是，每次我的博客有些更新，都不得不 ssh 到那台服务器上把代码 pull 下来。如此做了两三次以后，我觉得我不能再这么堕落下去，于是还是决定尝试一下 Webhook。</p>
+
+<p>于是我要完成的事情便是完成一个能够将我最新版本的博客，随时同步到备份服务器的 Webhook。简单分析一下我需要什么：</p>
+
+<ol>
+  <li>一台外网可以访问的主机</li>
+  <li>一个能够响应 Webhook 的服务器</li>
+  <li>配置 Webhook</li>
+</ol>
+
+<h2 id="section-1">1. 一台外网可访问的主机</h2>
+
+<p>什么叫外网可访问的主机？像阿里云的试用版就不行，它不提供外网 IP。而我使用的是 DigitalOcean 的云主机，主要的作用是架梯子，现在也顺便用来做备份服务器。当然你们也可以用类似 SAE 的服务，虽然没有 IP，但有独立的外网访问地址。</p>
+
+<h2 id="webhook-">2. 响应 Webhook 的服务器</h2>
+
+<p>为了响应 Webhook 所发出的请求，从而做一些我们想做的事情，我们得先实现一个响应服务器。本文采用 Node 来实现一个原型，你当然也可以用 PHP，python 等，全凭个人喜好啦。代码很短，就直接陈列在下方了：</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">)</span>
+  <span class="p">,</span> <span class="nx">exec</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;exec&#39;</span><span class="p">)</span>
+
+<span class="kr">const</span> <span class="nx">PORT</span> <span class="o">=</span> <span class="mi">9988</span>
+  <span class="p">,</span> <span class="nx">PATH</span> <span class="o">=</span> <span class="s1">&#39;../html&#39;</span>
+
+<span class="kd">var</span> <span class="nx">deployServer</span> <span class="o">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="sr">/deploy\/?$/i</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="kd">var</span> <span class="nx">commands</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="s1">&#39;cd &#39;</span> <span class="o">+</span> <span class="nx">PATH</span><span class="p">,</span>
+      <span class="s1">&#39;git pull&#39;</span>
+    <span class="p">].</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39; &amp;&amp; &#39;</span><span class="p">)</span>
+
+    <span class="nx">exec</span><span class="p">(</span><span class="nx">commands</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">out</span><span class="p">,</span> <span class="nx">code</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">err</span> <span class="k">instanceof</span> <span class="nb">Error</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">response</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+        <span class="nx">response</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">&#39;Server Internal Error.&#39;</span><span class="p">)</span>
+        <span class="k">throw</span> <span class="nx">err</span>
+      <span class="p">}</span>
+      <span class="nx">process</span><span class="p">.</span><span class="nx">stderr</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+      <span class="nx">process</span><span class="p">.</span><span class="nx">stdout</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">out</span><span class="p">)</span>
+      <span class="nx">response</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+      <span class="nx">response</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">&#39;Deploy Done.&#39;</span><span class="p">)</span>
+
+    <span class="p">})</span>
+
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+
+    <span class="nx">response</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">&#39;Not Found.&#39;</span><span class="p">)</span>
+
+  <span class="p">}</span>
+<span class="p">})</span>
+
+<span class="nx">deployServer</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">PORT</span><span class="p">)</span></code></pre></div>
+
+<p>如果还需要实现更多，更复杂的功能，直接在 <code>commands</code> 数组中添加便是。此处我的博客根目录 <code>html</code> 与部署服务器根目录同属一个目录，所以配置常量 <code>PATH = '../html'</code>。只要启动了服务器，那么 Webhook 就可以通过类似于 <strong>http://104.236.xxx.xxx:9988/deploy/</strong> 的路径来部署我的博客备份啦。</p>
+
+<div class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go"># 在后台启动部署服务器</span>
+<span class="go">$ node server.js &amp;</span></code></pre></div>
+
+<p>我以为服务器部署到这儿就完了，其实并没有，我遇到了一些麻烦。</p>
+
+<h3 id="run-node-server-forever">Run Node Server Forever</h3>
+
+<p>我在实际使用的时候发现，我的 Node 服务器时不时会自动停掉，具体原因我暂时还没有弄清楚。不过似乎很多人都遇到了这样的困扰，要解决这个问题，<a href="https://github.com/foreverjs/forever">forever</a> 是个不错的选择。借助 forever 这个库，它可以保证 Node 持续运行下去，一旦服务器挂了，它都会重启服务器。</p>
+
+<p>安装 forever：</p>
+
+<div class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">$ [sudo] npm install -g forever</span></code></pre></div>
+
+<p>运行：</p>
+
+<div class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">$ cd { 部署服务器的根目录 }</span>
+<span class="go">$ forever start server.js</span></code></pre></div>
+
+<p>我在 DigitalOcean 上的服务器安装的是 <strong>Ubuntu</strong> 系统，而 Ubuntu 中原本就有一个叫 node 的包。为了避免冲突，在 Ubuntu 上安装或使用 Node 得用 nodejs 这个名字。而 forever 默认是使用 node 作为执行脚本的程序名。所以为了处理 Ubuntu 存在的这种特殊情况，在启动 forever 时得另外添加一个参数：</p>
+
+<div class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">$ forever start server.js -c nodejs</span></code></pre></div>
+
+<h2 id="webhook">3. 配置 Webhook</h2>
+
+<p>如果像是本文这种最简易的应用，Webhook 的配置是十分简单的。首先进入你的 repo 主页，通过点击页面上的按钮 <strong>[settings]</strong> -&gt; <strong>[Webhooks &amp; service]</strong> 进入 Webhooks 配置主页面。也可以通过下面这个链接直接进入配置页面：</p>
+
+<div class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">https://github.com/[ 用户名 ]/[ 仓库名称 ]/settings/hooks</span></code></pre></div>
+
+<p>此处只需要配置 Webhook 所发出的 POST 请求发往何处即可，于是我们就配置我们所需要的路径： <strong>http://104.236.xxx.xxx/deploy/</strong>。这个地址指向的就是那个能够响应 Webhook 所发出请求的服务器。</p>
+
+<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/webhooks-config.png" alt="webhooks configuration" /></p>
+
+<p>配置好 Webhook 后，Github 会发送一个 ping 来测试这个地址。如果成功了，那么这个 Webhook 前就会加上一个绿色的勾；如果你得到的是一个红色的叉，那就好好检查一下哪儿出问题了吧！ </p>
+
+
+  </article>
+
+  <p class="copyright">
+    本文的版权归作者 <a href="mailto:jerry.zry@outlook.com">邹润阳</a> 所有，采用 <a href="http://creativecommons.org/licenses/by-nc/3.0/">Attribution-NonCommercial 3.0 License</a>。任何人可以进行转载、分享，但不可在未经允许的情况下用于商业用途；转载请注明出处。感谢配合！
+  </p>
+
+  
+    <div class="ds-thread" data-thread-key="10032" data-title="Webhook 实践 —— 自动部署" data-url="http://jerryzou.com/posts/webhook-practice/"></div>
+<script>
+var duoshuoQuery = {short_name:"jerryzou"};
+(function() {
+  var ds = document.createElement('script');
+  ds.type = 'text/javascript';ds.async = true;
+  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  ds.charset = 'UTF-8';
+  (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+  
+</div>
+<script>
+    jsonp('http://analytics1.sinaapp.com/page.php', {
+        callback: 'jsonp_callback',
+        type: 'increment',
+        domain: 'http://jerryzou.com',
+        title: 'Webhook 实践 —— 自动部署',
+        url: 'http://jerryzou.com/posts/webhook-practice/'
+    });
+
+    function jsonp_callback(result) {
+        var visitCounter = document.getElementById('visit-counter');
+        visitCounter.innerHTML = result.count;
+    }
+</script>
+
+        
+      </div>
+    </div>
+
+    <footer class="site-footer">
+    <div class="wrap">
+        <ul class="friend-links footer-text">
+            <li><a href="//ysyjerry1992.github.io/">Yusiyuan</a></li>
+            <li><a href="//blog.liqiang.me/">Jayce Li</a></li>
+            <li><a href="//www.dozer.cc/">Dozer</a></li>
+            <li><a href="//leuisken.github.io/">LeuisKen</a></li>
+            <li><a href="//xidui.github.io/">xidui</a></li>
+            <li><a href="//www.yiqixxx.com/">一起网</a></li>
+            <li><a href="//dianying.taobao.com">淘宝电影</a></li>
+            <li><a href="//efe.baidu.com/">Baidu EFE</a></li>
+            <li><a href="//fex.baidu.com/">Baidu FEX</a></li>
+        </ul>
+        <p class="footer-text">Powered by <a href="http://jekyllrb.com/">Jekyll</a> , <a href="https://pages.github.com/">Github Pages</a> and <a href="https://www.upyun.com/">UPYUN</a>.</p>
+    </div>
+</footer>
+
+    </body>
+</html>

@@ -8,6 +8,117 @@
     <atom:link href="http://jerryzou.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Webhook 实践 —— 自动部署</title>
+        <description>&lt;p&gt;&lt;a href=&quot;https://developer.github.com/webhooks/&quot;&gt;Webhook&lt;/a&gt;，也就是人们常说的钩子，是一个很有用的工具。你可以通过定制 Webhook 来监测你在 Github.com 上的各种事件，最常见的莫过于 &lt;strong&gt;push&lt;/strong&gt; 事件。如果你设置了一个监测 push 事件的 Webhook，那么每当你的这个项目有了任何提交，这个 Webhook 都会被触发，这时 Github 就会发送一个 HTTP POST 请求到你配置好的地址。&lt;/p&gt;
+
+&lt;p&gt;如此一来，你就可以通过这种方式去自动完成一些重复性工作；比如，你可以用 Webhook 来自动触发一些持续集成（CI）工具的运作，比如 Travis CI；又或者是通过 Webhook 去部署你的线上服务器。&lt;/p&gt;
+
+&lt;p&gt;Github 开发者平台的文档中对 Webhook 的所能做的事是这样描述的：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;You’re only limited by your imagination.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;面临的问题&lt;/h2&gt;
+
+&lt;p&gt;我目前正好面临了这样一个问题 —— 麻烦的人肉部署。也许有人看过我之前的一篇博文《&lt;a href=&quot;http://jerryzou.com/posts/feasibility-of-allowing-baiduSpider-for-Github-Pages/&quot;&gt;解决 Github Pages 禁止百度爬虫的方法与可行性分析&lt;/a&gt;》。为了解决文章中的这个问题，我最后建立了一个只服务于百度爬虫的一个备份服务器。但是随之而来的问题是，每次我的博客有些更新，都不得不 ssh 到那台服务器上把代码 pull 下来。如此做了两三次以后，我觉得我不能再这么堕落下去，于是还是决定尝试一下 Webhook。&lt;/p&gt;
+
+&lt;p&gt;于是我要完成的事情便是完成一个能够将我最新版本的博客，随时同步到备份服务器的 Webhook。简单分析一下我需要什么：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;一台外网可以访问的主机&lt;/li&gt;
+  &lt;li&gt;一个能够响应 Webhook 的服务器&lt;/li&gt;
+  &lt;li&gt;配置 Webhook&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;1. 一台外网可访问的主机&lt;/h2&gt;
+
+&lt;p&gt;什么叫外网可访问的主机？像阿里云的试用版就不行，它不提供外网 IP。而我使用的是 DigitalOcean 的云主机，主要的作用是架梯子，现在也顺便用来做备份服务器。当然你们也可以用类似 SAE 的服务，虽然没有 IP，但有独立的外网访问地址。&lt;/p&gt;
+
+&lt;h2 id=&quot;webhook-&quot;&gt;2. 响应 Webhook 的服务器&lt;/h2&gt;
+
+&lt;p&gt;为了响应 Webhook 所发出的请求，从而做一些我们想做的事情，我们得先实现一个响应服务器。本文采用 Node 来实现一个原型，你当然也可以用 PHP，python 等，全凭个人喜好啦。代码很短，就直接陈列在下方了：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;http&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;http&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;exec&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;exec&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;kr&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;PORT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;9988&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;PATH&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;../html&amp;#39;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;deployServer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createServer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;search&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/deploy\/?$/i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;commands&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+      &lt;span class=&quot;s1&quot;&gt;&amp;#39;cd &amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;s1&quot;&gt;&amp;#39;git pull&amp;#39;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39; &amp;amp;&amp;amp; &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;nx&quot;&gt;exec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;commands&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;code&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;instanceof&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;writeHead&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;500&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;Server Internal Error.&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;stderr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;stdout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;writeHead&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;Deploy Done.&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;nx&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;writeHead&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;404&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;Not Found.&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;deployServer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;listen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;PORT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;如果还需要实现更多，更复杂的功能，直接在 &lt;code&gt;commands&lt;/code&gt; 数组中添加便是。此处我的博客根目录 &lt;code&gt;html&lt;/code&gt; 与部署服务器根目录同属一个目录，所以配置常量 &lt;code&gt;PATH = &#39;../html&#39;&lt;/code&gt;。只要启动了服务器，那么 Webhook 就可以通过类似于 &lt;strong&gt;http://104.236.xxx.xxx:9988/deploy/&lt;/strong&gt; 的路径来部署我的博客备份啦。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell-session&quot; data-lang=&quot;shell-session&quot;&gt;&lt;span class=&quot;go&quot;&gt;# 在后台启动部署服务器&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;$ node server.js &amp;amp;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;我以为服务器部署到这儿就完了，其实并没有，我遇到了一些麻烦。&lt;/p&gt;
+
+&lt;h3 id=&quot;run-node-server-forever&quot;&gt;Run Node Server Forever&lt;/h3&gt;
+
+&lt;p&gt;我在实际使用的时候发现，我的 Node 服务器时不时会自动停掉，具体原因我暂时还没有弄清楚。不过似乎很多人都遇到了这样的困扰，要解决这个问题，&lt;a href=&quot;https://github.com/foreverjs/forever&quot;&gt;forever&lt;/a&gt; 是个不错的选择。借助 forever 这个库，它可以保证 Node 持续运行下去，一旦服务器挂了，它都会重启服务器。&lt;/p&gt;
+
+&lt;p&gt;安装 forever：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell-session&quot; data-lang=&quot;shell-session&quot;&gt;&lt;span class=&quot;go&quot;&gt;$ [sudo] npm install -g forever&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;运行：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell-session&quot; data-lang=&quot;shell-session&quot;&gt;&lt;span class=&quot;go&quot;&gt;$ cd { 部署服务器的根目录 }&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;$ forever start server.js&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;我在 DigitalOcean 上的服务器安装的是 &lt;strong&gt;Ubuntu&lt;/strong&gt; 系统，而 Ubuntu 中原本就有一个叫 node 的包。为了避免冲突，在 Ubuntu 上安装或使用 Node 得用 nodejs 这个名字。而 forever 默认是使用 node 作为执行脚本的程序名。所以为了处理 Ubuntu 存在的这种特殊情况，在启动 forever 时得另外添加一个参数：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell-session&quot; data-lang=&quot;shell-session&quot;&gt;&lt;span class=&quot;go&quot;&gt;$ forever start server.js -c nodejs&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;webhook&quot;&gt;3. 配置 Webhook&lt;/h2&gt;
+
+&lt;p&gt;如果像是本文这种最简易的应用，Webhook 的配置是十分简单的。首先进入你的 repo 主页，通过点击页面上的按钮 &lt;strong&gt;[settings]&lt;/strong&gt; -&amp;gt; &lt;strong&gt;[Webhooks &amp;amp; service]&lt;/strong&gt; 进入 Webhooks 配置主页面。也可以通过下面这个链接直接进入配置页面：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell-session&quot; data-lang=&quot;shell-session&quot;&gt;&lt;span class=&quot;go&quot;&gt;https://github.com/[ 用户名 ]/[ 仓库名称 ]/settings/hooks&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;此处只需要配置 Webhook 所发出的 POST 请求发往何处即可，于是我们就配置我们所需要的路径： &lt;strong&gt;http://104.236.xxx.xxx/deploy/&lt;/strong&gt;。这个地址指向的就是那个能够响应 Webhook 所发出请求的服务器。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/webhooks-config.png&quot; alt=&quot;webhooks configuration&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;配置好 Webhook 后，Github 会发送一个 ping 来测试这个地址。如果成功了，那么这个 Webhook 前就会加上一个绿色的勾；如果你得到的是一个红色的叉，那就好好检查一下哪儿出问题了吧！ &lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 25 Oct 2015 22:19:00 +0000</pubDate>
+        <link>http://jerryzou.com/posts/webhook-practice/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/webhook-practice/</guid>
+      </item>
+    
+      <item>
         <title>用 CSS 实现三角形与平行四边形</title>
         <description>&lt;p&gt;最近在逛某个技术网站的时候，感觉文章关键词上的样式好酷炫啊。于是我将那种写法照搬到了我的博客中，也许最近逛过我博客的小伙伴已经发现了它出现在哪儿了——分页的样式。来张截图：&lt;/p&gt;
 
@@ -1328,51 +1439,6 @@ Alex&lt;/p&gt;
         <pubDate>Sat, 24 Jan 2015 15:16:54 +0000</pubDate>
         <link>http://jerryzou.com/posts/shadowsocks-with-digitalocean/</link>
         <guid isPermaLink="true">http://jerryzou.com/posts/shadowsocks-with-digitalocean/</guid>
-      </item>
-    
-      <item>
-        <title>阿瞒究竟有没有杀伯奢？</title>
-        <description>&lt;p&gt;阿瞒是曹操的小名，叫起来很亲切。我自幼喜欢孟德的雄才大略，小时候读《三国演义》一直把孟德当作主角，可惜他自古大多被演绎成奸恶之徒。&lt;/p&gt;
-
-&lt;p&gt;在演义中，孟德刺杀董卓失败，逃亡途径谯郡。时任县令的陈宫捉住了孟德后，了解到他心中的大志向，于是决定罢官，与孟德同走。旅途又途径吕伯奢的家。伯奢是孟德父亲曹嵩的结义兄弟，当时天色已暗，孟德建议就在伯奢家借宿一晚。到了伯奢家，伯奢说家中无酒，于是骑驴上镇上沽酒。而孟德与陈宫坐厅中等待之时，忽闻后院有磨刀声。于是两人走过去，在厨房门口听到里面说道：“缚而杀之，何如？”这下孟德吓坏了，心想这些人是要拿我去领赏啊！于是和陈宫二人拔剑进去将伯奢一家八口人都杀了，完事了才发现地上有只被困起来的猪在哼哼，这才知道错杀了好人。两人赶紧出门，却正好碰上沽酒归来的伯奢。孟德怕伯奢会败露自己的行踪，于是干脆把伯奢也一并杀害了。这些让陈宫感到胆寒，他质问孟德为何要杀死伯奢，而孟德说：“宁教我负天下人，休教天下人负我”。这句话流传甚广，也充分表现出孟德多疑的心理。&lt;/p&gt;
-
-&lt;p&gt;但演义终究是演义，它并不是史书。作为一个喜欢孟德的人，我决定还是看看其他史料有没有关于这段历史的记载。&lt;/p&gt;
-
-&lt;p&gt;在裴松之作注的《三国志》是为孟德的黑历史翻案而被引用最多的，其中这样说道：&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;魏曰：太祖以卓终必覆败，遂不就拜，逃归乡里。从数骑过故人成皋吕伯奢；伯奢不在，其子与宾客共劫太祖，取马及物，太祖手刃击杀数人。
-&lt;br /&gt;世语曰：太祖过伯奢。伯奢出行，五子皆在，备宾主礼。太祖自以背卓命，疑其图己，手剑夜杀八人而去。
-&lt;br /&gt;孙盛杂记曰：太祖闻其食器声，以为图己，遂夜杀之。既而凄怆曰：“宁我负人，毋人负我！”遂行。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;而在陈寿的《三国志》原著中，并没有提到伯奢之事。陈寿编写《三国志》之时，以王沈的《魏书》和鱼豢的《魏略》为参考，却去掉了有关伯奢的段落，这真是耐人寻味。《魏书》成书时正值曹魏，所以后人常称：“多为时讳，未若陈寿之实录也。”《魏书》美化太祖的可能性较大，参考价值较低。所以孟德错杀好人大概是没跑了。孟德很有可能因多疑而杀了伯奢。阿瞒凭借着自己傲人的才略雄踞一方，却也正因为多疑，断送了自己的性命，这大概就是宿命吧。&lt;/p&gt;
-
-&lt;p&gt;但此时我突然冒出了一个问题：为什么以上四段史料中都未出现陈公台的身影？莫非陈宫救曹操仅仅只是演义中的杜撰？&lt;/p&gt;
-
-&lt;p&gt;《三国志·魏书·吕布传》注引《典略》：&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;陈宫字公台，东郡人也。刚直烈壮，少与海内知名之士皆相连结。及天下乱，始随太祖……&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;《三国志·曹操传》：&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;及在兖州，陈留边让言议颇侵太祖，太祖杀让，族其家。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;《三国志·袁绍传》中裴松之注载袁绍手下陈琳所写的讨伐曹操的檄文：&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;故九江太守边让，英才俊逸，天下知名，以直言正色，论不阿谄，身首被枭县之戮，妻孥受灰灭之咎。自是士林愤痛，民怨弥重，一夫奋臂，举州同声，故躬破于徐方，地夺于吕布，彷徨东裔，蹈据无所。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;可见陈宫并没有与孟德一起逃亡，一说直到初平二年（191年）曹操任东郡太守时，陈宫才成为他的部下。而陈宫因孟德杀死伯奢，进而感到孟德的可怕更是无从考证，大多都是罗贯中的演绎。更多的史料倾向于认为是孟德杀了边让才使得陈宫自危，所以背叛了孟德。&lt;/p&gt;
-</description>
-        <pubDate>Fri, 16 Jan 2015 22:33:54 +0000</pubDate>
-        <link>http://jerryzou.com/posts/caocao01/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/caocao01/</guid>
       </item>
     
   </channel>
