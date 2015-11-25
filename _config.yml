@@ -38,5 +38,6 @@ defaults:
       type: posts
     values:
       layout: post
+      copyright: true
       duoshuo_comment: true
       release: true
