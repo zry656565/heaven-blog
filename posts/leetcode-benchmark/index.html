@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+        
+            记一次作死 —— 被 Leetcode 封禁 | 咀嚼之味
+        </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="从昨天凌晨四点起，我的 Leetcode 账号就无法提交任何代码了，于是我意识到我的账号大概是被封了…… ">
+    <link rel="alternate" type="application/rss+xml" title="咀嚼之味 RSS" href="/feed.xml">
+    <link rel="canonical" href="http://jerryzou.com/posts/leetcode-benchmark/">
+    <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/release/style.619b7be8.css">
+
+    <!-- Baidu Analysis -->
+    <script>
+        if (window.location.href.substr(7, 9) !== 'localhost') {
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?2744fd74aa568e064f9986394a60ead1";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+            })();
+        }
+    </script>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-47842677-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    
+    <!-- handle external js files -->
+    <script type="text/javascript" src="/assets/js/lib/jquery/jquery-1.11.1.min.js"></script>
+
+    <!-- help function for jsonp -->
+    <script>
+        var jsonp = function(url, args) {
+            var head = document.getElementsByTagName('head')[0],
+                    script = document.createElement("script"),
+                    first = true,
+                    value;
+
+            for (var key in args) {
+                if (args.hasOwnProperty(key)) {
+                    value = encodeURIComponent(args[key]);
+                    url += first ? ('?' + key + '=' + value) : ('&' + key + '=' + value);
+                    first = false;
+                }
+            }
+            script.src= url;
+            head.appendChild(script);
+        }
+    </script>
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+  <div class="wrap">
+    <a class="site-title" href="/">咀嚼之味</a>
+    <nav class="site-nav">
+      <div class="trigger">
+        <a class="page-link" href="/">首页</a>
+        
+          
+          <a class="page-link" href="/all-articles/">所有文章</a>
+          
+        
+          
+          <a class="page-link" href="/skill/">技能图谱</a>
+          
+        
+          
+          <a class="page-link" href="/about/">关于我</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          <a class="page-link" href="/feed.xml">RSS订阅</a>
+      </div>
+    </nav>
+  </div>
+  <!-- fork me on github -->
+  <a id="fork-me" href="https://github.com/zry656565/heaven-blog"><img src="http://jerryblog-image.b0.upaiyun.com/blog/forkme.png" alt="Fork me on GitHub"></a>
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+        
+        <div class="post">
+
+  <header class="post-header">
+    <h1>记一次作死 —— 被 Leetcode 封禁</h1>
+    <p class="meta">Nov 26, 2015 <span class="pause"> - </span>
+        浏览量：<span id="visit-counter"></span>次<span class="pause"> | </span>
+        
+            
+                <a class="label" href="/all-articles/?label=Leetcode">Leetcode</a>
+            
+                <a class="label" href="/all-articles/?label=chrome">chrome</a>
+            
+                <a class="label" href="/all-articles/?label=curl">curl</a>
+            
+                <a class="label" href="/all-articles/?label=Nodejs">Nodejs</a>
+            
+        
+    </p>
+  </header>
+
+  <article class="post-content">
+  <p>从昨天凌晨四点起，我的 Leetcode 账号就无法提交任何代码了，于是我意识到我的账号大概是被封了……</p>
+
+<h2 id="section">起因</h2>
+
+<p>我和我的同学 <a href="https://github.com/xidui">@xidui</a> 正在维护一个项目 <a href="https://github.com/xidui/algorithm-training">xidui/algorithm-training</a>。其实就是收录一些算法题的解答，目前主要对象就是 Leetcode。我前几天正好做到 <a href="https://leetcode.com/problems/letter-combinations-of-a-phone-number/">#17 Letter Combinations of a Phone Number</a>。题目也蛮简单的，我写好以后提交了一下，发现跑出来的结果是 152 ms —— <strong>“哇哦，你打败了 2.44% 的提交”</strong>。好差！！我瞬间满脸黑线。而之前提到的项目中正好有另一个同学写的关于这一题的解答，我赶紧去参考了一下，感觉空间复杂度比我小很多，但时间复杂度应该差不多呀，然后注释中有这么一句：</p>
+
+<blockquote>
+  <p>I think this is an O(n^3) solution, but still runs faster than 100% submissions</p>
+</blockquote>
+
+<p>不信邪的我把这位同学的代码复制过来提交了一下，得到的结果是 —— 160ms…“哇哦，你打败了 2.44% 的提交哦！” ╮(╯_╰)╭</p>
+
+<p>看了看 Discuss 里的解法，感觉复杂度似乎也差不多，于是我决定研 (Zuo) 究 (Si) 一下 Leetcode OJ 服务的稳定性如何。</p>
+
+<h2 id="section-1">过程</h2>
+
+<p>打开 Chrome 的开发者工具，发现只有 <code>submit</code> 和 <code>check</code> 两种 ajax 请求，response 内容大概是这样的：</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// `submit` response</span>
+<span class="p">{</span> <span class="s2">&quot;submission_id&quot;</span><span class="o">:</span> <span class="mi">46823974</span> <span class="p">}</span>
+
+<span class="c1">// first `check` response</span>
+<span class="p">{</span> <span class="s2">&quot;state&quot;</span><span class="o">:</span> <span class="s2">&quot;STARTED&quot;</span> <span class="p">}</span>
+
+<span class="c1">// second `check` response</span>
+<span class="p">{</span>
+  <span class="s2">&quot;lang&quot;</span><span class="o">:</span> <span class="s2">&quot;javascript&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;total_testcases&quot;</span><span class="o">:</span> <span class="mi">25</span><span class="p">,</span>
+  <span class="s2">&quot;status_code&quot;</span><span class="o">:</span> <span class="mi">10</span><span class="p">,</span>
+  <span class="s2">&quot;status_runtime&quot;</span><span class="o">:</span> <span class="s2">&quot;152 ms&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;run_success&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="s2">&quot;state&quot;</span><span class="o">:</span> <span class="s2">&quot;SUCCESS&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;total_correct&quot;</span><span class="o">:</span> <span class="mi">25</span><span class="p">,</span>
+  <span class="s2">&quot;question_id&quot;</span><span class="o">:</span> <span class="s2">&quot;17&quot;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>所以只要先模拟一个 <code>submit</code> 的 POST 请求，拿到 submission_id 后，再用这个 id 模拟 <code>check</code> 的 GET 请求，直到拿到最终的结果。</p>
+
+<p>我直接把之前发送的两个 ajax 请求用 Curl 的形式保存下来：（感谢 Chrome ╰(￣▽￣)╮)</p>
+
+<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/curl.jpg!0.5" alt="如何通过chrome开发者工具获取请求的curl形式" /></p>
+
+<p>然后我写了个 Nodejs 的小程序，每隔<strong>一分钟</strong>调用上面保存的两个脚本来进行一次提交，并把当次的执行速度保存到 Mongodb 中。代码我就不贴啦，有兴趣的话可以到 <a href="https://github.com/zry656565/Leetcode-Benchmark">zry656565/Leetcode-Benchmark</a> 看看。</p>
+
+<h2 id="section-2">结果</h2>
+
+<p>这个程序大概是在十一点左右的时候开始运行的。本以为一分钟一次的频率并不高，结果第二天起来一看，从凌晨四点多开始就没有数据了，自此我这个账号就提交不了代码了。。</p>
+
+<p>当然啦，采集到了 300 多条数据也不能白费了，画个图出来看看吧。任意一个节点所提交的程序片段都是同一个，大概最终的结果是这样的：</p>
+
+<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/leetcode-benchmark.png!0.5" alt="结果" /></p>
+
+<p>(⊙o⊙)…本来想着是不是能找到某个 Leetcode 的服务器稍微稳定一点的时刻，不过似乎并不存在这样的时刻呢。呵呵，然并卵。不过好消息是，在事件发生的二十四小时以后，我发现我的账号解禁了，哈哈哈哈。</p>
+
+<h1 style="text-align:center;">完。</h1>
+
+
+  </article>
+
+  
+  <p class="copyright">
+    本文的版权归作者 <a href="mailto:jerry.zry@outlook.com">邹润阳</a> 所有，采用 <a href="http://creativecommons.org/licenses/by-nc/3.0/">Attribution-NonCommercial 3.0 License</a>。任何人可以进行转载、分享，但不可在未经允许的情况下用于商业用途；转载请注明出处。感谢配合！
+  </p>
+  
+
+  
+    <div class="ds-thread" data-thread-key="10033" data-title="记一次作死 —— 被 Leetcode 封禁" data-url="http://jerryzou.com/posts/leetcode-benchmark/"></div>
+<script>
+var duoshuoQuery = {short_name:"jerryzou"};
+(function() {
+  var ds = document.createElement('script');
+  ds.type = 'text/javascript';ds.async = true;
+  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  ds.charset = 'UTF-8';
+  (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+  
+</div>
+<script>
+    jsonp('http://analytics1.sinaapp.com/page.php', {
+        callback: 'jsonp_callback',
+        type: 'increment',
+        domain: 'http://jerryzou.com',
+        title: '记一次作死 —— 被 Leetcode 封禁',
+        url: 'http://jerryzou.com/posts/leetcode-benchmark/'
+    });
+
+    function jsonp_callback(result) {
+        var visitCounter = document.getElementById('visit-counter');
+        visitCounter.innerHTML = result.count;
+    }
+</script>
+
+        
+      </div>
+    </div>
+
+    <footer class="site-footer">
+    <div class="wrap">
+        <ul class="friend-links footer-text">
+            <li><a href="//ysyjerry1992.github.io/">Yusiyuan</a></li>
+            <li><a href="//blog.liqiang.me/">Jayce Li</a></li>
+            <li><a href="//www.dozer.cc/">Dozer</a></li>
+            <li><a href="//leuisken.github.io/">LeuisKen</a></li>
+            <li><a href="//xidui.github.io/">xidui</a></li>
+            <li><a href="//www.yiqixxx.com/">一起网</a></li>
+            <li><a href="//dianying.taobao.com">淘宝电影</a></li>
+            <li><a href="//efe.baidu.com/">Baidu EFE</a></li>
+            <li><a href="//fex.baidu.com/">Baidu FEX</a></li>
+        </ul>
+        <p class="footer-text">Powered by <a href="http://jekyllrb.com/">Jekyll</a> , <a href="https://pages.github.com/">Github Pages</a> and <a href="https://www.upyun.com/">UPYUN</a>.</p>
+    </div>
+</footer>
+
+    </body>
+</html>

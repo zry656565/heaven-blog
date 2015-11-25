@@ -99,6 +99,8 @@
         
           
         
+          
+        
           <a class="page-link" href="/feed.xml">RSS订阅</a>
       </div>
     </nav>
@@ -227,7 +229,7 @@
 
 <div class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">https://github.com/[ 用户名 ]/[ 仓库名称 ]/settings/hooks</span></code></pre></div>
 
-<p>此处只需要配置 Webhook 所发出的 POST 请求发往何处即可，于是我们就配置我们所需要的路径： <strong>http://104.236.xxx.xxx/deploy/</strong>。这个地址指向的就是那个能够响应 Webhook 所发出请求的服务器。</p>
+<p>此处只需要配置 Webhook 所发出的 POST 请求发往何处即可，于是我们就配置我们所需要的路径： <strong>http://104.236.xxx.xxx:9988/deploy/</strong>。这个地址指向的就是那个能够响应 Webhook 所发出请求的服务器。</p>
 
 <p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/webhooks-config.png" alt="webhooks configuration" /></p>
 
@@ -236,9 +238,11 @@
 
   </article>
 
+  
   <p class="copyright">
     本文的版权归作者 <a href="mailto:jerry.zry@outlook.com">邹润阳</a> 所有，采用 <a href="http://creativecommons.org/licenses/by-nc/3.0/">Attribution-NonCommercial 3.0 License</a>。任何人可以进行转载、分享，但不可在未经允许的情况下用于商业用途；转载请注明出处。感谢配合！
   </p>
+  
 
   
     <div class="ds-thread" data-thread-key="10032" data-title="Webhook 实践 —— 自动部署" data-url="http://jerryzou.com/posts/webhook-practice/"></div>

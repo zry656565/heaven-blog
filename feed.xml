@@ -8,6 +8,70 @@
     <atom:link href="http://jerryzou.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>记一次作死 —— 被 Leetcode 封禁</title>
+        <description>&lt;p&gt;从昨天凌晨四点起，我的 Leetcode 账号就无法提交任何代码了，于是我意识到我的账号大概是被封了……&lt;/p&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;起因&lt;/h2&gt;
+
+&lt;p&gt;我和我的同学 &lt;a href=&quot;https://github.com/xidui&quot;&gt;@xidui&lt;/a&gt; 正在维护一个项目 &lt;a href=&quot;https://github.com/xidui/algorithm-training&quot;&gt;xidui/algorithm-training&lt;/a&gt;。其实就是收录一些算法题的解答，目前主要对象就是 Leetcode。我前几天正好做到 &lt;a href=&quot;https://leetcode.com/problems/letter-combinations-of-a-phone-number/&quot;&gt;#17 Letter Combinations of a Phone Number&lt;/a&gt;。题目也蛮简单的，我写好以后提交了一下，发现跑出来的结果是 152 ms —— &lt;strong&gt;“哇哦，你打败了 2.44% 的提交”&lt;/strong&gt;。好差！！我瞬间满脸黑线。而之前提到的项目中正好有另一个同学写的关于这一题的解答，我赶紧去参考了一下，感觉空间复杂度比我小很多，但时间复杂度应该差不多呀，然后注释中有这么一句：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;I think this is an O(n^3) solution, but still runs faster than 100% submissions&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;不信邪的我把这位同学的代码复制过来提交了一下，得到的结果是 —— 160ms…“哇哦，你打败了 2.44% 的提交哦！” ╮(╯_╰)╭&lt;/p&gt;
+
+&lt;p&gt;看了看 Discuss 里的解法，感觉复杂度似乎也差不多，于是我决定研 (Zuo) 究 (Si) 一下 Leetcode OJ 服务的稳定性如何。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;过程&lt;/h2&gt;
+
+&lt;p&gt;打开 Chrome 的开发者工具，发现只有 &lt;code&gt;submit&lt;/code&gt; 和 &lt;code&gt;check&lt;/code&gt; 两种 ajax 请求，response 内容大概是这样的：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// `submit` response&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;submission_id&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;46823974&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// first `check` response&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;state&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;STARTED&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// second `check` response&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;lang&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;javascript&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;total_testcases&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;25&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;status_code&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;status_runtime&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;152 ms&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;run_success&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;state&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;SUCCESS&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;total_correct&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;25&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;question_id&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;17&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;所以只要先模拟一个 &lt;code&gt;submit&lt;/code&gt; 的 POST 请求，拿到 submission_id 后，再用这个 id 模拟 &lt;code&gt;check&lt;/code&gt; 的 GET 请求，直到拿到最终的结果。&lt;/p&gt;
+
+&lt;p&gt;我直接把之前发送的两个 ajax 请求用 Curl 的形式保存下来：（感谢 Chrome ╰(￣▽￣)╮)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/curl.jpg!0.5&quot; alt=&quot;如何通过chrome开发者工具获取请求的curl形式&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;然后我写了个 Nodejs 的小程序，每隔&lt;strong&gt;一分钟&lt;/strong&gt;调用上面保存的两个脚本来进行一次提交，并把当次的执行速度保存到 Mongodb 中。代码我就不贴啦，有兴趣的话可以到 &lt;a href=&quot;https://github.com/zry656565/Leetcode-Benchmark&quot;&gt;zry656565/Leetcode-Benchmark&lt;/a&gt; 看看。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-2&quot;&gt;结果&lt;/h2&gt;
+
+&lt;p&gt;这个程序大概是在十一点左右的时候开始运行的。本以为一分钟一次的频率并不高，结果第二天起来一看，从凌晨四点多开始就没有数据了，自此我这个账号就提交不了代码了。。&lt;/p&gt;
+
+&lt;p&gt;当然啦，采集到了 300 多条数据也不能白费了，画个图出来看看吧。任意一个节点所提交的程序片段都是同一个，大概最终的结果是这样的：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/leetcode-benchmark.png!0.5&quot; alt=&quot;结果&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;(⊙o⊙)…本来想着是不是能找到某个 Leetcode 的服务器稍微稳定一点的时刻，不过似乎并不存在这样的时刻呢。呵呵，然并卵。不过好消息是，在事件发生的二十四小时以后，我发现我的账号解禁了，哈哈哈哈。&lt;/p&gt;
+
+&lt;h1 style=&quot;text-align:center;&quot;&gt;完。&lt;/h1&gt;
+
+</description>
+        <pubDate>Thu, 26 Nov 2015 00:20:00 +0000</pubDate>
+        <link>http://jerryzou.com/posts/leetcode-benchmark/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/leetcode-benchmark/</guid>
+      </item>
+    
+      <item>
         <title>Webhook 实践 —— 自动部署</title>
         <description>&lt;p&gt;&lt;a href=&quot;https://developer.github.com/webhooks/&quot;&gt;Webhook&lt;/a&gt;，也就是人们常说的钩子，是一个很有用的工具。你可以通过定制 Webhook 来监测你在 Github.com 上的各种事件，最常见的莫过于 &lt;strong&gt;push&lt;/strong&gt; 事件。如果你设置了一个监测 push 事件的 Webhook，那么每当你的这个项目有了任何提交，这个 Webhook 都会被触发，这时 Github 就会发送一个 HTTP POST 请求到你配置好的地址。&lt;/p&gt;
 
@@ -106,7 +170,7 @@
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell-session&quot; data-lang=&quot;shell-session&quot;&gt;&lt;span class=&quot;go&quot;&gt;https://github.com/[ 用户名 ]/[ 仓库名称 ]/settings/hooks&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;此处只需要配置 Webhook 所发出的 POST 请求发往何处即可，于是我们就配置我们所需要的路径： &lt;strong&gt;http://104.236.xxx.xxx/deploy/&lt;/strong&gt;。这个地址指向的就是那个能够响应 Webhook 所发出请求的服务器。&lt;/p&gt;
+&lt;p&gt;此处只需要配置 Webhook 所发出的 POST 请求发往何处即可，于是我们就配置我们所需要的路径： &lt;strong&gt;http://104.236.xxx.xxx:9988/deploy/&lt;/strong&gt;。这个地址指向的就是那个能够响应 Webhook 所发出请求的服务器。&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/webhooks-config.png&quot; alt=&quot;webhooks configuration&quot; /&gt;&lt;/p&gt;
 
@@ -1320,125 +1384,6 @@ Alex&lt;/p&gt;
         <pubDate>Sat, 11 Apr 2015 22:38:54 +0000</pubDate>
         <link>http://jerryzou.com/posts/chew/</link>
         <guid isPermaLink="true">http://jerryzou.com/posts/chew/</guid>
-      </item>
-    
-      <item>
-        <title>使用Digital Ocean和shadowsocks来科学上网</title>
-        <description>&lt;p&gt;使用了各种不稳定的VPN服务以后，我还是觉得自己搭VPS比较靠谱。Digital Ocean提供了可伸缩的VPS，最便宜的服务器是每个月$5，虽然对于学生来说不算便宜，但好在一开始充$5送$10，而且成功申请到Github Student pack的话，还可以得到$100。ShadowSocks是科学上网的利器，在Github上已经得到了五千多个Star，使用的人极多、影响极深。而且它对各个平台的支持也非常好，目前我在Windows/Mac/iOS三个平台上都完成了科学上网环境的搭建。&lt;/p&gt;
-
-&lt;h2 id=&quot;digital-ocean&quot;&gt;Digital Ocean&lt;/h2&gt;
-
-&lt;p&gt;首先注册账号，激活邮箱自不必说。激活后就会收到$10的奖励，但是仅仅这样还是无法在Digital Ocean上创建虚拟主机。你需要绑定信用卡或者直接向你的账户里冲入$5才能正式开始使用。我的话，是在paypal账号上绑定了一张银联的卡来付款的，按这几天的汇率大概¥31左右吧。（另外附上我的邀请链接，嘿嘿：&lt;a href=&quot;https://www.digitalocean.com/?refcode=09e0142818aa&quot;&gt;https://www.digitalocean.com/?refcode=09e0142818aa&lt;/a&gt;）&lt;/p&gt;
-
-&lt;p&gt;然后你就可以创建你的云主机了，选择 $5/mon 的那一档来支撑shadowsocks的服务足矣。经过测试San Francisco的机房延迟最低，平均在230ms左右。而Singapore的机房延迟在280ms，还有5%左右的丢包率。所以经过几次创建后又销毁重新创建地倒腾，我最后还是选择了使用San Francisco的节点。另外操作系统的话，我选择的是&lt;code&gt;ubuntu 14.04 x64&lt;/code&gt;的。&lt;/p&gt;
-
-&lt;h3 id=&quot;ssh-key&quot;&gt;创建SSH key&lt;/h3&gt;
-
-&lt;p&gt;接下来可以添加SSH key，这一步不是必须的，但是我觉得使用SSH key比使用Digital Ocean为你创建的随机密码好一点。如果不想做这一步，或者你之前已经创建过SSH key的话，可以跳过这一部分。&lt;/p&gt;
-
-&lt;h4 id=&quot;ssh-key-1&quot;&gt;什么是SSH key&lt;/h4&gt;
-
-&lt;p&gt;SSH key是一个简单而又安全地连接到你的远端设备的方式，通过它你不需要在网络上传输你的密码。SSH key有public和private两部分，其中private部分存储在你的设备本地，而public部分则需要上传到远程设备上。当你通过ssh连接到远程设备上时，只有私钥和公钥匹配上才能登陆。&lt;/p&gt;
-
-&lt;h4 id=&quot;ssh-key-2&quot;&gt;如何创建SSH key&lt;/h4&gt;
-
-&lt;p&gt;第一步，首先查看你本地设备上是否有SSH keys。你可以运行以下指令：&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;cd ~/.ssh&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;ls *.pub&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;如果没有任何输出，说明你需要创建一个新的SSH key：&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;ssh-keygen -t rsa -C &amp;quot;email@example.com&amp;quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;后面的email请替换成你自己的email。接着你就会看到类似下面的信息：&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;Generating public/private rsa key pair.&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;Enter file in which to save the key (/Users/you/.ssh/id_rsa): [Press enter]&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;Enter passphrase (empty for no passphrase): [Type a passphrase]&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;Enter same passphrase again: [Type passphrase again]&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;Now your SSH key will be generated.&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;Your identification has been saved in /Users/your_username/.ssh/id_rsa.&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;Your public key has been saved in /Users/your_username/.ssh/id_rsa.pub.&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;The key fingerprint is:&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;01:0f:f4:3b:ca:85:d6:17:a1:7d:f0:68:9d:f0:a2:db email@example.com&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;比如我的公钥就生成于：/Users/Jerry/.ssh/id_rsa.pub，接下来就可以把公钥内容传到Digital Ocean上了，如下图所示：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/DigitalOcean_sshkey.png&quot; alt=&quot;Digital Ocean SSH key&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;shadowsocks&quot;&gt;Shadowsocks&lt;/h2&gt;
-
-&lt;p&gt;其实在shadowsocks的&lt;a href=&quot;https://github.com/shadowsocks/shadowsocks&quot;&gt;github主页&lt;/a&gt;上有很详细地说明，但是为了本文的完整性，还是将这些操作放在本文中以供参考。&lt;/p&gt;
-
-&lt;h3 id=&quot;shadowsocks-1&quot;&gt;在服务器端安装shadowsocks&lt;/h3&gt;
-
-&lt;p&gt;首先需要远程登录到Digital Ocean的主机上，我租用的San Francisco的机房IP地址是104.236.177.232。而因为之前已经建好了SSH Key，所以直接用root用户登录即可：&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;ssh root@104.236.177.232&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;在 Debian / Ubuntu 下 安装shadowsocks&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;apt-get install python-pip&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;pip install shadowsocks&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;我在实际安装下发现很多依赖缺失，所以需要先执行一下：apt-get update。另外也有一些同学会选择CentOS的服务器，附上在CentOS下安装shadowsocks的方法：&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;yum install python-setuptools &amp;amp;&amp;amp; easy_install pip&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;pip install shadowsocks&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;shadowsocks-2&quot;&gt;启动shadowsocks服务&lt;/h3&gt;
-
-&lt;p&gt;安装好shadowsocks以后，启动shadowsocks服务可以通过以下指令：&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;ssserver -p 8836 -k `password` -m rc4-md5&lt;/span&gt;
-
-&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;或者可以通过以下指令在后台启动shadowsocks的服务：
-&lt;span class=&quot;go&quot;&gt;ssserver -p 8836 -k `password` -m rc4-md5 -d start&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;ssserver -p 8836 -k `password` -m rc4-md5 -d stop&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;但上面的方法很不方便，我还是推荐使用配置文件的方法。首先创建一个文件：/etc/shadowsocks.json，示例如下：&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;quot;server&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;你的服务器ip地址&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;quot;server_port&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8388&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;quot;local_address&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;127.0.0.1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;quot;local_port&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1080&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;quot;password&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;你设置的密码&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;quot;timeout&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;300&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;quot;method&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;aes-256-cfb&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;quot;fast_open&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;接下来你就可以使用下面这个指令启动服务&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;ssserver -c /etc/shadowsocks.json&lt;/span&gt;
-
-&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;或者在后台运行
-&lt;span class=&quot;go&quot;&gt;ssserver -c /etc/shadowsocks.json -d start&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;ssserver -c /etc/shadowsocks.json -d stop&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;shadowsocks-3&quot;&gt;使用shadowsocks客户端&lt;/h3&gt;
-
-&lt;p&gt;shadowsocks的客户端支持各大主流平台，而且客户端的配置一般都很简单，只需要配置一下服务器的ip地址和之前设置好的连接密码即可。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://sourceforge.net/projects/shadowsocksgui/files/dist/&quot;&gt;OS X&lt;/a&gt; / &lt;a href=&quot;https://sourceforge.net/projects/shadowsocksgui/files/dist/&quot;&gt;Windows&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/shadowsocks/shadowsocks/wiki/Ports-and-Clients#android&quot;&gt;Android&lt;/a&gt; / &lt;a href=&quot;https://github.com/shadowsocks/shadowsocks-iOS/wiki/Help&quot;&gt;iOS&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/shadowsocks/shadowsocks/wiki/Ports-and-Clients&quot;&gt;更多设备&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;section&quot;&gt;参考资料&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/shadowsocks/shadowsocks&quot;&gt;Github Homepage for shadowsocks&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/shadowsocks/shadowsocks/wiki/Configuration-via-Config-File&quot;&gt;Configuration via Config File&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-</description>
-        <pubDate>Sat, 24 Jan 2015 15:16:54 +0000</pubDate>
-        <link>http://jerryzou.com/posts/shadowsocks-with-digitalocean/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/shadowsocks-with-digitalocean/</guid>
       </item>
     
   </channel>
