@@ -154,6 +154,10 @@ echo "Done\n";
 
 ![Dnspod的智能DNS服务][4]
 
+## 更新 (2015.11.26)
+
+如果大家自己搭了服务器，可以参考一下我上个月写的这篇：[Webhook 实践 —— 自动部署](http://jerryzou.com/posts/webhook-practice/)
+
 
 ## 参考资料
 - [如何解决百度爬虫无法爬取搭建在Github上的个人博客的问题？](http://www.zhihu.com/question/30898326)
