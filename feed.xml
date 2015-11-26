@@ -13,7 +13,7 @@
 
 &lt;h2 id=&quot;section&quot;&gt;起因&lt;/h2&gt;
 
-&lt;p&gt;我和我的同学 &lt;a href=&quot;https://github.com/xidui&quot;&gt;@xidui&lt;/a&gt; 正在维护一个项目 &lt;a href=&quot;https://github.com/xidui/algorithm-training&quot;&gt;xidui/algorithm-training&lt;/a&gt;。其实就是收录一些算法题的解答，目前主要对象就是 Leetcode。我前几天正好做到 &lt;a href=&quot;https://leetcode.com/problems/letter-combinations-of-a-phone-number/&quot;&gt;#17 Letter Combinations of a Phone Number&lt;/a&gt;。题目也蛮简单的，我写好以后提交了一下，发现跑出来的结果是 152 ms —— &lt;strong&gt;“哇哦，你打败了 2.44% 的提交”&lt;/strong&gt;。好差！！我瞬间满脸黑线。而之前提到的项目中正好有另一个同学写的关于这一题的解答，我赶紧去参考了一下，感觉空间复杂度比我小很多，但时间复杂度应该差不多呀，然后注释中有这么一句：&lt;/p&gt;
+&lt;p&gt;我和我的同学 &lt;a href=&quot;http://xidui.github.io/&quot;&gt;@xidui&lt;/a&gt; 正在维护一个项目 &lt;a href=&quot;https://github.com/xidui/algorithm-training&quot;&gt;xidui/algorithm-training&lt;/a&gt;。其实就是收录一些算法题的解答，目前主要对象就是 Leetcode。我前几天正好做到 &lt;a href=&quot;https://leetcode.com/problems/letter-combinations-of-a-phone-number/&quot;&gt;#17 Letter Combinations of a Phone Number&lt;/a&gt;。题目也蛮简单的，我写好以后提交了一下，发现跑出来的结果是 152 ms —— &lt;strong&gt;“哇哦，你打败了 2.44% 的提交”&lt;/strong&gt;。好差！！我瞬间满脸黑线。而之前提到的项目中正好有另一个同学写的关于这一题的解答，我赶紧去参考了一下，感觉空间复杂度比我小很多，但时间复杂度应该差不多呀，然后注释中有这么一句：&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;I think this is an O(n^3) solution, but still runs faster than 100% submissions&lt;/p&gt;
@@ -615,7 +615,11 @@ Alex&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://jerryblog.qiniudn.com/dnspod.png-h400&quot; alt=&quot;Dnspod的智能DNS服务&quot; /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;section-2&quot;&gt;参考资料&lt;/h2&gt;
+&lt;h2 id=&quot;section-2&quot;&gt;更新 (2015.11.26)&lt;/h2&gt;
+
+&lt;p&gt;如果大家自己搭了服务器，可以参考一下我上个月写的这篇：&lt;a href=&quot;http://jerryzou.com/posts/webhook-practice/&quot;&gt;Webhook 实践 —— 自动部署&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;section-3&quot;&gt;参考资料&lt;/h2&gt;
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;http://www.zhihu.com/question/30898326&quot;&gt;如何解决百度爬虫无法爬取搭建在Github上的个人博客的问题？&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Content_delivery_network&quot;&gt;Wikipedia: Content delivery network&lt;/a&gt;&lt;/li&gt;
