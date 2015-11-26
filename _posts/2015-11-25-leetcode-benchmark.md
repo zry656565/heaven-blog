@@ -11,7 +11,7 @@ labels: [Leetcode, chrome, curl, Nodejs]
 
 ## 起因
 
-我和我的同学 [@xidui](https://github.com/xidui) 正在维护一个项目 [xidui/algorithm-training](https://github.com/xidui/algorithm-training)。其实就是收录一些算法题的解答，目前主要对象就是 Leetcode。我前几天正好做到 [#17 Letter Combinations of a Phone Number](https://leetcode.com/problems/letter-combinations-of-a-phone-number/)。题目也蛮简单的，我写好以后提交了一下，发现跑出来的结果是 152 ms —— **“哇哦，你打败了 2.44% 的提交”**。好差！！我瞬间满脸黑线。而之前提到的项目中正好有另一个同学写的关于这一题的解答，我赶紧去参考了一下，感觉空间复杂度比我小很多，但时间复杂度应该差不多呀，然后注释中有这么一句：
+我和我的同学 [@xidui](http://xidui.github.io/) 正在维护一个项目 [xidui/algorithm-training](https://github.com/xidui/algorithm-training)。其实就是收录一些算法题的解答，目前主要对象就是 Leetcode。我前几天正好做到 [#17 Letter Combinations of a Phone Number](https://leetcode.com/problems/letter-combinations-of-a-phone-number/)。题目也蛮简单的，我写好以后提交了一下，发现跑出来的结果是 152 ms —— **“哇哦，你打败了 2.44% 的提交”**。好差！！我瞬间满脸黑线。而之前提到的项目中正好有另一个同学写的关于这一题的解答，我赶紧去参考了一下，感觉空间复杂度比我小很多，但时间复杂度应该差不多呀，然后注释中有这么一句：
 
 > I think this is an O(n^3) solution, but still runs faster than 100% submissions
 
