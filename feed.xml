@@ -9,11 +9,13 @@
     
       <item>
         <title>懒人必备的移动端定宽网页适配方案</title>
-        <description>&lt;p&gt;如今移动设备的分辨率纷繁复杂。以前仅仅是安卓机拥有各种各样的适配问题，如今 iPhone 也拥有了三种主流的分辨率，而未来的 iPhone 7 可能又会玩出什么新花样。如何以不变应万变，用简简单单的几行代码就能支持种类繁多的屏幕分辨率呢？今天就给大家介绍一种懒人必备的移动端定宽网页适配方法。首先看看下面这行代码：&lt;/p&gt;
+        <description>&lt;p&gt;如今移动设备的分辨率纷繁复杂。以前仅仅是安卓机拥有各种各样的适配问题，如今 iPhone 也拥有了三种主流的分辨率，而未来的 iPhone 7 可能又会玩出什么新花样。如何以不变应万变，用简简单单的几行代码就能支持种类繁多的屏幕分辨率呢？今天就给大家介绍一种懒人必备的移动端定宽网页适配方法。&lt;/p&gt;
+
+&lt;p&gt;首先看看下面这行代码：&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;viewport&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;width=device-width, user-scalabel=no&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;有过移动端开发经验的同学是不是对上面这句代码非常熟悉？它可能最常见的 &lt;code&gt;viewport&lt;/code&gt; 设置之一，而我今天介绍的这种方法也是利用了 meta 标签设置 &lt;code&gt;viewport&lt;/code&gt; 来支持大部分的移动端屏幕分辨率。&lt;/p&gt;
+&lt;p&gt;有过移动端开发经验的同学是不是对上面这句代码非常熟悉？它可能最常见的响应式设计的 &lt;code&gt;viewport&lt;/code&gt; 设置之一，而我今天介绍的这种方法也是利用了 meta 标签设置 &lt;code&gt;viewport&lt;/code&gt; 来支持大部分的移动端屏幕分辨率。&lt;/p&gt;
 
 &lt;h2 id=&quot;section&quot;&gt;目标&lt;/h2&gt;
 
