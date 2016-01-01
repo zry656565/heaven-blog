@@ -115,7 +115,7 @@ if (match = navigator.userAgent.match(/Android (\d+\.\d+)/)) {
 
 ![Android 4.4+ 和 iPhone 在缩放时的行为不一致][3]
 
-在缩放比不能保证的情况下，即时设置同样的 `width` 和 `initial-scale` 后，两者的表现也是不一致。具体两种机型采用的策略如何我还没有探索出来，有兴趣的同学可以研究看看。最省事的办法就是在 iPhone 和 Android 4.4+ 上不设置 scale 相关的属性。
+在缩放比不能保证的情况下，即使设置同样的 `width` 和 `initial-scale` 后，两者的表现也是不一致。具体两种机型采用的策略如何我还没有探索出来，有兴趣的同学可以研究看看。最省事的办法就是在 iPhone 和 Android 4.4+ 上不设置 scale 相关的属性。
 
 ## 总结
 
