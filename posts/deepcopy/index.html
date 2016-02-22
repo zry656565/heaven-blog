@@ -40,6 +40,9 @@
         ga('create', 'UA-47842677-1', 'auto');
         ga('send', 'pageview');
     </script>
+
+    <!-- Hit Kounter -->
+    <script src="http://hitk.applinzi.com/scripts/dst/hit-kounter.js"></script>
     
     <!-- handle external js files -->
     <script type="text/javascript" src="/assets/js/lib/jquery/jquery-1.11.1.min.js"></script>
@@ -118,7 +121,7 @@
   <header class="post-header">
     <h1>Javascript中的一种深复制实现</h1>
     <p class="meta">May 11, 2014 <span class="pause"> - </span>
-        浏览量：<span id="visit-counter"></span>次<span class="pause"> | </span>
+        浏览量：<span data-hk-page="current"> - </span>次<span class="pause"> | </span>
         
             
                 <a class="label" href="/all-articles/?label=JavaScript">JavaScript</a>
@@ -233,20 +236,6 @@ var duoshuoQuery = {short_name:"jerryzou"};
 </script>
   
 </div>
-<script>
-    jsonp('http://analytics1.sinaapp.com/page.php', {
-        callback: 'jsonp_callback',
-        type: 'increment',
-        domain: 'http://jerryzou.com',
-        title: 'Javascript中的一种深复制实现',
-        url: 'http://jerryzou.com/posts/deepcopy/'
-    });
-
-    function jsonp_callback(result) {
-        var visitCounter = document.getElementById('visit-counter');
-        visitCounter.innerHTML = result.count;
-    }
-</script>
 
         
       </div>

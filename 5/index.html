@@ -41,6 +41,9 @@
         ga('create', 'UA-47842677-1', 'auto');
         ga('send', 'pageview');
     </script>
+
+    <!-- Hit Kounter -->
+    <script src="http://hitk.applinzi.com/scripts/dst/hit-kounter.js"></script>
     
     <!-- handle external js files -->
     <script type="text/javascript" src="/assets/js/lib/jquery/jquery-1.11.1.min.js"></script>
@@ -122,7 +125,7 @@
       <li>
         <a class="post-link" href="/posts/tipsforC/">C语言中可能被你忽视的小细节</a>
         <p class="post-date">Posted on Nov 18, 2013 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/tipsforC/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/tipsforC/"> - </span>次
         	
         	<a href="/all-articles/?label=C语言"><span class="post-label">C语言</span></a>
         	
@@ -135,7 +138,7 @@
       <li>
         <a class="post-link" href="/posts/storageMethod/">搞清大数端小数端</a>
         <p class="post-date">Posted on Nov 4, 2013 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/storageMethod/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/storageMethod/"> - </span>次
         	
         	<a href="/all-articles/?label=系统底层"><span class="post-label">系统底层</span></a>
         	
@@ -190,20 +193,6 @@
   </div>
   
 </div>
-
-<script>
-    jsonp('http://analytics1.sinaapp.com/page.php', {
-        callback: 'getCallback',
-        type: 'getByDomain',
-        domain: 'http://jerryzou.com'
-    });
-
-    function getCallback(result) {
-        for (var i = 0; i < result.length; i++) {
-            $('.visit-count[data-link="'+ result[i].url +'"]').html(result[i].count);
-        }
-    }
-</script>
         </div>
 
         <div class="side-part">

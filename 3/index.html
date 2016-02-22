@@ -41,6 +41,9 @@
         ga('create', 'UA-47842677-1', 'auto');
         ga('send', 'pageview');
     </script>
+
+    <!-- Hit Kounter -->
+    <script src="http://hitk.applinzi.com/scripts/dst/hit-kounter.js"></script>
     
     <!-- handle external js files -->
     <script type="text/javascript" src="/assets/js/lib/jquery/jquery-1.11.1.min.js"></script>
@@ -122,7 +125,7 @@
       <li>
         <a class="post-link" href="/posts/bulkUploadToUPYUN/">使用plupload绕过服务器，批量上传图片到又拍云</a>
         <p class="post-date">Posted on Nov 29, 2014 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/bulkUploadToUPYUN/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/bulkUploadToUPYUN/"> - </span>次
         	
         	<a href="/all-articles/?label=批量上传图片"><span class="post-label">批量上传图片</span></a>
         	
@@ -139,7 +142,7 @@
       <li>
         <a class="post-link" href="/posts/aboutNormalizeCss/">来，让我们谈一谈 Normalize.css</a>
         <p class="post-date">Posted on Nov 18, 2014 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/aboutNormalizeCss/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/aboutNormalizeCss/"> - </span>次
         	
         	<a href="/all-articles/?label=Normalize.css"><span class="post-label">Normalize.css</span></a>
         	
@@ -154,7 +157,7 @@
       <li>
         <a class="post-link" href="/posts/getDevEnvironmentBack/">发生在升级OS X Yosemite后：修复各种开发环境</a>
         <p class="post-date">Posted on Nov 14, 2014 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/getDevEnvironmentBack/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/getDevEnvironmentBack/"> - </span>次
         	
         	<a href="/all-articles/?label=Mac"><span class="post-label">Mac</span></a>
         	
@@ -169,7 +172,7 @@
       <li>
         <a class="post-link" href="/posts/gitForSAE/">极速地将git项目部署到SAE的svn服务器上</a>
         <p class="post-date">Posted on Nov 13, 2014 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/gitForSAE/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/gitForSAE/"> - </span>次
         	
         	<a href="/all-articles/?label=SAE"><span class="post-label">SAE</span></a>
         	
@@ -188,7 +191,7 @@
       <li>
         <a class="post-link" href="/posts/sjtuBusFeedback/">交大校车 Web App 用户反馈</a>
         <p class="post-date">Posted on Oct 3, 2014 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/sjtuBusFeedback/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/sjtuBusFeedback/"> - </span>次
         	
         	<a href="/all-articles/?label=交大校车"><span class="post-label">交大校车</span></a>
         	
@@ -203,7 +206,7 @@
       <li>
         <a class="post-link" href="/posts/sjtuBus/">使用百度地图API来完成交大校园巴士时刻表</a>
         <p class="post-date">Posted on Sep 24, 2014 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/sjtuBus/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/sjtuBus/"> - </span>次
         	
         	<a href="/all-articles/?label=JavaScript"><span class="post-label">JavaScript</span></a>
         	
@@ -220,7 +223,7 @@
       <li>
         <a class="post-link" href="/posts/usePygments/">使用Pygments来实现代码高亮</a>
         <p class="post-date">Posted on Sep 7, 2014 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/usePygments/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/usePygments/"> - </span>次
         	
         	<a href="/all-articles/?label=highlight"><span class="post-label">highlight</span></a>
         	
@@ -281,20 +284,6 @@
   </div>
   
 </div>
-
-<script>
-    jsonp('http://analytics1.sinaapp.com/page.php', {
-        callback: 'getCallback',
-        type: 'getByDomain',
-        domain: 'http://jerryzou.com'
-    });
-
-    function getCallback(result) {
-        for (var i = 0; i < result.length; i++) {
-            $('.visit-count[data-link="'+ result[i].url +'"]').html(result[i].count);
-        }
-    }
-</script>
         </div>
 
         <div class="side-part">

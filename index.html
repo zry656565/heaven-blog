@@ -41,6 +41,9 @@
         ga('create', 'UA-47842677-1', 'auto');
         ga('send', 'pageview');
     </script>
+
+    <!-- Hit Kounter -->
+    <script src="http://hitk.applinzi.com/scripts/dst/hit-kounter.js"></script>
     
     <!-- handle external js files -->
     <script type="text/javascript" src="/assets/js/lib/jquery/jquery-1.11.1.min.js"></script>
@@ -122,7 +125,7 @@
       <li>
         <a class="post-link" href="/posts/design-for-all-mobile-resolution/">懒人必备的移动端定宽网页适配方案</a>
         <p class="post-date">Posted on Dec 8, 2015 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/design-for-all-mobile-resolution/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/design-for-all-mobile-resolution/"> - </span>次
         	
         	<a href="/all-articles/?label=移动端"><span class="post-label">移动端</span></a>
         	
@@ -137,7 +140,7 @@
       <li>
         <a class="post-link" href="/posts/leetcode-benchmark/">记一次作死 —— 被 Leetcode 封禁</a>
         <p class="post-date">Posted on Nov 26, 2015 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/leetcode-benchmark/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/leetcode-benchmark/"> - </span>次
         	
         	<a href="/all-articles/?label=Leetcode"><span class="post-label">Leetcode</span></a>
         	
@@ -156,7 +159,7 @@
       <li>
         <a class="post-link" href="/posts/webhook-practice/">Webhook 实践 —— 自动部署</a>
         <p class="post-date">Posted on Oct 25, 2015 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/webhook-practice/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/webhook-practice/"> - </span>次
         	
         	<a href="/all-articles/?label=Webhook"><span class="post-label">Webhook</span></a>
         	
@@ -173,7 +176,7 @@
       <li>
         <a class="post-link" href="/posts/use-css-to-paint-triangle-and-parallelogram/">用 CSS 实现三角形与平行四边形</a>
         <p class="post-date">Posted on Aug 16, 2015 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/use-css-to-paint-triangle-and-parallelogram/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/use-css-to-paint-triangle-and-parallelogram/"> - </span>次
         	
         	<a href="/all-articles/?label=CSS"><span class="post-label">CSS</span></a>
         	
@@ -188,7 +191,7 @@
       <li>
         <a class="post-link" href="/posts/method-of-self-learning/">给迷茫的自学者指一条路</a>
         <p class="post-date">Posted on Jul 16, 2015 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/method-of-self-learning/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/method-of-self-learning/"> - </span>次
         	
         	<a href="/all-articles/?label=自学"><span class="post-label">自学</span></a>
         	
@@ -203,7 +206,7 @@
       <li>
         <a class="post-link" href="/posts/feasibility-of-allowing-baiduSpider-for-Github-Pages/">解决 Github Pages 禁止百度爬虫的方法与可行性分析</a>
         <p class="post-date">Posted on Jun 8, 2015 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/feasibility-of-allowing-baiduSpider-for-Github-Pages/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/feasibility-of-allowing-baiduSpider-for-Github-Pages/"> - </span>次
         	
         	<a href="/all-articles/?label=百度爬虫"><span class="post-label">百度爬虫</span></a>
         	
@@ -222,7 +225,7 @@
       <li>
         <a class="post-link" href="/posts/dive-into-deep-clone-in-javascript/">深入剖析 JavaScript 的深复制</a>
         <p class="post-date">Posted on May 27, 2015 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/dive-into-deep-clone-in-javascript/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/dive-into-deep-clone-in-javascript/"> - </span>次
         	
         	<a href="/all-articles/?label=JavaScript"><span class="post-label">JavaScript</span></a>
         	
@@ -279,20 +282,6 @@
   </div>
   
 </div>
-
-<script>
-    jsonp('http://analytics1.sinaapp.com/page.php', {
-        callback: 'getCallback',
-        type: 'getByDomain',
-        domain: 'http://jerryzou.com'
-    });
-
-    function getCallback(result) {
-        for (var i = 0; i < result.length; i++) {
-            $('.visit-count[data-link="'+ result[i].url +'"]').html(result[i].count);
-        }
-    }
-</script>
         </div>
 
         <div class="side-part">

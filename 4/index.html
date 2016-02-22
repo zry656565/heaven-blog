@@ -41,6 +41,9 @@
         ga('create', 'UA-47842677-1', 'auto');
         ga('send', 'pageview');
     </script>
+
+    <!-- Hit Kounter -->
+    <script src="http://hitk.applinzi.com/scripts/dst/hit-kounter.js"></script>
     
     <!-- handle external js files -->
     <script type="text/javascript" src="/assets/js/lib/jquery/jquery-1.11.1.min.js"></script>
@@ -122,7 +125,7 @@
       <li>
         <a class="post-link" href="/posts/networkConfig/">小型局域网的多路由配置</a>
         <p class="post-date">Posted on Aug 2, 2014 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/networkConfig/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/networkConfig/"> - </span>次
         	
         	<a href="/all-articles/?label=网络"><span class="post-label">网络</span></a>
         	
@@ -137,7 +140,7 @@
       <li>
         <a class="post-link" href="/posts/paperFormat/">IEEE论文PDF格式检测中的问题与解决</a>
         <p class="post-date">Posted on Jun 2, 2014 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/paperFormat/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/paperFormat/"> - </span>次
         	
         	<a href="/all-articles/?label=IEEE"><span class="post-label">IEEE</span></a>
         	
@@ -152,7 +155,7 @@
       <li>
         <a class="post-link" href="/posts/jsmodular/">深入了解JavaScript模块化编程</a>
         <p class="post-date">Posted on Jun 1, 2014 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/jsmodular/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/jsmodular/"> - </span>次
         	
         	<a href="/all-articles/?label=JavaScript"><span class="post-label">JavaScript</span></a>
         	
@@ -167,7 +170,7 @@
       <li>
         <a class="post-link" href="/posts/deepcopy/">Javascript中的一种深复制实现</a>
         <p class="post-date">Posted on May 11, 2014 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/deepcopy/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/deepcopy/"> - </span>次
         	
         	<a href="/all-articles/?label=JavaScript"><span class="post-label">JavaScript</span></a>
         	
@@ -182,7 +185,7 @@
       <li>
         <a class="post-link" href="/posts/jreparser/">一款在线JavaScript正则表达式测试器</a>
         <p class="post-date">Posted on May 6, 2014 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/jreparser/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/jreparser/"> - </span>次
         	
         	<a href="/all-articles/?label=JavaScript"><span class="post-label">JavaScript</span></a>
         	
@@ -197,7 +200,7 @@
       <li>
         <a class="post-link" href="/posts/learnjs/">如何循序渐进地学习JavaScript</a>
         <p class="post-date">Posted on Dec 21, 2013 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/learnjs/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/learnjs/"> - </span>次
         	
         	<a href="/all-articles/?label=JavaScript"><span class="post-label">JavaScript</span></a>
         	
@@ -210,7 +213,7 @@
       <li>
         <a class="post-link" href="/posts/opentopublic/">博客建立</a>
         <p class="post-date">Posted on Dec 16, 2013 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/opentopublic/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/opentopublic/"> - </span>次
         	
         	<a href="/all-articles/?label=博客"><span class="post-label">博客</span></a>
         	
@@ -269,20 +272,6 @@
   </div>
   
 </div>
-
-<script>
-    jsonp('http://analytics1.sinaapp.com/page.php', {
-        callback: 'getCallback',
-        type: 'getByDomain',
-        domain: 'http://jerryzou.com'
-    });
-
-    function getCallback(result) {
-        for (var i = 0; i < result.length; i++) {
-            $('.visit-count[data-link="'+ result[i].url +'"]').html(result[i].count);
-        }
-    }
-</script>
         </div>
 
         <div class="side-part">

@@ -41,6 +41,9 @@
         ga('create', 'UA-47842677-1', 'auto');
         ga('send', 'pageview');
     </script>
+
+    <!-- Hit Kounter -->
+    <script src="http://hitk.applinzi.com/scripts/dst/hit-kounter.js"></script>
     
     <!-- handle external js files -->
     <script type="text/javascript" src="/assets/js/lib/jquery/jquery-1.11.1.min.js"></script>
@@ -122,7 +125,7 @@
       <li>
         <a class="post-link" href="/posts/cyclomatic-complexity-logic-in-css/">论 CSS 中的逻辑</a>
         <p class="post-date">Posted on May 21, 2015 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/cyclomatic-complexity-logic-in-css/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/cyclomatic-complexity-logic-in-css/"> - </span>次
         	
         	<a href="/all-articles/?label=CSS"><span class="post-label">CSS</span></a>
         	
@@ -137,7 +140,7 @@
       <li>
         <a class="post-link" href="/posts/do-you-really-want-use-bit-operators-in-JavaScript/">为什么不要在 JavaScript 中使用位操作符？</a>
         <p class="post-date">Posted on May 15, 2015 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/do-you-really-want-use-bit-operators-in-JavaScript/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/do-you-really-want-use-bit-operators-in-JavaScript/"> - </span>次
         	
         	<a href="/all-articles/?label=JavaScript"><span class="post-label">JavaScript</span></a>
         	
@@ -152,7 +155,7 @@
       <li>
         <a class="post-link" href="/posts/cookie-and-web-storage/">详说 Cookie, LocalStorage 与 SessionStorage</a>
         <p class="post-date">Posted on May 2, 2015 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/cookie-and-web-storage/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/cookie-and-web-storage/"> - </span>次
         	
         	<a href="/all-articles/?label=Cookie"><span class="post-label">Cookie</span></a>
         	
@@ -169,7 +172,7 @@
       <li>
         <a class="post-link" href="/posts/chew/">咀嚼之味</a>
         <p class="post-date">Posted on Apr 11, 2015 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/chew/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/chew/"> - </span>次
         	
         	<a href="/all-articles/?label=思考"><span class="post-label">思考</span></a>
         	
@@ -184,7 +187,7 @@
       <li>
         <a class="post-link" href="/posts/shadowsocks-with-digitalocean/">使用Digital Ocean和shadowsocks来科学上网</a>
         <p class="post-date">Posted on Jan 24, 2015 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/shadowsocks-with-digitalocean/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/shadowsocks-with-digitalocean/"> - </span>次
         	
         	<a href="/all-articles/?label=shadowsocks"><span class="post-label">shadowsocks</span></a>
         	
@@ -201,7 +204,7 @@
       <li>
         <a class="post-link" href="/posts/caocao01/">阿瞒究竟有没有杀伯奢？</a>
         <p class="post-date">Posted on Jan 16, 2015 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/caocao01/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/caocao01/"> - </span>次
         	
         	<a href="/all-articles/?label=曹操"><span class="post-label">曹操</span></a>
         	
@@ -216,7 +219,7 @@
       <li>
         <a class="post-link" href="/posts/dontBeEvil/">Don't be evil ?</a>
         <p class="post-date">Posted on Jan 1, 2015 ;
-            浏览量: <span class="visit-count" data-link="http://jerryzou.com/posts/dontBeEvil/">0</span>次
+            浏览量: <span data-hk-page="http://jerryzou.com/posts/dontBeEvil/"> - </span>次
         	
         	<a href="/all-articles/?label=Google"><span class="post-label">Google</span></a>
         	
@@ -275,20 +278,6 @@
   </div>
   
 </div>
-
-<script>
-    jsonp('http://analytics1.sinaapp.com/page.php', {
-        callback: 'getCallback',
-        type: 'getByDomain',
-        domain: 'http://jerryzou.com'
-    });
-
-    function getCallback(result) {
-        for (var i = 0; i < result.length; i++) {
-            $('.visit-count[data-link="'+ result[i].url +'"]').html(result[i].count);
-        }
-    }
-</script>
         </div>
 
         <div class="side-part">
