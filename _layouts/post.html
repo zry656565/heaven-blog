@@ -6,7 +6,7 @@ layout: default
   <header class="post-header">
     <h1>{{ page.title }}</h1>
     <p class="meta">{{ page.date | date: "%b %-d, %Y" }} <span class="pause"> - </span>
-        浏览量：<span id="visit-counter"></span>次<span class="pause"> | </span>
+        浏览量：<span data-hk-page="current"> - </span>次<span class="pause"> | </span>
         {% if page.labels %}
             {% for label in page.labels %}
                 <a class="label" href="{{ site.baseurl }}/all-articles/?label={{ label }}">{{ label }}</a>
@@ -29,17 +29,3 @@ layout: default
     {% include duoshuo.html %}
   {% endif %}
 </div>
-<script>
-    jsonp('http://analytics1.sinaapp.com/page.php', {
-        callback: 'jsonp_callback',
-        type: 'increment',
-        domain: '{{ site.url }}',
-        title: '{{ page.title }}',
-        url: '{{ page.permalink | prepend: site.url }}'
-    });
-
-    function jsonp_callback(result) {
-        var visitCounter = document.getElementById('visit-counter');
-        visitCounter.innerHTML = result.count;
-    }
-</script>
