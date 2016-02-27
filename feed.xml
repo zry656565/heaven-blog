@@ -8,6 +8,93 @@
     <atom:link href="http://jerryzou.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>为你的博客添加访问量统计</title>
+        <description>&lt;p&gt;相信很多程序员朋友们都拥有了自己的技术博客。像 Hexo, Jekyll 这样的静态网站生成器甚是好用，而对于相对动态的内容，比如评论框，也有诸如多说和 Disqus 的工具可以使用。&lt;/p&gt;
+
+&lt;p&gt;但是针对博客的访问量统计，却没有什么可用的工具。很多同学在我的博客中留言问我，我的博文中显示的访问量是怎么做到的？我曾经尝试依靠百度统计是不是能解决这个问题，然而我失败了。于是我自己用 PHP 写了一个很简单的服务来完成这件事，经过一次重构，我把它命名为 &lt;a href=&quot;https://github.com/zry656565/Hit-Kounter&quot;&gt;Hit Kounter&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;接下来会从以下几个方面介绍一下：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;如何为你的博客添加访问统计&lt;/li&gt;
+  &lt;li&gt;Hit Kounter 的 JS 接口&lt;/li&gt;
+  &lt;li&gt;小结：Hit Kounter 的未来&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;如何为你的博客添加访问量统计&lt;/h2&gt;
+
+&lt;h4 id=&quot;section-1&quot;&gt;1. 引入脚本&lt;/h4&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-0.1.1.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;首先，在你的页面中引入这个脚本；由于你可能在每个页面都需要显示访问量，把它加入根模板也许是个不错的选择。&lt;/p&gt;
+
+&lt;h4 id=&quot;section-2&quot;&gt;2. 显示当前页面的访问量&lt;/h4&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-hk-page=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;current&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; - &lt;span class=&quot;nt&quot;&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;你可以在页面的任何地方插入这句 HTML 片段，你之前引入的脚本会自动检查当前页面上带有 &lt;code&gt;data-hk-*&lt;/code&gt; 属性的元素，并针对你给出的属性值向服务器请求数据，最后把得到的结果替换到上面的标签内。可以参考&lt;a href=&quot;https://github.com/zry656565/heaven-blog/blob/5f19693ac0fb5723ef18d69b57106d2f95021400/_layouts/post.html#L9&quot;&gt;我博客中的例子&lt;/a&gt;。&lt;/p&gt;
+
+&lt;h4 id=&quot;section-3&quot;&gt;3. 显示指定页面的访问量&lt;/h4&gt;
+
+&lt;p&gt;如果你希望在文章列表页中显示各个页面的访问量分别是多少，那么你就要使用一个 url 来填充 &lt;code&gt;data-hk-page&lt;/code&gt; 的属性值，就像这样：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-hk-page=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://jerryzou.com/posts/design-for-all-mobile-resolution/&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; - &lt;span class=&quot;nt&quot;&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;那么 Hit Kounter 检测到这个标签以后，就会向服务器请求该地址的具体访问量，并最终将默认值 ` - ` 替换为实际值。可以参考&lt;a href=&quot;https://github.com/zry656565/heaven-blog/blob/5f19693ac0fb5723ef18d69b57106d2f95021400/index.html#L13&quot;&gt;我博客中的例子&lt;/a&gt;。&lt;/p&gt;
+
+&lt;h2 id=&quot;hit-kounter--js-&quot;&gt;Hit Kounter 的 JS 接口&lt;/h2&gt;
+
+&lt;p&gt;Hit Kounter 会在全局注入 &lt;code&gt;Icarus&lt;/code&gt; 对象，它是与服务器交互的数据接口。通过它，我们就可以直接向服务器发送请求。先看看下面这个例子：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;Icarus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;api&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;hk.page.get&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;1.0&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;pages&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;http://test.com/1&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;http://test.com/2&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;http://test.com/3&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;success&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;domain&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;failure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;code&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;code&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;上面这个例子中，我们主要是获取了三个页面的具体访问量；目前 &lt;code&gt;Icarus&lt;/code&gt; 支持的接口有四个（具体可以参考 &lt;a href=&quot;https://github.com/zry656565/Hit-Kounter/wiki/Icarus:-APIs&quot;&gt;Hit Kounter Wiki&lt;/a&gt;）：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;hk.page.increment&lt;/li&gt;
+  &lt;li&gt;hk.page.get&lt;/li&gt;
+  &lt;li&gt;hk.page.getTop&lt;/li&gt;
+  &lt;li&gt;hk.page.getByDomain&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;至于如何使用就由你们自由发挥啦。&lt;/p&gt;
+
+&lt;h2 id=&quot;hit-kounter-&quot;&gt;小结：Hit Kounter 的未来&lt;/h2&gt;
+
+&lt;p&gt;当然，Hit Kounter 的功能不至于此啦，由于作者我还是个读研狗，最近得发论文了，所以更新进度暂且比较慢；目前 Hit Kounter 是 0.1 Beta版，未来会加入越来越多的功能，包括但不限于：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;添加一个能够获得全站的访问总量的 API&lt;/li&gt;
+  &lt;li&gt;通过添加 &lt;code&gt;&amp;lt;div data-hk-top-pages=&quot;5&quot;&amp;gt;&lt;/code&gt; 这样一个元素，便能够将全站访问量最高的五个页面罗列在 &lt;code&gt;div&lt;/code&gt; 框内。&lt;/li&gt;
+  &lt;li&gt;为用户提供一个很方便的方式来导入初始的访问量数据&lt;/li&gt;
+  &lt;li&gt;完善各种可能的错误信息（包括服务端和浏览器端的错误）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;TODO List 可以在 &lt;a href=&quot;https://github.com/zry656565/Hit-Kounter/issues/1&quot;&gt;这个 issue&lt;/a&gt; 中看到，而且因为 &lt;a href=&quot;https://github.com/zry656565/Hit-Kounter&quot;&gt;Hit Kounter&lt;/a&gt; 是开源项目，也很期待大家能够多吐槽，如果能给 Hit Kounter 贡献代码那就再好不过啦~。&lt;/p&gt;
+</description>
+        <pubDate>Sat, 27 Feb 2016 13:20:00 +0000</pubDate>
+        <link>http://jerryzou.com/posts/introduction-to-hit-kounter/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/introduction-to-hit-kounter/</guid>
+      </item>
+    
+      <item>
         <title>懒人必备的移动端定宽网页适配方案</title>
         <description>&lt;p&gt;如今移动设备的分辨率纷繁复杂。以前仅仅是安卓机拥有各种各样的适配问题，如今 iPhone 也拥有了三种主流的分辨率，而未来的 iPhone 7 可能又会玩出什么新花样。如何以不变应万变，用简简单单的几行代码就能支持种类繁多的屏幕分辨率呢？今天就给大家介绍一种懒人必备的移动端定宽网页适配方法。&lt;/p&gt;
 
@@ -1515,119 +1602,6 @@ Alex&lt;/p&gt;
         <pubDate>Fri, 15 May 2015 23:13:35 +0000</pubDate>
         <link>http://jerryzou.com/posts/do-you-really-want-use-bit-operators-in-JavaScript/</link>
         <guid isPermaLink="true">http://jerryzou.com/posts/do-you-really-want-use-bit-operators-in-JavaScript/</guid>
-      </item>
-    
-      <item>
-        <title>详说 Cookie, LocalStorage 与 SessionStorage</title>
-        <description>&lt;p&gt;最近在找暑期实习，其中百度、网易游戏、阿里的面试都问到一些关于HTML5的东西，问题大多是这样开头的：“你用过什么HTML5的技术呀？” 而后，每次都能扯到 Cookie 和 localStorage 有啥差别。这篇文章就旨在详细地阐述这部分内容，而具体 Web Storage API 的使用可以参考&lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API&quot;&gt;MDN的文档&lt;/a&gt;，就不在这篇文章中赘述了。&lt;/p&gt;
-
-&lt;h2 id=&quot;section&quot;&gt;基本概念&lt;/h2&gt;
-
-&lt;h4 id=&quot;cookie&quot;&gt;Cookie&lt;/h4&gt;
-
-&lt;p&gt;Cookie 是小甜饼的意思。顾名思义，cookie 确实非常小，它的大小限制为4KB左右，是网景公司的前雇员 Lou Montulli 在1993年3月的发明。它的主要用途有保存登录信息，比如你登录某个网站市场可以看到“记住密码”，这通常就是通过在 Cookie 中存入一段辨别用户身份的数据来实现的。&lt;/p&gt;
-
-&lt;h4 id=&quot;localstorage&quot;&gt;localStorage&lt;/h4&gt;
-
-&lt;p&gt;localStorage 是 HTML5 标准中新加入的技术，它并不是什么划时代的新东西。早在 IE 6 时代，就有一个叫 userData 的东西用于本地存储，而当时考虑到浏览器兼容性，更通用的方案是使用 Flash。而如今，localStorage 被大多数浏览器所支持，如果你的网站需要支持 IE6+，那以 userData 作为你的 polyfill 的方案是种不错的选择。&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;特性&lt;/th&gt;
-      &lt;th&gt;Chrome&lt;/th&gt;
-      &lt;th&gt;Firefox (Gecko)&lt;/th&gt;
-      &lt;th&gt;Internet Explorer&lt;/th&gt;
-      &lt;th&gt;Opera&lt;/th&gt;
-      &lt;th&gt;Safari (WebKit)&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;localStorage&lt;/td&gt;
-      &lt;td&gt;4&lt;/td&gt;
-      &lt;td&gt;3.5&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;10.50&lt;/td&gt;
-      &lt;td&gt;4&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;sessionStorage&lt;/td&gt;
-      &lt;td&gt;5&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;10.50&lt;/td&gt;
-      &lt;td&gt;4&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h4 id=&quot;sessionstorage&quot;&gt;sessionStorage&lt;/h4&gt;
-
-&lt;p&gt;sessionStorage 与 localStorage 的接口类似，但保存数据的生命周期与 localStorage 不同。做过后端开发的同学应该知道 Session 这个词的意思，直译过来是“会话”。而 sessionStorage 是一个前端的概念，它只是可以将一部分数据在当前会话中保存下来，刷新页面数据依旧存在。但当页面关闭后，sessionStorage 中的数据就会被清空。&lt;/p&gt;
-
-&lt;h2 id=&quot;section-1&quot;&gt;三者的异同&lt;/h2&gt;
-
-&lt;table&gt;
-	&lt;thead&gt;
-		&lt;tr&gt;
-			&lt;th&gt;特性&lt;/th&gt;
-			&lt;th&gt;Cookie&lt;/th&gt;
-			&lt;th&gt;localStorage&lt;/th&gt;
-			&lt;th&gt;sessionStorage&lt;/th&gt;
-		&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-		&lt;tr&gt;
-			&lt;td&gt;数据的生命期&lt;/td&gt;
-			&lt;td&gt;一般由服务器生成，可设置失效时间。如果在浏览器端生成Cookie，默认是关闭浏览器后失效&lt;/td&gt;
-			&lt;td&gt;除非被清除，否则永久保存&lt;/td&gt;
-			&lt;td&gt;仅在当前会话下有效，关闭页面或浏览器后被清除&lt;/td&gt;
-		&lt;/tr&gt;
-		&lt;tr&gt;
-			&lt;td&gt;存放数据大小&lt;/td&gt;
-			&lt;td&gt;4K左右&lt;/td&gt;
-			&lt;td colspan=&quot;2&quot;&gt;一般为5MB&lt;/td&gt;
-		&lt;/tr&gt;
-		&lt;tr&gt;
-			&lt;td&gt;与服务器端通信&lt;/td&gt;
-			&lt;td&gt;每次都会携带在HTTP头中，如果使用cookie保存过多数据会带来性能问题&lt;/td&gt;
-			&lt;td colspan=&quot;2&quot;&gt;仅在客户端（即浏览器）中保存，不参与和服务器的通信&lt;/td&gt;
-		&lt;/tr&gt;
-		&lt;tr&gt;
-			&lt;td&gt;易用性&lt;/td&gt;
-			&lt;td&gt;需要程序员自己封装，源生的Cookie接口不友好&lt;/td&gt;
-			&lt;td colspan=&quot;2&quot;&gt;源生接口可以接受，亦可再次封装来对Object和Array有更好的支持&lt;/td&gt;
-		&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h4 id=&quot;section-2&quot;&gt;应用场景&lt;/h4&gt;
-
-&lt;p&gt;有了对上面这些差别的直观理解，我们就可以讨论三者的应用场景了。&lt;/p&gt;
-
-&lt;p&gt;因为考虑到每个 HTTP 请求都会带着 Cookie 的信息，所以 Cookie 当然是能精简就精简啦，比较常用的一个应用场景就是判断用户是否登录。针对登录过的用户，服务器端会在他登录时往 Cookie 中插入一段加密过的唯一辨识单一用户的辨识码，下次只要读取这个值就可以判断当前用户是否登录啦。曾经还使用 Cookie 来保存用户在电商网站的购物车信息，如今有了 localStorage，似乎在这个方面也可以给 Cookie 放个假了~&lt;/p&gt;
-
-&lt;p&gt;而另一方面 localStorage 接替了 Cookie 管理购物车的工作，同时也能胜任其他一些工作。比如HTML5游戏通常会产生一些本地数据，localStorage 也是非常适用的。如果遇到一些内容特别多的表单，为了优化用户体验，我们可能要把表单页面拆分成多个子页面，然后按步骤引导用户填写。这时候 sessionStorage 的作用就发挥出来了。&lt;/p&gt;
-
-&lt;h2 id=&quot;section-3&quot;&gt;安全性的考虑&lt;/h2&gt;
-
-&lt;p&gt;需要注意的是，不是什么数据都适合放在 Cookie、localStorage 和 sessionStorage 中的。使用它们的时候，需要时刻注意是否有代码存在 XSS 注入的风险。因为只要打开控制台，你就随意修改它们的值，也就是说如果你的网站中有 XSS 的风险，它们就能对你的 localStorage 肆意妄为。所以千万不要用它们存储你系统中的敏感数据。&lt;/p&gt;
-
-&lt;h2 id=&quot;section-4&quot;&gt;参考资料&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/questions/19867599/what-is-the-difference-between-localstorage-sessionstorage-session-and-cookie&quot;&gt;what is the difference between localStorage, sessionStorage, session and cookie?&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/questions/3718349/html5-localstorage-security&quot;&gt;HTML5 localStorage security&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://zh.wikipedia.org/wiki/Cookie&quot;&gt;维基百科 - Cookie&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API&quot;&gt;Web Storage API&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://han.guokai.blog.163.com/blog/static/13671827120112694851799/&quot;&gt;浏览器本地数据（sessionStorage、localStorage、cookie）与server端数据&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://www.cnblogs.com/yuzhongwusan/archive/2011/12/19/2293347.html&quot;&gt;HTMl5的sessionStorage和localStorage&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://www.cnblogs.com/xiaowei0705/archive/2011/04/19/2021372.html&quot;&gt;HTML5 LocalStorage 本地存储&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Sat, 02 May 2015 22:28:35 +0000</pubDate>
-        <link>http://jerryzou.com/posts/cookie-and-web-storage/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/cookie-and-web-storage/</guid>
       </item>
     
   </channel>
