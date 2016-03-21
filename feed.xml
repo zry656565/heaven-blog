@@ -8,6 +8,142 @@
     <atom:link href="http://jerryzou.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Kinect 数据录制与回放</title>
+        <description>&lt;p&gt;最近在实验室用深度相机做一些三维重建的研究，主要的实验场景在宝山区的仓库。学校到仓库的来回车程大概有三四个小时，如果每次都要到实际场景中来测试算法，这真是着实令人头疼。所以我想着，如果能用 Kinect 把仓库中的场景录制下来，回来直接用录好的数据来测试算法，那不就不用来回跑了吗？接下来就来讲讲如何完成这件事。&lt;/p&gt;
+
+&lt;p&gt;首先，我的实验环境是：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;操作系统：Windows 10&lt;/li&gt;
+  &lt;li&gt;IDE：Visual Studio 2013 community 版本&lt;/li&gt;
+  &lt;li&gt;Kinect 版本：2.0&lt;/li&gt;
+  &lt;li&gt;编程语言：C#&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;录制&lt;/h2&gt;
+
+&lt;p&gt;录制数据相对来说比较简单，我们只需要借助 Kinect for Windows SDK 自带的 &lt;strong&gt;Kinect Studio&lt;/strong&gt; 就可以达成这一目的。&lt;/p&gt;
+
+&lt;p&gt;你可以依照下图的三个小步骤来录制你想要的场景数据；等录制完毕以后，你可以在 &lt;code&gt;C:\Users\${你的用户名}\Documents\Kinect Studio\Repository&lt;/code&gt; 下找到你录制好的 xef 文件，比如我刚刚录制的 &lt;code&gt;20160317_111153_00.xef&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/kinect-studio.png&quot; alt=&quot;Kinect Studio Sample&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;回放&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;实现回放的原理&lt;/strong&gt;：我们在正常使用 Kinect 的过程中，每当 Kinect 采集到一帧画面，就会触发一下 &lt;code&gt;FrameArrived&lt;/code&gt; 事件。而我们写的程序总是会通过一个 &lt;code&gt;FrameReader&lt;/code&gt; 来响应每一帧画面所触发的事件。所以只要通过读取 &lt;strong&gt;xef&lt;/strong&gt; 文件中的数据，模拟触发 &lt;code&gt;FrameArrived&lt;/code&gt; 事件；从而做到几乎不修改原本的代码，就能在原来程序中回放录制的场景。&lt;/p&gt;
+
+&lt;p&gt;正常来说，&lt;strong&gt;xef&lt;/strong&gt; 文件只能在 Kinect Studio 中播放出来。不过 Kinect 开发小组的成员 Carmine 在 MSDN 上发布了一些能够读取 &lt;code&gt;xef&lt;/code&gt; 的示例代码。接下来我就来讲解一下具体的步骤：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;将项目的编译版本修改为 &lt;strong&gt;x64&lt;/strong&gt; （否则你会得到 BadImageFormatException 错误）&lt;/li&gt;
+  &lt;li&gt;找到 Kinect Studio 的安装目录 (e.g. C:\Program Files\Microsoft SDKs\Kinect\v2.0_1409\Tools\KinectStudio).&lt;/li&gt;
+  &lt;li&gt;将 &lt;strong&gt;Microsoft.Kinect.Tools.dll&lt;/strong&gt; 引入你的项目 (如下图)&lt;/li&gt;
+  &lt;li&gt;将 &lt;strong&gt;KStudioService.dll&lt;/strong&gt; 复制到你的 Debug / Release 文件夹&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/vs-reference.png&quot; alt=&quot;add References to your project&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;接下来，你需要编写一些代码来调用回放的功能。以官方的例子 &lt;strong&gt;DepthBasics-WPF&lt;/strong&gt; 为例，首先你需要定义一个新的类，并在这个类中定义一个静态方法，如下所示：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/******&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt; * PlaybackClip.cs&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt; */&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;System.Collections.Generic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;System.Linq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;System.Text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;System.Threading&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;System.Threading.Tasks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;Microsoft.Kinect.Tools&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;Microsoft.Samples.Kinect.DepthBasics&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;PlaybackHelper&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;PlaybackClip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;filePath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;uint&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loopCount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;KStudioClient&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;KStudio&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CreateClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ConnectToService&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+                
+                &lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;KStudioPlayback&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;playback&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CreatePlayback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filePath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                    &lt;span class=&quot;n&quot;&gt;playback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LoopCount&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loopCount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+                    &lt;span class=&quot;n&quot;&gt;playback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        
+                    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;playback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;State&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;KStudioPlaybackState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Playing&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                        &lt;span class=&quot;n&quot;&gt;Thread&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Sleep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;500&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+                    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        
+                    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;playback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;State&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;KStudioPlaybackState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                        &lt;span class=&quot;k&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;InvalidOperationException&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Error: Playback failed!&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+                    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        
+                &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DisconnectFromService&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;最后，你需要在现有的代码中使用 &lt;code&gt;PlaybackHelper.PlaybackClip&lt;/code&gt; 方法来帮助你回放之前的数据。此处的示例代码在检测不到 Kinect 设备时会 &lt;strong&gt;启用一个新线程&lt;/strong&gt; 来回放指定的数据，并指定循环回放 10 次，你可以根据需要进行修改。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/***&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt; * MainWindow.xaml.cs&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt; */&lt;/span&gt;
+ 
+&lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;Microsoft.Samples.Kinect.DepthBasics&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;partial&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MainWindow&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;INotifyPropertyChanged&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// ... 此处省略若干示例中的代码&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;MainWindow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;c1&quot;&gt;// ... 此处省略若干示例中的代码&lt;/span&gt;
+
+            &lt;span class=&quot;c1&quot;&gt;// 此处为需要添加的代码&lt;/span&gt;
+            &lt;span class=&quot;c1&quot;&gt;//#begin&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(!&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kinectSensor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IsAvailable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;Thread&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;playbackThread&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Thread&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;startPlayback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;playbackThread&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;c1&quot;&gt;//#end&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+        &lt;span class=&quot;c1&quot;&gt;// 此处为需要添加的代码&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//#begin&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;startPlayback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;PlaybackHelper&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PlaybackClip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;${此处填写 xef 的路径}&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//#end&lt;/span&gt;
+        
+        &lt;span class=&quot;c1&quot;&gt;// ... 此处省略若干示例中的代码&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;完成了以上这些以后，拔掉你的 Kinect 并重启你的程序。如果程序依然能够很顺利的执行，那么恭喜你，你成功啦！&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/kinect-result.jpg!0.5&quot; alt=&quot;Sample Result&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;section-2&quot;&gt;参考文献&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/questions/27280689/kinect-v2-read-out-data-from-xef-files&quot;&gt;Stackoverflow - Kinect v2, read out data from .xef files&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://social.msdn.microsoft.com/Forums/en-US/59c97d1e-79f6-4dd0-8fae-73080a2c7b18/documentation-for-microsoftkinecttools-api?forum=kinectv2sdk&amp;amp;prof=required&quot;&gt;MSDN - Sample codes from Carmine&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Mon, 21 Mar 2016 23:20:00 +0000</pubDate>
+        <link>http://jerryzou.com/posts/record-and-playback-for-kinect/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/record-and-playback-for-kinect/</guid>
+      </item>
+    
+      <item>
         <title>为你的博客添加访问量统计</title>
         <description>&lt;p&gt;相信很多程序员朋友们都拥有了自己的技术博客。像 Hexo, Jekyll 这样的静态网站生成器甚是好用，而对于相对动态的内容，比如评论框，也有诸如多说和 Disqus 的工具可以使用。&lt;/p&gt;
 
@@ -1487,121 +1623,6 @@ Alex&lt;/p&gt;
         <pubDate>Thu, 21 May 2015 08:55:25 +0000</pubDate>
         <link>http://jerryzou.com/posts/cyclomatic-complexity-logic-in-css/</link>
         <guid isPermaLink="true">http://jerryzou.com/posts/cyclomatic-complexity-logic-in-css/</guid>
-      </item>
-    
-      <item>
-        <title>为什么不要在 JavaScript 中使用位操作符？</title>
-        <description>&lt;p&gt;如果你的第一门编程语言不是 JavaScript，而是 C++ 或 Java，那么一开始你大概会看不惯 JavaScript 的数字类型。在 JavaScript 中的数字类型是不区分什么 Int，Float，Double，Decimal 的。咳咳，我说的当然是在 ES6 之前的 JS，在 ES6 的新标准中提出了像 Int8Array 这样新的数据类型。不过这不是本文叙述的重点，暂且就不谈啦。本文将更着重地谈 JS 的数字类型以及作用于它的位操作符，而关于包装对象 Number 的更多了解可以看拔赤翻译的&lt;a href=&quot;https://github.com/lxj/javascript.patterns/blob/master/chapter3.markdown#%E5%8E%9F%E5%A7%8B%E5%80%BC%E7%9A%84%E5%8C%85%E8%A3%85%E5%AF%B9%E8%B1%A1&quot;&gt;《JavaScript设计模式》&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;section&quot;&gt;数字类型的本质&lt;/h2&gt;
-
-&lt;p&gt;实际上，JavaScript的数字类型的本质就是一个&lt;strong&gt;基于 IEEE 754 标准的双精度 64 位的浮点数&lt;/strong&gt;。按照标准，它的数据结构如图示这样：由1位符号位，11位指数部分以及52位尾数部分构成。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/double_float.png&quot; alt=&quot;general double float number&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;在浮点数中，数字通常被表示为：&lt;/p&gt;
-
-&lt;pre class=&quot;formula&quot;&gt;
-(-1)&lt;sup&gt;sign&lt;/sup&gt; × mantissa × 2&lt;sup&gt;exponent&lt;/sup&gt;
-&lt;/pre&gt;
-
-&lt;p&gt;而为了将尾数规格化，并做到尽量提高精确度，就需要把尾数精确在 &lt;code&gt;[1,2)&lt;/code&gt; 的区间内，这样便可省去前导的1。比如：&lt;/p&gt;
-
-&lt;pre class=&quot;formula&quot;&gt;
-11.101 × 2&lt;sup&gt;3&lt;/sup&gt; = 1.1101 × 2&lt;sup&gt;4&lt;/sup&gt;
-0.1001 × 2&lt;sup&gt;5&lt;/sup&gt; = 1.001 × 2&lt;sup&gt;4&lt;/sup&gt;
-&lt;/pre&gt;
-
-&lt;p&gt;并且标准规定指数部分使用 0x3ff 作为偏移量，也就有了双精度浮点数的一般公式：&lt;/p&gt;
-
-&lt;pre class=&quot;formula&quot;&gt;
-(-1)&lt;sup&gt;sign&lt;/sup&gt; × 1.mantissa × 2&lt;sup&gt;exponent - 0x3ff&lt;/sup&gt;
-&lt;/pre&gt;
-
-&lt;p&gt;举一些例子，应该能帮助你理解这个公式：&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell-session&quot; data-lang=&quot;shell-session&quot;&gt;&lt;span class=&quot;go&quot;&gt;3ff0 0000 0000 0000  =  1&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;c000 0000 0000 0000  =  -2&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;3fd5 5555 5555 5555  ~  1/3&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;0000 0000 0000 0000  =  0&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;8000 0000 0000 0000  =  -0&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;7ff0 0000 0000 0000  =  无穷大 ( 1/0 )&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;fff0 0000 0000 0000  =  负无穷大 ( 1/-0 )&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;7fef ffff ffff ffff  ~  1.7976931348623157 x 10^308 (= Number.MAX_VALUE)&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;433f ffff ffff ffff  =  2^53 - 1 (= Number.MAX_SAFE_INTEGER)&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;c33f ffff ffff ffff  =  -2^53 + 1 (= Number.MIN_SAFE_INTEGER)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;得益于尾数省略的一位“1”，使用双精度浮点数来表示的最大安全整数为 -2&lt;sup&gt;53&lt;/sup&gt;+1 到 2&lt;sup&gt;53&lt;/sup&gt;-1 之间，所以如果你仅仅使用 JavaScript 中的数字类型进行一些整数运算，那么你也可以近似地将这一数字类型理解为 &lt;strong&gt;53&lt;/strong&gt; 位整型。&lt;/p&gt;
-
-&lt;h2 id=&quot;section-1&quot;&gt;让人又爱又恨的位操作符&lt;/h2&gt;
-
-&lt;p&gt;熟悉 C 或者 C++ 的同学一定对位操作符不陌生。位操作符最主要的应用大概就是作为标志位与掩码。这是一种节省存储空间的高明手段，在曾经内存的大小以 KB 为单位计算时，每多一个变量就是一份额外的开销。而使用位操作符的掩码则在很大程度上缓解了这个问题：&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#define LOG_ERRORS            1  &lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;// 0001&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#define LOG_WARNINGS          2  &lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;// 0010&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#define LOG_NOTICES           4  &lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;// 0100&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#define LOG_INCOMING          8  &lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;// 1000&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;flags&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LOG_ERRORS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;                                 &lt;span class=&quot;c1&quot;&gt;// 0001&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;flags&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LOG_ERRORS&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LOG_WARNINGS&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LOG_INCOMING&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// 1011&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;因为标志位一般只需要 1 bit，就可以保存，并没有必要为每个标志位都定义一个变量。所以按上面这种方式只使用一个变量，却可以保存大量的信息——无符号的 char 可以保存 8 个标志位，而无符号的 int 则可以同时表示 32 个标志位。&lt;/p&gt;
-
-&lt;p&gt;可惜位操作符在 JavaScript 中的表现就比较诡异了，因为 JavaScript 没有真正意义上的整型。看看如下代码的运行结果吧：&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// 2000000000&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// -294967296&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;// fxck！我只想装了个逼用左移1位给 a * 2，但是结果是什么鬼！！！&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;parseInt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;100000000&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 4294967296&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;parseInt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;1111&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;       &lt;span class=&quot;c1&quot;&gt;// 15&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;                         &lt;span class=&quot;c1&quot;&gt;// 15&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;// 啊啊啊，为毛我的 a 丝毫不起作用，JavaScript真是门吊诡的语言！！！&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;好吧，虽然我说过大家可以近似地认为，JS 的数字类型可以表示 53 位的整型。但事实上，位操作符并不是这么认为的。在 &lt;a href=&quot;http://www.ecma-international.org/ecma-262/5.1/#sec-11.10&quot;&gt;ECMAScript® Language Specification&lt;/a&gt; 中是这样描述位操作符的：&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;The production A : A @ B, where @ is one of the bitwise operators in the productions above, is evaluated as follows:&lt;/p&gt;
-
-  &lt;ol&gt;
-    &lt;li&gt;Let lref be the result of evaluating A.&lt;/li&gt;
-    &lt;li&gt;Let lval be GetValue(lref).&lt;/li&gt;
-    &lt;li&gt;Let rref be the result of evaluating B.&lt;/li&gt;
-    &lt;li&gt;Let rval be GetValue(rref).&lt;/li&gt;
-    &lt;li&gt;Let lnum be &lt;strong&gt;ToInt32&lt;/strong&gt;(lval).&lt;/li&gt;
-    &lt;li&gt;Let rnum be &lt;strong&gt;ToInt32&lt;/strong&gt;(rval).&lt;/li&gt;
-    &lt;li&gt;Return the result of applying the bitwise operator @ to lnum and rnum. The result is a signed 32 bit integer.&lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;需要注意的是第5和第6步，按照ES标准，两个需要运算的值会被先转为&lt;strong&gt;有符号的32位整型&lt;/strong&gt;。所以超过32位的整数会被截断，而小数部分则会被直接舍弃。&lt;/p&gt;
-
-&lt;p&gt;而反过来考虑，我们在什么情况下需要用到位操作符？使用左移来代替 2 的幂的乘法？Naive啊，等遇到像第一个例子的问题，你就要抓狂了。而且对一个浮点数进行左移操作是否比直接乘 2 来得效率高，这也是个值得商榷的问题。&lt;/p&gt;
-
-&lt;p&gt;那用来表示标志位呢？首先，现在的内存大小已经不值得我们用精简几个变量来减少存储空间了；其次呢，使用标志位也会使得代码的可读性大大下降。再者，在 JavaScript 中使用位操作符的地方毕竟太少，如果你执意使用位操作符，未来维护这段代码的人又对 JS 中的位操作符的坑不熟悉，这也会造成不利的影响。&lt;/p&gt;
-
-&lt;p&gt;所以，我对大家的建议是，尽量在 JavaScript 中别使用位操作符。&lt;/p&gt;
-
-&lt;h2 id=&quot;section-2&quot;&gt;参考资料&lt;/h2&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;a href=&quot;http://zh.wikipedia.org/wiki/%E9%9B%99%E7%B2%BE%E5%BA%A6%E6%B5%AE%E9%BB%9E%E6%95%B8&quot;&gt;维基百科：双精度浮点数&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Data_structures&quot;&gt;MDN：JavaScript数据结构&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Bitwise_Operators&quot;&gt;MDN：按位操作符&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/questions/18591924/how-to-use-bitmask&quot;&gt;How to use bitmask?&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://www.ecma-international.org/ecma-262/5.1/#sec-11.10&quot;&gt;ECMAScript® Language Specification - 11.10 Binary Bitwise Operators&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-</description>
-        <pubDate>Fri, 15 May 2015 23:13:35 +0000</pubDate>
-        <link>http://jerryzou.com/posts/do-you-really-want-use-bit-operators-in-JavaScript/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/do-you-really-want-use-bit-operators-in-JavaScript/</guid>
       </item>
     
   </channel>

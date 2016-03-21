@@ -2,6 +2,15 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     
     <url>
+        <loc>http://jerryzou.com/posts/record-and-playback-for-kinect/</loc>
+        
+        <lastmod>2016-03-21T23:20:00Z</lastmod>
+        
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    
+    <url>
         <loc>http://jerryzou.com/posts/introduction-to-hit-kounter/</loc>
         
         <lastmod>2016-02-27T13:20:00Z</lastmod>

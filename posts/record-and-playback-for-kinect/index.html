@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+        
+            Kinect 数据录制与回放 | 咀嚼之味
+        </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="最近在实验室用深度相机做一些三维重建的研究，主要的实验场景在宝山区的仓库。学校到仓库的来回车程大概有三四个小时，如果每次都要到实际场景中来测试算法，这真是着实令人头疼。所以我想着，如果能用 Kinect 把仓库中的场景录制下来，回来直接读取录好的数据，那不就不用来回跑了吗？ ">
+    <link rel="alternate" type="application/rss+xml" title="咀嚼之味 RSS" href="/feed.xml">
+    <link rel="canonical" href="http://jerryzou.com/posts/record-and-playback-for-kinect/">
+    <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/release/style.619b7be8.css">
+
+    <!-- Baidu Analysis -->
+    <script>
+        if (window.location.href.substr(7, 9) !== 'localhost') {
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?2744fd74aa568e064f9986394a60ead1";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+            })();
+        }
+    </script>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-47842677-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+    <!-- Hit Kounter -->
+    <script src="http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-0.1.1.js"></script>
+    
+    <!-- handle external js files -->
+    <script src="/assets/js/lib/jquery/jquery-1.11.1.min.js"></script>
+
+    <!-- help function for jsonp -->
+    <script>
+        var jsonp = function(url, args) {
+            var head = document.getElementsByTagName('head')[0],
+                    script = document.createElement("script"),
+                    first = true,
+                    value;
+
+            for (var key in args) {
+                if (args.hasOwnProperty(key)) {
+                    value = encodeURIComponent(args[key]);
+                    url += first ? ('?' + key + '=' + value) : ('&' + key + '=' + value);
+                    first = false;
+                }
+            }
+            script.src= url;
+            head.appendChild(script);
+        }
+    </script>
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+  <div class="wrap">
+    <a class="site-title" href="/">咀嚼之味</a>
+    <nav class="site-nav">
+      <div class="trigger">
+        <a class="page-link" href="/">首页</a>
+        
+          
+          <a class="page-link" href="/all-articles/">所有文章</a>
+          
+        
+          
+          <a class="page-link" href="/skill/">技能图谱</a>
+          
+        
+          
+          <a class="page-link" href="/about/">关于我</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          <a class="page-link" href="/feed.xml">RSS订阅</a>
+      </div>
+    </nav>
+  </div>
+  <!-- fork me on github -->
+  <a id="fork-me" href="https://github.com/zry656565/heaven-blog"><img src="http://jerryblog-image.b0.upaiyun.com/blog/forkme.png" alt="Fork me on GitHub"></a>
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+        
+        <div class="post">
+
+  <header class="post-header">
+    <h1>Kinect 数据录制与回放</h1>
+    <p class="meta">Mar 21, 2016 <span class="pause"> - </span>
+        浏览量：<span data-hk-page="current"> - </span>次<span class="pause"> | </span>
+        
+            
+                <a class="label" href="/all-articles/?label=Kinect">Kinect</a>
+            
+                <a class="label" href="/all-articles/?label=C#">C#</a>
+            
+                <a class="label" href="/all-articles/?label=xef">xef</a>
+            
+        
+    </p>
+  </header>
+
+  <article class="post-content">
+  <p>最近在实验室用深度相机做一些三维重建的研究，主要的实验场景在宝山区的仓库。学校到仓库的来回车程大概有三四个小时，如果每次都要到实际场景中来测试算法，这真是着实令人头疼。所以我想着，如果能用 Kinect 把仓库中的场景录制下来，回来直接用录好的数据来测试算法，那不就不用来回跑了吗？接下来就来讲讲如何完成这件事。</p>
+
+<p>首先，我的实验环境是：</p>
+
+<ul>
+  <li>操作系统：Windows 10</li>
+  <li>IDE：Visual Studio 2013 community 版本</li>
+  <li>Kinect 版本：2.0</li>
+  <li>编程语言：C#</li>
+</ul>
+
+<h2 id="section">录制</h2>
+
+<p>录制数据相对来说比较简单，我们只需要借助 Kinect for Windows SDK 自带的 <strong>Kinect Studio</strong> 就可以达成这一目的。</p>
+
+<p>你可以依照下图的三个小步骤来录制你想要的场景数据；等录制完毕以后，你可以在 <code>C:\Users\${你的用户名}\Documents\Kinect Studio\Repository</code> 下找到你录制好的 xef 文件，比如我刚刚录制的 <code>20160317_111153_00.xef</code></p>
+
+<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/kinect-studio.png" alt="Kinect Studio Sample" /></p>
+
+<h2 id="section-1">回放</h2>
+
+<p><strong>实现回放的原理</strong>：我们在正常使用 Kinect 的过程中，每当 Kinect 采集到一帧画面，就会触发一下 <code>FrameArrived</code> 事件。而我们写的程序总是会通过一个 <code>FrameReader</code> 来响应每一帧画面所触发的事件。所以只要通过读取 <strong>xef</strong> 文件中的数据，模拟触发 <code>FrameArrived</code> 事件；从而做到几乎不修改原本的代码，就能在原来程序中回放录制的场景。</p>
+
+<p>正常来说，<strong>xef</strong> 文件只能在 Kinect Studio 中播放出来。不过 Kinect 开发小组的成员 Carmine 在 MSDN 上发布了一些能够读取 <code>xef</code> 的示例代码。接下来我就来讲解一下具体的步骤：</p>
+
+<ol>
+  <li>将项目的编译版本修改为 <strong>x64</strong> （否则你会得到 BadImageFormatException 错误）</li>
+  <li>找到 Kinect Studio 的安装目录 (e.g. C:\Program Files\Microsoft SDKs\Kinect\v2.0_1409\Tools\KinectStudio).</li>
+  <li>将 <strong>Microsoft.Kinect.Tools.dll</strong> 引入你的项目 (如下图)</li>
+  <li>将 <strong>KStudioService.dll</strong> 复制到你的 Debug / Release 文件夹</li>
+</ol>
+
+<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/vs-reference.png" alt="add References to your project" /></p>
+
+<p>接下来，你需要编写一些代码来调用回放的功能。以官方的例子 <strong>DepthBasics-WPF</strong> 为例，首先你需要定义一个新的类，并在这个类中定义一个静态方法，如下所示：</p>
+
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="cm">/******</span>
+<span class="cm"> * PlaybackClip.cs</span>
+<span class="cm"> */</span>
+
+<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.Kinect.Tools</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Microsoft.Samples.Kinect.DepthBasics</span>
+<span class="p">{</span>
+    <span class="k">class</span> <span class="nc">PlaybackHelper</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">PlaybackClip</span><span class="p">(</span><span class="kt">string</span> <span class="n">filePath</span><span class="p">,</span> <span class="kt">uint</span> <span class="n">loopCount</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">using</span> <span class="p">(</span><span class="n">KStudioClient</span> <span class="n">client</span> <span class="p">=</span> <span class="n">KStudio</span><span class="p">.</span><span class="n">CreateClient</span><span class="p">())</span>
+            <span class="p">{</span>
+                <span class="n">client</span><span class="p">.</span><span class="n">ConnectToService</span><span class="p">();</span>
+                
+                <span class="k">using</span> <span class="p">(</span><span class="n">KStudioPlayback</span> <span class="n">playback</span> <span class="p">=</span> <span class="n">client</span><span class="p">.</span><span class="n">CreatePlayback</span><span class="p">(</span><span class="n">filePath</span><span class="p">))</span>
+                <span class="p">{</span>
+                    <span class="n">playback</span><span class="p">.</span><span class="n">LoopCount</span> <span class="p">=</span> <span class="n">loopCount</span><span class="p">;</span>
+                    <span class="n">playback</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
+        
+                    <span class="k">while</span> <span class="p">(</span><span class="n">playback</span><span class="p">.</span><span class="n">State</span> <span class="p">==</span> <span class="n">KStudioPlaybackState</span><span class="p">.</span><span class="n">Playing</span><span class="p">)</span>
+                    <span class="p">{</span>
+                        <span class="n">Thread</span><span class="p">.</span><span class="n">Sleep</span><span class="p">(</span><span class="m">500</span><span class="p">);</span>
+                    <span class="p">}</span>
+        
+                    <span class="k">if</span> <span class="p">(</span><span class="n">playback</span><span class="p">.</span><span class="n">State</span> <span class="p">==</span> <span class="n">KStudioPlaybackState</span><span class="p">.</span><span class="n">Error</span><span class="p">)</span>
+                    <span class="p">{</span>
+                        <span class="k">throw</span> <span class="k">new</span> <span class="nf">InvalidOperationException</span><span class="p">(</span><span class="s">&quot;Error: Playback failed!&quot;</span><span class="p">);</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+        
+                <span class="n">client</span><span class="p">.</span><span class="n">DisconnectFromService</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+<p>最后，你需要在现有的代码中使用 <code>PlaybackHelper.PlaybackClip</code> 方法来帮助你回放之前的数据。此处的示例代码在检测不到 Kinect 设备时会 <strong>启用一个新线程</strong> 来回放指定的数据，并指定循环回放 10 次，你可以根据需要进行修改。</p>
+
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="cm">/***</span>
+<span class="cm"> * MainWindow.xaml.cs</span>
+<span class="cm"> */</span>
+ 
+<span class="k">namespace</span> <span class="nn">Microsoft.Samples.Kinect.DepthBasics</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">MainWindow</span> <span class="p">:</span> <span class="n">Window</span><span class="p">,</span> <span class="n">INotifyPropertyChanged</span>
+    <span class="p">{</span>
+        <span class="c1">// ... 此处省略若干示例中的代码</span>
+        <span class="k">public</span> <span class="nf">MainWindow</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="c1">// ... 此处省略若干示例中的代码</span>
+
+            <span class="c1">// 此处为需要添加的代码</span>
+            <span class="c1">//#begin</span>
+            <span class="k">if</span> <span class="p">(!</span><span class="k">this</span><span class="p">.</span><span class="n">kinectSensor</span><span class="p">.</span><span class="n">IsAvailable</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">Thread</span> <span class="n">playbackThread</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="p">(</span><span class="n">startPlayback</span><span class="p">);</span>
+                <span class="n">playbackThread</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
+            <span class="p">}</span>
+            <span class="c1">//#end</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 此处为需要添加的代码</span>
+        <span class="c1">//#begin</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">startPlayback</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">PlaybackHelper</span><span class="p">.</span><span class="n">PlaybackClip</span><span class="p">(</span><span class="s">&quot;${此处填写 xef 的路径}&quot;</span><span class="p">,</span> <span class="m">10</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="c1">//#end</span>
+        
+        <span class="c1">// ... 此处省略若干示例中的代码</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+<p>完成了以上这些以后，拔掉你的 Kinect 并重启你的程序。如果程序依然能够很顺利的执行，那么恭喜你，你成功啦！</p>
+
+<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/kinect-result.jpg!0.5" alt="Sample Result" /></p>
+
+<h2 id="section-2">参考文献</h2>
+
+<ul>
+  <li><a href="http://stackoverflow.com/questions/27280689/kinect-v2-read-out-data-from-xef-files">Stackoverflow - Kinect v2, read out data from .xef files</a></li>
+  <li><a href="https://social.msdn.microsoft.com/Forums/en-US/59c97d1e-79f6-4dd0-8fae-73080a2c7b18/documentation-for-microsoftkinecttools-api?forum=kinectv2sdk&amp;prof=required">MSDN - Sample codes from Carmine</a></li>
+</ul>
+
+
+  </article>
+
+  
+  <p class="copyright">
+    本文的版权归作者 <a href="mailto:jerry.zry@outlook.com">邹润阳</a> 所有，采用 <a href="http://creativecommons.org/licenses/by-nc/3.0/">Attribution-NonCommercial 3.0 License</a>。任何人可以进行转载、分享，但不可在未经允许的情况下用于商业用途；转载请注明出处。感谢配合！
+  </p>
+  
+
+  
+    <div class="ds-thread" data-thread-key="10036" data-title="Kinect 数据录制与回放" data-url="http://jerryzou.com/posts/record-and-playback-for-kinect/"></div>
+<script>
+var duoshuoQuery = {short_name:"jerryzou"};
+(function() {
+  var ds = document.createElement('script');
+  ds.type = 'text/javascript';ds.async = true;
+  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  ds.charset = 'UTF-8';
+  (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+  
+</div>
+
+        
+      </div>
+    </div>
+
+    <footer class="site-footer">
+    <div class="wrap">
+        <ul class="friend-links footer-text">
+            <li><a href="//ysyjerry1992.github.io/">Yusiyuan</a></li>
+            <li><a href="//blog.liqiang.me/">Jayce Li</a></li>
+            <li><a href="//zhangwenli.com/">羡辙</a></li>
+            <li><a href="//xidui.github.io/">xidui</a></li>
+            <li><a href="//www.dozer.cc/">Dozer</a></li>
+            <li><a href="//leuisken.github.io/">LeuisKen</a></li>
+            <li><a href="//www.yiqixxx.com/">一起网</a></li>
+            <li><a href="//dianying.taobao.com">淘宝电影</a></li>
+            <li><a href="//efe.baidu.com/">Baidu EFE</a></li>
+            <li><a href="//fex.baidu.com/">Baidu FEX</a></li>
+            <li><a href="//91stw.net">科学看世界</a></li>
+        </ul>
+        <p class="footer-text">Powered by <a href="http://jekyllrb.com/">Jekyll</a> , <a href="https://pages.github.com/">Github Pages</a> and <a href="https://www.upyun.com/">UPYUN</a>.</p>
+    </div>
+</footer>
+
+    </body>
+</html>
