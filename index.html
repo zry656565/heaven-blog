@@ -42,31 +42,12 @@
         ga('send', 'pageview');
     </script>
 
-    <!-- Hit Kounter -->
-    <script src="http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-0.1.1.js"></script>
+    <!-- Hit Kounter LC -->
+    <script src="https://cdn1.lncld.net/static/js/av-mini-0.6.10.js"></script>
+    <script src="http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.2.0.js"></script>
     
     <!-- handle external js files -->
     <script src="/assets/js/lib/jquery/jquery-1.11.1.min.js"></script>
-
-    <!-- help function for jsonp -->
-    <script>
-        var jsonp = function(url, args) {
-            var head = document.getElementsByTagName('head')[0],
-                    script = document.createElement("script"),
-                    first = true,
-                    value;
-
-            for (var key in args) {
-                if (args.hasOwnProperty(key)) {
-                    value = encodeURIComponent(args[key]);
-                    url += first ? ('?' + key + '=' + value) : ('&' + key + '=' + value);
-                    first = false;
-                }
-            }
-            script.src= url;
-            head.appendChild(script);
-        }
-    </script>
 </head>
 
 
@@ -127,14 +108,12 @@
         <p class="post-date">Posted on Mar 21, 2016 ;
             浏览量: <span data-hk-page="http://jerryzou.com/posts/record-and-playback-for-kinect/"> - </span>次
         	
-        	<a href="/all-articles/?label=Kinect"><span class="post-label">Kinect</span></a>
+        	<a href="/all-articles/?label=博客"><span class="post-label">博客</span></a>
         	
-        	<a href="/all-articles/?label=C#"><span class="post-label">C#</span></a>
-        	
-        	<a href="/all-articles/?label=xef"><span class="post-label">xef</span></a>
+        	<a href="/all-articles/?label=JavaScript"><span class="post-label">JavaScript</span></a>
         	
         </p>
-        <p class="post-description">最近在实验室用深度相机做一些三维重建的研究，主要的实验场景在宝山区的仓库。学校到仓库的来回车程大概有三四个小时，如果每次都要到实际场景中来测试算法，这真是着实令人头疼。所以我想着，如果能用 Kinect 把仓库中的场景录制下来，回来直接读取录好的数据，那不就不用来回跑了吗？ <a class="post-link2" href="/posts/record-and-playback-for-kinect/">[继续阅读...]</a></p>
+        <p class="post-description">最近在实验室用深度相机做一些三维重建的研究，主要的实验场景在宝山区的仓库。学校到仓库的来回车程大概有三四个小时，如果每次都要到实际场景中来测试算法，这真是着实令人头疼。所以我想着，如果能用 Kinect 把仓库中的场景录制下来，回来直接用录好的数据来测试算法，那不就不用来回跑了吗？ <a class="post-link2" href="/posts/record-and-playback-for-kinect/">[继续阅读...]</a></p>
       </li>
       
     

@@ -9,7 +9,7 @@
             Kinect 数据录制与回放 | 咀嚼之味
         </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="description" content="最近在实验室用深度相机做一些三维重建的研究，主要的实验场景在宝山区的仓库。学校到仓库的来回车程大概有三四个小时，如果每次都要到实际场景中来测试算法，这真是着实令人头疼。所以我想着，如果能用 Kinect 把仓库中的场景录制下来，回来直接读取录好的数据，那不就不用来回跑了吗？ ">
+    <meta name="description" content="最近在实验室用深度相机做一些三维重建的研究，主要的实验场景在宝山区的仓库。学校到仓库的来回车程大概有三四个小时，如果每次都要到实际场景中来测试算法，这真是着实令人头疼。所以我想着，如果能用 Kinect 把仓库中的场景录制下来，回来直接用录好的数据来测试算法，那不就不用来回跑了吗？ ">
     <link rel="alternate" type="application/rss+xml" title="咀嚼之味 RSS" href="/feed.xml">
     <link rel="canonical" href="http://jerryzou.com/posts/record-and-playback-for-kinect/">
     <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
@@ -41,31 +41,12 @@
         ga('send', 'pageview');
     </script>
 
-    <!-- Hit Kounter -->
-    <script src="http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-0.1.1.js"></script>
+    <!-- Hit Kounter LC -->
+    <script src="https://cdn1.lncld.net/static/js/av-mini-0.6.10.js"></script>
+    <script src="http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.2.0.js"></script>
     
     <!-- handle external js files -->
     <script src="/assets/js/lib/jquery/jquery-1.11.1.min.js"></script>
-
-    <!-- help function for jsonp -->
-    <script>
-        var jsonp = function(url, args) {
-            var head = document.getElementsByTagName('head')[0],
-                    script = document.createElement("script"),
-                    first = true,
-                    value;
-
-            for (var key in args) {
-                if (args.hasOwnProperty(key)) {
-                    value = encodeURIComponent(args[key]);
-                    url += first ? ('?' + key + '=' + value) : ('&' + key + '=' + value);
-                    first = false;
-                }
-            }
-            script.src= url;
-            head.appendChild(script);
-        }
-    </script>
 </head>
 
 
@@ -124,11 +105,9 @@
         浏览量：<span data-hk-page="current"> - </span>次<span class="pause"> | </span>
         
             
-                <a class="label" href="/all-articles/?label=Kinect">Kinect</a>
+                <a class="label" href="/all-articles/?label=博客">博客</a>
             
-                <a class="label" href="/all-articles/?label=C#">C#</a>
-            
-                <a class="label" href="/all-articles/?label=xef">xef</a>
+                <a class="label" href="/all-articles/?label=JavaScript">JavaScript</a>
             
         
     </p>
@@ -156,14 +135,14 @@
 
 <h2 id="section-1">回放</h2>
 
-<p><strong>实现回放的原理</strong>：我们在正常使用 Kinect 的过程中，每当 Kinect 采集到一帧画面，就会触发一下 <code>FrameArrived</code> 事件。而我们写的程序总是会通过一个 <code>FrameReader</code> 来响应每一帧画面所触发的事件。所以只要通过读取 <strong>xef</strong> 文件中的数据，模拟触发 <code>FrameArrived</code> 事件；从而做到几乎不修改原本的代码，就能在原来程序中回放录制的场景。</p>
+<p><strong>实现回放的原理：</strong> 我们在正常使用 Kinect 的过程中，每当 Kinect 采集到一帧画面，就会触发一下 <code>FrameArrived</code> 事件。而我们写的程序总是会通过一个 <code>FrameReader</code> 来响应每一帧画面所触发的事件。所以只要通过读取 <strong>xef</strong> 文件中的数据，模拟触发 <code>FrameArrived</code> 事件；从而做到几乎不修改原本的代码，就能在原来程序中回放录制的场景。</p>
 
 <p>正常来说，<strong>xef</strong> 文件只能在 Kinect Studio 中播放出来。不过 Kinect 开发小组的成员 Carmine 在 MSDN 上发布了一些能够读取 <code>xef</code> 的示例代码。接下来我就来讲解一下具体的步骤：</p>
 
 <ol>
-  <li>将项目的编译版本修改为 <strong>x64</strong> （否则你会得到 BadImageFormatException 错误）</li>
-  <li>找到 Kinect Studio 的安装目录 (e.g. C:\Program Files\Microsoft SDKs\Kinect\v2.0_1409\Tools\KinectStudio).</li>
-  <li>将 <strong>Microsoft.Kinect.Tools.dll</strong> 引入你的项目 (如下图)</li>
+  <li>将项目的编译版本修改为 <strong>x64</strong> (否则你会得到 BadImageFormatException 错误)</li>
+  <li>找到 Kinect Studio 的安装目录 (e.g. C:\Program Files\Microsoft SDKs\Kinect\v2.0_1409\Tools\KinectStudio)</li>
+  <li>将 <strong>Microsoft.Kinect.Tools.dll</strong> 引入你的项目 (见下图)</li>
   <li>将 <strong>KStudioService.dll</strong> 复制到你的 Debug / Release 文件夹</li>
 </ol>
 
@@ -191,25 +170,25 @@
         <span class="p">{</span>
             <span class="k">using</span> <span class="p">(</span><span class="n">KStudioClient</span> <span class="n">client</span> <span class="p">=</span> <span class="n">KStudio</span><span class="p">.</span><span class="n">CreateClient</span><span class="p">())</span>
             <span class="p">{</span>
-                <span class="n">client</span><span class="p">.</span><span class="n">ConnectToService</span><span class="p">();</span>
-                
-                <span class="k">using</span> <span class="p">(</span><span class="n">KStudioPlayback</span> <span class="n">playback</span> <span class="p">=</span> <span class="n">client</span><span class="p">.</span><span class="n">CreatePlayback</span><span class="p">(</span><span class="n">filePath</span><span class="p">))</span>
-                <span class="p">{</span>
-                    <span class="n">playback</span><span class="p">.</span><span class="n">LoopCount</span> <span class="p">=</span> <span class="n">loopCount</span><span class="p">;</span>
-                    <span class="n">playback</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
+               <span class="n">client</span><span class="p">.</span><span class="n">ConnectToService</span><span class="p">();</span>
+               
+               <span class="k">using</span> <span class="p">(</span><span class="n">KStudioPlayback</span> <span class="n">playback</span> <span class="p">=</span> <span class="n">client</span><span class="p">.</span><span class="n">CreatePlayback</span><span class="p">(</span><span class="n">filePath</span><span class="p">))</span>
+               <span class="p">{</span>
+                   <span class="n">playback</span><span class="p">.</span><span class="n">LoopCount</span> <span class="p">=</span> <span class="n">loopCount</span><span class="p">;</span>
+                   <span class="n">playback</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
         
-                    <span class="k">while</span> <span class="p">(</span><span class="n">playback</span><span class="p">.</span><span class="n">State</span> <span class="p">==</span> <span class="n">KStudioPlaybackState</span><span class="p">.</span><span class="n">Playing</span><span class="p">)</span>
-                    <span class="p">{</span>
-                        <span class="n">Thread</span><span class="p">.</span><span class="n">Sleep</span><span class="p">(</span><span class="m">500</span><span class="p">);</span>
-                    <span class="p">}</span>
+                   <span class="k">while</span> <span class="p">(</span><span class="n">playback</span><span class="p">.</span><span class="n">State</span> <span class="p">==</span> <span class="n">KStudioPlaybackState</span><span class="p">.</span><span class="n">Playing</span><span class="p">)</span>
+                   <span class="p">{</span>
+                       <span class="n">Thread</span><span class="p">.</span><span class="n">Sleep</span><span class="p">(</span><span class="m">500</span><span class="p">);</span>
+                   <span class="p">}</span>
         
-                    <span class="k">if</span> <span class="p">(</span><span class="n">playback</span><span class="p">.</span><span class="n">State</span> <span class="p">==</span> <span class="n">KStudioPlaybackState</span><span class="p">.</span><span class="n">Error</span><span class="p">)</span>
-                    <span class="p">{</span>
-                        <span class="k">throw</span> <span class="k">new</span> <span class="nf">InvalidOperationException</span><span class="p">(</span><span class="s">&quot;Error: Playback failed!&quot;</span><span class="p">);</span>
-                    <span class="p">}</span>
-                <span class="p">}</span>
+                   <span class="k">if</span> <span class="p">(</span><span class="n">playback</span><span class="p">.</span><span class="n">State</span> <span class="p">==</span> <span class="n">KStudioPlaybackState</span><span class="p">.</span><span class="n">Error</span><span class="p">)</span>
+                   <span class="p">{</span>
+                       <span class="k">throw</span> <span class="k">new</span> <span class="nf">InvalidOperationException</span><span class="p">(</span><span class="s">&quot;Error: Playback failed!&quot;</span><span class="p">);</span>
+                   <span class="p">}</span>
+               <span class="p">}</span>
         
-                <span class="n">client</span><span class="p">.</span><span class="n">DisconnectFromService</span><span class="p">();</span>
+               <span class="n">client</span><span class="p">.</span><span class="n">DisconnectFromService</span><span class="p">();</span>
             <span class="p">}</span>
         <span class="p">}</span>
     <span class="p">}</span>
@@ -226,7 +205,7 @@
     <span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">MainWindow</span> <span class="p">:</span> <span class="n">Window</span><span class="p">,</span> <span class="n">INotifyPropertyChanged</span>
     <span class="p">{</span>
         <span class="c1">// ... 此处省略若干示例中的代码</span>
-        <span class="k">public</span> <span class="nf">MainWindow</span><span class="p">()</span>
+		<span class="k">public</span> <span class="nf">MainWindow</span><span class="p">()</span>
         <span class="p">{</span>
             <span class="c1">// ... 此处省略若干示例中的代码</span>
 
@@ -252,7 +231,7 @@
     <span class="p">}</span>
 <span class="p">}</span></code></pre></div>
 
-<p>完成了以上这些以后，拔掉你的 Kinect 并重启你的程序。如果程序依然能够很顺利的执行，那么恭喜你，你成功啦！</p>
+<p>完成了以上这些以后，拔掉你的 Kinect 并重启你的程序。如果程序依然能够很顺利的执行，<strong>那么恭喜你，你成功啦</strong>！</p>
 
 <p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/kinect-result.jpg!0.5" alt="Sample Result" /></p>
 

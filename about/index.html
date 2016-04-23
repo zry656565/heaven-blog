@@ -42,31 +42,12 @@
         ga('send', 'pageview');
     </script>
 
-    <!-- Hit Kounter -->
-    <script src="http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-0.1.1.js"></script>
+    <!-- Hit Kounter LC -->
+    <script src="https://cdn1.lncld.net/static/js/av-mini-0.6.10.js"></script>
+    <script src="http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.2.0.js"></script>
     
     <!-- handle external js files -->
     <script src="/assets/js/lib/jquery/jquery-1.11.1.min.js"></script>
-
-    <!-- help function for jsonp -->
-    <script>
-        var jsonp = function(url, args) {
-            var head = document.getElementsByTagName('head')[0],
-                    script = document.createElement("script"),
-                    first = true,
-                    value;
-
-            for (var key in args) {
-                if (args.hasOwnProperty(key)) {
-                    value = encodeURIComponent(args[key]);
-                    url += first ? ('?' + key + '=' + value) : ('&' + key + '=' + value);
-                    first = false;
-                }
-            }
-            script.src= url;
-            head.appendChild(script);
-        }
-    </script>
 </head>
 
 
