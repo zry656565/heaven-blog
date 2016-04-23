@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+        
+            访问量统计工具 Hit Kounter v0.2 | 咀嚼之味
+        </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="Hit Kounter 是一个简单的访问量统计工具。据我从数据库里的数据目测，现在已经拥有了 9 位用户！不过我要对这九位用户说声抱歉啦。Hit Kounter 原本部署于 SAE 上，而近期 SAE 针对使用 MySQL 的应用开始收费。本项目只是一个本人使用业余时间开发的小工具；它本身包含的功能也很精简，并不适合使用付费服务。所以我已经将 Hit Kounter 服务迁移至 LeanCloud 上。原本部署在 SAE 上的服务预计在五一假期后下线，对已经使用 Hit Kounter 的一些用户，我再次表达我的歉意！使用方式上，目前 v0.2 版本相比于 v0.1 并没有什么改变… ">
+    <link rel="alternate" type="application/rss+xml" title="咀嚼之味 RSS" href="/feed.xml">
+    <link rel="canonical" href="http://jerryzou.com/posts/introduction-to-hit-kounter-lc/">
+    <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/release/style.619b7be8.css">
+
+    <!-- Baidu Analysis -->
+    <script>
+        if (window.location.href.substr(7, 9) !== 'localhost') {
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?2744fd74aa568e064f9986394a60ead1";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+            })();
+        }
+    </script>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-47842677-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+    <!-- Hit Kounter LC -->
+    <script src="https://cdn1.lncld.net/static/js/av-mini-0.6.10.js"></script>
+    <script src="http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.2.0.js"></script>
+    
+    <!-- handle external js files -->
+    <script src="/assets/js/lib/jquery/jquery-1.11.1.min.js"></script>
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+  <div class="wrap">
+    <a class="site-title" href="/">咀嚼之味</a>
+    <nav class="site-nav">
+      <div class="trigger">
+        <a class="page-link" href="/">首页</a>
+        
+          
+          <a class="page-link" href="/all-articles/">所有文章</a>
+          
+        
+          
+          <a class="page-link" href="/skill/">技能图谱</a>
+          
+        
+          
+          <a class="page-link" href="/about/">关于我</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          <a class="page-link" href="/feed.xml">RSS订阅</a>
+      </div>
+    </nav>
+  </div>
+  <!-- fork me on github -->
+  <a id="fork-me" href="https://github.com/zry656565/heaven-blog"><img src="http://jerryblog-image.b0.upaiyun.com/blog/forkme.png" alt="Fork me on GitHub"></a>
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+        
+        <div class="post">
+
+  <header class="post-header">
+    <h1>访问量统计工具 Hit Kounter v0.2</h1>
+    <p class="meta">Apr 24, 2016 <span class="pause"> - </span>
+        浏览量：<span data-hk-page="current"> - </span>次<span class="pause"> | </span>
+        
+            
+                <a class="label" href="/all-articles/?label=博客">博客</a>
+            
+                <a class="label" href="/all-articles/?label=JavaScript">JavaScript</a>
+            
+        
+    </p>
+  </header>
+
+  <article class="post-content">
+  <p><strong>Hit Kounter</strong> 是一个简单的访问量统计工具。据我从数据库里的数据目测，现在已经拥有了 <strong>9 位用户</strong>！不过我要对这九位用户说声抱歉啦。</p>
+
+<p>Hit Kounter 原本部署于 SAE 上，而近期 SAE 针对使用 MySQL 的应用开始收费。本项目只是一个本人使用业余时间开发的小工具；它本身包含的功能也很精简，并不适合使用付费服务。所以我已经将 Hit Kounter 服务迁移至 <strong>LeanCloud</strong> 上。原本部署在 SAE 上的服务预计在 <strong>五一假期</strong> 后下线，对已经使用 Hit Kounter 的一些用户，我再次表达我的歉意！</p>
+
+<p>由于此次改版改动比较大，我是 fork 了一份代码出来进行修改的；<strong>改版后的 Hit Kounter</strong> 在 Github 上仓库地址是 <a href="https://github.com/zry656565/Hit-Kounter-LC">zry656565/Hit-Kounter-LC</a>，区别于原来的 Hit Kounter PHP 版：<a href="https://github.com/zry656565/Hit-Kounter">zry656565/Hit-Kounter</a></p>
+
+<p>使用方式上，目前 <strong>v0.2</strong> 版本相比于 <strong>v0.1</strong> 并没有什么改变，接下来会从以下几个方面介绍一下：</p>
+
+<ul>
+  <li>如何为你的博客添加访问统计</li>
+  <li>Hit Kounter 的 JS 接口</li>
+  <li>如何从 v0.1.1 版本迁移到 v0.2.0</li>
+  <li>小结：Hit Kounter 的未来</li>
+</ul>
+
+<p>如果你是 Hit Kounter v0.1 的用户，可以直接阅读 <strong>如何从 v0.1.1 版本迁移到 v0.2.0</strong>。</p>
+
+<h2 id="section">如何为你的博客添加访问量统计</h2>
+
+<h4 id="section-1">1. 引入脚本</h4>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;https://cdn1.lncld.net/static/js/av-mini-0.6.10.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.2.0.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></div>
+
+<p>首先，在你的页面中引入这两个脚本，第一个脚本是 LeanCloud 的库脚本，引入了它我们才能使用 LeanCloud 的服务；由于你可能在每个页面都需要显示访问量，把它加入根模板也许是个不错的选择。</p>
+
+<h4 id="section-2">2. 显示当前页面的访问量</h4>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;span</span> <span class="na">data-hk-page=</span><span class="s">&quot;current&quot;</span><span class="nt">&gt;</span> - <span class="nt">&lt;/span&gt;</span></code></pre></div>
+
+<p>你可以在页面的任何地方插入这句 HTML 片段，你之前引入的脚本会自动检查当前页面上带有 <code>data-hk-*</code> 属性的元素，并针对你给出的属性值向服务器请求数据，最后把得到的结果替换到上面的标签内。可以参考 <a href="https://github.com/zry656565/heaven-blog/blob/5f19693ac0fb5723ef18d69b57106d2f95021400/_layouts/post.html#L9">我博客中的例子</a>。</p>
+
+<h4 id="section-3">3. 显示指定页面的访问量</h4>
+
+<p>如果你希望在文章列表页中显示各个页面的访问量分别是多少，那么你就要使用一个 url 来填充 <code>data-hk-page</code> 的属性值，就像这样：</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;span</span> <span class="na">data-hk-page=</span><span class="s">&quot;http://jerryzou.com/posts/design-for-all-mobile-resolution/&quot;</span><span class="nt">&gt;</span> - <span class="nt">&lt;/span&gt;</span></code></pre></div>
+
+<p>那么 Hit Kounter 检测到这个标签以后，就会向服务器请求该地址的具体访问量，并将默认值 ` - ` 替换为实际值。可以参考 <a href="https://github.com/zry656565/heaven-blog/blob/5f19693ac0fb5723ef18d69b57106d2f95021400/index.html#L13">我博客中的例子</a>。</p>
+
+<h2 id="hit-kounter--js-">Hit Kounter 的 JS 接口</h2>
+
+<p>Hit Kounter 会在全局注入 <code>Icarus</code> 对象，它是与服务器交互的数据接口。通过它，我们就可以直接向服务器发送请求。先看看下面这个例子：</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Icarus</span><span class="p">.</span><span class="nx">request</span><span class="p">({</span>
+  <span class="nx">api</span><span class="o">:</span> <span class="s1">&#39;hk.page.get&#39;</span><span class="p">,</span>
+  <span class="nx">v</span><span class="o">:</span> <span class="s1">&#39;1.0&#39;</span><span class="p">,</span>
+  <span class="nx">data</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">pages</span><span class="o">:</span> <span class="p">[</span>
+      <span class="p">{</span> <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;http://test.com/1&#39;</span> <span class="p">},</span>
+      <span class="p">{</span> <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;http://test.com/2&#39;</span> <span class="p">},</span>
+      <span class="p">{</span> <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;http://test.com/3&#39;</span> <span class="p">}</span>
+    <span class="p">]</span>
+  <span class="p">},</span>
+  <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">results</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">results</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">results</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">domain</span><span class="p">,</span> <span class="nx">results</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">url</span><span class="p">,</span> <span class="nx">results</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">count</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nx">failure</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">code</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">code</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span></code></pre></div>
+
+<p>上面这个例子中，我们主要是获取了三个页面的具体访问量；目前 <code>Icarus</code> 支持的接口有四个（具体可以参考 <a href="https://github.com/zry656565/Hit-Kounter-LC/wiki/Icarus:-APIs">Hit-Kounter-LC Wiki</a>）：</p>
+
+<ul>
+  <li>hk.page.increment</li>
+  <li>hk.page.get</li>
+  <li>hk.page.getTop</li>
+  <li>hk.page.getByDomain</li>
+</ul>
+
+<p>至于如何使用就由你们自由发挥啦。</p>
+
+<h2 id="v011--v020">如何从 v0.1.1 版本迁移到 v0.2.0</h2>
+
+<p>我已经把迁移的成本降到最低，只要替换引入的文件即可：</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!-- 老版本需要引入的文件 --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-0.1.1.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+
+<span class="c">&lt;!-- 新版本需要引入的文件 --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;https://cdn1.lncld.net/static/js/av-mini-0.6.10.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.2.0.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></div>
+
+<p>因为 v0.2 版本基于 LeanCloud 的服务，所以需要额外引入 LeanCloud 的一个库文件。另外需要注意的是，第二个文件除了版本号做了更新，还多了 <code>-lc</code> 几个字符哦。</p>
+
+<p>本次更新在将后端服务从 SAE 替换为 LeanCloud 的同时并没有做太多的功能改进。最主要的一点功能改进是引入缓存机制，在数据超过默认的五分钟之前，<strong>Icarus</strong> 不会向服务器发送新的 get 请求。（increment 请求当然还是照发不误的啦）</p>
+
+<h4 id="icarus-">以下内容请使用了 Icarus 接口的用户注意</h4>
+
+<p><strong>Icarus</strong> 接口所接受的多余的参数现在需要放在 <code>data</code> 对象中，注意对你之前的代码做一定修改。直接看例子可能比较直观：</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="cm">/*================</span>
+<span class="cm"> * 老版本调用方式</span>
+<span class="cm"> *================*/</span>
+<span class="nx">Icarus</span><span class="p">.</span><span class="nx">request</span><span class="p">({</span>
+  <span class="nx">api</span><span class="o">:</span> <span class="s1">&#39;hk.page.get&#39;</span><span class="p">,</span>
+  <span class="nx">v</span><span class="o">:</span> <span class="s1">&#39;1.0&#39;</span><span class="p">,</span>
+  <span class="nx">pages</span><span class="o">:</span> <span class="p">[</span>                          <span class="c1">// &lt;---</span>
+    <span class="p">{</span> <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;http://test.com/1&#39;</span> <span class="p">}</span>    <span class="c1">// &lt;---</span>
+  <span class="p">],</span>                                <span class="c1">// &lt;---</span>
+  <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">results</span><span class="p">)</span> <span class="p">{},</span>
+  <span class="nx">failure</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">code</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">});</span>
+
+<span class="cm">/*================</span>
+<span class="cm"> * 新版本调用方式</span>
+<span class="cm"> *================*/</span>
+<span class="nx">Icarus</span><span class="p">.</span><span class="nx">request</span><span class="p">({</span>
+  <span class="nx">api</span><span class="o">:</span> <span class="s1">&#39;hk.page.get&#39;</span><span class="p">,</span>
+  <span class="nx">v</span><span class="o">:</span> <span class="s1">&#39;1.0&#39;</span><span class="p">,</span>
+  <span class="nx">data</span><span class="o">:</span> <span class="p">{</span>                           <span class="c1">// &lt;---</span>
+    <span class="nx">pages</span><span class="o">:</span> <span class="p">[</span>                        <span class="c1">// &lt;---</span>
+      <span class="p">{</span> <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;http://test.com/1&#39;</span> <span class="p">}</span>  <span class="c1">// &lt;---</span>
+    <span class="p">]</span>                               <span class="c1">// &lt;---</span>
+  <span class="p">},</span>                                <span class="c1">// &lt;---</span>
+  <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">results</span><span class="p">)</span> <span class="p">{},</span>
+  <span class="nx">failure</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">code</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">});</span></code></pre></div>
+
+<h2 id="hit-kounter-">小结：Hit Kounter 的未来</h2>
+
+<p>当然，Hit Kounter 未来会加入越来越多的功能，包括但不限于：</p>
+
+<ul>
+  <li>添加一个能够获得全站的访问总量的 API</li>
+  <li>通过添加 <code>&lt;div data-hk-top-pages="5"&gt;</code> 这样一个元素，便能够将全站访问量最高的五个页面罗列在 <code>div</code> 框内。</li>
+  <li>为用户提供一个很方便的方式来导入初始的访问量数据</li>
+  <li>完善各种可能的错误信息（包括服务端和浏览器端的错误）</li>
+</ul>
+
+<p>TODO List 可以在 <a href="https://github.com/zry656565/Hit-Kounter-LC/issues/1">这个 issue</a> 中看到，而且因为 <a href="https://github.com/zry656565/Hit-Kounter">zry656565/Hit-Kounter-LC</a> 是开源项目，也很期待大家能够多吐槽，如果能给 <strong>Hit-Kounter-LC</strong> 贡献代码那就再好不过啦~。</p>
+
+  </article>
+
+  
+  <p class="copyright">
+    本文的版权归作者 <a href="mailto:jerry.zry@outlook.com">邹润阳</a> 所有，采用 <a href="http://creativecommons.org/licenses/by-nc/3.0/">Attribution-NonCommercial 3.0 License</a>。任何人可以进行转载、分享，但不可在未经允许的情况下用于商业用途；转载请注明出处。感谢配合！
+  </p>
+  
+
+  
+    <div class="ds-thread" data-thread-key="10037" data-title="访问量统计工具 Hit Kounter v0.2" data-url="http://jerryzou.com/posts/introduction-to-hit-kounter-lc/"></div>
+<script>
+var duoshuoQuery = {short_name:"jerryzou"};
+(function() {
+  var ds = document.createElement('script');
+  ds.type = 'text/javascript';ds.async = true;
+  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  ds.charset = 'UTF-8';
+  (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+  
+</div>
+
+        
+      </div>
+    </div>
+
+    <footer class="site-footer">
+    <div class="wrap">
+        <ul class="friend-links footer-text">
+            <li><a href="//ysyjerry1992.github.io/">Yusiyuan</a></li>
+            <li><a href="//blog.liqiang.me/">Jayce Li</a></li>
+            <li><a href="//zhangwenli.com/">羡辙</a></li>
+            <li><a href="//xidui.github.io/">xidui</a></li>
+            <li><a href="//www.dozer.cc/">Dozer</a></li>
+            <li><a href="//leuisken.github.io/">LeuisKen</a></li>
+            <li><a href="//www.yiqixxx.com/">一起网</a></li>
+            <li><a href="//dianying.taobao.com">淘宝电影</a></li>
+            <li><a href="//efe.baidu.com/">Baidu EFE</a></li>
+            <li><a href="//fex.baidu.com/">Baidu FEX</a></li>
+            <li><a href="//91stw.net">科学看世界</a></li>
+        </ul>
+        <p class="footer-text">Powered by <a href="http://jekyllrb.com/">Jekyll</a> , <a href="https://pages.github.com/">Github Pages</a> and <a href="https://www.upyun.com/">UPYUN</a>.</p>
+    </div>
+</footer>
+
+    </body>
+</html>

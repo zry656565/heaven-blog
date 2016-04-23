@@ -109,12 +109,18 @@
             
                 <a class="label" href="/all-articles/?label=JavaScript">JavaScript</a>
             
+                <a class="label" href="/all-articles/?label=PHP">PHP</a>
+            
         
     </p>
   </header>
 
   <article class="post-content">
-  <p>相信很多程序员朋友们都拥有了自己的技术博客。像 Hexo, Jekyll 这样的静态网站生成器甚是好用，而对于相对动态的内容，比如评论框，也有诸如多说和 Disqus 的工具可以使用。</p>
+  <blockquote>
+  <p><strong>2016.04.23 通告：</strong> Hit Kounter 原本部署于 SAE 上，而近期 SAE 针对使用 MySQL 的应用开始收费。本项目只是一个本人使用业余时间开发的小工具；它本身包含的功能也很精简，并不适合使用付费服务。所以我已经将 Hit Kounter 服务迁移至 <strong>LeanCloud</strong> 上，有兴趣的同学请移步最新的一篇博文 <a href="/posts/introduction-to-hit-kounter-lc">博客访问量统计工具 Hit Kounter v0.2</a> 查看最新版本的使用方法。原本部署在 SAE 上的服务预计在 <strong>五一假期</strong> 后下线，对已经使用 Hit Kounter 的一些用户，我深感抱歉！</p>
+</blockquote>
+
+<p>相信很多程序员朋友们都拥有了自己的技术博客。像 Hexo, Jekyll 这样的静态网站生成器甚是好用，而对于相对动态的内容，比如评论框，也有诸如多说和 Disqus 的工具可以使用。</p>
 
 <p>但是针对博客的访问量统计，却没有什么可用的工具。很多同学在我的博客中留言问我，我的博文中显示的访问量是怎么做到的？我曾经尝试依靠百度统计是不是能解决这个问题，然而我失败了。于是我自己用 PHP 写了一个很简单的服务来完成这件事，经过一次重构，我把它命名为 <a href="https://github.com/zry656565/Hit-Kounter">Hit Kounter</a>。</p>
 
@@ -160,9 +166,9 @@
     <span class="p">{</span> <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;http://test.com/2&#39;</span> <span class="p">},</span>
     <span class="p">{</span> <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;http://test.com/3&#39;</span> <span class="p">}</span>
   <span class="p">],</span>
-  <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">result</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">domain</span><span class="p">,</span> <span class="nx">result</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span> <span class="nx">result</span><span class="p">.</span><span class="nx">count</span><span class="p">);</span>
+  <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">results</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">results</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">results</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">domain</span><span class="p">,</span> <span class="nx">results</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">url</span><span class="p">,</span> <span class="nx">results</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">count</span><span class="p">);</span>
     <span class="p">}</span>
   <span class="p">},</span>
   <span class="nx">failure</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">code</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
