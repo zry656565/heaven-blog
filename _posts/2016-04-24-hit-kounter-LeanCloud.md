@@ -146,4 +146,4 @@ Icarus.request({
 - 为用户提供一个很方便的方式来导入初始的访问量数据
 - 完善各种可能的错误信息（包括服务端和浏览器端的错误）
 
-TODO List 可以在 [这个 issue](https://github.com/zry656565/Hit-Kounter-LC/issues/1) 中看到，而且因为 [zry656565/Hit-Kounter-LC](https://github.com/zry656565/Hit-Kounter) 是开源项目，也很期待大家能够多吐槽，如果能给 **Hit-Kounter-LC** 贡献代码那就再好不过啦~。
+TODO List 可以在 [这个 issue](https://github.com/zry656565/Hit-Kounter-LC/issues/1) 中看到，而且因为 [zry656565/Hit-Kounter-LC](https://github.com/zry656565/Hit-Kounter-LC) 是开源项目，也很期待大家能够多吐槽，如果能给 **Hit-Kounter-LC** 贡献代码那就再好不过啦~。
