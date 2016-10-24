@@ -183,11 +183,11 @@
 
 <p>安装好shadowsocks以后，启动shadowsocks服务可以通过以下指令：</p>
 
-<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">ssserver -p 8836 -k `password` -m rc4-md5</span>
+<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">ssserver -p 8836 -k 你设置的密码 -m rc4-md5</span>
 
 <span class="gp">#</span>或者可以通过以下指令在后台启动shadowsocks的服务：
-<span class="go">ssserver -p 8836 -k `password` -m rc4-md5 -d start</span>
-<span class="go">ssserver -p 8836 -k `password` -m rc4-md5 -d stop</span></code></pre></div>
+<span class="go">ssserver -p 8836 -k 你设置的密码 -m rc4-md5 -d start</span>
+<span class="go">ssserver -p 8836 -k 你设置的密码 -m rc4-md5 -d stop</span></code></pre></div>
 
 <p>但上面的方法很不方便，我还是推荐使用配置文件的方法。首先创建一个文件：/etc/shadowsocks.json，示例如下：</p>
 
@@ -259,18 +259,16 @@ var duoshuoQuery = {short_name:"jerryzou"};
     <footer class="site-footer">
     <div class="wrap">
         <ul class="friend-links footer-text">
-            <li><a href="//ysyjerry1992.github.io/">Yusiyuan</a></li>
             <li><a href="//blog.liqiang.me/">Jayce Li</a></li>
             <li><a href="//zhangwenli.com/">羡辙</a></li>
             <li><a href="//xidui.github.io/">xidui</a></li>
             <li><a href="//www.dozer.cc/">Dozer</a></li>
             <li><a href="//leuisken.github.io/">LeuisKen</a></li>
             <li><a href="//szhshp.org">szhshp</a></li>
-            <li><a href="//www.yiqixxx.com/">一起网</a></li>
             <li><a href="//dianying.taobao.com">淘宝电影</a></li>
+            <li><a href="//leetcode.com">LeetCode</a></li>
             <li><a href="//efe.baidu.com/">Baidu EFE</a></li>
             <li><a href="//fex.baidu.com/">Baidu FEX</a></li>
-            <li><a href="//91stw.net">科学看世界</a></li>
         </ul>
         <p class="footer-text">Powered by <a href="http://jekyllrb.com/">Jekyll</a> , <a href="https://pages.github.com/">Github Pages</a> and <a href="https://www.upyun.com/">UPYUN</a>.</p>
     </div>
