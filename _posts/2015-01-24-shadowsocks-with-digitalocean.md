@@ -87,11 +87,11 @@ pip install shadowsocks
 安装好shadowsocks以后，启动shadowsocks服务可以通过以下指令：
 
 {% highlight console %}
-ssserver -p 8836 -k `password` -m rc4-md5
+ssserver -p 8836 -k 你设置的密码 -m rc4-md5
 
 #或者可以通过以下指令在后台启动shadowsocks的服务：
-ssserver -p 8836 -k `password` -m rc4-md5 -d start
-ssserver -p 8836 -k `password` -m rc4-md5 -d stop
+ssserver -p 8836 -k 你设置的密码 -m rc4-md5 -d start
+ssserver -p 8836 -k 你设置的密码 -m rc4-md5 -d stop
 {% endhighlight %}
 
 但上面的方法很不方便，我还是推荐使用配置文件的方法。首先创建一个文件：/etc/shadowsocks.json，示例如下：
