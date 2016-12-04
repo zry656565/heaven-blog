@@ -43,13 +43,13 @@ module.exports = function(grunt) {
                 command: 'jekyll build'
             },
             jekyll_serve: {
-                command: 'jekyll serve --watch'
+                command: 'jekyll serve --incremental'
             },
             clean_tmp: {
                 command: 'rm -r .tmp'
             },
             react_parse: {
-                command: 'jsx pages/ build/'
+                command: './node_modules/react-tools/bin/jsx pages/ build/'
             },
             deploy: {
                 command: [

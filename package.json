@@ -13,7 +13,8 @@
     "grunt-contrib-copy": "^0.8.0",
     "grunt-filerev": "^2.3.0",
     "grunt-usemin": "^3.0.0",
-    "grunt-shell": "^1.1.1"
+    "grunt-shell": "^1.1.1",
+    "react-tools": "0.13.3"
   },
   "repository": {
     "type": "git",
