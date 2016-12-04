@@ -1,5 +1,5 @@
 ---
-date: 2015-11-26 00:20:00 UTC
+date: 2015-11-26 00:20:00 +0800
 title: 记一次作死 —— 被 Leetcode 封禁
 description: 从昨天凌晨四点起，我的 Leetcode 账号就无法提交任何代码了，于是我意识到我的账号大概是被封了……
 permalink: /posts/leetcode-benchmark/

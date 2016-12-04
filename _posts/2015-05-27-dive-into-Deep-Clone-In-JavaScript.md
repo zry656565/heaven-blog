@@ -1,5 +1,5 @@
 ---
-date: 2015-05-27 22:55:25 UTC
+date: 2015-05-27 22:55:25 +0800
 title: 深入剖析 JavaScript 的深复制
 description: 一年前我曾写过一篇 Javascript 中的一种深复制实现，当时写这篇文章的时候还比较稚嫩，有很多地方没有考虑仔细。为了不误人子弟，我决定结合 Underscore、lodash 和 jQuery 这些主流的第三方库来重新谈一谈在 JavaScript 中的深复制。
 permalink: /posts/dive-into-deep-clone-in-javascript/
@@ -9,11 +9,11 @@ labels: ["JavaScript", "深复制"]
 
 一年前我曾写过一篇 [Javascript 中的一种深复制实现](http://jerryzou.com/posts/deepcopy/)，当时写这篇文章的时候还比较稚嫩，有很多地方没有考虑仔细。为了不误人子弟，我决定结合 Underscore、lodash 和 jQuery 这些主流的第三方库来重新谈一谈这个问题。
 
-##第三方库的实现
+## 第三方库的实现
 
 讲一句唯心主义的话，放之四海而皆准的方法是不存在的，不同的深复制实现方法和实现粒度有各自的优劣以及各自适合的应用场景，所以本文并不是在教大家改如何实现深复制，而是将一些在 JavaScript 中实现深复制所需要考虑的问题呈献给大家。我们首先从较为简单的 Underscore 开始：
 
-###Underscore —— _.clone()
+### Underscore —— _.clone()
 
 在 Underscore 中有这样一个方法：`_.clone()`，这个方法实际上是一种浅复制 (shallow-copy)，所有嵌套的对象和数组都是直接复制引用而并没有进行深复制。来看一下例子应该会更加直观：
 
@@ -54,7 +54,7 @@ b[1].f = 55;
 console.log(JSON.stringify(a));  // [{"f":1},{"f":5},{"f":10}]
 {% endhighlight %}
 
-###jQuery —— $.clone() / $.extend()
+### jQuery —— $.clone() / $.extend()
 
 在 jQuery 中也有这么一个叫 `$.clone()` 的方法，可是它并不是用于一般的 JS 对象的深复制，而是用于 DOM 对象。这不是这篇文章的重点，所以感兴趣的同学可以参考[jQuery的文档](http://api.jquery.com/clone/)。与 Underscore 类似，我们也是可以通过 `$.extend()` 方法来完成深复制。值得庆幸的是，我们在 jQuery 中可以通过添加一个参数来实现**递归extend**。调用`$.extend(true, {}, ...)`就可以实现深复制啦，参考下面的例子：
 
@@ -74,7 +74,7 @@ z.b.f === x.b.f       // false
 
 在 [jQuery的源码 - src/core.js #L121](https://github.com/jquery/jquery/blob/1472290917f17af05e98007136096784f9051fab/src/core.js#L121) 文件中我们可以找到`$.extend()`的实现，也是实现得比较简洁，而且不太依赖于 jQuery 的内置函数，稍作修改就能拿出来单独使用。
 
-###lodash —— _.clone() / _.cloneDeep()
+### lodash —— _.clone() / _.cloneDeep()
 
 在lodash中关于复制的方法有两个，分别是`_.clone()`和`_.cloneDeep()`。其中`_.clone(obj, true)`等价于`_.cloneDeep(obj)`。使用上，lodash和前两者并没有太大的区别，但看了源码会发现，Underscore 的实现只有30行左右，而 jQuery 也不过60多行。可 lodash 中与深复制相关的代码却有上百行，这是什么道理呢？
 
@@ -136,7 +136,7 @@ var arrayBufferTag = '[object ArrayBuffer]',
     uint32Tag = '[object Uint32Array]';
 {% endhighlight %}
 
-##借助 JSON 全局对象
+## 借助 JSON 全局对象
 
 相比于上面介绍的三个库的做法，针对纯 JSON 数据对象的深复制，使用 JSON 全局对象的 `parse` 和 `stringify` 方法来实现深复制也算是一个简单讨巧的方法。然而使用这种方法会有一些隐藏的坑，它能正确处理的对象只有 Number, String, Boolean, Array, 扁平对象，即那些能够被 json 直接表示的数据结构。
 
@@ -147,7 +147,7 @@ function jsonClone(obj) {
 var clone = jsonClone({ a:1 });
 {% endhighlight %}
 
-##拥抱未来的深复制方法
+## 拥抱未来的深复制方法
 
 我自己实现了一个深复制的方法，因为用到了`Object.create`、`Object.isPrototypeOf`等比较新的方法，所以基本只能在 IE9+ 中使用。而且，我的实现是**直接定义在 prototype 上**的，很有可能引起大多数的前端同行们的不适。(关于这个我还曾在知乎上提问过：[为什么不要直接在Object.prototype上定义方法？](http://www.zhihu.com/question/26924011)）只是实验性质的，大家参考一下就好，改成非 prototype 版本也是很容易的，不过就是要不断地去**判断对象的类型**了。~
 
@@ -317,7 +317,7 @@ defineMethods([
 {% endhighlight %}
 
 
-##比较各个深复制方法
+## 比较各个深复制方法
 
 特性 | jQuery | lodash | JSON.parse | 所谓“拥抱未来的深复制实现”
 --- | :------: | :-----: | :-----: | :-------:
@@ -330,7 +330,7 @@ defineMethods([
 复制不可枚举元素 | × | × | × | × |
 复制函数 | × | × | × | × |
 
-##执行效率
+## 执行效率
 
 为了测试各种深复制方法的执行效率，我使用了如下的测试用例：
 
@@ -357,7 +357,7 @@ Test 2 | 505 | 270 | 690 | 345
 Test 3 | 456 | 268 | 650 | 332
 Average | 478.7 | 293 | 656.7 | 332.3
 
-##参考资料
+## 参考资料
 
 - [Underscore - clone](http://underscorejs.org/#clone)
 - [Stackoverflow - How do you clone an array of objects using underscore?](http://stackoverflow.com/questions/21003059/how-do-you-clone-an-array-of-objects-using-underscore)

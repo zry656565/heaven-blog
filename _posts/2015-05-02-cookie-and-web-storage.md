@@ -1,5 +1,5 @@
 ---
-date: 2015-05-02 22:28:35 UTC
+date: 2015-05-02 22:28:35 +0800
 title: 详说 Cookie, LocalStorage 与 SessionStorage
 description: 最近在找暑期实习，其中百度、网易游戏、阿里的面试都问到一些关于HTML5的东西，问题大多是这样开头的：“你用过什么HTML5的技术呀？” 而后，每次都能扯到 Cookie 和 localStorage 有啥差别。这篇文章就旨在详细地阐述这部分内容。
 permalink: /posts/cookie-and-web-storage/
@@ -9,13 +9,13 @@ labels: ["Cookie", "LocalStorage", "HTML5"]
 
 最近在找暑期实习，其中百度、网易游戏、阿里的面试都问到一些关于HTML5的东西，问题大多是这样开头的：“你用过什么HTML5的技术呀？” 而后，每次都能扯到 Cookie 和 localStorage 有啥差别。这篇文章就旨在详细地阐述这部分内容，而具体 Web Storage API 的使用可以参考[MDN的文档](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API)，就不在这篇文章中赘述了。
 
-##基本概念
+## 基本概念
 
-####Cookie
+#### Cookie
 
 Cookie 是小甜饼的意思。顾名思义，cookie 确实非常小，它的大小限制为4KB左右，是网景公司的前雇员 Lou Montulli 在1993年3月的发明。它的主要用途有保存登录信息，比如你登录某个网站市场可以看到“记住密码”，这通常就是通过在 Cookie 中存入一段辨别用户身份的数据来实现的。
 
-####localStorage
+#### localStorage
 
 localStorage 是 HTML5 标准中新加入的技术，它并不是什么划时代的新东西。早在 IE 6 时代，就有一个叫 userData 的东西用于本地存储，而当时考虑到浏览器兼容性，更通用的方案是使用 Flash。而如今，localStorage 被大多数浏览器所支持，如果你的网站需要支持 IE6+，那以 userData 作为你的 polyfill 的方案是种不错的选择。
 
@@ -24,11 +24,11 @@ localStorage 是 HTML5 标准中新加入的技术，它并不是什么划时代
 | localStorage | 4 | 3.5 | 8 | 10.50 | 4 |
 | sessionStorage | 5 | 2 | 8 | 10.50 | 4 |
 
-####sessionStorage
+#### sessionStorage
 
 sessionStorage 与 localStorage 的接口类似，但保存数据的生命周期与 localStorage 不同。做过后端开发的同学应该知道 Session 这个词的意思，直译过来是“会话”。而 sessionStorage 是一个前端的概念，它只是可以将一部分数据在当前会话中保存下来，刷新页面数据依旧存在。但当页面关闭后，sessionStorage 中的数据就会被清空。
 
-##三者的异同
+## 三者的异同
 
 <table>
 	<thead>
@@ -64,7 +64,7 @@ sessionStorage 与 localStorage 的接口类似，但保存数据的生命周期
 	</tbody>
 </table>
 
-####应用场景
+#### 应用场景
 
 有了对上面这些差别的直观理解，我们就可以讨论三者的应用场景了。
 
@@ -72,11 +72,11 @@ sessionStorage 与 localStorage 的接口类似，但保存数据的生命周期
 
 而另一方面 localStorage 接替了 Cookie 管理购物车的工作，同时也能胜任其他一些工作。比如HTML5游戏通常会产生一些本地数据，localStorage 也是非常适用的。如果遇到一些内容特别多的表单，为了优化用户体验，我们可能要把表单页面拆分成多个子页面，然后按步骤引导用户填写。这时候 sessionStorage 的作用就发挥出来了。
 
-##安全性的考虑
+## 安全性的考虑
 
 需要注意的是，不是什么数据都适合放在 Cookie、localStorage 和 sessionStorage 中的。使用它们的时候，需要时刻注意是否有代码存在 XSS 注入的风险。因为只要打开控制台，你就随意修改它们的值，也就是说如果你的网站中有 XSS 的风险，它们就能对你的 localStorage 肆意妄为。所以千万不要用它们存储你系统中的敏感数据。
 
-##参考资料
+## 参考资料
 - [what is the difference between localStorage, sessionStorage, session and cookie?](http://stackoverflow.com/questions/19867599/what-is-the-difference-between-localstorage-sessionstorage-session-and-cookie)
 - [HTML5 localStorage security](http://stackoverflow.com/questions/3718349/html5-localstorage-security)
 - [维基百科 - Cookie](http://zh.wikipedia.org/wiki/Cookie)

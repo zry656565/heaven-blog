@@ -1,5 +1,5 @@
 ---
-date: 2015-05-21 08:55:25 UTC
+date: 2015-05-21 08:55:25 +0800
 title: 论 CSS 中的逻辑
 description: 在过去的很长一段时间中，我们都说 CSS 是不带有任何逻辑的，意思是在 CSS 中没有控制流，也没有某种类似于其他编程语言的方式来组织 CSS。CSS 天生缺乏逻辑性的问题导致了预处理器的出现。然而业界却对 CSS 预处理器褒贬不一，支持预处理器的人认为这弥补了 CSS 缺失的特性；而反对预处理器的人则认为 CSS 的设计初衷就不应该带有逻辑性，他们认为根本不应该引入预处理器这个概念...
 permalink: /posts/cyclomatic-complexity-logic-in-css/
@@ -53,7 +53,7 @@ div.sidebar .login-box a.btn span {
 
 每当为选择器添加一层限制，其实我们也就是添加了额外的一个 `if` 语句。这会导致圈复杂度问题(Cyclomatic Complexity)。
 
-##圈复杂度
+## 圈复杂度
 
 在软件工程中，[圈复杂度](http://en.wikipedia.org/wiki/Cyclomatic_complexity)是一种程序复杂性的一种度量标准，它一般计算程序中的控制流的数量（如 `if`, `else`, `while` 等）。程序中存在越多的控制流，则圈复杂度就越高。我们自然想要保证圈复杂度能够尽量地低，因为圈复杂度越高：
 

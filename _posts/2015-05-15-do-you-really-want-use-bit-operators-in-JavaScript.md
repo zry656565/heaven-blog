@@ -1,5 +1,5 @@
 ---
-date: 2015-05-15 23:13:35 UTC
+date: 2015-05-15 23:13:35 +0800
 title: 为什么不要在 JavaScript 中使用位操作符？
 description: 如果你的第一门编程语言不是 JavaScript，而是 C++ 或 Java，那么一开始你大概会看不惯 JavaScript 的数字类型。在 JavaScript 中的数字类型是不区分什么 Int，Float，Double，Decimal 的。咳咳，我说的当然是在 ES6 之前的 JS，在 ES6 的新标准中提出了像 Int8Array 这样新的数据类型。不过这不是本文叙述的重点，暂且就不谈啦。本文将更着重地谈 JS 的数字类型以及作用于它的位操作符...
 permalink: /posts/do-you-really-want-use-bit-operators-in-JavaScript/
@@ -9,7 +9,7 @@ labels: ["JavaScript", "位操作符"]
 
 如果你的第一门编程语言不是 JavaScript，而是 C++ 或 Java，那么一开始你大概会看不惯 JavaScript 的数字类型。在 JavaScript 中的数字类型是不区分什么 Int，Float，Double，Decimal 的。咳咳，我说的当然是在 ES6 之前的 JS，在 ES6 的新标准中提出了像 Int8Array 这样新的数据类型。不过这不是本文叙述的重点，暂且就不谈啦。本文将更着重地谈 JS 的数字类型以及作用于它的位操作符，而关于包装对象 Number 的更多了解可以看拔赤翻译的[《JavaScript设计模式》](https://github.com/lxj/javascript.patterns/blob/master/chapter3.markdown#%E5%8E%9F%E5%A7%8B%E5%80%BC%E7%9A%84%E5%8C%85%E8%A3%85%E5%AF%B9%E8%B1%A1)
 
-##数字类型的本质
+## 数字类型的本质
 
 实际上，JavaScript的数字类型的本质就是一个**基于 IEEE 754 标准的双精度 64 位的浮点数**。按照标准，它的数据结构如图示这样：由1位符号位，11位指数部分以及52位尾数部分构成。
 
@@ -51,7 +51,7 @@ c33f ffff ffff ffff  =  -2^53 + 1 (= Number.MIN_SAFE_INTEGER)
 
 得益于尾数省略的一位“1”，使用双精度浮点数来表示的最大安全整数为 -2<sup>53</sup>+1 到 2<sup>53</sup>-1 之间，所以如果你仅仅使用 JavaScript 中的数字类型进行一些整数运算，那么你也可以近似地将这一数字类型理解为 **53** 位整型。
 
-##让人又爱又恨的位操作符
+## 让人又爱又恨的位操作符
 
 熟悉 C 或者 C++ 的同学一定对位操作符不陌生。位操作符最主要的应用大概就是作为标志位与掩码。这是一种节省存储空间的高明手段，在曾经内存的大小以 KB 为单位计算时，每多一个变量就是一份额外的开销。而使用位操作符的掩码则在很大程度上缓解了这个问题：
 
@@ -106,7 +106,7 @@ a | b;                         // 15
 
 所以，我对大家的建议是，尽量在 JavaScript 中别使用位操作符。
 
-##参考资料
+## 参考资料
 
 1. [维基百科：双精度浮点数](http://zh.wikipedia.org/wiki/%E9%9B%99%E7%B2%BE%E5%BA%A6%E6%B5%AE%E9%BB%9E%E6%95%B8)
 2. [MDN：JavaScript数据结构](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Data_structures)

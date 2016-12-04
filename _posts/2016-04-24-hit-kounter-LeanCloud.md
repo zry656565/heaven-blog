@@ -1,5 +1,5 @@
 ---
-date: 2016-04-24 0:20:00 UTC
+date: 2016-04-24 0:20:00 +0800
 title: 访问量统计工具 Hit Kounter v0.2
 description: Hit Kounter 是一个简单的访问量统计工具。据我从数据库里的数据目测，现在已经拥有了 9 位用户！不过我要对这九位用户说声抱歉啦。Hit Kounter 原本部署于 SAE 上，而近期 SAE 针对使用 MySQL 的应用开始收费。本项目只是一个本人使用业余时间开发的小工具；它本身包含的功能也很精简，并不适合使用付费服务。所以我已经将 Hit Kounter 服务迁移至 LeanCloud 上。原本部署在 SAE 上的服务预计在五一假期后下线，对已经使用 Hit Kounter 的一些用户，我再次表达我的歉意！使用方式上，目前 v0.2 版本相比于 v0.1 并没有什么改变…
 permalink: /posts/introduction-to-hit-kounter-lc/

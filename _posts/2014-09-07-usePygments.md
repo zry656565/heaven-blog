@@ -1,5 +1,5 @@
 ---
-date: 2014-09-07 18:11:53 UTC
+date: 2014-09-07 18:11:53 +0800
 title: 使用Pygments来实现代码高亮
 description: 今天我尝试更换了我个人博客jerryzou.com中的代码高亮样式，主要使用的就是Pygments。Pygments有许多各式各样的样式可供选择，而在这篇文章中，我将为大家讲解如何安装Pygments、以及如何生成代码高亮所需要的文件。
 permalink: /posts/usePygments/
@@ -9,7 +9,7 @@ labels: [highlight, Pygments, 博客]
 
 今天我尝试更换了我个人博客jerryzou.com中的代码高亮样式，主要使用的就是`Pygments`。`Pygments`有许多各式各样的样式可供选择，而在这篇文章中，我将为大家讲解如何安装`Pygments`、以及如何生成代码高亮所需要的文件。
 
-###安装Pygments
+### 安装Pygments
 
 在`OS X`中，因为python是预装的，可以直接运行指令：
 {% highlight shell-session %}
@@ -41,7 +41,7 @@ sudo yum install python-pygments
 sudo emerge -av dev-python/pygments
 {% endhighlight %}
 
-###生成所需的html文件
+### 生成所需的html文件
 如果你用类似`Jekyll`、`hexo`等静态网站生成工具，你就不需要自己生成html文件，可以直接跳过这一小节。这些工具会帮你自动生成，比如本站就是使用Jekyll生成的。如果你需要自己生成html文件，可以参照以下的步骤：
 
 假设需要高亮的代码为一段js代码，文件名为`test.js`：
@@ -65,7 +65,7 @@ pygmentize -f html -o test.html test.js
 {% endhighlight %}
 以上把需要生成的代码按词法分析拆分成多个小部分，接下来的问题是如何给这些分好的块上色呢？于是引出了下一个问题：我们需要生成对应的css文件。
 
-###生成所需的css文件
+### 生成所需的css文件
 Pygments提供了十多种高亮样式的方案，所有可用的方案可以用如下方式查看：
 {% highlight python %}
 >>> from pygments.styles import STYLE_MAP
@@ -101,7 +101,7 @@ pygmentize -f html -a .highlight -S default > pygments.css
 
 只要在使用到代码高亮的html文件中，引入这个css样式就大功告成了。
 
-###参考资料：
+### 参考资料：
 1. [http://pygments.org/](http://pygments.org/)
 2. [http://segmentfault.com/q/1010000000261050](http://segmentfault.com/q/1010000000261050)
 3. [http://havee.me/internet/2013-07/jekyll-install.html](http://havee.me/internet/2013-07/jekyll-install.html)

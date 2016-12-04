@@ -1,5 +1,5 @@
 ---
-date: 2014-10-03 20:31:10 UTC
+date: 2014-10-03 20:31:10 +0800
 title: 交大校车 Web App 用户反馈
 description: 上周交大校车 Web App 上线。为了更好地服务于同学，有任何建议和反馈都可以在本帖下留言。
 permalink: /posts/sjtuBusFeedback/
