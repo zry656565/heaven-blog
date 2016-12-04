@@ -3,6 +3,7 @@ _site
 release
 _includes/head.html
 pages/1_articles.md
+.jekyll-metadata
 
 #temporary files produced by grunt
 .tmp
