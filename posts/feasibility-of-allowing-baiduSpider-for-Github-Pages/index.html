@@ -85,6 +85,8 @@
         
           
         
+          
+        
           <a class="page-link" href="/feed.xml">RSS订阅</a>
       </div>
     </nav>
@@ -120,7 +122,7 @@
   <article class="post-content">
   <p>我写技术博客有两个原因：一是总结自己近日的研究成果，二是将这些成果分享给大家。所以就我个人来说，还是比较希望写出来的文章有更多的人能够看到的。我最近注意到我的博客的流量大多来自于谷歌，而几乎没有来源于百度的。而本文就旨在提出这个问题，并尝试着去解决这个问题。当然，换一个云主机服务提供商能够很直接明了地解决这个问题，但这不是本文的重点，暂且不提。</p>
 
-<h2 id="github-pages-">为什么 Github Pages 禁用了百度爬虫？</h2>
+<h2 id="为什么-github-pages-禁用了百度爬虫">为什么 Github Pages 禁用了百度爬虫？</h2>
 
 <p>就这个问题，我联系了 Github Support 部门，对方给我的答复是这样的：</p>
 
@@ -141,13 +143,13 @@ Alex</p>
 
 <p>因此，只能自己动手丰衣足食了，下面来讨论一下解决这个问题的方式。</p>
 
-<h2 id="cdn">解决问题 —— CDN</h2>
+<h2 id="解决问题--cdn">解决问题 —— CDN</h2>
 
 <p>我在知乎提了这样一个问题：<a href="http://www.zhihu.com/question/30898326">如何解决百度爬虫无法爬取搭建在Github上的个人博客的问题？</a>，并且 Stackoverflow 上也有类似的问题：<a href="http://stackoverflow.com/questions/29196845/github-blocks-baidu-spider-how-can-i-make-it-work-again">github blocks Baidu spider, how can I make it work again</a>。两位知乎答主和Stackoverflow的评论都比较推荐使用 CDN 来解决这个问题。</p>
 
 <p>那我们首先来了解一下 CDN 的原理。</p>
 
-<h3 id="cdn-">CDN 的原理</h3>
+<h3 id="cdn-的原理">CDN 的原理</h3>
 
 <p>CDN 的全称是 <a href="http://en.wikipedia.org/wiki/Content_delivery_network">Content Delivery Network</a>，即内容分发网络，一般用于分发静态内容，比如图片、视频、CSS、JS文件。</p>
 
@@ -161,22 +163,22 @@ Alex</p>
 
 <p>那 CDN 服务是如何决定你从哪个边缘服务器获取资源的呢？其实就是在发送 DNS 请求的时候，将你要访问的域名映射到最近的节点的 IP 上。具体判定哪个是最近的节点，最简单的策略就是根据 IP，但各个 CDN 的服务提供商的策略可能各不相同，这里就不展开讨论了。</p>
 
-<h3 id="cdn--1">CDN 的局限性</h3>
+<h3 id="cdn-的局限性">CDN 的局限性</h3>
 
 <p>CDN 确实能够解决不少问题，但它本身也存在一定的局限性。其中最重要的一点是：<strong>决不能用 CDN 来缓存动态内容</strong>。</p>
 
 <p>来看一个例子，假设服务器端有这样一个PHP文件 hello.php：</p>
 
-<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="x">&lt;html&gt;</span>
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="x">&lt;html&gt;</span>
 <span class="x">    &lt;head&gt;...&lt;/head&gt;</span>
 <span class="x">    &lt;body&gt;Hello, </span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$name</span> <span class="cp">?&gt;</span><span class="x"> &lt;/body&gt;</span>
-<span class="x">&lt;/html&gt;</span></code></pre></div>
+<span class="x">&lt;/html&gt;</span></code></pre></figure>
 
 <p>如果 CDN 缓存了这个文件就会造成很糟糕的后果。比如 Jerry 先访问了 hello.php 页面，得到了 Hello, Jerry 的内容。此时这个内容已经被缓存到了节点 A，而 Tom 同学也是离节点 A 最近，那么 Tom 同学访问 hello.php 时，就会直接得到缓存内容：Hello, Jerry。这个时候 Tom 同学的内心一定是崩溃的。</p>
 
 <p>你还应该<strong>避免</strong>使用 CDN 的情况有：<strong>根据 user-agent 来选择返回移动版还是桌面版页面</strong>。UA 判断这对解决我们的问题很重要，下文会提及。当然，部署在 Github Pages 上的网站都是静态站点，所有用户进来看到的内容一般是相同的。所以通过 CDN 来对全站进行缓存没有什么问题。</p>
 
-<h2 id="section">可行性分析</h2>
+<h2 id="可行性分析">可行性分析</h2>
 
 <p>Github是通过 UA 来判定百度爬虫并返回 403 Forbidden 的。而百度爬虫的 UA 一般是这样的：</p>
 
@@ -214,7 +216,7 @@ Alex</p>
 
 <p>当然，不死心的我还是做了件奇怪的事……首先我在找到了<a href="http://forums.oscommerce.com/topic/382923-baiduspider-using-multiple-user-agents-how-to-stop-them/">所有 BaiduSpider 的 IP</a>，然后想要伪装成这些 IP 来请求内容，以此想在所有百度爬虫可能爬取的边缘服务器上都建立缓存。</p>
 
-<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
 <span class="k">function</span> <span class="nf">Curl</span><span class="p">(</span><span class="nv">$url</span><span class="p">,</span> <span class="nv">$ip</span><span class="p">){</span>
     <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
     <span class="nb">curl_setopt_array</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="p">[</span>
@@ -249,12 +251,12 @@ Alex</p>
     <span class="k">echo</span> <span class="s2">&quot;</span><span class="si">$ip\n</span><span class="s2">&quot;</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="k">echo</span> <span class="s2">&quot;Done</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span></code></pre></div>
+<span class="k">echo</span> <span class="s2">&quot;Done</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span></code></pre></figure>
 
 <p><br />
 然而并没有卵用……</p>
 
-<h2 id="section-1">更新 (2015.7.12)</h2>
+<h2 id="更新-2015712">更新 (2015.7.12)</h2>
 
 <p>通过 Dnspod 的<strong>智能 DNS 服务</strong>可以变相解决这个问题，大概的设置如下图所示，只要为你所有的主机记录重复添加 A 记录，把线路类型设置为百度，并将记录值指向你自己的云主机即可。</p>
 
@@ -264,11 +266,11 @@ Alex</p>
 
 <p><img src="http://jerryblog.qiniudn.com/dnspod.png-h400" alt="Dnspod的智能DNS服务" /></p>
 
-<h2 id="section-2">更新 (2015.11.26)</h2>
+<h2 id="更新-20151126">更新 (2015.11.26)</h2>
 
 <p>如果大家自己搭了服务器，可以参考一下我上个月写的这篇：<a href="http://jerryzou.com/posts/webhook-practice/">Webhook 实践 —— 自动部署</a></p>
 
-<h2 id="section-3">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 <ul>
   <li><a href="http://www.zhihu.com/question/30898326">如何解决百度爬虫无法爬取搭建在Github上的个人博客的问题？</a></li>
   <li><a href="http://en.wikipedia.org/wiki/Content_delivery_network">Wikipedia: Content delivery network</a></li>

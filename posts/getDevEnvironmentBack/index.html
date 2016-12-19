@@ -85,6 +85,8 @@
         
           
         
+          
+        
           <a class="page-link" href="/feed.xml">RSS订阅</a>
       </div>
     </nav>
@@ -116,7 +118,7 @@
   <article class="post-content">
   <p>终于还是忍不住升级了，促使我升级的原动力居然是<code>Alfred</code>的Yosemite theme居然比初始theme好看很多！在升级前就预想到我的开发环境是一定会被破坏的，所以升级好系统以后还是赶快看下发生了什么吧！</p>
 
-<h2 id="section">问题</h2>
+<h2 id="问题">问题</h2>
 
 <p>一进新系统就发现<code>phpstorm</code>跪了，提示要装<code>jre6</code>才能用。好吧，然后陆陆续续逐渐发现好多东西都跪了。只能一个一个慢慢修复啦。目前可见的发生错误的环境有：</p>
 
@@ -128,9 +130,9 @@
   <li>MySQL</li>
 </ol>
 
-<h2 id="section-1">逐个击破</h2>
+<h2 id="逐个击破">逐个击破</h2>
 
-<h3 id="phpstorm">1. PhpStorm</h3>
+<h3 id="1-phpstorm">1. PhpStorm</h3>
 
 <p>升级了Yosemite以后，按一般的尿性，苹果肯定会升级所有运行环境的版本的，其中少不了Java，因此PhpStorm躺枪。肯定有同学要问啊，为什么<code>JetBrains</code>这种被誉为史上最屌霸天的IDE厂商所使用的jdk版本这么低！</p>
 
@@ -142,57 +144,57 @@
 
 <p>好了，解决方法就是下个jre6嘛！结果我在oracle的网站上找了半天却只能找到提供给OS X的jre7和jre8。好吧，其实直接在苹果官网上就可以找到下载链接：<a href="http://support.apple.com/kb/DL1572">http://support.apple.com/kb/DL1572</a></p>
 
-<h3 id="homebrew">2. Homebrew</h3>
+<h3 id="2-homebrew">2. Homebrew</h3>
 
 <p>Homebrew的运行离不开Ruby，升级后运行不了的原因其实也就是内置于Yosemite的Ruby版本更新啦：<code>1.8 =&gt; 2.0</code>。想要运行brew就会得到如下错误信息：</p>
 
-<div class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">/usr/local/Library/brew.rb: /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin/ruby: bad interpreter: No such file or directory</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">/usr/local/Library/brew.rb: /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin/ruby: bad interpreter: No such file or directory</span></code></pre></figure>
 
 <p>然后在网上找到解决办法如下：</p>
 
-<h5 id="brew">2.1 更新<code>brew</code>脚本</h5>
+<h5 id="21-更新brew脚本">2.1 更新<code>brew</code>脚本</h5>
 <p>用你喜欢的编辑器打开<code>/usr/local/bin/brew</code>，然后将<code>brew</code>检测系统的一段代码注释掉，具体如下所示：</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#BREW_SYSTEM=$(uname -s | tr &quot;[:upper:]&quot; &quot;[:lower:]&quot;)</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#BREW_SYSTEM=$(uname -s | tr &quot;[:upper:]&quot; &quot;[:lower:]&quot;)</span>
 <span class="c1">#if [ &quot;$BREW_SYSTEM&quot; = &quot;darwin&quot; ]</span>
 <span class="c1">#then</span>
 <span class="c1">#    exec &quot;$BREW_LIBRARY_DIRECTORY/brew.rb&quot; &quot;$@&quot;</span>
 <span class="c1">#else</span>
     <span class="nb">exec</span> <span class="n">ruby</span> <span class="o">-</span><span class="no">W0</span> <span class="s2">&quot;$BREW_LIBRARY_DIRECTORY/brew.rb&quot;</span> <span class="s2">&quot;$@&quot;</span>
-<span class="c1">#fi</span></code></pre></div>
+<span class="c1">#fi</span></code></pre></figure>
 
-<h5 id="section-2">2.2 创建软链接</h5>
+<h5 id="22-创建软链接">2.2 创建软链接</h5>
 
 <p>Homebrew会通过<code>Ruby 1.8</code>的路径去找Ruby的运行环境，可惜在Yosemite里它再也找不到了。所以在Homebrew做出一定的改变以前，我们需要骗骗它，建立一个假的<code>Ruby 1.8</code>的地址，其实指向系统的<code>Ruby 2.0</code>运行环境。</p>
 
-<div class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">sudo mkdir -p /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin</span>
-<span class="go">sudo ln -s /usr/bin/ruby /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin/ruby</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">sudo mkdir -p /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin</span>
+<span class="go">sudo ln -s /usr/bin/ruby /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin/ruby</span></code></pre></figure>
 
-<h3 id="nodejs">3. node.js</h3>
+<h3 id="3-nodejs">3. node.js</h3>
 
 <p>好吧，其实写这篇博客的时候只发现前面两个问题。可是当我用<code>grunt</code>来自动生成我的博客时，却收到了<code>env: node: No such file or directory</code>这样的错误信息。看来node也在这次升级中惨烈牺牲了啊。</p>
 
 <p>在<code>/usr/local/bin/</code>下已经找到<code>node</code>和<code>npm</code>却发现是无法打开的，依旧会提示<code>No such file or directory</code>。目前还是不太清楚是什么原因造成的，最后解决的办法也比较暴力：直接到node官网上下了个最新的pkg直接重新安装一下就好了。</p>
 
-<h3 id="apache">4. Apache</h3>
+<h3 id="4-apache">4. Apache</h3>
 
 <p>要本地调试代码的时候发现<code>Apache</code>也不能幸免地跪了。执行<code>apachectl -v</code>发现Apache已经更新到<code>2.4.9</code>版本了。一定又是因为版本更新出了什么差错。</p>
 
-<h5 id="httpdconf">4.1 修改httpd.conf</h5>
+<h5 id="41-修改httpdconf">4.1 修改httpd.conf</h5>
 
 <p>首先打开<code>/private/etc/apache2/httpd.conf</code>发现似乎恢复默认的设置了。重新将以下两行代码解注：</p>
 
-<div class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">Include /private/etc/apache2/extra/httpd-vhosts.conf</span>
+<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">Include /private/etc/apache2/extra/httpd-vhosts.conf</span>
 <span class="go">...</span>
-<span class="go">LoadModule php5_module libexec/apache2/libphp5.so</span></code></pre></div>
+<span class="go">LoadModule php5_module libexec/apache2/libphp5.so</span></code></pre></figure>
 
-<h5 id="httpd-vhostsconf">4.2 修改httpd-vhosts.conf</h5>
+<h5 id="42-修改httpd-vhostsconf">4.2 修改httpd-vhosts.conf</h5>
 
 <p>打开<code>private/etc/apache2/extra/httpd-vhosts.conf</code>发现之前设好的虚拟主机似乎没有被修改掉嘛！但因为升级到<code>Apache 2.4</code>以上设置需要一定的调整，不然就会得到<code>403 Forbidden You don't have permission to access / on this server</code>错误啦。</p>
 
 <p>将原本的</p>
 
-<div class="highlight"><pre><code class="language-apacheconf" data-lang="apacheconf"><span class="nt">&lt;VirtualHost</span> <span class="s">*:80</span><span class="nt">&gt;</span>
+<figure class="highlight"><pre><code class="language-apacheconf" data-lang="apacheconf"><span class="nt">&lt;VirtualHost</span> <span class="s">*:80</span><span class="nt">&gt;</span>
     <span class="nb">ServerAdmin</span> zry656565@gmail.com
     <span class="nb">DocumentRoot</span> <span class="s2">&quot;/Users/Jerry/Dev/apache/php_tester&quot;</span>
     <span class="nb">ServerName</span> php_tester
@@ -204,11 +206,11 @@
         <span class="nb">Order</span> deny,allow
         <span class="nb">Allow</span> from <span class="k">all</span>
     <span class="nt">&lt;/Directory&gt;</span>
-<span class="nt">&lt;/VirtualHost&gt;</span></code></pre></div>
+<span class="nt">&lt;/VirtualHost&gt;</span></code></pre></figure>
 
 <p>改成</p>
 
-<div class="highlight"><pre><code class="language-apacheconf" data-lang="apacheconf"><span class="nt">&lt;VirtualHost</span> <span class="s">*:80</span><span class="nt">&gt;</span>
+<figure class="highlight"><pre><code class="language-apacheconf" data-lang="apacheconf"><span class="nt">&lt;VirtualHost</span> <span class="s">*:80</span><span class="nt">&gt;</span>
     <span class="nb">ServerAdmin</span> zry656565@gmail.com
     <span class="nb">DocumentRoot</span> <span class="s2">&quot;/Users/Jerry/Dev/apache/php_tester&quot;</span>
     <span class="nb">ServerName</span> php_tester
@@ -219,27 +221,27 @@
         <span class="nb">AllowOverride</span> <span class="k">None</span>
         <span class="nb">Require</span> <span class="k">all</span> granted
     <span class="nt">&lt;/Directory&gt;</span>
-<span class="nt">&lt;/VirtualHost&gt;</span></code></pre></div>
+<span class="nt">&lt;/VirtualHost&gt;</span></code></pre></figure>
 
 <p>其实就是将<code>Order deny,allow, Allow from all</code>改成<code>Require all granted</code>。</p>
 
-<h3 id="mysql">5. MySQL</h3>
+<h3 id="5-mysql">5. MySQL</h3>
 
 <p>MySQL目前还没有正式支持OS X Yosemite，所以在升级系统后会发现，MySQL的服务居然没有在后台启动。要解决这个问题只有手动启动MySQL的服务，建议在<code>~/.bash_profile</code>中加入如下脚本，然后用<code>source ~/.bash_profile</code>启用脚本。</p>
 
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">export </span><span class="nv">MYSQL_HOME</span><span class="o">=</span>/usr/local/mysql/bin
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">export </span><span class="nv">MYSQL_HOME</span><span class="o">=</span>/usr/local/mysql/bin
 <span class="nb">alias </span><span class="nv">start_mysql</span><span class="o">=</span><span class="s1">&#39;sudo $MYSQL_HOME/mysqld_safe &amp;&#39;</span>
-<span class="nb">alias </span><span class="nv">stop_mysql</span><span class="o">=</span><span class="s1">&#39;sudo $MYSQL_HOME/mysqladmin shutdown&#39;</span></code></pre></div>
+<span class="nb">alias </span><span class="nv">stop_mysql</span><span class="o">=</span><span class="s1">&#39;sudo $MYSQL_HOME/mysqladmin shutdown&#39;</span></code></pre></figure>
 
 <p>接下来，你只需要使用<code>start_mysql</code>和<code>stop_mysql</code>指令就可以开关mysql服务啦！</p>
 
-<h2 id="section-3">结语</h2>
+<h2 id="结语">结语</h2>
 
 <p>其实本来还会发上第六条的：git。因为我发现我想把这篇博文发到github的博客上去却失败了！找了半天原因却摸不着头脑。后来突发奇想在gitcafe上创建了个项目居然push成功了，说明不是本地的git的问题，而是github的问题。过了一天才成功发上来还真是蛋疼！</p>
 
 <p>以上这些解决方案在我本地都能够解决问题，如果你还有什么疑问，可以在博文下留言，说不定能帮到你。</p>
 
-<h2 id="section-4">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol>
   <li><a href="http://www.tuicool.com/articles/iIvy2e">Homebrew, Ruby, and Rails on OS X 10.10</a></li>
@@ -248,7 +250,7 @@
   <li><a href="http://stackoverflow.com/questions/7927854/start-mysql-server-from-command-line-on-mac-os-lion">start mySQL server from command line on Mac OS Lion</a></li>
 </ol>
 
-<h2 id="section-5">更新</h2>
+<h2 id="更新">更新</h2>
 
 <ul>
   <li>2014.11.16 添加apache、mysql的恢复</li>

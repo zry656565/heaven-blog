@@ -85,6 +85,8 @@
         
           
         
+          
+        
           <a class="page-link" href="/feed.xml">RSS订阅</a>
       </div>
     </nav>
@@ -126,7 +128,7 @@
   <p>You’re only limited by your imagination.</p>
 </blockquote>
 
-<h2 id="section">面临的问题</h2>
+<h2 id="面临的问题">面临的问题</h2>
 
 <p>我目前正好面临了这样一个问题 —— 麻烦的人肉部署。也许有人看过我之前的一篇博文《<a href="http://jerryzou.com/posts/feasibility-of-allowing-baiduSpider-for-Github-Pages/">解决 Github Pages 禁止百度爬虫的方法与可行性分析</a>》。为了解决文章中的这个问题，我最后建立了一个只服务于百度爬虫的一个备份服务器。但是随之而来的问题是，每次我的博客有些更新，都不得不 ssh 到那台服务器上把代码 pull 下来。如此做了两三次以后，我觉得我不能再这么堕落下去，于是还是决定尝试一下 Webhook。</p>
 
@@ -138,15 +140,15 @@
   <li>配置 Webhook</li>
 </ol>
 
-<h2 id="section-1">1. 一台外网可访问的主机</h2>
+<h2 id="1-一台外网可访问的主机">1. 一台外网可访问的主机</h2>
 
 <p>什么叫外网可访问的主机？像阿里云的试用版就不行，它不提供外网 IP。而我使用的是 DigitalOcean 的云主机，主要的作用是架梯子，现在也顺便用来做备份服务器。当然你们也可以用类似 SAE 的服务，虽然没有 IP，但有独立的外网访问地址。</p>
 
-<h2 id="webhook-">2. 响应 Webhook 的服务器</h2>
+<h2 id="2-响应-webhook-的服务器">2. 响应 Webhook 的服务器</h2>
 
 <p>为了响应 Webhook 所发出的请求，从而做一些我们想做的事情，我们得先实现一个响应服务器。本文采用 Node 来实现一个原型，你当然也可以用 PHP，python 等，全凭个人喜好啦。代码很短，就直接陈列在下方了：</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">)</span>
   <span class="p">,</span> <span class="nx">exec</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;exec&#39;</span><span class="p">)</span>
 
 <span class="kr">const</span> <span class="nx">PORT</span> <span class="o">=</span> <span class="mi">9988</span>
@@ -181,12 +183,12 @@
   <span class="p">}</span>
 <span class="p">})</span>
 
-<span class="nx">deployServer</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">PORT</span><span class="p">)</span></code></pre></div>
+<span class="nx">deployServer</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">PORT</span><span class="p">)</span></code></pre></figure>
 
 <p>如果还需要实现更多，更复杂的功能，直接在 <code>commands</code> 数组中添加便是。此处我的博客根目录 <code>html</code> 与部署服务器根目录同属一个目录，所以配置常量 <code>PATH = '../html'</code>。只要启动了服务器，那么 Webhook 就可以通过类似于 <strong>http://104.236.xxx.xxx:9988/deploy/</strong> 的路径来部署我的博客备份啦。</p>
 
-<div class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go"># 在后台启动部署服务器</span>
-<span class="go">$ node server.js &amp;</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go"># 在后台启动部署服务器</span>
+<span class="go">$ node server.js &amp;</span></code></pre></figure>
 
 <p>我以为服务器部署到这儿就完了，其实并没有，我遇到了一些麻烦。</p>
 
@@ -196,28 +198,28 @@
 
 <p>安装 forever：</p>
 
-<div class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">$ [sudo] npm install -g forever</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">$ [sudo] npm install -g forever</span></code></pre></figure>
 
 <p>运行：</p>
 
-<div class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">$ cd { 部署服务器的根目录 }</span>
-<span class="go">$ forever start server.js</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">$ cd { 部署服务器的根目录 }</span>
+<span class="go">$ forever start server.js</span></code></pre></figure>
 
 <p>我在 DigitalOcean 上的服务器安装的是 <strong>Ubuntu</strong> 系统，而 Ubuntu 中原本就有一个叫 node 的包。为了避免冲突，在 Ubuntu 上安装或使用 Node 得用 nodejs 这个名字。而 forever 默认是使用 node 作为执行脚本的程序名。所以为了处理 Ubuntu 存在的这种特殊情况，在启动 forever 时得另外添加一个参数：</p>
 
-<div class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">$ forever start server.js -c nodejs</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">$ forever start server.js -c nodejs</span></code></pre></figure>
 
-<h2 id="webhook">3. 配置 Webhook</h2>
+<h2 id="3-配置-webhook">3. 配置 Webhook</h2>
 
 <p>如果像是本文这种最简易的应用，Webhook 的配置是十分简单的。首先进入你的 repo 主页，通过点击页面上的按钮 <strong>[settings]</strong> -&gt; <strong>[Webhooks &amp; service]</strong> 进入 Webhooks 配置主页面。也可以通过下面这个链接直接进入配置页面：</p>
 
-<div class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">https://github.com/[ 用户名 ]/[ 仓库名称 ]/settings/hooks</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">https://github.com/[ 用户名 ]/[ 仓库名称 ]/settings/hooks</span></code></pre></figure>
 
 <p>此处只需要配置 Webhook 所发出的 POST 请求发往何处即可，于是我们就配置我们所需要的路径： <strong>http://104.236.xxx.xxx:9988/deploy/</strong>。这个地址指向的就是那个能够响应 Webhook 所发出请求的服务器。</p>
 
 <p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/webhooks-config.png" alt="webhooks configuration" /></p>
 
-<p>配置好 Webhook 后，Github 会发送一个 ping 来测试这个地址。如果成功了，那么这个 Webhook 前就会加上一个绿色的勾；如果你得到的是一个红色的叉，那就好好检查一下哪儿出问题了吧！ </p>
+<p>配置好 Webhook 后，Github 会发送一个 ping 来测试这个地址。如果成功了，那么这个 Webhook 前就会加上一个绿色的勾；如果你得到的是一个红色的叉，那就好好检查一下哪儿出问题了吧！</p>
 
 
   </article>

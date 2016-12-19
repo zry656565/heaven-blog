@@ -85,6 +85,8 @@
         
           
         
+          
+        
           <a class="page-link" href="/feed.xml">RSS订阅</a>
       </div>
     </nav>
@@ -120,7 +122,7 @@
   <article class="post-content">
   <p>从昨天凌晨四点起，我的 Leetcode 账号就无法提交任何代码了，于是我意识到我的账号大概是被封了……</p>
 
-<h2 id="section">起因</h2>
+<h2 id="起因">起因</h2>
 
 <p>我和我的同学 <a href="http://xidui.github.io/">@xidui</a> 正在维护一个项目 <a href="https://github.com/xidui/algorithm-training">xidui/algorithm-training</a>。其实就是收录一些算法题的解答，目前主要对象就是 Leetcode。我前几天正好做到 <a href="https://leetcode.com/problems/letter-combinations-of-a-phone-number/">#17 Letter Combinations of a Phone Number</a>。题目也蛮简单的，我写好以后提交了一下，发现跑出来的结果是 152 ms —— <strong>“哇哦，你打败了 2.44% 的提交”</strong>。好差！！我瞬间满脸黑线。而之前提到的项目中正好有另一个同学写的关于这一题的解答，我赶紧去参考了一下，感觉空间复杂度比我小很多，但时间复杂度应该差不多呀，然后注释中有这么一句：</p>
 
@@ -132,11 +134,11 @@
 
 <p>看了看 Discuss 里的解法，感觉复杂度似乎也差不多，于是我决定研 (Zuo) 究 (Si) 一下 Leetcode OJ 服务的稳定性如何。</p>
 
-<h2 id="section-1">过程</h2>
+<h2 id="过程">过程</h2>
 
 <p>打开 Chrome 的开发者工具，发现只有 <code>submit</code> 和 <code>check</code> 两种 ajax 请求，response 内容大概是这样的：</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// `submit` response</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// `submit` response</span>
 <span class="p">{</span> <span class="s2">&quot;submission_id&quot;</span><span class="o">:</span> <span class="mi">46823974</span> <span class="p">}</span>
 
 <span class="c1">// first `check` response</span>
@@ -152,7 +154,7 @@
   <span class="s2">&quot;state&quot;</span><span class="o">:</span> <span class="s2">&quot;SUCCESS&quot;</span><span class="p">,</span>
   <span class="s2">&quot;total_correct&quot;</span><span class="o">:</span> <span class="mi">25</span><span class="p">,</span>
   <span class="s2">&quot;question_id&quot;</span><span class="o">:</span> <span class="s2">&quot;17&quot;</span>
-<span class="p">}</span></code></pre></div>
+<span class="p">}</span></code></pre></figure>
 
 <p>所以只要先模拟一个 <code>submit</code> 的 POST 请求，拿到 submission_id 后，再用这个 id 模拟 <code>check</code> 的 GET 请求，直到拿到最终的结果。</p>
 
@@ -162,7 +164,7 @@
 
 <p>然后我写了个 Nodejs 的小程序，每隔<strong>一分钟</strong>调用上面保存的两个脚本来进行一次提交，并把当次的执行速度保存到 Mongodb 中。代码我就不贴啦，有兴趣的话可以到 <a href="https://github.com/zry656565/Leetcode-Benchmark">zry656565/Leetcode-Benchmark</a> 看看。</p>
 
-<h2 id="section-2">结果</h2>
+<h2 id="结果">结果</h2>
 
 <p>这个程序大概是在十一点左右的时候开始运行的。本以为一分钟一次的频率并不高，结果第二天起来一看，从凌晨四点多开始就没有数据了，自此我这个账号就提交不了代码了。。</p>
 

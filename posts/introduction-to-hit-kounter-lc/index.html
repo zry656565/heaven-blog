@@ -85,6 +85,8 @@
         
           
         
+          
+        
           <a class="page-link" href="/feed.xml">RSS订阅</a>
       </div>
     </nav>
@@ -131,34 +133,34 @@
 
 <p>如果你是 Hit Kounter v0.1 的用户，可以直接阅读 <strong>如何从 v0.1.1 版本迁移到 v0.2.0</strong>。</p>
 
-<h2 id="section">如何为你的博客添加访问量统计</h2>
+<h2 id="如何为你的博客添加访问量统计">如何为你的博客添加访问量统计</h2>
 
-<h4 id="section-1">1. 引入脚本</h4>
+<h4 id="1-引入脚本">1. 引入脚本</h4>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;https://cdn1.lncld.net/static/js/av-mini-0.6.10.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
-<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.2.0.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;https://cdn1.lncld.net/static/js/av-mini-0.6.10.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.2.0.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></figure>
 
 <p>首先，在你的页面中引入这两个脚本，第一个脚本是 LeanCloud 的库脚本，引入了它我们才能使用 LeanCloud 的服务；由于你可能在每个页面都需要显示访问量，把它加入根模板也许是个不错的选择。</p>
 
-<h4 id="section-2">2. 显示当前页面的访问量</h4>
+<h4 id="2-显示当前页面的访问量">2. 显示当前页面的访问量</h4>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;span</span> <span class="na">data-hk-page=</span><span class="s">&quot;current&quot;</span><span class="nt">&gt;</span> - <span class="nt">&lt;/span&gt;</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;span</span> <span class="na">data-hk-page=</span><span class="s">&quot;current&quot;</span><span class="nt">&gt;</span> - <span class="nt">&lt;/span&gt;</span></code></pre></figure>
 
 <p>你可以在页面的任何地方插入这句 HTML 片段，你之前引入的脚本会自动检查当前页面上带有 <code>data-hk-*</code> 属性的元素，并针对你给出的属性值向服务器请求数据，最后把得到的结果替换到上面的标签内。可以参考 <a href="https://github.com/zry656565/heaven-blog/blob/5f19693ac0fb5723ef18d69b57106d2f95021400/_layouts/post.html#L9">我博客中的例子</a>。</p>
 
-<h4 id="section-3">3. 显示指定页面的访问量</h4>
+<h4 id="3-显示指定页面的访问量">3. 显示指定页面的访问量</h4>
 
 <p>如果你希望在文章列表页中显示各个页面的访问量分别是多少，那么你就要使用一个 url 来填充 <code>data-hk-page</code> 的属性值，就像这样：</p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;span</span> <span class="na">data-hk-page=</span><span class="s">&quot;http://jerryzou.com/posts/design-for-all-mobile-resolution/&quot;</span><span class="nt">&gt;</span> - <span class="nt">&lt;/span&gt;</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;span</span> <span class="na">data-hk-page=</span><span class="s">&quot;http://jerryzou.com/posts/design-for-all-mobile-resolution/&quot;</span><span class="nt">&gt;</span> - <span class="nt">&lt;/span&gt;</span></code></pre></figure>
 
 <p>那么 Hit Kounter 检测到这个标签以后，就会向服务器请求该地址的具体访问量，并将默认值 ` - ` 替换为实际值。可以参考 <a href="https://github.com/zry656565/heaven-blog/blob/5f19693ac0fb5723ef18d69b57106d2f95021400/index.html#L13">我博客中的例子</a>。</p>
 
-<h2 id="hit-kounter--js-">Hit Kounter 的 JS 接口</h2>
+<h2 id="hit-kounter-的-js-接口">Hit Kounter 的 JS 接口</h2>
 
 <p>Hit Kounter 会在全局注入 <code>Icarus</code> 对象，它是与服务器交互的数据接口。通过它，我们就可以直接向服务器发送请求。先看看下面这个例子：</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Icarus</span><span class="p">.</span><span class="nx">request</span><span class="p">({</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Icarus</span><span class="p">.</span><span class="nx">request</span><span class="p">({</span>
   <span class="nx">api</span><span class="o">:</span> <span class="s1">&#39;hk.page.get&#39;</span><span class="p">,</span>
   <span class="nx">v</span><span class="o">:</span> <span class="s1">&#39;1.0&#39;</span><span class="p">,</span>
   <span class="nx">data</span><span class="o">:</span> <span class="p">{</span>
@@ -176,7 +178,7 @@
   <span class="nx">failure</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">code</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">code</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span>
   <span class="p">}</span>
-<span class="p">});</span></code></pre></div>
+<span class="p">});</span></code></pre></figure>
 
 <p>上面这个例子中，我们主要是获取了三个页面的具体访问量；目前 <code>Icarus</code> 支持的接口有四个（具体可以参考 <a href="https://github.com/zry656565/Hit-Kounter-LC/wiki/Icarus:-APIs">Hit-Kounter-LC Wiki</a>）：</p>
 
@@ -189,26 +191,26 @@
 
 <p>至于如何使用就由你们自由发挥啦。</p>
 
-<h2 id="v011--v020">如何从 v0.1.1 版本迁移到 v0.2.0</h2>
+<h2 id="如何从-v011-版本迁移到-v020">如何从 v0.1.1 版本迁移到 v0.2.0</h2>
 
 <p>我已经把迁移的成本降到最低，只要替换引入的文件即可：</p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!-- 老版本需要引入的文件 --&gt;</span>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!-- 老版本需要引入的文件 --&gt;</span>
 <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-0.1.1.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
 
 <span class="c">&lt;!-- 新版本需要引入的文件 --&gt;</span>
 <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;https://cdn1.lncld.net/static/js/av-mini-0.6.10.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
-<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.2.0.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></div>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.2.0.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></figure>
 
 <p>因为 v0.2 版本基于 LeanCloud 的服务，所以需要额外引入 LeanCloud 的一个库文件。另外需要注意的是，第二个文件除了版本号做了更新，还多了 <code>-lc</code> 几个字符哦。</p>
 
 <p>本次更新在将后端服务从 SAE 替换为 LeanCloud 的同时并没有做太多的功能改进。最主要的一点功能改进是引入缓存机制，在数据超过默认的五分钟之前，<strong>Icarus</strong> 不会向服务器发送新的 get 请求。（increment 请求当然还是照发不误的啦）</p>
 
-<h4 id="icarus-">以下内容请使用了 Icarus 接口的用户注意</h4>
+<h4 id="以下内容请使用了-icarus-接口的用户注意">以下内容请使用了 Icarus 接口的用户注意</h4>
 
 <p><strong>Icarus</strong> 接口所接受的多余的参数现在需要放在 <code>data</code> 对象中，注意对你之前的代码做一定修改。直接看例子可能比较直观：</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="cm">/*================</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="cm">/*================</span>
 <span class="cm"> * 老版本调用方式</span>
 <span class="cm"> *================*/</span>
 <span class="nx">Icarus</span><span class="p">.</span><span class="nx">request</span><span class="p">({</span>
@@ -234,9 +236,9 @@
   <span class="p">},</span>                                <span class="c1">// &lt;---</span>
   <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">results</span><span class="p">)</span> <span class="p">{},</span>
   <span class="nx">failure</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">code</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span> <span class="p">{}</span>
-<span class="p">});</span></code></pre></div>
+<span class="p">});</span></code></pre></figure>
 
-<h2 id="hit-kounter-">小结：Hit Kounter 的未来</h2>
+<h2 id="小结hit-kounter-的未来">小结：Hit Kounter 的未来</h2>
 
 <p>当然，Hit Kounter 未来会加入越来越多的功能，包括但不限于：</p>
 

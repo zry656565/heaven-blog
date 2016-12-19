@@ -85,6 +85,8 @@
         
           
         
+          
+        
           <a class="page-link" href="/feed.xml">RSS订阅</a>
       </div>
     </nav>
@@ -116,7 +118,7 @@
   </header>
 
   <article class="post-content">
-  <h2 id="section">综述</h2>
+  <h2 id="综述">综述</h2>
 
 <p>论坛或者贴吧经常会需要分享很多图片，上传图片比较差的做法是上传到中央服务器上，中央服务器再转发给静态图片服务器。而这篇文章讲介绍如何使用plupload对上传过程进行优化，并绕过服务器直接批量上传图片到又拍云上的方法。我写了一个Demo，大家可以到<a href="http://zry656565.github.io/bulk-upload-to-UPYUN/">http://zry656565.github.io/bulk-upload-to-UPYUN/</a>查看，而本文集中会讲到以下几个重点：</p>
 
@@ -132,52 +134,52 @@
   </li>
 </ul>
 
-<h2 id="plupload">plupload库</h2>
+<h2 id="plupload库">plupload库</h2>
 
 <p><a href="http://www.plupload.com/">plupload</a>是一个支持非常丰富的图片上传插件。可以对低版本的浏览器通过<strong>Flash/Silverligh/html4</strong>支持批量上传，而在高版本浏览器中则会优先使用<strong>html5</strong>接口上传，这一切的判定都是自动的，可以说使用起来非常方便！其次plupload还支持在<strong>客户端压缩图片、直接Drag&amp;Drop</strong>来上传等功能，具体大家就可以到它的官网上了解更多的信息。</p>
 
 <p>在这里我们仅使用它的核心API，只需要引入一个文件即可。</p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;lib/plupload-2.1.2/js/plupload.full.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;lib/plupload-2.1.2/js/plupload.full.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></figure>
 
 <p>官方给出的核心API例子非常简单，可以直接移步<a href="http://www.plupload.com/examples/core">http://www.plupload.com/examples/core</a>查看。核心API在理解上不存在什么困难，如果需要帮助可以在本文后面向我提问。</p>
 
-<h2 id="section-1">图片的本地压缩</h2>
+<h2 id="图片的本地压缩">图片的本地压缩</h2>
 
 <p>一般在网页中浏览的图片质量需求不高，记得当初高中上课学PS，老师说网上的图片分辨率设72就好了，打印的图片的话得设300。所以用户在上传一张很大的照片时，比较好的做法是现在用户的客户端本地压缩好这张图片，并把压缩后较小的图片上传，既不影响浏览效果，同时也能加快上传速度，减小服务器的负担。</p>
 
 <p>图片的本地压缩功能在plupload中是支持的，只要在初始化它的时候传入一个<code>resize</code>参数就好了。其中，宽度和高度可以根据实际情况设置，而<code>quality</code>是比较重要的一个参数，顾名思义，这个值设置得越小，图片越小，但显示的质量也会越差，这个就需要你自己权衡一下啦。</p>
 
-<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
     <span class="nt">&quot;resize&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="nt">&quot;width&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
         <span class="nt">&quot;height&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
         <span class="nt">&quot;quality&quot;</span><span class="p">:</span> <span class="mi">70</span>
     <span class="p">}</span>
-<span class="p">}</span></code></pre></div>
+<span class="p">}</span></code></pre></figure>
 
-<h2 id="section-2">多选图片</h2>
+<h2 id="多选图片">多选图片</h2>
 
 <p>批量上传图片的一个前置条件就是能够多选图片。多选文件是HTML5的一个标准特性，我们可以通过如下方式来开启多选模式：</p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">&quot;xxx&quot;</span><span class="nt">&gt;</span>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">&quot;xxx&quot;</span><span class="nt">&gt;</span>
   Select images: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;file&quot;</span> <span class="na">name=</span><span class="s">&quot;img&quot;</span> <span class="na">multiple</span><span class="nt">&gt;</span> <span class="c">&lt;!-- multiple 在这儿是关键！--&gt;</span>
   <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span><span class="nt">&gt;</span>
-<span class="nt">&lt;/form&gt;</span></code></pre></div>
+<span class="nt">&lt;/form&gt;</span></code></pre></figure>
 
 <p>根据一个非常优秀的jquery插件jQuery-File-Upload的<a href="https://github.com/blueimp/jQuery-File-Upload/wiki/Browser-support">浏览器支持</a>中<strong>Multiple File selection</strong>这个小节所写的那样，IE一直发展到<code>IE10</code>才刚开始支持这个HTML5的特性，那么我们又不得不借助Flash神奇的力量来对低版本浏览器进行多选图片的支持。幸运的是plupload已经帮我们做到了这一点，而且这一开关是默认开启的。如果你觉得你不需要用到多选图片，你可以设置<code>multi_selection: false</code>来关闭这个特性。</p>
 
-<h2 id="section-3">绕过服务器直接批量上传图片到又拍云</h2>
+<h2 id="绕过服务器直接批量上传图片到又拍云">绕过服务器直接批量上传图片到又拍云</h2>
 
 <p>又拍云提供了HTTP FORM API。通过这个接口，我们就可以直接从浏览器端发起上传图片的请求，而不需要通过我们自己的服务器进行中转，大大降低了开销。</p>
 
-<h4 id="http-form-api">使用又拍的HTTP FORM API</h4>
+<h4 id="使用又拍的http-form-api">使用又拍的HTTP FORM API</h4>
 
 <p>使用这个接口，就需要向又拍云发送一个表单。这个表单包含你所要上传的文件，并且还需要包含<code>policy</code>和<code>signature</code>。Policy用于将上传请求相关的参数，例如保存路径，文件类型，预处理结果等，另外，也包含了上传请求授时间等。而Signature用于安全校验。</p>
 
 <p>为了演示方便，此处直接使用javascript来生成Policy和Signature。<strong>但在实际使用中，为了安全性考虑，请在服务器端完成这个过程。</strong>下面的代码在官方的demo基础上做了些许修改，主要是使用了官方的测试帐号，关于这两个参数的具体生成方法，请参考官方的文档：<a href="http://docs.upyun.com/api/form_api/">http://docs.upyun.com/api/form_api/</a>。</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;bucket&#39;</span><span class="o">:</span> <span class="s1">&#39;demonstration&#39;</span><span class="p">,</span>
     <span class="s1">&#39;save-key&#39;</span><span class="o">:</span> <span class="s1">&#39;/test/filename.txt&#39;</span><span class="p">,</span>
     <span class="s1">&#39;expiration&#39;</span><span class="o">:</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">+</span> <span class="mi">86400</span>
@@ -187,15 +189,15 @@
 <span class="c1">// 从 UPYUN 用户管理后台获取表单 API</span>
 <span class="kd">var</span> <span class="nx">form_api_secret</span> <span class="o">=</span> <span class="s1">&#39;1+JY2ZqD5UVfw6hQ8EesYQO50Wo=&#39;</span><span class="p">;</span>
 <span class="c1">// 计算签名</span>
-<span class="kd">var</span> <span class="nx">signature</span> <span class="o">=</span> <span class="nx">md5</span><span class="p">(</span><span class="nx">policy</span> <span class="o">+</span> <span class="s1">&#39;&amp;&#39;</span> <span class="o">+</span> <span class="nx">form_api_secret</span><span class="p">);</span></code></pre></div>
+<span class="kd">var</span> <span class="nx">signature</span> <span class="o">=</span> <span class="nx">md5</span><span class="p">(</span><span class="nx">policy</span> <span class="o">+</span> <span class="s1">&#39;&amp;&#39;</span> <span class="o">+</span> <span class="nx">form_api_secret</span><span class="p">);</span></code></pre></figure>
 
-<h4 id="plupload-1">plupload的配置</h4>
+<h4 id="plupload的配置">plupload的配置</h4>
 
 <p>如何使得plupload可以配合又拍云的HTTP FORM API，着实让我头疼了一番。在查看plupload的文档中，无意中的发现却让我看到了曙光，<a href="http://www.plupload.com/docs/Upload-to-Amazon-S3">Upload to Amazon S3</a>这个链接吸引了我。<code>Amazon S3</code>的全称是Amazon Simple Storage Service，它提供的云存储服务多多少少和又拍云有些相似。</p>
 
 <p>于是根据这篇文章中关于浏览器端配置的介绍，我琢磨出了上传到又拍云所需要的配置。其实说起来也很简单，主要就是对<code>url</code>和<code>multipart_params</code>两个参数进行配置。下面的例子中的<code>options.bucket</code>、<code>policy</code>和<code>signature</code>直接使用上一节计算出来的值。</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">uploader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">plupload</span><span class="p">.</span><span class="nx">Uploader</span><span class="p">({</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">uploader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">plupload</span><span class="p">.</span><span class="nx">Uploader</span><span class="p">({</span>
     <span class="p">...</span>
     <span class="nx">url</span> <span class="o">:</span> <span class="s1">&#39;http://v0.api.upyun.com/&#39;</span> <span class="o">+</span> <span class="nx">options</span><span class="p">.</span><span class="nx">bucket</span><span class="p">,</span>
     <span class="nx">multipart_params</span><span class="o">:</span> <span class="p">{</span>
@@ -205,13 +207,13 @@
         <span class="s1">&#39;signature&#39;</span><span class="o">:</span> <span class="nx">signature</span><span class="p">,</span>
     <span class="p">},</span>
     <span class="p">...</span>
-<span class="p">});</span></code></pre></div>
+<span class="p">});</span></code></pre></figure>
 
-<h2 id="section-4">总结</h2>
+<h2 id="总结">总结</h2>
 
 <p>如此这般，终于实现了通过plupload绕过服务器，向又拍云批量上传图片了。plupload真是一个很强大的库，不过它对商业使用可以需要收费的哦，具体还是到它的官网上去了解吧！虽然在开头已经提过了，这里还是在唠叨一句：最终的demo效果可以到我创建的项目中看到，丢下链接：<a href="http://zry656565.github.io/bulk-upload-to-UPYUN/">http://zry656565.github.io/bulk-upload-to-UPYUN/</a></p>
 
-<h2 id="section-5">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol>
   <li><a href="http://docs.upyun.com/api/form_api/">又拍云文档 － HTTP FORM API</a></li>

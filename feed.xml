@@ -26,34 +26,34 @@
 
 &lt;p&gt;如果你是 Hit Kounter v0.1 的用户，可以直接阅读 &lt;strong&gt;如何从 v0.1.1 版本迁移到 v0.2.0&lt;/strong&gt;。&lt;/p&gt;
 
-&lt;h2 id=&quot;section&quot;&gt;如何为你的博客添加访问量统计&lt;/h2&gt;
+&lt;h2 id=&quot;如何为你的博客添加访问量统计&quot;&gt;如何为你的博客添加访问量统计&lt;/h2&gt;
 
-&lt;h4 id=&quot;section-1&quot;&gt;1. 引入脚本&lt;/h4&gt;
+&lt;h4 id=&quot;1-引入脚本&quot;&gt;1. 引入脚本&lt;/h4&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;https://cdn1.lncld.net/static/js/av-mini-0.6.10.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.2.0.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;https://cdn1.lncld.net/static/js/av-mini-0.6.10.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.2.0.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;首先，在你的页面中引入这两个脚本，第一个脚本是 LeanCloud 的库脚本，引入了它我们才能使用 LeanCloud 的服务；由于你可能在每个页面都需要显示访问量，把它加入根模板也许是个不错的选择。&lt;/p&gt;
 
-&lt;h4 id=&quot;section-2&quot;&gt;2. 显示当前页面的访问量&lt;/h4&gt;
+&lt;h4 id=&quot;2-显示当前页面的访问量&quot;&gt;2. 显示当前页面的访问量&lt;/h4&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-hk-page=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;current&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; - &lt;span class=&quot;nt&quot;&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-hk-page=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;current&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; - &lt;span class=&quot;nt&quot;&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;你可以在页面的任何地方插入这句 HTML 片段，你之前引入的脚本会自动检查当前页面上带有 &lt;code&gt;data-hk-*&lt;/code&gt; 属性的元素，并针对你给出的属性值向服务器请求数据，最后把得到的结果替换到上面的标签内。可以参考 &lt;a href=&quot;https://github.com/zry656565/heaven-blog/blob/5f19693ac0fb5723ef18d69b57106d2f95021400/_layouts/post.html#L9&quot;&gt;我博客中的例子&lt;/a&gt;。&lt;/p&gt;
 
-&lt;h4 id=&quot;section-3&quot;&gt;3. 显示指定页面的访问量&lt;/h4&gt;
+&lt;h4 id=&quot;3-显示指定页面的访问量&quot;&gt;3. 显示指定页面的访问量&lt;/h4&gt;
 
 &lt;p&gt;如果你希望在文章列表页中显示各个页面的访问量分别是多少，那么你就要使用一个 url 来填充 &lt;code&gt;data-hk-page&lt;/code&gt; 的属性值，就像这样：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-hk-page=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://jerryzou.com/posts/design-for-all-mobile-resolution/&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; - &lt;span class=&quot;nt&quot;&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-hk-page=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://jerryzou.com/posts/design-for-all-mobile-resolution/&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; - &lt;span class=&quot;nt&quot;&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;那么 Hit Kounter 检测到这个标签以后，就会向服务器请求该地址的具体访问量，并将默认值 ` - ` 替换为实际值。可以参考 &lt;a href=&quot;https://github.com/zry656565/heaven-blog/blob/5f19693ac0fb5723ef18d69b57106d2f95021400/index.html#L13&quot;&gt;我博客中的例子&lt;/a&gt;。&lt;/p&gt;
 
-&lt;h2 id=&quot;hit-kounter--js-&quot;&gt;Hit Kounter 的 JS 接口&lt;/h2&gt;
+&lt;h2 id=&quot;hit-kounter-的-js-接口&quot;&gt;Hit Kounter 的 JS 接口&lt;/h2&gt;
 
 &lt;p&gt;Hit Kounter 会在全局注入 &lt;code&gt;Icarus&lt;/code&gt; 对象，它是与服务器交互的数据接口。通过它，我们就可以直接向服务器发送请求。先看看下面这个例子：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;Icarus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;Icarus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
   &lt;span class=&quot;nx&quot;&gt;api&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;hk.page.get&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
   &lt;span class=&quot;nx&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;1.0&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
   &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -71,7 +71,7 @@
   &lt;span class=&quot;nx&quot;&gt;failure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;code&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;code&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;上面这个例子中，我们主要是获取了三个页面的具体访问量；目前 &lt;code&gt;Icarus&lt;/code&gt; 支持的接口有四个（具体可以参考 &lt;a href=&quot;https://github.com/zry656565/Hit-Kounter-LC/wiki/Icarus:-APIs&quot;&gt;Hit-Kounter-LC Wiki&lt;/a&gt;）：&lt;/p&gt;
 
@@ -84,26 +84,26 @@
 
 &lt;p&gt;至于如何使用就由你们自由发挥啦。&lt;/p&gt;
 
-&lt;h2 id=&quot;v011--v020&quot;&gt;如何从 v0.1.1 版本迁移到 v0.2.0&lt;/h2&gt;
+&lt;h2 id=&quot;如何从-v011-版本迁移到-v020&quot;&gt;如何从 v0.1.1 版本迁移到 v0.2.0&lt;/h2&gt;
 
 &lt;p&gt;我已经把迁移的成本降到最低，只要替换引入的文件即可：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 老版本需要引入的文件 --&amp;gt;&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 老版本需要引入的文件 --&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-0.1.1.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 新版本需要引入的文件 --&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;https://cdn1.lncld.net/static/js/av-mini-0.6.10.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.2.0.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.2.0.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;因为 v0.2 版本基于 LeanCloud 的服务，所以需要额外引入 LeanCloud 的一个库文件。另外需要注意的是，第二个文件除了版本号做了更新，还多了 &lt;code&gt;-lc&lt;/code&gt; 几个字符哦。&lt;/p&gt;
 
 &lt;p&gt;本次更新在将后端服务从 SAE 替换为 LeanCloud 的同时并没有做太多的功能改进。最主要的一点功能改进是引入缓存机制，在数据超过默认的五分钟之前，&lt;strong&gt;Icarus&lt;/strong&gt; 不会向服务器发送新的 get 请求。（increment 请求当然还是照发不误的啦）&lt;/p&gt;
 
-&lt;h4 id=&quot;icarus-&quot;&gt;以下内容请使用了 Icarus 接口的用户注意&lt;/h4&gt;
+&lt;h4 id=&quot;以下内容请使用了-icarus-接口的用户注意&quot;&gt;以下内容请使用了 Icarus 接口的用户注意&lt;/h4&gt;
 
 &lt;p&gt;&lt;strong&gt;Icarus&lt;/strong&gt; 接口所接受的多余的参数现在需要放在 &lt;code&gt;data&lt;/code&gt; 对象中，注意对你之前的代码做一定修改。直接看例子可能比较直观：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/*================&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/*================&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt; * 老版本调用方式&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt; *================*/&lt;/span&gt;
 &lt;span class=&quot;nx&quot;&gt;Icarus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
@@ -129,9 +129,9 @@
   &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;                                &lt;span class=&quot;c1&quot;&gt;// &amp;lt;---&lt;/span&gt;
   &lt;span class=&quot;nx&quot;&gt;success&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{},&lt;/span&gt;
   &lt;span class=&quot;nx&quot;&gt;failure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;code&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h2 id=&quot;hit-kounter-&quot;&gt;小结：Hit Kounter 的未来&lt;/h2&gt;
+&lt;h2 id=&quot;小结hit-kounter-的未来&quot;&gt;小结：Hit Kounter 的未来&lt;/h2&gt;
 
 &lt;p&gt;当然，Hit Kounter 未来会加入越来越多的功能，包括但不限于：&lt;/p&gt;
 
@@ -144,7 +144,7 @@
 
 &lt;p&gt;TODO List 可以在 &lt;a href=&quot;https://github.com/zry656565/Hit-Kounter-LC/issues/1&quot;&gt;这个 issue&lt;/a&gt; 中看到，而且因为 &lt;a href=&quot;https://github.com/zry656565/Hit-Kounter-LC&quot;&gt;zry656565/Hit-Kounter-LC&lt;/a&gt; 是开源项目，也很期待大家能够多吐槽，如果能给 &lt;strong&gt;Hit-Kounter-LC&lt;/strong&gt; 贡献代码那就再好不过啦~。&lt;/p&gt;
 </description>
-        <pubDate>Sun, 24 Apr 2016 00:20:00 +0000</pubDate>
+        <pubDate>Sun, 24 Apr 2016 00:20:00 +0800</pubDate>
         <link>http://jerryzou.com/posts/introduction-to-hit-kounter-lc/</link>
         <guid isPermaLink="true">http://jerryzou.com/posts/introduction-to-hit-kounter-lc/</guid>
       </item>
@@ -162,7 +162,7 @@
   &lt;li&gt;编程语言：C#&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;section&quot;&gt;录制&lt;/h2&gt;
+&lt;h2 id=&quot;录制&quot;&gt;录制&lt;/h2&gt;
 
 &lt;p&gt;录制数据相对来说比较简单，我们只需要借助 Kinect for Windows SDK 自带的 &lt;strong&gt;Kinect Studio&lt;/strong&gt; 就可以达成这一目的。&lt;/p&gt;
 
@@ -170,7 +170,7 @@
 
 &lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/kinect-studio.png&quot; alt=&quot;Kinect Studio Sample&quot; /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;section-1&quot;&gt;回放&lt;/h2&gt;
+&lt;h2 id=&quot;回放&quot;&gt;回放&lt;/h2&gt;
 
 &lt;p&gt;&lt;strong&gt;实现回放的原理：&lt;/strong&gt; 我们在正常使用 Kinect 的过程中，每当 Kinect 采集到一帧画面，就会触发一下 &lt;code&gt;FrameArrived&lt;/code&gt; 事件。而我们写的程序总是会通过一个 &lt;code&gt;FrameReader&lt;/code&gt; 来响应每一帧画面所触发的事件。所以只要通过读取 &lt;strong&gt;xef&lt;/strong&gt; 文件中的数据，模拟触发 &lt;code&gt;FrameArrived&lt;/code&gt; 事件；从而做到几乎不修改原本的代码，就能在原来程序中回放录制的场景。&lt;/p&gt;
 
@@ -187,7 +187,7 @@
 
 &lt;p&gt;接下来，你需要编写一些代码来调用回放的功能。以官方的例子 &lt;strong&gt;DepthBasics-WPF&lt;/strong&gt; 为例，首先你需要定义一个新的类，并在这个类中定义一个静态方法，如下所示：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/******&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/******&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt; * PlaybackClip.cs&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt; */&lt;/span&gt;
 
@@ -229,11 +229,11 @@
             &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
         &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;最后，你需要在现有的代码中使用 &lt;code&gt;PlaybackHelper.PlaybackClip&lt;/code&gt; 方法来帮助你回放之前的数据。此处的示例代码在检测不到 Kinect 设备时会 &lt;strong&gt;启用一个新线程&lt;/strong&gt; 来回放指定的数据，并指定循环回放 10 次，你可以根据需要进行修改。&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/***&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/***&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt; * MainWindow.xaml.cs&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt; */&lt;/span&gt;
  
@@ -266,13 +266,13 @@
         
         &lt;span class=&quot;c1&quot;&gt;// ... 此处省略若干示例中的代码&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;完成了以上这些以后，拔掉你的 Kinect 并重启你的程序。如果程序依然能够很顺利的执行，&lt;strong&gt;那么恭喜你，你成功啦&lt;/strong&gt;！&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/kinect-result.jpg!0.5&quot; alt=&quot;Sample Result&quot; /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;section-2&quot;&gt;参考文献&lt;/h2&gt;
+&lt;h2 id=&quot;参考文献&quot;&gt;参考文献&lt;/h2&gt;
 
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/questions/27280689/kinect-v2-read-out-data-from-xef-files&quot;&gt;Stackoverflow - Kinect v2, read out data from .xef files&lt;/a&gt;&lt;/li&gt;
@@ -280,7 +280,7 @@
 &lt;/ul&gt;
 
 </description>
-        <pubDate>Mon, 21 Mar 2016 23:20:00 +0000</pubDate>
+        <pubDate>Mon, 21 Mar 2016 23:20:00 +0800</pubDate>
         <link>http://jerryzou.com/posts/record-and-playback-for-kinect/</link>
         <guid isPermaLink="true">http://jerryzou.com/posts/record-and-playback-for-kinect/</guid>
       </item>
@@ -303,33 +303,33 @@
   &lt;li&gt;小结：Hit Kounter 的未来&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;section&quot;&gt;如何为你的博客添加访问量统计&lt;/h2&gt;
+&lt;h2 id=&quot;如何为你的博客添加访问量统计&quot;&gt;如何为你的博客添加访问量统计&lt;/h2&gt;
 
-&lt;h4 id=&quot;section-1&quot;&gt;1. 引入脚本&lt;/h4&gt;
+&lt;h4 id=&quot;1-引入脚本&quot;&gt;1. 引入脚本&lt;/h4&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-0.1.1.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-0.1.1.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;首先，在你的页面中引入这个脚本；由于你可能在每个页面都需要显示访问量，把它加入根模板也许是个不错的选择。&lt;/p&gt;
 
-&lt;h4 id=&quot;section-2&quot;&gt;2. 显示当前页面的访问量&lt;/h4&gt;
+&lt;h4 id=&quot;2-显示当前页面的访问量&quot;&gt;2. 显示当前页面的访问量&lt;/h4&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-hk-page=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;current&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; - &lt;span class=&quot;nt&quot;&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-hk-page=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;current&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; - &lt;span class=&quot;nt&quot;&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;你可以在页面的任何地方插入这句 HTML 片段，你之前引入的脚本会自动检查当前页面上带有 &lt;code&gt;data-hk-*&lt;/code&gt; 属性的元素，并针对你给出的属性值向服务器请求数据，最后把得到的结果替换到上面的标签内。可以参考&lt;a href=&quot;https://github.com/zry656565/heaven-blog/blob/5f19693ac0fb5723ef18d69b57106d2f95021400/_layouts/post.html#L9&quot;&gt;我博客中的例子&lt;/a&gt;。&lt;/p&gt;
 
-&lt;h4 id=&quot;section-3&quot;&gt;3. 显示指定页面的访问量&lt;/h4&gt;
+&lt;h4 id=&quot;3-显示指定页面的访问量&quot;&gt;3. 显示指定页面的访问量&lt;/h4&gt;
 
 &lt;p&gt;如果你希望在文章列表页中显示各个页面的访问量分别是多少，那么你就要使用一个 url 来填充 &lt;code&gt;data-hk-page&lt;/code&gt; 的属性值，就像这样：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-hk-page=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://jerryzou.com/posts/design-for-all-mobile-resolution/&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; - &lt;span class=&quot;nt&quot;&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-hk-page=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://jerryzou.com/posts/design-for-all-mobile-resolution/&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; - &lt;span class=&quot;nt&quot;&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;那么 Hit Kounter 检测到这个标签以后，就会向服务器请求该地址的具体访问量，并最终将默认值 ` - ` 替换为实际值。可以参考&lt;a href=&quot;https://github.com/zry656565/heaven-blog/blob/5f19693ac0fb5723ef18d69b57106d2f95021400/index.html#L13&quot;&gt;我博客中的例子&lt;/a&gt;。&lt;/p&gt;
 
-&lt;h2 id=&quot;hit-kounter--js-&quot;&gt;Hit Kounter 的 JS 接口&lt;/h2&gt;
+&lt;h2 id=&quot;hit-kounter-的-js-接口&quot;&gt;Hit Kounter 的 JS 接口&lt;/h2&gt;
 
 &lt;p&gt;Hit Kounter 会在全局注入 &lt;code&gt;Icarus&lt;/code&gt; 对象，它是与服务器交互的数据接口。通过它，我们就可以直接向服务器发送请求。先看看下面这个例子：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;Icarus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;Icarus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
   &lt;span class=&quot;nx&quot;&gt;api&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;hk.page.get&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
   &lt;span class=&quot;nx&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;1.0&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
   &lt;span class=&quot;nx&quot;&gt;pages&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
@@ -345,7 +345,7 @@
   &lt;span class=&quot;nx&quot;&gt;failure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;code&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;code&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;上面这个例子中，我们主要是获取了三个页面的具体访问量；目前 &lt;code&gt;Icarus&lt;/code&gt; 支持的接口有四个（具体可以参考 &lt;a href=&quot;https://github.com/zry656565/Hit-Kounter/wiki/Icarus:-APIs&quot;&gt;Hit Kounter Wiki&lt;/a&gt;）：&lt;/p&gt;
 
@@ -358,7 +358,7 @@
 
 &lt;p&gt;至于如何使用就由你们自由发挥啦。&lt;/p&gt;
 
-&lt;h2 id=&quot;hit-kounter-&quot;&gt;小结：Hit Kounter 的未来&lt;/h2&gt;
+&lt;h2 id=&quot;小结hit-kounter-的未来&quot;&gt;小结：Hit Kounter 的未来&lt;/h2&gt;
 
 &lt;p&gt;当然，Hit Kounter 的功能不至于此啦，由于作者我还是个读研狗，最近得发论文了，所以更新进度暂且比较慢；目前 Hit Kounter 是 0.1 Beta版，未来会加入越来越多的功能，包括但不限于：&lt;/p&gt;
 
@@ -371,7 +371,7 @@
 
 &lt;p&gt;TODO List 可以在 &lt;a href=&quot;https://github.com/zry656565/Hit-Kounter/issues/1&quot;&gt;这个 issue&lt;/a&gt; 中看到，而且因为 &lt;a href=&quot;https://github.com/zry656565/Hit-Kounter&quot;&gt;Hit Kounter&lt;/a&gt; 是开源项目，也很期待大家能够多吐槽，如果能给 Hit Kounter 贡献代码那就再好不过啦~。&lt;/p&gt;
 </description>
-        <pubDate>Sat, 27 Feb 2016 13:20:00 +0000</pubDate>
+        <pubDate>Sat, 27 Feb 2016 13:20:00 +0800</pubDate>
         <link>http://jerryzou.com/posts/introduction-to-hit-kounter/</link>
         <guid isPermaLink="true">http://jerryzou.com/posts/introduction-to-hit-kounter/</guid>
       </item>
@@ -382,17 +382,17 @@
 
 &lt;p&gt;首先看看下面这行代码：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;viewport&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;width=device-width, user-scalabel=no&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;viewport&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;width=device-width, user-scalabel=no&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;有过移动端开发经验的同学是不是对上面这句代码非常熟悉？它可能最常见的响应式设计的 &lt;code&gt;viewport&lt;/code&gt; 设置之一，而我今天介绍的这种方法也是利用了 meta 标签设置 &lt;code&gt;viewport&lt;/code&gt; 来支持大部分的移动端屏幕分辨率。&lt;/p&gt;
 
-&lt;h2 id=&quot;section&quot;&gt;目标&lt;/h2&gt;
+&lt;h2 id=&quot;目标&quot;&gt;目标&lt;/h2&gt;
 
 &lt;ul&gt;
   &lt;li&gt;仅仅通过配置 &lt;code&gt;&amp;lt;meta name=&quot;viewport&quot;&amp;gt;&lt;/code&gt; 使得移动端网站只需要按照固定的宽度设计并实现，就能在任何主流的移动设备上都能看到符合设计稿的页面，包括 Android 4+、iPhone 4+。&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;section-1&quot;&gt;测试设备&lt;/h2&gt;
+&lt;h2 id=&quot;测试设备&quot;&gt;测试设备&lt;/h2&gt;
 
 &lt;ul&gt;
   &lt;li&gt;三星 Note II (Android 4.1.2) - 真机&lt;/li&gt;
@@ -404,8 +404,8 @@
 
 &lt;p&gt;iPhone 的适配比较简单，只需要设置 &lt;code&gt;width&lt;/code&gt; 即可。比如：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;c&quot;&gt;&amp;lt;!-- for iPhone --&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;viewport&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;width=320, user-scalable=no&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;c&quot;&gt;&amp;lt;!-- for iPhone --&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;viewport&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;width=320, user-scalable=no&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;这样你的页面在所有的 iPhone 上，无论是 宽 375 像素的 iPhone 6 还是宽 414 像素的 iPhone 6 plus，都能显示出定宽 320 像素的页面。&lt;/p&gt;
 
@@ -424,8 +424,8 @@
 
 &lt;p&gt;我们可以像在 iPhone 上那样设置 &lt;code&gt;width=320&lt;/code&gt; 以达到我们想要的 320px 定宽的页面设计。&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;c&quot;&gt;&amp;lt;!-- for Android 4.4+ --&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;viewport&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;width=320, user-scalable=no&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;c&quot;&gt;&amp;lt;!-- for Android 4.4+ --&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;viewport&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;width=320, user-scalable=no&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h3 id=&quot;android-40--43&quot;&gt;Android 4.0 ~ 4.3&lt;/h3&gt;
 
@@ -523,7 +523,7 @@
 
 &lt;p&gt;这样的计算式不得不使用 JS 来实现，最终我们就能得到适配 &lt;strong&gt;Android 4.0 ~ 4.3&lt;/strong&gt; 定宽的代码：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;match&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;match&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;nx&quot;&gt;scale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;nx&quot;&gt;TARGET_WIDTH&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;320&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 
@@ -533,11 +533,11 @@
         &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;scale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;screen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;width&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;TARGET_WIDTH&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
         &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;querySelector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;meta[name=&amp;quot;viewport&amp;quot;]&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setAttribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;content&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;width=&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;TARGET_WIDTH&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;, initial-scale = &amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;scale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;, target-densitydpi=device-dpi&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;其中，&lt;code&gt;TARGET_WIDTH&lt;/code&gt; 就是你所期望的宽度，注意这段代码仅在 &lt;strong&gt;320-720px&lt;/strong&gt; 之间有效哦。&lt;/p&gt;
 
-&lt;h2 id=&quot;section-2&quot;&gt;缩放中的坑&lt;/h2&gt;
+&lt;h2 id=&quot;缩放中的坑&quot;&gt;缩放中的坑&lt;/h2&gt;
 
 &lt;p&gt;如果是 iPhone 或者 Android 4.4+ 的机器，在使用 scale 相关的属性时要非常谨慎，包括 &lt;code&gt;initial-scale&lt;/code&gt;, &lt;code&gt;maximum-scale&lt;/code&gt; 和 &lt;code&gt;minimum-scale&lt;/code&gt;。
 要么保证 &lt;strong&gt;Scale = deviceWidth / vWidth&lt;/strong&gt;，要么就尽量不用。来看一个例子：&lt;/p&gt;
@@ -546,11 +546,11 @@
 
 &lt;p&gt;在缩放比不能保证的情况下，即使设置同样的 &lt;code&gt;width&lt;/code&gt; 和 &lt;code&gt;initial-scale&lt;/code&gt; 后，两者的表现也是不一致。具体两种机型采用的策略如何我还没有探索出来，有兴趣的同学可以研究看看。最省事的办法就是在 iPhone 和 Android 4.4+ 上不设置 scale 相关的属性。&lt;/p&gt;
 
-&lt;h2 id=&quot;section-3&quot;&gt;总结&lt;/h2&gt;
+&lt;h2 id=&quot;总结&quot;&gt;总结&lt;/h2&gt;
 
 &lt;p&gt;结合上面所有的分析，你可以通过下面这段 JS 代码来对所有 iPhone 和 Android 4+ 的手机屏幕进行适配：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;match&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;match&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;nx&quot;&gt;scale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;nx&quot;&gt;TARGET_WIDTH&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;320&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 
@@ -562,22 +562,22 @@
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;querySelector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;meta[name=&amp;quot;viewport&amp;quot;]&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setAttribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;content&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;width=&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;TARGET_WIDTH&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;如果你不希望你的页面被用户手动缩放，你还可以加上 &lt;code&gt;user-scalable=no&lt;/code&gt;。不过需要注意的是，这个属性在部分安卓机型上是无效的哦。&lt;/p&gt;
 
-&lt;h2 id=&quot;section-4&quot;&gt;其他参考资料&lt;/h2&gt;
+&lt;h2 id=&quot;其他参考资料&quot;&gt;其他参考资料&lt;/h2&gt;
 
 &lt;ol&gt;
   &lt;li&gt;&lt;a href=&quot;https://bugs.webkit.org/show_bug.cgi?id=88047&quot;&gt;Supporting Different Screens in Web Apps - Android Developers&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;http://www.petelepage.com/blog/2013/02/viewport-target-densitydpi-support-is-being-deprecated/&quot;&gt;Viewport target-densitydpi support is being deprecated&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2 id=&quot;section-5&quot;&gt;附录 - 测试页面&lt;/h2&gt;
+&lt;h2 id=&quot;附录---测试页面&quot;&gt;附录 - 测试页面&lt;/h2&gt;
 
 &lt;p&gt;有兴趣的同学可以拿这个测试页面来测测自己的手机，别忘了改 &lt;code&gt;viewport&lt;/code&gt; 哦。&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;html&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;lang=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;en&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
     &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;UTF-8&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
@@ -625,10 +625,10 @@
         &lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;querySelector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;[name=&amp;quot;viewport&amp;quot;]&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 </description>
-        <pubDate>Tue, 08 Dec 2015 13:36:00 +0000</pubDate>
+        <pubDate>Tue, 08 Dec 2015 13:36:00 +0800</pubDate>
         <link>http://jerryzou.com/posts/design-for-all-mobile-resolution/</link>
         <guid isPermaLink="true">http://jerryzou.com/posts/design-for-all-mobile-resolution/</guid>
       </item>
@@ -637,7 +637,7 @@
         <title>记一次作死 —— 被 Leetcode 封禁</title>
         <description>&lt;p&gt;从昨天凌晨四点起，我的 Leetcode 账号就无法提交任何代码了，于是我意识到我的账号大概是被封了……&lt;/p&gt;
 
-&lt;h2 id=&quot;section&quot;&gt;起因&lt;/h2&gt;
+&lt;h2 id=&quot;起因&quot;&gt;起因&lt;/h2&gt;
 
 &lt;p&gt;我和我的同学 &lt;a href=&quot;http://xidui.github.io/&quot;&gt;@xidui&lt;/a&gt; 正在维护一个项目 &lt;a href=&quot;https://github.com/xidui/algorithm-training&quot;&gt;xidui/algorithm-training&lt;/a&gt;。其实就是收录一些算法题的解答，目前主要对象就是 Leetcode。我前几天正好做到 &lt;a href=&quot;https://leetcode.com/problems/letter-combinations-of-a-phone-number/&quot;&gt;#17 Letter Combinations of a Phone Number&lt;/a&gt;。题目也蛮简单的，我写好以后提交了一下，发现跑出来的结果是 152 ms —— &lt;strong&gt;“哇哦，你打败了 2.44% 的提交”&lt;/strong&gt;。好差！！我瞬间满脸黑线。而之前提到的项目中正好有另一个同学写的关于这一题的解答，我赶紧去参考了一下，感觉空间复杂度比我小很多，但时间复杂度应该差不多呀，然后注释中有这么一句：&lt;/p&gt;
 
@@ -649,11 +649,11 @@
 
 &lt;p&gt;看了看 Discuss 里的解法，感觉复杂度似乎也差不多，于是我决定研 (Zuo) 究 (Si) 一下 Leetcode OJ 服务的稳定性如何。&lt;/p&gt;
 
-&lt;h2 id=&quot;section-1&quot;&gt;过程&lt;/h2&gt;
+&lt;h2 id=&quot;过程&quot;&gt;过程&lt;/h2&gt;
 
 &lt;p&gt;打开 Chrome 的开发者工具，发现只有 &lt;code&gt;submit&lt;/code&gt; 和 &lt;code&gt;check&lt;/code&gt; 两种 ajax 请求，response 内容大概是这样的：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// `submit` response&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// `submit` response&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;submission_id&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;46823974&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
 &lt;span class=&quot;c1&quot;&gt;// first `check` response&lt;/span&gt;
@@ -669,7 +669,7 @@
   &lt;span class=&quot;s2&quot;&gt;&amp;quot;state&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;SUCCESS&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
   &lt;span class=&quot;s2&quot;&gt;&amp;quot;total_correct&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;25&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
   &lt;span class=&quot;s2&quot;&gt;&amp;quot;question_id&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;17&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;所以只要先模拟一个 &lt;code&gt;submit&lt;/code&gt; 的 POST 请求，拿到 submission_id 后，再用这个 id 模拟 &lt;code&gt;check&lt;/code&gt; 的 GET 请求，直到拿到最终的结果。&lt;/p&gt;
 
@@ -679,7 +679,7 @@
 
 &lt;p&gt;然后我写了个 Nodejs 的小程序，每隔&lt;strong&gt;一分钟&lt;/strong&gt;调用上面保存的两个脚本来进行一次提交，并把当次的执行速度保存到 Mongodb 中。代码我就不贴啦，有兴趣的话可以到 &lt;a href=&quot;https://github.com/zry656565/Leetcode-Benchmark&quot;&gt;zry656565/Leetcode-Benchmark&lt;/a&gt; 看看。&lt;/p&gt;
 
-&lt;h2 id=&quot;section-2&quot;&gt;结果&lt;/h2&gt;
+&lt;h2 id=&quot;结果&quot;&gt;结果&lt;/h2&gt;
 
 &lt;p&gt;这个程序大概是在十一点左右的时候开始运行的。本以为一分钟一次的频率并不高，结果第二天起来一看，从凌晨四点多开始就没有数据了，自此我这个账号就提交不了代码了。。&lt;/p&gt;
 
@@ -692,7 +692,7 @@
 &lt;h1 style=&quot;text-align:center;&quot;&gt;完。&lt;/h1&gt;
 
 </description>
-        <pubDate>Thu, 26 Nov 2015 00:20:00 +0000</pubDate>
+        <pubDate>Thu, 26 Nov 2015 00:20:00 +0800</pubDate>
         <link>http://jerryzou.com/posts/leetcode-benchmark/</link>
         <guid isPermaLink="true">http://jerryzou.com/posts/leetcode-benchmark/</guid>
       </item>
@@ -709,7 +709,7 @@
   &lt;p&gt;You’re only limited by your imagination.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;section&quot;&gt;面临的问题&lt;/h2&gt;
+&lt;h2 id=&quot;面临的问题&quot;&gt;面临的问题&lt;/h2&gt;
 
 &lt;p&gt;我目前正好面临了这样一个问题 —— 麻烦的人肉部署。也许有人看过我之前的一篇博文《&lt;a href=&quot;http://jerryzou.com/posts/feasibility-of-allowing-baiduSpider-for-Github-Pages/&quot;&gt;解决 Github Pages 禁止百度爬虫的方法与可行性分析&lt;/a&gt;》。为了解决文章中的这个问题，我最后建立了一个只服务于百度爬虫的一个备份服务器。但是随之而来的问题是，每次我的博客有些更新，都不得不 ssh 到那台服务器上把代码 pull 下来。如此做了两三次以后，我觉得我不能再这么堕落下去，于是还是决定尝试一下 Webhook。&lt;/p&gt;
 
@@ -721,15 +721,15 @@
   &lt;li&gt;配置 Webhook&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2 id=&quot;section-1&quot;&gt;1. 一台外网可访问的主机&lt;/h2&gt;
+&lt;h2 id=&quot;1-一台外网可访问的主机&quot;&gt;1. 一台外网可访问的主机&lt;/h2&gt;
 
 &lt;p&gt;什么叫外网可访问的主机？像阿里云的试用版就不行，它不提供外网 IP。而我使用的是 DigitalOcean 的云主机，主要的作用是架梯子，现在也顺便用来做备份服务器。当然你们也可以用类似 SAE 的服务，虽然没有 IP，但有独立的外网访问地址。&lt;/p&gt;
 
-&lt;h2 id=&quot;webhook-&quot;&gt;2. 响应 Webhook 的服务器&lt;/h2&gt;
+&lt;h2 id=&quot;2-响应-webhook-的服务器&quot;&gt;2. 响应 Webhook 的服务器&lt;/h2&gt;
 
 &lt;p&gt;为了响应 Webhook 所发出的请求，从而做一些我们想做的事情，我们得先实现一个响应服务器。本文采用 Node 来实现一个原型，你当然也可以用 PHP，python 等，全凭个人喜好啦。代码很短，就直接陈列在下方了：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;http&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;http&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;http&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;http&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
   &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;exec&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;exec&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
 &lt;span class=&quot;kr&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;PORT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;9988&lt;/span&gt;
@@ -764,12 +764,12 @@
   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
 
-&lt;span class=&quot;nx&quot;&gt;deployServer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;listen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;PORT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;nx&quot;&gt;deployServer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;listen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;PORT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;如果还需要实现更多，更复杂的功能，直接在 &lt;code&gt;commands&lt;/code&gt; 数组中添加便是。此处我的博客根目录 &lt;code&gt;html&lt;/code&gt; 与部署服务器根目录同属一个目录，所以配置常量 &lt;code&gt;PATH = &#39;../html&#39;&lt;/code&gt;。只要启动了服务器，那么 Webhook 就可以通过类似于 &lt;strong&gt;http://104.236.xxx.xxx:9988/deploy/&lt;/strong&gt; 的路径来部署我的博客备份啦。&lt;/p&gt;
+&lt;p&gt;如果还需要实现更多，更复杂的功能，直接在 &lt;code&gt;commands&lt;/code&gt; 数组中添加便是。此处我的博客根目录 &lt;code&gt;html&lt;/code&gt; 与部署服务器根目录同属一个目录，所以配置常量 &lt;code&gt;PATH = '../html'&lt;/code&gt;。只要启动了服务器，那么 Webhook 就可以通过类似于 &lt;strong&gt;http://104.236.xxx.xxx:9988/deploy/&lt;/strong&gt; 的路径来部署我的博客备份啦。&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell-session&quot; data-lang=&quot;shell-session&quot;&gt;&lt;span class=&quot;go&quot;&gt;# 在后台启动部署服务器&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;$ node server.js &amp;amp;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell-session&quot; data-lang=&quot;shell-session&quot;&gt;&lt;span class=&quot;go&quot;&gt;# 在后台启动部署服务器&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;$ node server.js &amp;amp;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;我以为服务器部署到这儿就完了，其实并没有，我遇到了一些麻烦。&lt;/p&gt;
 
@@ -779,31 +779,31 @@
 
 &lt;p&gt;安装 forever：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell-session&quot; data-lang=&quot;shell-session&quot;&gt;&lt;span class=&quot;go&quot;&gt;$ [sudo] npm install -g forever&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell-session&quot; data-lang=&quot;shell-session&quot;&gt;&lt;span class=&quot;go&quot;&gt;$ [sudo] npm install -g forever&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;运行：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell-session&quot; data-lang=&quot;shell-session&quot;&gt;&lt;span class=&quot;go&quot;&gt;$ cd { 部署服务器的根目录 }&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;$ forever start server.js&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell-session&quot; data-lang=&quot;shell-session&quot;&gt;&lt;span class=&quot;go&quot;&gt;$ cd { 部署服务器的根目录 }&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;$ forever start server.js&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;我在 DigitalOcean 上的服务器安装的是 &lt;strong&gt;Ubuntu&lt;/strong&gt; 系统，而 Ubuntu 中原本就有一个叫 node 的包。为了避免冲突，在 Ubuntu 上安装或使用 Node 得用 nodejs 这个名字。而 forever 默认是使用 node 作为执行脚本的程序名。所以为了处理 Ubuntu 存在的这种特殊情况，在启动 forever 时得另外添加一个参数：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell-session&quot; data-lang=&quot;shell-session&quot;&gt;&lt;span class=&quot;go&quot;&gt;$ forever start server.js -c nodejs&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell-session&quot; data-lang=&quot;shell-session&quot;&gt;&lt;span class=&quot;go&quot;&gt;$ forever start server.js -c nodejs&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h2 id=&quot;webhook&quot;&gt;3. 配置 Webhook&lt;/h2&gt;
+&lt;h2 id=&quot;3-配置-webhook&quot;&gt;3. 配置 Webhook&lt;/h2&gt;
 
 &lt;p&gt;如果像是本文这种最简易的应用，Webhook 的配置是十分简单的。首先进入你的 repo 主页，通过点击页面上的按钮 &lt;strong&gt;[settings]&lt;/strong&gt; -&amp;gt; &lt;strong&gt;[Webhooks &amp;amp; service]&lt;/strong&gt; 进入 Webhooks 配置主页面。也可以通过下面这个链接直接进入配置页面：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell-session&quot; data-lang=&quot;shell-session&quot;&gt;&lt;span class=&quot;go&quot;&gt;https://github.com/[ 用户名 ]/[ 仓库名称 ]/settings/hooks&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell-session&quot; data-lang=&quot;shell-session&quot;&gt;&lt;span class=&quot;go&quot;&gt;https://github.com/[ 用户名 ]/[ 仓库名称 ]/settings/hooks&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;此处只需要配置 Webhook 所发出的 POST 请求发往何处即可，于是我们就配置我们所需要的路径： &lt;strong&gt;http://104.236.xxx.xxx:9988/deploy/&lt;/strong&gt;。这个地址指向的就是那个能够响应 Webhook 所发出请求的服务器。&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/webhooks-config.png&quot; alt=&quot;webhooks configuration&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;配置好 Webhook 后，Github 会发送一个 ping 来测试这个地址。如果成功了，那么这个 Webhook 前就会加上一个绿色的勾；如果你得到的是一个红色的叉，那就好好检查一下哪儿出问题了吧！ &lt;/p&gt;
+&lt;p&gt;配置好 Webhook 后，Github 会发送一个 ping 来测试这个地址。如果成功了，那么这个 Webhook 前就会加上一个绿色的勾；如果你得到的是一个红色的叉，那就好好检查一下哪儿出问题了吧！&lt;/p&gt;
 
 </description>
-        <pubDate>Sun, 25 Oct 2015 22:19:00 +0000</pubDate>
+        <pubDate>Sun, 25 Oct 2015 22:19:00 +0800</pubDate>
         <link>http://jerryzou.com/posts/webhook-practice/</link>
         <guid isPermaLink="true">http://jerryzou.com/posts/webhook-practice/</guid>
       </item>
@@ -816,7 +816,7 @@
 
 &lt;p&gt;你在首页的底部也可以看到这样一个分页栏；是不是看上去还不错？下面就来看看这是如何实现的吧~&lt;/p&gt;
 
-&lt;h2 id=&quot;border&quot;&gt;第一种方法：利用&lt;code&gt;border&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;第一种方法利用border&quot;&gt;第一种方法：利用&lt;code&gt;border&lt;/code&gt;&lt;/h2&gt;
 
 &lt;p&gt;第一种方法是借助&lt;code&gt;border&lt;/code&gt;属性 hack 出三角形，然后通过一个矩形拼接两个三角形最终制造出一个平行四边形。为什么使用&lt;code&gt;border&lt;/code&gt;可以产生三角形呢？先来看看一张图片：&lt;/p&gt;
 
@@ -824,7 +824,7 @@
 
 &lt;p&gt;看了图中的三个小图形的变化过程，你应该已经清楚了一半。其实 hack 出三角形只需要两个条件，第一，元素本身的长宽为0；其次，将不需要的部分通过 border-color 来设置隐藏。通过类似的方法，你还可以创造出梯形，上图中的三个图形的代码如下。（另附 &lt;a href=&quot;http://codepen.io/jerryzou/pen/mJYJym&quot;&gt;CodePen 示例&lt;/a&gt;）&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;nf&quot;&gt;#first&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;nf&quot;&gt;#first&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;20px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;20px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;border-width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -846,7 +846,7 @@
   &lt;span class=&quot;k&quot;&gt;border-width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;border-style&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;solid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;border-color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;red&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;transparent&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;transparent&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;transparent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;接下来就要考虑如何拼接出一个平行四边形了。在&lt;code&gt;border&lt;/code&gt;法中，它由三部分组成，分别是左三角形、矩形、右三角形。如果每次绘制平行四边形都要创建三个元素显然过于麻烦了，所以在这里&lt;code&gt;:before&lt;/code&gt;和&lt;code&gt;:after&lt;/code&gt;伪元素是个不错的选择。下面我们实现一下这样的效果：&lt;/p&gt;
 
@@ -854,7 +854,7 @@
 
 &lt;p&gt;为了将三角形与矩形无缝拼接到一起，多处属性要保持一致，所以使用类似 Less, Sass, Stylus 等 CSS 预处理器来写这段代码会更容易维护，下面给出 Scss 版本的代码。（另附 &lt;a href=&quot;http://codepen.io/jerryzou/pen/ZGNGWZ?editors=110&quot;&gt;CodePen 链接&lt;/a&gt;）&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-scss&quot; data-lang=&quot;scss&quot;&gt;&lt;span class=&quot;c1&quot;&gt;//三角形的宽高&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-scss&quot; data-lang=&quot;scss&quot;&gt;&lt;span class=&quot;c1&quot;&gt;//三角形的宽高&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;$height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;$width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 
@@ -898,11 +898,11 @@
   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
   &lt;span class=&quot;k&quot;&gt;@include&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt; parallelogram-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;需要注意的是，如果通过 &lt;code&gt;$height&lt;/code&gt;、&lt;code&gt;$width&lt;/code&gt; 设置的三角形斜率太小或太大都有可能造成渲染出锯齿，所以使用起来要多多测试一下不同的宽高所得到的视觉效果如何。&lt;/p&gt;
 
-&lt;h2 id=&quot;transform&quot;&gt;第二种方法：利用&lt;code&gt;transform&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;第二种方法利用transform&quot;&gt;第二种方法：利用&lt;code&gt;transform&lt;/code&gt;&lt;/h2&gt;
 
 &lt;p&gt;使用&lt;code&gt;transform&lt;/code&gt;来实现平行四边形的方法是我在逛&lt;a href=&quot;http://www.alitrip.com/&quot;&gt;去啊&lt;/a&gt;的时候看到的，效果大概是这个样子：&lt;/p&gt;
 
@@ -910,7 +910,7 @@
 
 &lt;p&gt;看到之后觉得好神奇啊，原来还可以只有平行四边形的外轮廓。（因为方法一只能创造填充效果的平行四边形）实现起来非常简单，主要是借助了&lt;code&gt;transform: skew(...)&lt;/code&gt;，下面就来看看源码吧。&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;style&amp;gt;&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;style&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nc&quot;&gt;.city&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;inline&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;5px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;20px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -920,7 +920,7 @@
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/style&amp;gt;&lt;/span&gt;
 
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;city&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;上海&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;city&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;上海&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;于是我们得到了这样的效果：&lt;/p&gt;
 
@@ -936,7 +936,7 @@
 
 &lt;p&gt;实现代码如下，另附 &lt;a href=&quot;http://codepen.io/jerryzou/pen/BNeNwV?editors=110&quot;&gt;CodePen 示例&lt;/a&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;style&amp;gt;&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;style&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nc&quot;&gt;.city&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;inline&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;5px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;20px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -952,19 +952,19 @@
 
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;city&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
   &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&amp;gt;&lt;/span&gt;上海&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h2 id=&quot;section&quot;&gt;总结&lt;/h2&gt;
+&lt;h2 id=&quot;总结&quot;&gt;总结&lt;/h2&gt;
 
 &lt;p&gt;第一种方法使用 &lt;code&gt;border&lt;/code&gt; 属性 hack 出三角形，并通过对三个元素进行拼接最终实现了平行四边形；而第二种方法则通过 &lt;code&gt;transform: skew&lt;/code&gt; 来得到平行四边形。总体来说，第二种方法相对于第一种代码量小得多，而且也很好理解。唯一的不足是无法构造像本站的分页中所使用的梯形。希望本文对各位有所帮助。&lt;/p&gt;
 
 &lt;h3 id=&quot;update&quot;&gt;UPDATE&lt;/h3&gt;
 
-&lt;h4 id=&quot;section-1&quot;&gt;2015.8.18&lt;/h4&gt;
+&lt;h4 id=&quot;2015818&quot;&gt;2015.8.18&lt;/h4&gt;
 
 &lt;p&gt;&lt;a href=&quot;http://weibo.com/fouber&quot;&gt;@前端农民工&lt;/a&gt; 给出了一个 CSS-Tricks 的&lt;a href=&quot;https://css-tricks.com/examples/ShapesOfCSS/&quot;&gt;链接&lt;/a&gt;，是关于各种用 CSS 绘制几何图形的方法，浅显易懂，推荐大家看看！&lt;/p&gt;
 
-&lt;h4 id=&quot;section-2&quot;&gt;2015.9.14&lt;/h4&gt;
+&lt;h4 id=&quot;2015914&quot;&gt;2015.9.14&lt;/h4&gt;
 
 &lt;p&gt;Groune 指出在缩放页面的情况下，本博客的分页均会出现白边。我自己重现了一下这个问题，截图如下。&lt;/p&gt;
 
@@ -979,7 +979,7 @@
 &lt;p&gt;此例暴露出不同浏览器在缩放的情况下对于 &lt;strong&gt;Border Triangle&lt;/strong&gt; 的渲染还是有一定差异的（具体是怎样的差异，大家可以在 &lt;a href=&quot;http://codepen.io/jerryzou/pen/ZGNGWZ?editors=110&quot;&gt;CodePen&lt;/a&gt; 上尝试一下）。目前暂时没有找到解决这一问题的方法。所以还是采用了本文提到的第二种方法重新实现了一下本博客的分页；具体效果还请各位看官返回主页查看咯~&lt;/p&gt;
 
 </description>
-        <pubDate>Sun, 16 Aug 2015 20:16:30 +0000</pubDate>
+        <pubDate>Sun, 16 Aug 2015 20:16:30 +0800</pubDate>
         <link>http://jerryzou.com/posts/use-css-to-paint-triangle-and-parallelogram/</link>
         <guid isPermaLink="true">http://jerryzou.com/posts/use-css-to-paint-triangle-and-parallelogram/</guid>
       </item>
@@ -990,7 +990,7 @@
 
 &lt;p&gt;我会以四个角度给你们介绍四个工具，&lt;strong&gt;XMind&lt;/strong&gt;、&lt;strong&gt;Trello&lt;/strong&gt;、&lt;strong&gt;Pocket&lt;/strong&gt; 和 &lt;strong&gt;Evernote&lt;/strong&gt;；我相信这些工具大家也大多耳熟能详，而我会讲述我是如何使用这些工具，以及这些工具是如何相辅相成的。可能因为我接触前端领域的知识较多，例子中也会以前端为主，但知识和方法都是相通的，所以这应该也不会成为什么大问题。&lt;/p&gt;
 
-&lt;h2 id=&quot;section&quot;&gt;1. 建立大局观：思维导图&lt;/h2&gt;
+&lt;h2 id=&quot;1-建立大局观思维导图&quot;&gt;1. 建立大局观：思维导图&lt;/h2&gt;
 
 &lt;p&gt;自学者们在没有得到指导的情况下通常会对未来行走的方向一片迷茫，此刻最重要的是建立起&lt;strong&gt;大局观&lt;/strong&gt;，也就是在宏观的角度建立起未来的蓝图。
 要做到这一点，思维导图 (Mind Map) 是个很好的工具。我自己比较常用的是 &lt;strong&gt;&lt;a href=&quot;http://www.xmind.net/cn/&quot;&gt;XMind&lt;/a&gt;&lt;/strong&gt;，免费版在大多数情况已经够用了。
@@ -1013,7 +1013,7 @@
 如果直接把别人的一大张图拿来作为自己的蓝图，那么你依旧是迷茫而不知所措的。任何领域的知识都是汪洋大海，你永远不能指望能够完全掌握所有知识。
 所以你只需要在你学习的过程中，不断添加、修正、完善的你的导图就好，最理想的学习状态就是&lt;strong&gt;保持自己的节奏&lt;/strong&gt;。&lt;/p&gt;
 
-&lt;h2 id=&quot;trello&quot;&gt;2. 知道自己该做什么：Trello&lt;/h2&gt;
+&lt;h2 id=&quot;2-知道自己该做什么trello&quot;&gt;2. 知道自己该做什么：Trello&lt;/h2&gt;
 
 &lt;p&gt;有了大局观，就要着眼于当下，踏踏实实地走出每一步了。这时我推荐你们使用 &lt;strong&gt;&lt;a href=&quot;https://trello.com/&quot;&gt;Trello&lt;/a&gt;&lt;/strong&gt;，
 它好处在于同时支持网页版和 App，不管在哪里都可以很方便的查看。而且 Trello 天然支持 4 层树状结构，很适合与思维导图的树状结构对应。
@@ -1032,7 +1032,7 @@
 &lt;p&gt;类似于上图的做法，你可以将你需要做的事分成几类，以便于你真正想学习时有的放矢。在每一个 Card 中，你都能添加一些详细的信息，能添加标签、描述，还能加 Checklist！
 可我还是建议你不要赋予 Trello 太多的责任，我觉得 Trello 作用应该局限于梳理待办事项，而已经得到的知识或者想要总结的东西，应该借助于下面要介绍的两个工具。&lt;/p&gt;
 
-&lt;h2 id=&quot;pocket&quot;&gt;3. 对文章进行整理归类：Pocket&lt;/h2&gt;
+&lt;h2 id=&quot;3-对文章进行整理归类pocket&quot;&gt;3. 对文章进行整理归类：Pocket&lt;/h2&gt;
 
 &lt;p&gt;在学习知识的过程中，你总是会参考不少的文章，而某些非常精彩的文章，你总是会想要记录下来的。有些人会使用书签，而这是最糟糕的做法。
 因为你想要检索内容的时候，你几乎没法从一堆书签的名字中找到你想要的内容，而且你也很难维护日益增长的书签数目。&lt;/p&gt;
@@ -1047,7 +1047,7 @@
 &lt;p&gt;首先在我自己使用的体验上来说，Evernote 剪藏出来的文章比起 Pocket 剪辑出来的显示效果要糟糕很多；
 其次，我个人也不太喜欢赋予一个工具太多职责，在用过一段时间剪藏后，我发现我的 Evernote 变得愈加混乱，有时也很难把某一篇文章简单地归类到某本笔记本中，这让我非常困扰。&lt;/p&gt;
 
-&lt;h2 id=&quot;evernote&quot;&gt;4. 记录学习的体会：Evernote&lt;/h2&gt;
+&lt;h2 id=&quot;4-记录学习的体会evernote&quot;&gt;4. 记录学习的体会：Evernote&lt;/h2&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://jerryblog.qiniudn.com/evernote.png-h100&quot; alt=&quot;evernote&quot; /&gt;&lt;/p&gt;
 
@@ -1058,14 +1058,14 @@
 &lt;p&gt;在 Evernote 中，你可以记录你学习的过程，总结一些相似知识之间的关联，从而形成自己的观点。你还可以将一些你觉得写的比较不错的文章发布到你的博客上与大家一起分享。
 另外推荐一个付费的工具 &lt;a href=&quot;http://maxiang.info/&quot;&gt;马克飞象&lt;/a&gt;。依靠它，你就可以使用 Markdown 来编写你的笔记啦，没用过的同学打开试试吧！~&lt;/p&gt;
 
-&lt;h2 id=&quot;section-1&quot;&gt;总结&lt;/h2&gt;
+&lt;h2 id=&quot;总结&quot;&gt;总结&lt;/h2&gt;
 
 &lt;p&gt;今天给大家介绍的是我个人的学习方法，主要就是借助了 &lt;strong&gt;XMind&lt;/strong&gt;、&lt;strong&gt;Trello&lt;/strong&gt;、&lt;strong&gt;Pocket&lt;/strong&gt; 和 &lt;strong&gt;Evernote&lt;/strong&gt; 四个工具来管理我的知识树。
 不管怎么样，希望对大家有所帮助吧！如果你有什么想法想要交流，欢迎直接在下面的评论框中留言。&lt;/p&gt;
 
 &lt;h3 id=&quot;update&quot;&gt;UPDATE&lt;/h3&gt;
 
-&lt;h4 id=&quot;section-2&quot;&gt;2015.10.22&lt;/h4&gt;
+&lt;h4 id=&quot;20151022&quot;&gt;2015.10.22&lt;/h4&gt;
 
 &lt;p&gt;根据 &lt;a href=&quot;http://weibo.com/u/3140194393&quot;&gt;@普罗米修斯君&lt;/a&gt; 与 &lt;a href=&quot;http://www.zhihu.com/people/cuilei&quot;&gt;@Cuilei&lt;/a&gt; 等朋友的建议，添加几个可以作为替代的同类软件：&lt;/p&gt;
 
@@ -1088,7 +1088,7 @@
 &lt;/ul&gt;
 
 </description>
-        <pubDate>Thu, 16 Jul 2015 19:16:30 +0000</pubDate>
+        <pubDate>Thu, 16 Jul 2015 19:16:30 +0800</pubDate>
         <link>http://jerryzou.com/posts/method-of-self-learning/</link>
         <guid isPermaLink="true">http://jerryzou.com/posts/method-of-self-learning/</guid>
       </item>
@@ -1097,7 +1097,7 @@
         <title>解决 Github Pages 禁止百度爬虫的方法与可行性分析</title>
         <description>&lt;p&gt;我写技术博客有两个原因：一是总结自己近日的研究成果，二是将这些成果分享给大家。所以就我个人来说，还是比较希望写出来的文章有更多的人能够看到的。我最近注意到我的博客的流量大多来自于谷歌，而几乎没有来源于百度的。而本文就旨在提出这个问题，并尝试着去解决这个问题。当然，换一个云主机服务提供商能够很直接明了地解决这个问题，但这不是本文的重点，暂且不提。&lt;/p&gt;
 
-&lt;h2 id=&quot;github-pages-&quot;&gt;为什么 Github Pages 禁用了百度爬虫？&lt;/h2&gt;
+&lt;h2 id=&quot;为什么-github-pages-禁用了百度爬虫&quot;&gt;为什么 Github Pages 禁用了百度爬虫？&lt;/h2&gt;
 
 &lt;p&gt;就这个问题，我联系了 Github Support 部门，对方给我的答复是这样的：&lt;/p&gt;
 
@@ -1118,13 +1118,13 @@ Alex&lt;/p&gt;
 
 &lt;p&gt;因此，只能自己动手丰衣足食了，下面来讨论一下解决这个问题的方式。&lt;/p&gt;
 
-&lt;h2 id=&quot;cdn&quot;&gt;解决问题 —— CDN&lt;/h2&gt;
+&lt;h2 id=&quot;解决问题--cdn&quot;&gt;解决问题 —— CDN&lt;/h2&gt;
 
 &lt;p&gt;我在知乎提了这样一个问题：&lt;a href=&quot;http://www.zhihu.com/question/30898326&quot;&gt;如何解决百度爬虫无法爬取搭建在Github上的个人博客的问题？&lt;/a&gt;，并且 Stackoverflow 上也有类似的问题：&lt;a href=&quot;http://stackoverflow.com/questions/29196845/github-blocks-baidu-spider-how-can-i-make-it-work-again&quot;&gt;github blocks Baidu spider, how can I make it work again&lt;/a&gt;。两位知乎答主和Stackoverflow的评论都比较推荐使用 CDN 来解决这个问题。&lt;/p&gt;
 
 &lt;p&gt;那我们首先来了解一下 CDN 的原理。&lt;/p&gt;
 
-&lt;h3 id=&quot;cdn-&quot;&gt;CDN 的原理&lt;/h3&gt;
+&lt;h3 id=&quot;cdn-的原理&quot;&gt;CDN 的原理&lt;/h3&gt;
 
 &lt;p&gt;CDN 的全称是 &lt;a href=&quot;http://en.wikipedia.org/wiki/Content_delivery_network&quot;&gt;Content Delivery Network&lt;/a&gt;，即内容分发网络，一般用于分发静态内容，比如图片、视频、CSS、JS文件。&lt;/p&gt;
 
@@ -1138,22 +1138,22 @@ Alex&lt;/p&gt;
 
 &lt;p&gt;那 CDN 服务是如何决定你从哪个边缘服务器获取资源的呢？其实就是在发送 DNS 请求的时候，将你要访问的域名映射到最近的节点的 IP 上。具体判定哪个是最近的节点，最简单的策略就是根据 IP，但各个 CDN 的服务提供商的策略可能各不相同，这里就不展开讨论了。&lt;/p&gt;
 
-&lt;h3 id=&quot;cdn--1&quot;&gt;CDN 的局限性&lt;/h3&gt;
+&lt;h3 id=&quot;cdn-的局限性&quot;&gt;CDN 的局限性&lt;/h3&gt;
 
 &lt;p&gt;CDN 确实能够解决不少问题，但它本身也存在一定的局限性。其中最重要的一点是：&lt;strong&gt;决不能用 CDN 来缓存动态内容&lt;/strong&gt;。&lt;/p&gt;
 
 &lt;p&gt;来看一个例子，假设服务器端有这样一个PHP文件 hello.php：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;x&quot;&gt;    &amp;lt;head&amp;gt;...&amp;lt;/head&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;x&quot;&gt;    &amp;lt;body&amp;gt;Hello, &lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$name&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt; &amp;lt;/body&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;x&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;x&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;如果 CDN 缓存了这个文件就会造成很糟糕的后果。比如 Jerry 先访问了 hello.php 页面，得到了 Hello, Jerry 的内容。此时这个内容已经被缓存到了节点 A，而 Tom 同学也是离节点 A 最近，那么 Tom 同学访问 hello.php 时，就会直接得到缓存内容：Hello, Jerry。这个时候 Tom 同学的内心一定是崩溃的。&lt;/p&gt;
 
 &lt;p&gt;你还应该&lt;strong&gt;避免&lt;/strong&gt;使用 CDN 的情况有：&lt;strong&gt;根据 user-agent 来选择返回移动版还是桌面版页面&lt;/strong&gt;。UA 判断这对解决我们的问题很重要，下文会提及。当然，部署在 Github Pages 上的网站都是静态站点，所有用户进来看到的内容一般是相同的。所以通过 CDN 来对全站进行缓存没有什么问题。&lt;/p&gt;
 
-&lt;h2 id=&quot;section&quot;&gt;可行性分析&lt;/h2&gt;
+&lt;h2 id=&quot;可行性分析&quot;&gt;可行性分析&lt;/h2&gt;
 
 &lt;p&gt;Github是通过 UA 来判定百度爬虫并返回 403 Forbidden 的。而百度爬虫的 UA 一般是这样的：&lt;/p&gt;
 
@@ -1191,7 +1191,7 @@ Alex&lt;/p&gt;
 
 &lt;p&gt;当然，不死心的我还是做了件奇怪的事……首先我在找到了&lt;a href=&quot;http://forums.oscommerce.com/topic/382923-baiduspider-using-multiple-user-agents-how-to-stop-them/&quot;&gt;所有 BaiduSpider 的 IP&lt;/a&gt;，然后想要伪装成这些 IP 来请求内容，以此想在所有百度爬虫可能爬取的边缘服务器上都建立缓存。&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Curl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$ip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
     &lt;span class=&quot;nv&quot;&gt;$ch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;curl_init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
     &lt;span class=&quot;nb&quot;&gt;curl_setopt_array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
@@ -1226,12 +1226,12 @@ Alex&lt;/p&gt;
     &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$ip\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Done&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Done&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;&lt;br /&gt;
 然而并没有卵用……&lt;/p&gt;
 
-&lt;h2 id=&quot;section-1&quot;&gt;更新 (2015.7.12)&lt;/h2&gt;
+&lt;h2 id=&quot;更新-2015712&quot;&gt;更新 (2015.7.12)&lt;/h2&gt;
 
 &lt;p&gt;通过 Dnspod 的&lt;strong&gt;智能 DNS 服务&lt;/strong&gt;可以变相解决这个问题，大概的设置如下图所示，只要为你所有的主机记录重复添加 A 记录，把线路类型设置为百度，并将记录值指向你自己的云主机即可。&lt;/p&gt;
 
@@ -1241,11 +1241,11 @@ Alex&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://jerryblog.qiniudn.com/dnspod.png-h400&quot; alt=&quot;Dnspod的智能DNS服务&quot; /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;section-2&quot;&gt;更新 (2015.11.26)&lt;/h2&gt;
+&lt;h2 id=&quot;更新-20151126&quot;&gt;更新 (2015.11.26)&lt;/h2&gt;
 
 &lt;p&gt;如果大家自己搭了服务器，可以参考一下我上个月写的这篇：&lt;a href=&quot;http://jerryzou.com/posts/webhook-practice/&quot;&gt;Webhook 实践 —— 自动部署&lt;/a&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;section-3&quot;&gt;参考资料&lt;/h2&gt;
+&lt;h2 id=&quot;参考资料&quot;&gt;参考资料&lt;/h2&gt;
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;http://www.zhihu.com/question/30898326&quot;&gt;如何解决百度爬虫无法爬取搭建在Github上的个人博客的问题？&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Content_delivery_network&quot;&gt;Wikipedia: Content delivery network&lt;/a&gt;&lt;/li&gt;
@@ -1254,7 +1254,7 @@ Alex&lt;/p&gt;
 &lt;/ul&gt;
 
 </description>
-        <pubDate>Mon, 08 Jun 2015 11:26:25 +0000</pubDate>
+        <pubDate>Mon, 08 Jun 2015 11:26:25 +0800</pubDate>
         <link>http://jerryzou.com/posts/feasibility-of-allowing-baiduSpider-for-Github-Pages/</link>
         <guid isPermaLink="true">http://jerryzou.com/posts/feasibility-of-allowing-baiduSpider-for-Github-Pages/</guid>
       </item>
@@ -1263,15 +1263,15 @@ Alex&lt;/p&gt;
         <title>深入剖析 JavaScript 的深复制</title>
         <description>&lt;p&gt;一年前我曾写过一篇 &lt;a href=&quot;http://jerryzou.com/posts/deepcopy/&quot;&gt;Javascript 中的一种深复制实现&lt;/a&gt;，当时写这篇文章的时候还比较稚嫩，有很多地方没有考虑仔细。为了不误人子弟，我决定结合 Underscore、lodash 和 jQuery 这些主流的第三方库来重新谈一谈这个问题。&lt;/p&gt;
 
-&lt;h2 id=&quot;section&quot;&gt;第三方库的实现&lt;/h2&gt;
+&lt;h2 id=&quot;第三方库的实现&quot;&gt;第三方库的实现&lt;/h2&gt;
 
 &lt;p&gt;讲一句唯心主义的话，放之四海而皆准的方法是不存在的，不同的深复制实现方法和实现粒度有各自的优劣以及各自适合的应用场景，所以本文并不是在教大家改如何实现深复制，而是将一些在 JavaScript 中实现深复制所需要考虑的问题呈献给大家。我们首先从较为简单的 Underscore 开始：&lt;/p&gt;
 
-&lt;h3 id=&quot;underscore--clone&quot;&gt;Underscore —— _.clone()&lt;/h3&gt;
+&lt;h3 id=&quot;underscore--_clone&quot;&gt;Underscore —— _.clone()&lt;/h3&gt;
 
 &lt;p&gt;在 Underscore 中有这样一个方法：&lt;code&gt;_.clone()&lt;/code&gt;，这个方法实际上是一种浅复制 (shallow-copy)，所有嵌套的对象和数组都是直接复制引用而并没有进行深复制。来看一下例子应该会更加直观：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
@@ -1282,31 +1282,31 @@ Alex&lt;/p&gt;
 &lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// true&lt;/span&gt;
 
 &lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;z&lt;/span&gt;         &lt;span class=&quot;c1&quot;&gt;// 100&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;z&lt;/span&gt;         &lt;span class=&quot;c1&quot;&gt;// 100&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;让我们来看一下 &lt;a href=&quot;https://github.com/jashkenas/underscore/blob/e4743ab712b8ab42ad4ccb48b155034d02394e4d/underscore.js#L1068&quot;&gt;Underscore 的源码&lt;/a&gt;：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// Create a (shallow-cloned) duplicate of an object.&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// Create a (shallow-cloned) duplicate of an object.&lt;/span&gt;
 &lt;span class=&quot;nx&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;clone&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;isObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;isArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;slice&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;extend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({},&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;如果目标对象是一个数组，则直接调用数组的&lt;code&gt;slice()&lt;/code&gt;方法，否则就是用&lt;code&gt;_.extend()&lt;/code&gt;方法。想必大家对&lt;code&gt;extend()&lt;/code&gt;方法不会陌生，它的作用主要是将从第二个参数开始的所有对象，按键值逐个赋给第一个对象。而在 jQuery 中也有类似的方法。关于 Underscore 中的 &lt;code&gt;_.extend()&lt;/code&gt; 方法的实现可以参考 &lt;a href=&quot;https://github.com/jashkenas/underscore/blob/e4743ab712b8ab42ad4ccb48b155034d02394e4d/underscore.js#L1006&quot;&gt;underscore.js #L1006&lt;/a&gt;。&lt;/p&gt;
 
 &lt;p&gt;Underscore 的 &lt;code&gt;clone()&lt;/code&gt; 不能算作深复制，但它至少比直接赋值来得“深”一些，它创建了一个新的对象。另外，你也可以通过以下比较 tricky 的方法来完成&lt;strong&gt;单层&lt;/strong&gt;嵌套的深复制：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;underscore&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;underscore&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}];&lt;/span&gt;
 &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;clone&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;       &lt;span class=&quot;c1&quot;&gt;// &amp;lt;----&lt;/span&gt;
 &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;55&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;JSON&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;stringify&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// [{&amp;quot;f&amp;quot;:1},{&amp;quot;f&amp;quot;:5},{&amp;quot;f&amp;quot;:10}]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;JSON&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;stringify&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// [{&amp;quot;f&amp;quot;:1},{&amp;quot;f&amp;quot;:5},{&amp;quot;f&amp;quot;:10}]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h3 id=&quot;jquery--clone--extend&quot;&gt;jQuery —— $.clone() / $.extend()&lt;/h3&gt;
 
 &lt;p&gt;在 jQuery 中也有这么一个叫 &lt;code&gt;$.clone()&lt;/code&gt; 的方法，可是它并不是用于一般的 JS 对象的深复制，而是用于 DOM 对象。这不是这篇文章的重点，所以感兴趣的同学可以参考&lt;a href=&quot;http://api.jquery.com/clone/&quot;&gt;jQuery的文档&lt;/a&gt;。与 Underscore 类似，我们也是可以通过 &lt;code&gt;$.extend()&lt;/code&gt; 方法来完成深复制。值得庆幸的是，我们在 jQuery 中可以通过添加一个参数来实现&lt;strong&gt;递归extend&lt;/strong&gt;。调用&lt;code&gt;$.extend(true, {}, ...)&lt;/code&gt;就可以实现深复制啦，参考下面的例子：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
     &lt;span class=&quot;nx&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
@@ -1316,15 +1316,15 @@ Alex&lt;/p&gt;
     &lt;span class=&quot;nx&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;extend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{},&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;//deep copy&lt;/span&gt;
 
 &lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;f&lt;/span&gt;       &lt;span class=&quot;c1&quot;&gt;// true&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;f&lt;/span&gt;       &lt;span class=&quot;c1&quot;&gt;// false&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;nx&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;f&lt;/span&gt;       &lt;span class=&quot;c1&quot;&gt;// false&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;在 &lt;a href=&quot;https://github.com/jquery/jquery/blob/1472290917f17af05e98007136096784f9051fab/src/core.js#L121&quot;&gt;jQuery的源码 - src/core.js #L121&lt;/a&gt; 文件中我们可以找到&lt;code&gt;$.extend()&lt;/code&gt;的实现，也是实现得比较简洁，而且不太依赖于 jQuery 的内置函数，稍作修改就能拿出来单独使用。&lt;/p&gt;
 
-&lt;h3 id=&quot;lodash--clone--clonedeep&quot;&gt;lodash —— _.clone() / _.cloneDeep()&lt;/h3&gt;
+&lt;h3 id=&quot;lodash--_clone--_clonedeep&quot;&gt;lodash —— _.clone() / _.cloneDeep()&lt;/h3&gt;
 
 &lt;p&gt;在lodash中关于复制的方法有两个，分别是&lt;code&gt;_.clone()&lt;/code&gt;和&lt;code&gt;_.cloneDeep()&lt;/code&gt;。其中&lt;code&gt;_.clone(obj, true)&lt;/code&gt;等价于&lt;code&gt;_.cloneDeep(obj)&lt;/code&gt;。使用上，lodash和前两者并没有太大的区别，但看了源码会发现，Underscore 的实现只有30行左右，而 jQuery 也不过60多行。可 lodash 中与深复制相关的代码却有上百行，这是什么道理呢？&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;jquery&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;jquery&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
     &lt;span class=&quot;nx&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;lodash&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 
 &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Int16Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
@@ -1347,11 +1347,11 @@ Alex&lt;/p&gt;
 &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;obj2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;                            &lt;span class=&quot;c1&quot;&gt;// [5, 6, 0, 0, 0]&lt;/span&gt;
 &lt;span class=&quot;nb&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;call&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;           &lt;span class=&quot;c1&quot;&gt;// [object Int16Array]&lt;/span&gt;
 &lt;span class=&quot;nx&quot;&gt;obj2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;                               &lt;span class=&quot;c1&quot;&gt;// [5, 6, 0, 0, 0]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;                               &lt;span class=&quot;c1&quot;&gt;// [5, 6, 0, 0, 0]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;通过上面这个例子可以初见端倪，jQuery 无法正确深复制 JSON 对象以外的对象，而我们可以从下面这段代码片段可以看出 lodash 花了大量的代码来实现 ES6 引入的大量新的标准对象。更厉害的是，lodash 针对&lt;strong&gt;存在环的对象&lt;/strong&gt;的处理也是非常出色的。因此相较而言，lodash 在深复制上的行为反馈比前两个库好很多，是更拥抱未来的一个第三方库。&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/** `Object#toString` result references. */&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/** `Object#toString` result references. */&lt;/span&gt;
 &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;argsTag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;[object Arguments]&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;nx&quot;&gt;arrayTag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;[object Array]&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;nx&quot;&gt;boolTag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;[object Boolean]&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
@@ -1375,24 +1375,24 @@ Alex&lt;/p&gt;
     &lt;span class=&quot;nx&quot;&gt;uint8Tag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;[object Uint8Array]&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;nx&quot;&gt;uint8ClampedTag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;[object Uint8ClampedArray]&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;nx&quot;&gt;uint16Tag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;[object Uint16Array]&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;uint32Tag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;[object Uint32Array]&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+    &lt;span class=&quot;nx&quot;&gt;uint32Tag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;[object Uint32Array]&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h2 id=&quot;json-&quot;&gt;借助 JSON 全局对象&lt;/h2&gt;
+&lt;h2 id=&quot;借助-json-全局对象&quot;&gt;借助 JSON 全局对象&lt;/h2&gt;
 
 &lt;p&gt;相比于上面介绍的三个库的做法，针对纯 JSON 数据对象的深复制，使用 JSON 全局对象的 &lt;code&gt;parse&lt;/code&gt; 和 &lt;code&gt;stringify&lt;/code&gt; 方法来实现深复制也算是一个简单讨巧的方法。然而使用这种方法会有一些隐藏的坑，它能正确处理的对象只有 Number, String, Boolean, Array, 扁平对象，即那些能够被 json 直接表示的数据结构。&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;jsonClone&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;jsonClone&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;JSON&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;parse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;JSON&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;stringify&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;clone&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;jsonClone&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;clone&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;jsonClone&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h2 id=&quot;section-1&quot;&gt;拥抱未来的深复制方法&lt;/h2&gt;
+&lt;h2 id=&quot;拥抱未来的深复制方法&quot;&gt;拥抱未来的深复制方法&lt;/h2&gt;
 
 &lt;p&gt;我自己实现了一个深复制的方法，因为用到了&lt;code&gt;Object.create&lt;/code&gt;、&lt;code&gt;Object.isPrototypeOf&lt;/code&gt;等比较新的方法，所以基本只能在 IE9+ 中使用。而且，我的实现是&lt;strong&gt;直接定义在 prototype 上&lt;/strong&gt;的，很有可能引起大多数的前端同行们的不适。(关于这个我还曾在知乎上提问过：&lt;a href=&quot;http://www.zhihu.com/question/26924011&quot;&gt;为什么不要直接在Object.prototype上定义方法？&lt;/a&gt;）只是实验性质的，大家参考一下就好，改成非 prototype 版本也是很容易的，不过就是要不断地去&lt;strong&gt;判断对象的类型&lt;/strong&gt;了。~&lt;/p&gt;
 
 &lt;p&gt;这个实现方法具体可以看我写的一个小玩意儿——&lt;a href=&quot;https://github.com/cherryjs/cherry.js&quot;&gt;Cherry.js&lt;/a&gt;，使用方法大概是这样的：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
@@ -1402,11 +1402,11 @@ Alex&lt;/p&gt;
 
 &lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
 &lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;testProp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;test&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;clone&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$clone&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;                  &lt;span class=&quot;c1&quot;&gt;//&amp;lt;----&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;nx&quot;&gt;clone&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$clone&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;                  &lt;span class=&quot;c1&quot;&gt;//&amp;lt;----&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;首先定义一个辅助函数，用于在预定义对象的 Prototype 上定义方法：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;defineMethods&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;protoArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;nameToFunc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;defineMethods&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;protoArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;nameToFunc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;nx&quot;&gt;protoArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;forEach&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;proto&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;names&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;nameToFunc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
             &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -1420,11 +1420,11 @@ Alex&lt;/p&gt;
             &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
         &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;为了避免和源生方法冲突，我在方法名前加了一个 &lt;code&gt;$&lt;/code&gt; 符号。而这个方法的具体实现很简单，就是递归深复制。其中我需要解释一下两个参数：&lt;code&gt;srcStack&lt;/code&gt;和&lt;code&gt;dstStack&lt;/code&gt;。它们的主要用途是对存在环的对象进行深复制。比如源对象中的子对象&lt;code&gt;srcStack[7]&lt;/code&gt;在深复制以后，对应于&lt;code&gt;dstStack[7]&lt;/code&gt;。该实现方法参考了 lodash 的实现。关于递归最重要的就是 Object 和 Array 对象：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/*=====================================*&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/*=====================================*&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt; * Object.prototype&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt; * - $clone()&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt;*=====================================*/&lt;/span&gt;
@@ -1496,11 +1496,11 @@ Alex&lt;/p&gt;
         &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;newArr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;接下来要针对 Date 和 RegExp 对象的深复制进行一些特殊处理：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/*=====================================*&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/*=====================================*&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt; * Date.prototype&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt; * - $clone&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt; *=====================================*/&lt;/span&gt;
@@ -1523,11 +1523,11 @@ Alex&lt;/p&gt;
         &lt;span class=&quot;nx&quot;&gt;flags&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;multiline&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;m&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;RegExp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;source&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;接下来就是 Number, Boolean 和 String 的 &lt;code&gt;$clone&lt;/code&gt; 方法，虽然很简单，但这也是必不可少的。这样就能防止像单个字符串这样的对象错误地去调用 &lt;code&gt;Object.prototype.$clone&lt;/code&gt;。&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/*=====================================*&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/*=====================================*&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt; * Number / Boolean / String.prototype&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt; * - $clone()&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt; *=====================================*/&lt;/span&gt;
@@ -1538,9 +1538,9 @@ Alex&lt;/p&gt;
     &lt;span class=&quot;nb&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;s1&quot;&gt;&amp;#39;$clone&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;valueOf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h2 id=&quot;section-2&quot;&gt;比较各个深复制方法&lt;/h2&gt;
+&lt;h2 id=&quot;比较各个深复制方法&quot;&gt;比较各个深复制方法&lt;/h2&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
@@ -1612,11 +1612,11 @@ Alex&lt;/p&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;h2 id=&quot;section-3&quot;&gt;执行效率&lt;/h2&gt;
+&lt;h2 id=&quot;执行效率&quot;&gt;执行效率&lt;/h2&gt;
 
 &lt;p&gt;为了测试各种深复制方法的执行效率，我使用了如下的测试用例：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{};&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{};&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{};&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -1626,7 +1626,7 @@ Alex&lt;/p&gt;
 
 &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;start&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;now&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
 &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;clone&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;now&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;now&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;下面来看看各个实现方法的具体效率如何，我所使用的浏览器是 Mac 上的 Chrome 43.0.2357.81 (64-bit) 版本，可以看出来在3次的实验中，我所实现的方法比 lodash 稍逊一筹，但比jQuery的效率也会高一些。希望这篇文章对你们有帮助~&lt;/p&gt;
 
@@ -1672,7 +1672,7 @@ Alex&lt;/p&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;h2 id=&quot;section-4&quot;&gt;参考资料&lt;/h2&gt;
+&lt;h2 id=&quot;参考资料&quot;&gt;参考资料&lt;/h2&gt;
 
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;http://underscorejs.org/#clone&quot;&gt;Underscore - clone&lt;/a&gt;&lt;/li&gt;
@@ -1682,7 +1682,7 @@ Alex&lt;/p&gt;
   &lt;li&gt;&lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify&quot;&gt;MDN - JSON.stringify&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-        <pubDate>Wed, 27 May 2015 22:55:25 +0000</pubDate>
+        <pubDate>Wed, 27 May 2015 22:55:25 +0800</pubDate>
         <link>http://jerryzou.com/posts/dive-into-deep-clone-in-javascript/</link>
         <guid isPermaLink="true">http://jerryzou.com/posts/dive-into-deep-clone-in-javascript/</guid>
       </item>

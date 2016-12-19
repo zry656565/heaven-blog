@@ -85,6 +85,8 @@
         
           
         
+          
+        
           <a class="page-link" href="/feed.xml">RSS订阅</a>
       </div>
     </nav>
@@ -127,7 +129,7 @@
   <li>编程语言：C#</li>
 </ul>
 
-<h2 id="section">录制</h2>
+<h2 id="录制">录制</h2>
 
 <p>录制数据相对来说比较简单，我们只需要借助 Kinect for Windows SDK 自带的 <strong>Kinect Studio</strong> 就可以达成这一目的。</p>
 
@@ -135,7 +137,7 @@
 
 <p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/kinect-studio.png" alt="Kinect Studio Sample" /></p>
 
-<h2 id="section-1">回放</h2>
+<h2 id="回放">回放</h2>
 
 <p><strong>实现回放的原理：</strong> 我们在正常使用 Kinect 的过程中，每当 Kinect 采集到一帧画面，就会触发一下 <code>FrameArrived</code> 事件。而我们写的程序总是会通过一个 <code>FrameReader</code> 来响应每一帧画面所触发的事件。所以只要通过读取 <strong>xef</strong> 文件中的数据，模拟触发 <code>FrameArrived</code> 事件；从而做到几乎不修改原本的代码，就能在原来程序中回放录制的场景。</p>
 
@@ -152,7 +154,7 @@
 
 <p>接下来，你需要编写一些代码来调用回放的功能。以官方的例子 <strong>DepthBasics-WPF</strong> 为例，首先你需要定义一个新的类，并在这个类中定义一个静态方法，如下所示：</p>
 
-<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="cm">/******</span>
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="cm">/******</span>
 <span class="cm"> * PlaybackClip.cs</span>
 <span class="cm"> */</span>
 
@@ -194,11 +196,11 @@
             <span class="p">}</span>
         <span class="p">}</span>
     <span class="p">}</span>
-<span class="p">}</span></code></pre></div>
+<span class="p">}</span></code></pre></figure>
 
 <p>最后，你需要在现有的代码中使用 <code>PlaybackHelper.PlaybackClip</code> 方法来帮助你回放之前的数据。此处的示例代码在检测不到 Kinect 设备时会 <strong>启用一个新线程</strong> 来回放指定的数据，并指定循环回放 10 次，你可以根据需要进行修改。</p>
 
-<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="cm">/***</span>
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="cm">/***</span>
 <span class="cm"> * MainWindow.xaml.cs</span>
 <span class="cm"> */</span>
  
@@ -231,13 +233,13 @@
         
         <span class="c1">// ... 此处省略若干示例中的代码</span>
     <span class="p">}</span>
-<span class="p">}</span></code></pre></div>
+<span class="p">}</span></code></pre></figure>
 
 <p>完成了以上这些以后，拔掉你的 Kinect 并重启你的程序。如果程序依然能够很顺利的执行，<strong>那么恭喜你，你成功啦</strong>！</p>
 
 <p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/kinect-result.jpg!0.5" alt="Sample Result" /></p>
 
-<h2 id="section-2">参考文献</h2>
+<h2 id="参考文献">参考文献</h2>
 
 <ul>
   <li><a href="http://stackoverflow.com/questions/27280689/kinect-v2-read-out-data-from-xef-files">Stackoverflow - Kinect v2, read out data from .xef files</a></li>

@@ -1,329 +1,151 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    
-    <url>
-        <loc>http://jerryzou.com/posts/introduction-to-hit-kounter-lc/</loc>
-        
-        <lastmod>2016-04-24T00:20:00Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/record-and-playback-for-kinect/</loc>
-        
-        <lastmod>2016-03-21T23:20:00Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/introduction-to-hit-kounter/</loc>
-        
-        <lastmod>2016-02-27T13:20:00Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/design-for-all-mobile-resolution/</loc>
-        
-        <lastmod>2015-12-08T13:36:00Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/leetcode-benchmark/</loc>
-        
-        <lastmod>2015-11-26T00:20:00Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/webhook-practice/</loc>
-        
-        <lastmod>2015-10-25T22:19:00Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/use-css-to-paint-triangle-and-parallelogram/</loc>
-        
-        <lastmod>2015-08-16T20:16:30Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/method-of-self-learning/</loc>
-        
-        <lastmod>2015-07-16T19:16:30Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/feasibility-of-allowing-baiduSpider-for-Github-Pages/</loc>
-        
-        <lastmod>2015-06-08T11:26:25Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/dive-into-deep-clone-in-javascript/</loc>
-        
-        <lastmod>2015-05-27T22:55:25Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/cyclomatic-complexity-logic-in-css/</loc>
-        
-        <lastmod>2015-05-21T08:55:25Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/do-you-really-want-use-bit-operators-in-JavaScript/</loc>
-        
-        <lastmod>2015-05-15T23:13:35Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/cookie-and-web-storage/</loc>
-        
-        <lastmod>2015-05-02T22:28:35Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/chew/</loc>
-        
-        <lastmod>2015-04-11T22:38:54Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/shadowsocks-with-digitalocean/</loc>
-        
-        <lastmod>2015-01-24T15:16:54Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/caocao01/</loc>
-        
-        <lastmod>2015-01-16T22:33:54Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/dontBeEvil/</loc>
-        
-        <lastmod>2015-01-01T02:29:10Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/bulkUploadToUPYUN/</loc>
-        
-        <lastmod>2014-11-29T01:25:10Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/aboutNormalizeCss/</loc>
-        
-        <lastmod>2014-11-18T22:23:10Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/getDevEnvironmentBack/</loc>
-        
-        <lastmod>2014-11-14T22:12:10Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/gitForSAE/</loc>
-        
-        <lastmod>2014-11-13T02:15:10Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/sjtuBusFeedback/</loc>
-        
-        <lastmod>2014-10-03T20:31:10Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/sjtuBus/</loc>
-        
-        <lastmod>2014-09-24T21:31:53Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/usePygments/</loc>
-        
-        <lastmod>2014-09-07T18:11:53Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/networkConfig/</loc>
-        
-        <lastmod>2014-08-02T00:00:00Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/paperFormat/</loc>
-        
-        <lastmod>2014-06-02T00:00:00Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/jsmodular/</loc>
-        
-        <lastmod>2014-06-01T00:00:00Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/deepcopy/</loc>
-        
-        <lastmod>2014-05-11T21:33:00Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/jreparser/</loc>
-        
-        <lastmod>2014-05-06T00:00:00Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/learnjs/</loc>
-        
-        <lastmod>2013-12-21T15:56:00Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/opentopublic/</loc>
-        
-        <lastmod>2013-12-16T10:00:00Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/tipsforC/</loc>
-        
-        <lastmod>2013-11-18T15:37:00Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <url>
-        <loc>http://jerryzou.com/posts/storageMethod/</loc>
-        
-        <lastmod>2013-11-04T15:37:00Z</lastmod>
-        
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    
-    
-    
-    
-    
-    
-    <url>
-        <loc>http://jerryzou.com/about/</loc>
-        <lastmod>2015-06-02T20:37:00Z</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+<url>
+<loc>http://jerryzou.com/posts/introduction-to-hit-kounter-lc/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/record-and-playback-for-kinect/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/introduction-to-hit-kounter/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/design-for-all-mobile-resolution/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/leetcode-benchmark/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/webhook-practice/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/use-css-to-paint-triangle-and-parallelogram/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/method-of-self-learning/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/feasibility-of-allowing-baiduSpider-for-Github-Pages/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/dive-into-deep-clone-in-javascript/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/cyclomatic-complexity-logic-in-css/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/do-you-really-want-use-bit-operators-in-JavaScript/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/cookie-and-web-storage/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/chew/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/shadowsocks-with-digitalocean/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/caocao01/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/dontBeEvil/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/bulkUploadToUPYUN/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/aboutNormalizeCss/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/getDevEnvironmentBack/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/gitForSAE/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/sjtuBusFeedback/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/sjtuBus/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/usePygments/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/networkConfig/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/paperFormat/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/jsmodular/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/deepcopy/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/jreparser/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/learnjs/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/opentopublic/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/tipsforC/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/storageMethod/</loc>
+<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/all-articles/</loc>
+<lastmod>2015-05-07T11:46:38+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/skill/</loc>
+<lastmod>2015-08-02T14:16:38+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/about/</loc>
+<lastmod>2016-10-24T17:31:16+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/</loc>
+<lastmod>2016-02-23T00:33:03+08:00</lastmod>
+</url>
 </urlset>

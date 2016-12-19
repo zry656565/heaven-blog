@@ -85,6 +85,8 @@
         
           
         
+          
+        
           <a class="page-link" href="/feed.xml">RSS订阅</a>
       </div>
     </nav>
@@ -124,15 +126,15 @@
 
 <p>我发现我们可以将复合选择器理解为：主体部分 + <strong>条件部分</strong>。首先来看一个例子：</p>
 
-<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">div</span><span class="nc">.sidebar</span> <span class="nc">.login-box</span> <span class="nt">a</span><span class="nc">.btn</span> <span class="nt">span</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">div</span><span class="nc">.sidebar</span> <span class="nc">.login-box</span> <span class="nt">a</span><span class="nc">.btn</span> <span class="nt">span</span> <span class="p">{</span>
     <span class="c">/*...*/</span>
-<span class="p">}</span></code></pre></div>
+<span class="p">}</span></code></pre></figure>
 
 <p>在这个复合选择器由主体部分是 <code>span</code>，而条件部分是 <code>IF (inside .btn) AND IF (on a) AND IF (inside .login-box) AND IF (inside .sidebar) AND IF (on div)</code>。</p>
 
 <p>也就是说，一个选择器的每一部分都是一个 <code>if</code> 语句，需要在解析选择器时被满足（或者不满足）。有了这种微妙的而又全新的认识，如今我们回头再看看自己曾经写出的 CSS 代码，我们将会意识到选择器写的好或者坏，会对效率产生直接的影响。我们真的会写出下面这段逻辑吗？（伪代码）：</p>
 
-<div class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">@if exists(span) {</span>
+<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">@if exists(span) {</span>
 <span class="go">  @if is-inside(.btn) {</span>
 <span class="go">    @if is-on(a) {</span>
 <span class="go">      @if is-inside(.login-box) {</span>
@@ -144,19 +146,19 @@
 <span class="go">      }</span>
 <span class="go">    }</span>
 <span class="go">  }</span>
-<span class="go">}</span></code></pre></div>
+<span class="go">}</span></code></pre></figure>
 
 <p>也许不会。这看上去太不直接，也太啰嗦了。我们也许只需要这么写：</p>
 
-<div class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">@if exists(.btn-text) {</span>
+<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">@if exists(.btn-text) {</span>
 
 <span class="go">  # Do this.</span>
 
-<span class="go">}</span></code></pre></div>
+<span class="go">}</span></code></pre></figure>
 
 <p>每当为选择器添加一层限制，其实我们也就是添加了额外的一个 <code>if</code> 语句。这会导致圈复杂度问题(Cyclomatic Complexity)。</p>
 
-<h2 id="section">圈复杂度</h2>
+<h2 id="圈复杂度">圈复杂度</h2>
 
 <p>在软件工程中，<a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity">圈复杂度</a>是一种程序复杂性的一种度量标准，它一般计算程序中的控制流的数量（如 <code>if</code>, <code>else</code>, <code>while</code> 等）。程序中存在越多的控制流，则圈复杂度就越高。我们自然想要保证圈复杂度能够尽量地低，因为圈复杂度越高：</p>
 

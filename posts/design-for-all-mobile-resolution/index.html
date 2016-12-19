@@ -85,6 +85,8 @@
         
           
         
+          
+        
           <a class="page-link" href="/feed.xml">RSS订阅</a>
       </div>
     </nav>
@@ -118,17 +120,17 @@
 
 <p>首先看看下面这行代码：</p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content=</span><span class="s">&quot;width=device-width, user-scalabel=no&quot;</span><span class="nt">&gt;</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content=</span><span class="s">&quot;width=device-width, user-scalabel=no&quot;</span><span class="nt">&gt;</span></code></pre></figure>
 
 <p>有过移动端开发经验的同学是不是对上面这句代码非常熟悉？它可能最常见的响应式设计的 <code>viewport</code> 设置之一，而我今天介绍的这种方法也是利用了 meta 标签设置 <code>viewport</code> 来支持大部分的移动端屏幕分辨率。</p>
 
-<h2 id="section">目标</h2>
+<h2 id="目标">目标</h2>
 
 <ul>
   <li>仅仅通过配置 <code>&lt;meta name="viewport"&gt;</code> 使得移动端网站只需要按照固定的宽度设计并实现，就能在任何主流的移动设备上都能看到符合设计稿的页面，包括 Android 4+、iPhone 4+。</li>
 </ul>
 
-<h2 id="section-1">测试设备</h2>
+<h2 id="测试设备">测试设备</h2>
 
 <ul>
   <li>三星 Note II (Android 4.1.2) - 真机</li>
@@ -140,8 +142,8 @@
 
 <p>iPhone 的适配比较简单，只需要设置 <code>width</code> 即可。比如：</p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!-- for iPhone --&gt;</span>
-<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content=</span><span class="s">&quot;width=320, user-scalable=no&quot;</span> <span class="nt">/&gt;</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!-- for iPhone --&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content=</span><span class="s">&quot;width=320, user-scalable=no&quot;</span> <span class="nt">/&gt;</span></code></pre></figure>
 
 <p>这样你的页面在所有的 iPhone 上，无论是 宽 375 像素的 iPhone 6 还是宽 414 像素的 iPhone 6 plus，都能显示出定宽 320 像素的页面。</p>
 
@@ -160,8 +162,8 @@
 
 <p>我们可以像在 iPhone 上那样设置 <code>width=320</code> 以达到我们想要的 320px 定宽的页面设计。</p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!-- for Android 4.4+ --&gt;</span>
-<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content=</span><span class="s">&quot;width=320, user-scalable=no&quot;</span> <span class="nt">/&gt;</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!-- for Android 4.4+ --&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content=</span><span class="s">&quot;width=320, user-scalable=no&quot;</span> <span class="nt">/&gt;</span></code></pre></figure>
 
 <h3 id="android-40--43">Android 4.0 ~ 4.3</h3>
 
@@ -259,7 +261,7 @@
 
 <p>这样的计算式不得不使用 JS 来实现，最终我们就能得到适配 <strong>Android 4.0 ~ 4.3</strong> 定宽的代码：</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">match</span><span class="p">,</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">match</span><span class="p">,</span>
     <span class="nx">scale</span><span class="p">,</span>
     <span class="nx">TARGET_WIDTH</span> <span class="o">=</span> <span class="mi">320</span><span class="p">;</span>
 
@@ -269,11 +271,11 @@
         <span class="kd">var</span> <span class="nx">scale</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">screen</span><span class="p">.</span><span class="nx">width</span> <span class="o">/</span> <span class="nx">TARGET_WIDTH</span><span class="p">;</span>
         <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;meta[name=&quot;viewport&quot;]&#39;</span><span class="p">).</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">,</span> <span class="s1">&#39;width=&#39;</span> <span class="o">+</span> <span class="nx">TARGET_WIDTH</span> <span class="o">+</span> <span class="s1">&#39;, initial-scale = &#39;</span> <span class="o">+</span> <span class="nx">scale</span> <span class="o">+</span> <span class="s1">&#39;, target-densitydpi=device-dpi&#39;</span><span class="p">);</span>
     <span class="p">}</span>
-<span class="p">}</span></code></pre></div>
+<span class="p">}</span></code></pre></figure>
 
 <p>其中，<code>TARGET_WIDTH</code> 就是你所期望的宽度，注意这段代码仅在 <strong>320-720px</strong> 之间有效哦。</p>
 
-<h2 id="section-2">缩放中的坑</h2>
+<h2 id="缩放中的坑">缩放中的坑</h2>
 
 <p>如果是 iPhone 或者 Android 4.4+ 的机器，在使用 scale 相关的属性时要非常谨慎，包括 <code>initial-scale</code>, <code>maximum-scale</code> 和 <code>minimum-scale</code>。
 要么保证 <strong>Scale = deviceWidth / vWidth</strong>，要么就尽量不用。来看一个例子：</p>
@@ -282,11 +284,11 @@
 
 <p>在缩放比不能保证的情况下，即使设置同样的 <code>width</code> 和 <code>initial-scale</code> 后，两者的表现也是不一致。具体两种机型采用的策略如何我还没有探索出来，有兴趣的同学可以研究看看。最省事的办法就是在 iPhone 和 Android 4.4+ 上不设置 scale 相关的属性。</p>
 
-<h2 id="section-3">总结</h2>
+<h2 id="总结">总结</h2>
 
 <p>结合上面所有的分析，你可以通过下面这段 JS 代码来对所有 iPhone 和 Android 4+ 的手机屏幕进行适配：</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">match</span><span class="p">,</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">match</span><span class="p">,</span>
     <span class="nx">scale</span><span class="p">,</span>
     <span class="nx">TARGET_WIDTH</span> <span class="o">=</span> <span class="mi">320</span><span class="p">;</span>
 
@@ -298,22 +300,22 @@
     <span class="p">}</span>
 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
     <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;meta[name=&quot;viewport&quot;]&#39;</span><span class="p">).</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">,</span> <span class="s1">&#39;width=&#39;</span> <span class="o">+</span> <span class="nx">TARGET_WIDTH</span><span class="p">);</span>
-<span class="p">}</span></code></pre></div>
+<span class="p">}</span></code></pre></figure>
 
 <p>如果你不希望你的页面被用户手动缩放，你还可以加上 <code>user-scalable=no</code>。不过需要注意的是，这个属性在部分安卓机型上是无效的哦。</p>
 
-<h2 id="section-4">其他参考资料</h2>
+<h2 id="其他参考资料">其他参考资料</h2>
 
 <ol>
   <li><a href="https://bugs.webkit.org/show_bug.cgi?id=88047">Supporting Different Screens in Web Apps - Android Developers</a></li>
   <li><a href="http://www.petelepage.com/blog/2013/02/viewport-target-densitydpi-support-is-being-deprecated/">Viewport target-densitydpi support is being deprecated</a></li>
 </ol>
 
-<h2 id="section-5">附录 - 测试页面</h2>
+<h2 id="附录---测试页面">附录 - 测试页面</h2>
 
 <p>有兴趣的同学可以拿这个测试页面来测测自己的手机，别忘了改 <code>viewport</code> 哦。</p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">&quot;en&quot;</span><span class="nt">&gt;</span>
 <span class="nt">&lt;head&gt;</span>
     <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;UTF-8&quot;</span><span class="nt">&gt;</span>
@@ -361,7 +363,7 @@
         <span class="nx">log</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;[name=&quot;viewport&quot;]&#39;</span><span class="p">).</span><span class="nx">content</span><span class="p">)</span>
     <span class="nt">&lt;/script&gt;</span>
 <span class="nt">&lt;/body&gt;</span>
-<span class="nt">&lt;/html&gt;</span></code></pre></div>
+<span class="nt">&lt;/html&gt;</span></code></pre></figure>
 
 
   </article>
