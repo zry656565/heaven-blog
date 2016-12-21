@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+        
+            使用 DigitalOcean 和 shadowsocks 来科学上网 | 咀嚼之味
+        </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="使用了各种不稳定的VPN服务以后，我还是觉得自己搭VPS比较靠谱。DigitalOcean 提供了可伸缩的 VPS，最便宜的服务器是每个月$5，虽然对于学生来说不算便宜，但好在一开始充$5送$10，而且成功申请到 Github Student pack 的话，还可以得到$100。ShadowSocks 是科学上网的利器，在 Github 上已经得到了五千多个 Star，使用的人极多、影响极深。而且它对各个平台的支持也非常好，目前我在 Windows/Mac/iOS 三个平台上都拥有了科学上网的环境。 ">
+    <link rel="alternate" type="application/rss+xml" title="咀嚼之味 RSS" href="/feed.xml">
+    <link rel="canonical" href="http://jerryzou.com/posts/shadowsocks-and-digitalocean/">
+    <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/release/style.a5eea016.css">
+
+    <!-- Baidu Analysis -->
+    <script>
+        if (window.location.href.substr(7, 9) !== 'localhost') {
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?2744fd74aa568e064f9986394a60ead1";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+            })();
+        }
+    </script>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-47842677-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+    <!-- Hit Kounter LC -->
+    <script src="https://cdn1.lncld.net/static/js/av-min-1.5.0.js"></script>
+    <script src="http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.3.0.js"></script>
+    
+    <!-- handle external js files -->
+    <script src="/assets/js/lib/jquery/jquery-1.11.1.min.js"></script>
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+  <div class="wrap">
+    <a class="site-title" href="/">咀嚼之味</a>
+    <nav class="site-nav">
+      <div class="trigger">
+        <a class="page-link" href="/">首页</a>
+        
+          
+          <a class="page-link" href="/all-articles/">所有文章</a>
+          
+        
+          
+          <a class="page-link" href="/skill/">技能图谱</a>
+          
+        
+          
+          <a class="page-link" href="/about/">关于我</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          <a class="page-link" href="/feed.xml">RSS订阅</a>
+      </div>
+    </nav>
+  </div>
+  <!-- fork me on github -->
+  <a id="fork-me" href="https://github.com/zry656565/heaven-blog"><img src="http://jerryblog-image.b0.upaiyun.com/blog/forkme.png" alt="Fork me on GitHub"></a>
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+        
+        <div class="post">
+
+  <header class="post-header">
+    <h1>使用 DigitalOcean 和 shadowsocks 来科学上网</h1>
+    <p class="meta">Jan 24, 2015 <span class="pause"> - </span>
+        浏览量：<span data-hk-page="current"> - </span>次<span class="pause"> | </span>
+        
+            
+                <a class="label" href="/all-articles/?label=shadowsocks">shadowsocks</a>
+            
+                <a class="label" href="/all-articles/?label=DigitalOcean">DigitalOcean</a>
+            
+                <a class="label" href="/all-articles/?label=VPS">VPS</a>
+            
+        
+    </p>
+  </header>
+
+  <article class="post-content">
+  <p>使用了各种不稳定的VPN服务以后，我还是觉得自己搭VPS比较靠谱。DigitalOcean 提供了可伸缩的 VPS，最便宜的服务器是每个月$5，虽然对于学生来说不算便宜，但好在一开始充$5送$10，而且成功申请到 Github Student pack 的话，还可以得到$100。ShadowSocks 是科学上网的利器，在 Github 上已经得到了五千多个 Star，使用的人极多、影响极深。而且它对各个平台的支持也非常好，目前我在 Windows/Mac/iOS 三个平台上都拥有了科学上网的环境。</p>
+
+<h2 id="digitalocean">DigitalOcean</h2>
+
+<p>首先注册账号，激活邮箱自不必说。激活后就会收到$10的奖励，但是仅仅这样还是无法在 DigitalOcean 上创建虚拟主机。你需要绑定信用卡或者直接向你的账户里冲入$5才能正式开始使用。我的话，是在 paypal 账号上绑定了一张银联的卡来付款的，按这几天的汇率大概¥31左右吧。（另外附上我的邀请链接，嘿嘿：<a href="https://www.digitalocean.com/?refcode=09e0142818aa">https://www.digitalocean.com/?refcode=09e0142818aa</a>）</p>
+
+<p>然后你就可以创建你的云主机了，选择 $5/mon 的那一档来支撑 shadowsocks 的服务足矣。经过测试 San Francisco 的机房延迟最低，平均在230ms左右。而 Singapore 的机房延迟在280ms，还有5%左右的丢包率。所以经过几次创建后又销毁重新创建地倒腾，我最后还是选择了使用 San Francisco 的节点。另外操作系统的话，我选择的是<code>ubuntu 14.04 x64</code>的。</p>
+
+<h3 id="创建-ssh-key">创建 SSH key</h3>
+
+<p>接下来可以添加 SSH key，这一步不是必须的，但是我觉得使用 SSH key 比使用 DigitalOcean 为你创建的随机密码好一点。如果不想做这一步，或者你之前已经创建过 SSH key 的话，可以跳过这一部分。</p>
+
+<h4 id="什么是-ssh-key">什么是 SSH key</h4>
+
+<p>SSH key 是一个简单而又安全地连接到你的远端设备的方式，通过它你不需要在网络上传输你的密码。SSH key 有 public 和 private 两部分，其中 private 部分存储在你的设备本地，而 public 部分则需要上传到远程设备上。当你通过 ssh 连接到远程设备上时，只有私钥和公钥匹配上才能登陆。</p>
+
+<h4 id="如何创建-ssh-key">如何创建 SSH key</h4>
+
+<p>第一步，首先查看你本地设备上是否有 SSH keys。你可以运行以下指令：</p>
+
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">cd ~/.ssh</span>
+<span class="go">ls *.pub</span></code></pre></figure>
+
+<p>如果没有任何输出，说明你需要创建一个新的 SSH key：</p>
+
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">ssh-keygen -t rsa -C &quot;email@example.com&quot;</span></code></pre></figure>
+
+<p>后面的 email 请替换成你自己的 email。接着你就会看到类似下面的信息：</p>
+
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">Generating public/private rsa key pair.</span>
+<span class="go">Enter file in which to save the key (/Users/you/.ssh/id_rsa): [Press enter]</span>
+<span class="go">Enter passphrase (empty for no passphrase): [Type a passphrase]</span>
+<span class="go">Enter same passphrase again: [Type passphrase again]</span>
+<span class="go">Now your SSH key will be generated.</span>
+<span class="go">Your identification has been saved in /Users/your_username/.ssh/id_rsa.</span>
+<span class="go">Your public key has been saved in /Users/your_username/.ssh/id_rsa.pub.</span>
+<span class="go">The key fingerprint is:</span>
+<span class="go">01:0f:f4:3b:ca:85:d6:17:a1:7d:f0:68:9d:f0:a2:db email@example.com</span></code></pre></figure>
+
+<p>比如我的公钥就生成于：/Users/Jerry/.ssh/id_rsa.pub，接下来就可以把公钥内容传到 DigitalOcean 上了，如下图所示：</p>
+
+<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/DigitalOcean_sshkey.png" alt="DigitalOcean SSH key" /></p>
+
+<h2 id="shadowsocks">Shadowsocks</h2>
+
+<p>其实在 shadowsocks 的<a href="https://github.com/shadowsocks/shadowsocks">github主页</a>上有很详细地说明，但是为了本文的完整性，还是将这些操作放在本文中以供参考。</p>
+
+<h3 id="在服务器端安装shadowsocks">在服务器端安装shadowsocks</h3>
+
+<p>首先需要远程登录到 DigitalOcean 的主机上，我租用的 San Francisco 的机房 IP 地址是 104.236.177.232。而因为之前已经建好了 SSH Key，所以直接用 root 用户登录即可：</p>
+
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">ssh root@104.236.177.232</span></code></pre></figure>
+
+<p>在 Debian / Ubuntu 下 安装 shadowsocks</p>
+
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">apt-get install python-pip</span>
+<span class="go">pip install shadowsocks</span></code></pre></figure>
+
+<p>我在实际安装下发现很多依赖缺失，所以需要先执行一下：apt-get update。另外也有一些同学会选择 CentOS 的服务器，附上在 CentOS 下安装 shadowsocks 的方法：</p>
+
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">yum install python-setuptools &amp;&amp; easy_install pip</span>
+<span class="go">pip install shadowsocks</span></code></pre></figure>
+
+<h3 id="启动-shadowsocks-服务">启动 shadowsocks 服务</h3>
+
+<p>安装好 shadowsocks 以后，启动 shadowsocks 服务可以通过以下指令：</p>
+
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">ssserver -p 8836 -k 你设置的密码 -m rc4-md5</span>
+
+<span class="gp">#</span> 或者可以通过以下指令在后台启动shadowsocks的服务：
+<span class="go">ssserver -p 8836 -k 你设置的密码 -m rc4-md5 -d start</span>
+<span class="go">ssserver -p 8836 -k 你设置的密码 -m rc4-md5 -d stop</span></code></pre></figure>
+
+<p>但上面的方法很不方便，我还是推荐使用配置文件的方法。首先创建一个文件：/etc/shadowsocks.json，示例如下：</p>
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+    <span class="nt">&quot;server&quot;</span><span class="p">:</span><span class="s2">&quot;你的服务器ip地址&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;server_port&quot;</span><span class="p">:</span><span class="mi">8388</span><span class="p">,</span>
+    <span class="nt">&quot;local_address&quot;</span><span class="p">:</span> <span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;local_port&quot;</span><span class="p">:</span><span class="mi">1080</span><span class="p">,</span>
+    <span class="nt">&quot;password&quot;</span><span class="p">:</span><span class="s2">&quot;你设置的密码&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;timeout&quot;</span><span class="p">:</span><span class="mi">300</span><span class="p">,</span>
+    <span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="s2">&quot;aes-256-cfb&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;fast_open&quot;</span><span class="p">:</span> <span class="kc">false</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>接下来你就可以使用下面这个指令启动服务</p>
+
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">ssserver -c /etc/shadowsocks.json</span>
+
+<span class="gp">#</span> 或者在后台运行
+<span class="go">ssserver -c /etc/shadowsocks.json -d start</span>
+<span class="go">ssserver -c /etc/shadowsocks.json -d stop</span></code></pre></figure>
+
+<h3 id="使用shadowsocks客户端">使用shadowsocks客户端</h3>
+
+<p>shadowsocks 的客户端支持各大主流平台，而且客户端的配置一般都很简单，只需要配置一下服务器的ip地址和之前设置好的连接密码即可。</p>
+
+<ul>
+  <li><a href="https://sourceforge.net/projects/shadowsocksgui/files/dist/">OS X</a> / <a href="https://sourceforge.net/projects/shadowsocksgui/files/dist/">Windows</a></li>
+  <li><a href="https://github.com/shadowsocks/shadowsocks/wiki/Ports-and-Clients#android">Android</a> / <a href="https://github.com/shadowsocks/shadowsocks-iOS/wiki/Help">iOS</a></li>
+  <li><a href="https://github.com/shadowsocks/shadowsocks/wiki/Ports-and-Clients">更多设备</a></li>
+</ul>
+
+<h2 id="参考资料">参考资料</h2>
+
+<ul>
+  <li><a href="https://github.com/shadowsocks/shadowsocks">Github Homepage for shadowsocks</a></li>
+  <li><a href="https://github.com/shadowsocks/shadowsocks/wiki/Configuration-via-Config-File">Configuration via Config File</a></li>
+</ul>
+
+
+  </article>
+
+  
+  <p class="copyright">
+    本文的版权归作者 <a href="mailto:jerry.zry@outlook.com">邹润阳</a> 所有，采用 <a href="http://creativecommons.org/licenses/by-nc/3.0/">Attribution-NonCommercial 3.0 License</a>。任何人可以进行转载、分享，但不可在未经允许的情况下用于商业用途；转载请注明出处。感谢配合！
+  </p>
+  
+
+  
+    <div class="ds-thread" data-thread-key="10023" data-title="使用 DigitalOcean 和 shadowsocks 来科学上网" data-url="http://jerryzou.com/posts/shadowsocks-and-digitalocean/"></div>
+<script>
+var duoshuoQuery = {short_name:"jerryzou"};
+(function() {
+  var ds = document.createElement('script');
+  ds.type = 'text/javascript';ds.async = true;
+  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  ds.charset = 'UTF-8';
+  (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+  
+</div>
+
+        
+      </div>
+    </div>
+
+    <footer class="site-footer">
+    <div class="wrap">
+        <ul class="friend-links footer-text">
+            <li><a href="//blog.liqiang.me/">Jayce Li</a></li>
+            <li><a href="//zhangwenli.com/">羡辙</a></li>
+            <li><a href="//xidui.github.io/">xidui</a></li>
+            <li><a href="//www.dozer.cc/">Dozer</a></li>
+            <li><a href="//leuisken.github.io/">LeuisKen</a></li>
+            <li><a href="//szhshp.org">szhshp</a></li>
+            <li><a href="//dianying.taobao.com">淘宝电影</a></li>
+            <li><a href="//leetcode.com">LeetCode</a></li>
+            <li><a href="//efe.baidu.com/">Baidu EFE</a></li>
+            <li><a href="//fex.baidu.com/">Baidu FEX</a></li>
+        </ul>
+        <p class="footer-text">Powered by <a href="http://jekyllrb.com/">Jekyll</a> , <a href="https://pages.github.com/">Github Pages</a> and <a href="https://www.upyun.com/">UPYUN</a>.</p>
+    </div>
+</footer>
+
+    </body>
+</html>

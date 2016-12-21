@@ -57,8 +57,8 @@
 <lastmod>2016-12-04T21:53:39+08:00</lastmod>
 </url>
 <url>
-<loc>http://jerryzou.com/posts/shadowsocks-with-digitalocean/</loc>
-<lastmod>2016-12-04T21:53:39+08:00</lastmod>
+<loc>http://jerryzou.com/posts/shadowsocks-and-digitalocean/</loc>
+<lastmod>2016-12-21T16:10:17+08:00</lastmod>
 </url>
 <url>
 <loc>http://jerryzou.com/posts/caocao01/</loc>
@@ -147,5 +147,9 @@
 <url>
 <loc>http://jerryzou.com/</loc>
 <lastmod>2016-02-23T00:33:03+08:00</lastmod>
+</url>
+<url>
+<loc>http://jerryzou.com/posts/shadowsocks-with-digitalocean/index.html</loc>
+<lastmod>2016-12-21T16:08:05+08:00</lastmod>
 </url>
 </urlset>
