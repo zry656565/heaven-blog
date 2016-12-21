@@ -2,7 +2,7 @@
 date: 2015-01-24 15:16:54 +0800
 title: 使用 DigitalOcean 和 shadowsocks 来科学上网
 description: 使用了各种不稳定的VPN服务以后，我还是觉得自己搭VPS比较靠谱。DigitalOcean 提供了可伸缩的 VPS，最便宜的服务器是每个月$5，虽然对于学生来说不算便宜，但好在一开始充$5送$10，而且成功申请到 Github Student pack 的话，还可以得到$100。ShadowSocks 是科学上网的利器，在 Github 上已经得到了五千多个 Star，使用的人极多、影响极深。而且它对各个平台的支持也非常好，目前我在 Windows/Mac/iOS 三个平台上都拥有了科学上网的环境。
-permalink: /posts/shadowsocks-with-digitalocean/
+permalink: /posts/shadowsocks-and-digitalocean/
 key: 10023
 labels: [shadowsocks, DigitalOcean, VPS]
 ---
