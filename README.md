@@ -15,6 +15,7 @@
 
 ```bash
 # 如果你的系统没有 ruby 环境，请先安装
+# 使用 gem 安装主要的依赖
 gem install jekyll bundler
 
 # 安装依赖的 gem 包
@@ -35,10 +36,10 @@ yarn
 
 ## 编译与部署
 
-```
-grunt build      #本地编译
-grunt debug      #本地编译并启动测试服务器
-grunt release    #本地编译出线上版本（应用各种优化）
-grunt serve      #本地编译并启动测试服务器（应用各种优化）
-grunt deploy     #将站点发布到 gh-pages 分支下
+```bash
+grunt build      # 本地编译
+grunt debug      # 本地编译并启动测试服务器
+grunt release    # 本地编译出线上版本（应用各种优化）
+grunt serve      # 本地编译并启动测试服务器（应用各种优化）
+grunt deploy     # 将站点发布到 gh-pages 分支下
 ```
