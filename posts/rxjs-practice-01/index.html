@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+        
+            RxJS 实战篇（一）拖拽 | 咀嚼之味
+        </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="123 ">
+    <link rel="alternate" type="application/rss+xml" title="咀嚼之味 RSS" href="/feed.xml">
+    <link rel="canonical" href="http://jerryzou.com/posts/rxjs-practice-01/">
+    <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/release/style.69777300.css">
+
+    <!-- Baidu Analysis -->
+    <script>
+        if (window.location.href.substr(7, 9) !== 'localhost') {
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?2744fd74aa568e064f9986394a60ead1";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+            })();
+        }
+    </script>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-47842677-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+    <!-- Hit Kounter LC -->
+    <script src="https://cdn1.lncld.net/static/js/av-min-1.5.0.js"></script>
+    <script src="http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.3.0.js"></script>
+    
+    <!-- handle external js files -->
+    <script src="/assets/js/lib/jquery/jquery-1.11.1.min.js"></script>
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+  <div class="wrap">
+    <a class="site-title" href="/">咀嚼之味</a>
+    <nav class="site-nav">
+      <div class="trigger">
+        <a class="page-link" href="/">首页</a>
+        
+          
+          <a class="page-link" href="/all-articles/">所有文章</a>
+          
+        
+          
+          <a class="page-link" href="/skill/">技能图谱</a>
+          
+        
+          
+          <a class="page-link" href="/about/">关于我</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          <a class="page-link" href="/feed.xml">RSS订阅</a>
+      </div>
+    </nav>
+  </div>
+  <!-- fork me on github -->
+  <a id="fork-me" href="https://github.com/zry656565/heaven-blog"><img src="http://jerryblog-image.b0.upaiyun.com/blog/forkme.png" alt="Fork me on GitHub"></a>
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+        
+        <div class="post">
+
+  <header class="post-header">
+    <h1>RxJS 实战篇（一）拖拽</h1>
+    <p class="meta">Jun 17, 2017 <span class="pause"> - </span>
+        浏览量：<span data-hk-page="current"> - </span>次<span class="pause"> | </span>
+        
+            
+                <a class="label" href="/all-articles/?label=JavaScript">JavaScript</a>
+            
+                <a class="label" href="/all-articles/?label=RxJS">RxJS</a>
+            
+                <a class="label" href="/all-articles/?label=drag">drag</a>
+            
+        
+    </p>
+  </header>
+
+  <article class="post-content">
+  <script async="" src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
+
+<p>面对交互性很强、数据变化复杂的场景，传统的前端开发方式往往存在一些共有的问题：<strong>1).</strong> UI 状态与数据难以追踪；<strong>2).</strong> 写出的代码可读性很差，逻辑代码分布离散。
+相比之下，响应式编程（Reactive Programming）在解决此类问题上有着得天独厚的优势。Vue、Mobx、RxJS 这些库都是响应式编程思想的结晶。</p>
+
+<p>很多人在接触到 RxJS 后会有一个共同的感觉：这个库虽然很强大，但奈何各种各样的 operators 太多了，在实际场景中根本不知道怎么运用！所以本文并不旨在阐释响应式编程的优越性，而是通过循序渐进的实例来展示 RxJS 常用 operators 的使用场景。如果你尚未入门 RxJS，推荐你可以先看看一位来自台湾的前端工程师 Jerry Hong 写的 <a href="http://ithelp.ithome.com.tw/articles/10186103">30 天精通 RxJS 系列</a>。不要被三十天这个标题给吓到啦，如果你有一些函数式编程的经验的话，周末花一天时间就能看完。当然要加深对 RxJS 的理解还是得多多实战。毕竟实践出真知嘛！</p>
+
+<p>本文不适合 <strong>未入门的新手</strong> 与 <strong>已精通的高手</strong>。如果你觉得你对 RxJS 有了初步的认识，但掌握程度不高，可能这篇文章就比较适合你了。你可以尝试跟着本文的三个实例自己先做做看，再对比一下本文给出的解决方案，相信你能对 RxJS 有更深入的理解。注意，本文给出的解决方案并不一定是最优的解决方案，如果你有什么改进的建议，可以在文末留言，谢谢！</p>
+
+<h2 id="1-简单的拖拽">1. 简单的拖拽</h2>
+
+<blockquote>
+  <p><strong>需求</strong>：给定一个小方块，实现简单的拖拽功能，要求鼠标在小方块上按下后能够拖着小方块进行移动；鼠标放开后，则运动停止。</p>
+</blockquote>
+
+<p>要实现一个简单的拖拽，需要对 <code>mousedown</code>, <code>mousemove</code>, <code>mouseup</code> 等多个事件进行观察，并相应地改变小方块的位置。</p>
+
+<p>首先分析一下，为了相应地移动小方块，我们需要知道的信息有：<strong>1).</strong> 小方块被拖拽时的初始位置；<strong>2).</strong> 小方块在被拖拽着移动时，需要移动到的新位置。通过 Marble Diagram 来描述一下我们的原始流与想要得到的流，其中最下面这个流就是我们想要用于更新小方块位置的流。</p>
+
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">mousedown   : --d----------------------d---------</span>
+<span class="go">mousemove   : -m--m-m-m--m--m---m-m-------m-m-m--</span>
+<span class="go">mouseup     : ---------u---------------------u---</span>
+
+<span class="go">dragUpdate  : ----m-m-m-------------------m-m----</span></code></pre></figure>
+
+<p>简而言之，就是在一次 <code>mousedown</code> 和 <code>mouseup</code> 之间触发 <code>mousemove</code> 时，更新小方块的位置。要做到这一点，最重要的操作符是 <a href="http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-takeUntil"><strong>takeUntil</strong></a>，相关的伪代码如下：</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">mousedown</span><span class="p">.</span><span class="nx">switchMap</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">mousemove</span><span class="p">.</span><span class="nx">takeUntil</span><span class="p">(</span><span class="nx">mouseup</span><span class="p">))</span></code></pre></figure>
+
+<p>将 <strong>switchMap</strong> 和 <strong>takeUntil</strong> 加入上面的 Marble Diagram：</p>
+
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">mousedown  : --d----------------------d---------</span>
+<span class="go">mousemove  : -m--m-m-m--m--m---m-m-------m-m-m--</span>
+<span class="go">mouseup    : ---------u---------------------u---</span>
+<span class="go">     </span>
+<span class="go">   stream1$ = mousemove.map(() =&gt; mousemove.takeUntil(mouseup))</span>
+
+<span class="go">stream1$   : --d----------------------d---------</span>
+<span class="go">                \                      \</span>
+<span class="go">                 m-m-m|                 -m-m|</span>
+<span class="go">   </span>
+<span class="go">   dragUpdate = stream1$.switch()</span>
+
+<span class="go">dragUpdate : ----m-m-m-------------------m-m----</span></code></pre></figure>
+
+<p>其实 <strong>switchMap</strong> 就是 <strong>map + switch</strong> 组合的简写形式。当然，我们还需要同时记录一下初始位置并根据鼠标移动的距离来更新小方块的位置，实际的实现代码如下：</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">box</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;box&#39;</span><span class="p">)</span>
+<span class="kr">const</span> <span class="nx">mouseDown$</span> <span class="o">=</span> <span class="nx">Rx</span><span class="p">.</span><span class="nx">Observable</span><span class="p">.</span><span class="nx">fromEvent</span><span class="p">(</span><span class="nx">box</span><span class="p">,</span> <span class="s1">&#39;mousedown&#39;</span><span class="p">)</span>
+<span class="kr">const</span> <span class="nx">mouseMove$</span> <span class="o">=</span> <span class="nx">Rx</span><span class="p">.</span><span class="nx">Observable</span><span class="p">.</span><span class="nx">fromEvent</span><span class="p">(</span><span class="nb">document</span><span class="p">,</span> <span class="s1">&#39;mousemove&#39;</span><span class="p">)</span>
+<span class="kr">const</span> <span class="nx">mouseUp$</span> <span class="o">=</span> <span class="nx">Rx</span><span class="p">.</span><span class="nx">Observable</span><span class="p">.</span><span class="nx">fromEvent</span><span class="p">(</span><span class="nb">document</span><span class="p">,</span> <span class="s1">&#39;mouseup&#39;</span><span class="p">)</span>
+
+<span class="nx">mouseDown$</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">event</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">({</span>
+  <span class="nx">pos</span><span class="o">:</span> <span class="nx">getTranslate</span><span class="p">(</span><span class="nx">box</span><span class="p">),</span>
+  <span class="nx">event</span><span class="p">,</span>
+<span class="p">}))</span>
+<span class="p">.</span><span class="nx">switchMap</span><span class="p">((</span><span class="nx">initialState</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">initialPos</span> <span class="o">=</span> <span class="nx">initialState</span><span class="p">.</span><span class="nx">pos</span>
+  <span class="kr">const</span> <span class="p">{</span> <span class="nx">clientX</span><span class="p">,</span> <span class="nx">clientY</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">initialState</span><span class="p">.</span><span class="nx">event</span>
+  <span class="k">return</span> <span class="nx">mouseMove$</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">moveEvent</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">({</span>
+    <span class="nx">x</span><span class="o">:</span> <span class="nx">moveEvent</span><span class="p">.</span><span class="nx">clientX</span> <span class="o">-</span> <span class="nx">clientX</span> <span class="o">+</span> <span class="nx">initialPos</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span>
+    <span class="nx">y</span><span class="o">:</span> <span class="nx">moveEvent</span><span class="p">.</span><span class="nx">clientY</span> <span class="o">-</span> <span class="nx">clientY</span> <span class="o">+</span> <span class="nx">initialPos</span><span class="p">.</span><span class="nx">y</span><span class="p">,</span>
+  <span class="p">}))</span>
+  <span class="p">.</span><span class="nx">takeUntil</span><span class="p">(</span><span class="nx">mouseUp$</span><span class="p">)</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">subscribe</span><span class="p">((</span><span class="nx">pos</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">setTranslate</span><span class="p">(</span><span class="nx">box</span><span class="p">,</span> <span class="nx">pos</span><span class="p">)</span>
+<span class="p">})</span></code></pre></figure>
+
+<p>其中，<code>getTranslate</code> 和 <code>setTranslate</code> 主要作用就是获取和更新小方块的位置。具体实现可以参见 <a href="https://codepen.io/jerryzou/pen/XgppaN">Codepen</a></p>
+
+<p data-height="260" data-theme-id="0" data-slug-hash="XgppaN" data-default-tab="js,result" data-user="jerryzou" data-embed-version="2" data-pen-title="easy-drag" class="codepen">See the Pen <a href="https://codepen.io/jerryzou/pen/XgppaN/">easy-drag</a> by Jerry Zou (<a href="https://codepen.io/jerryzou">@jerryzou</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+
+<h2 id="2-添加初始延迟">2. 添加初始延迟</h2>
+
+<blockquote>
+  <p><strong>需求</strong>：在拖拽的实际应用中，有时会希望有个初始延迟。就像手机屏幕上的诸多 App 图标，在你想要拖拽它们进行排序时，通常需要按住图标一小段时间，比如 <strong>200ms</strong>（如下图所示），这时该如何操作呢？</p>
+</blockquote>
+
+<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/iPhone-drag.gif" alt="iPhone drag" /></p>
+
+<p>为了演示方便，这里我们先定义一个简单的动画，当用户鼠标按下超过一定时间后，播放一个闪烁动画：</p>
+
+<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nc">.blink</span> <span class="p">{</span>
+  <span class="n">animation</span><span class="o">:</span> <span class="m">0.4s</span> <span class="n">linear</span> <span class="n">blinking</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">@keyframes</span> <span class="nt">blinking</span> <span class="p">{</span>
+  <span class="nt">0</span><span class="o">%</span> <span class="p">{</span> <span class="k">opacity</span><span class="o">:</span> <span class="m">1</span><span class="p">;</span> <span class="p">}</span>
+  <span class="nt">50</span><span class="o">%</span> <span class="p">{</span> <span class="k">opacity</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span> <span class="p">}</span>
+  <span class="nt">100</span><span class="o">%</span> <span class="p">{</span> <span class="k">opacity</span><span class="o">:</span> <span class="m">1</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>此处我们只做一个简单的实现：在用户鼠标按下时间超过 200ms 且在这 200ms 的时间内没有发生鼠标移动时，认为拖拽开始。伪代码如下：</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">mousedown</span><span class="p">.</span><span class="nx">switchMap</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">$$</span><span class="p">.</span><span class="nx">delay</span><span class="p">(</span><span class="mi">200</span><span class="p">).</span><span class="nx">takeUntil</span><span class="p">(</span><span class="nx">mousemove</span><span class="p">))</span></code></pre></figure>
+
+<p>其中，上面的 <code>$$</code> 指的是一个新创建的流。为了得到更直观的理解，使用多个 Marble Diagram 来分段理解之前的伪代码：</p>
+
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">mousedown   : --d----------------------d---------</span>
+<span class="go">mousemove   : -m---m----m--------m-------------m-</span>
+
+<span class="go">   stream1$ = mousedown.map(() =&gt; $$.delay(200).takeUntil(mousemove))</span>
+
+<span class="go">stream1$    : --d----------------------d---------</span>
+<span class="go">                 \                      \</span>
+<span class="go">                  -|                     ----s|</span>
+
+<span class="go">   dragStart = mousedown.switchMap(() =&gt; $$.delay(200).takeUntil(mousemove))</span>
+
+<span class="go">dragStart   : -------------------------------s----</span></code></pre></figure>
+
+<p>在第一次鼠标按下的 200ms 内，触发了 <code>mousemove</code> 事件，所以第一次 <code>mousedown</code> 并没有触发一次 <strong>dragStart</strong>，而在第二次鼠标按下的 200ms 内，并没有触发 <code>mousemove</code> 事件，所以最后就引起了一次 <strong>dragStart</strong>。</p>
+
+<p>结合之前的简单拖拽的实现，代码如下：</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">mouseDown$</span><span class="p">.</span><span class="nx">switchMap</span><span class="p">((</span><span class="nx">event</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">Rx</span><span class="p">.</span><span class="nx">Observable</span><span class="p">.</span><span class="nx">of</span><span class="p">({</span>
+    <span class="nx">pos</span><span class="o">:</span> <span class="nx">getTranslate</span><span class="p">(</span><span class="nx">box</span><span class="p">),</span>
+    <span class="nx">event</span><span class="p">,</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="nx">delay</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">takeUntil</span><span class="p">(</span><span class="nx">mouseMove$</span><span class="p">)</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">switchMap</span><span class="p">((</span><span class="nx">initialState</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">initialPos</span> <span class="o">=</span> <span class="nx">initialState</span><span class="p">.</span><span class="nx">pos</span>
+  <span class="kr">const</span> <span class="p">{</span> <span class="nx">clientX</span><span class="p">,</span> <span class="nx">clientY</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">initialState</span><span class="p">.</span><span class="nx">event</span>
+  <span class="nx">box</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">&#39;blink&#39;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="nx">mouseMove$</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">moveEvent</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">({</span>
+    <span class="nx">x</span><span class="o">:</span> <span class="nx">moveEvent</span><span class="p">.</span><span class="nx">clientX</span> <span class="o">-</span> <span class="nx">clientX</span> <span class="o">+</span> <span class="nx">initialPos</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span>
+    <span class="nx">y</span><span class="o">:</span> <span class="nx">moveEvent</span><span class="p">.</span><span class="nx">clientY</span> <span class="o">-</span> <span class="nx">clientY</span> <span class="o">+</span> <span class="nx">initialPos</span><span class="p">.</span><span class="nx">y</span><span class="p">,</span>
+  <span class="p">}))</span>
+  <span class="p">.</span><span class="nx">takeUntil</span><span class="p">(</span><span class="nx">mouseUp$</span><span class="p">.</span><span class="k">do</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">box</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s1">&#39;blink&#39;</span><span class="p">)))</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">subscribe</span><span class="p">((</span><span class="nx">pos</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">setTranslate</span><span class="p">(</span><span class="nx">box</span><span class="p">,</span> <span class="nx">pos</span><span class="p">)</span>
+<span class="p">})</span></code></pre></figure>
+
+<p>其中，多了两句操作 <code>#box</code> 的 classname 的代码，主要就是用于触发动画的。完整代码见 <a href="https://codepen.io/jerryzou/pen/bRgOdN?editors=0110">Codepen</a></p>
+
+<p data-height="265" data-theme-id="0" data-slug-hash="bRgOdN" data-default-tab="js,result" data-user="jerryzou" data-embed-version="2" data-pen-title="delay-drag" class="codepen">See the Pen <a href="https://codepen.io/jerryzou/pen/bRgOdN/">delay-drag</a> by Jerry Zou (<a href="https://codepen.io/jerryzou">@jerryzou</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+
+<h2 id="3-拖拽接龙">3. 拖拽接龙</h2>
+
+<blockquote>
+  <p>需求：给定 n 个小方块，要求拖拽第一个小方块进行移动，后续的小方块能够以间隔 0.1s 的时间跟着之前的小方块进行延迟模仿运动。</p>
+</blockquote>
+
+<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/drag-list.gif" alt="drag list" /></p>
+
+<p>此例中，我们不再要求“初始延迟”，因此针对正在拖拽着的红色小方块，只要沿用第一个例子中的简单拖拽的方法，即可获取我们需要改变方块位置的事件流：</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">mousedown</span><span class="p">.</span><span class="nx">switchMap</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">mousemove</span><span class="p">.</span><span class="nx">takeUntil</span><span class="p">(</span><span class="nx">mouseup</span><span class="p">))</span></code></pre></figure>
+
+<p>然而我们该如何依次修改多个方块的位置呢？首先，可以先构造一个流来按延迟时间依次取得我们想要改变的小方块：</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// 获取所有小方块，图示的例子中给出的是 7 个小方块</span>
+<span class="kr">const</span> <span class="nx">boxes</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s1">&#39;box&#39;</span><span class="p">)</span>
+
+<span class="c1">// 使用 zip 操作符构造一个由 boxes 组成的流</span>
+<span class="kr">const</span> <span class="nx">boxes$</span> <span class="o">=</span> <span class="nx">Rx</span><span class="p">.</span><span class="nx">Observable</span><span class="p">.</span><span class="nx">from</span><span class="p">([].</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">boxes</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="kr">const</span> <span class="nx">delayBoxes$</span> <span class="o">=</span> <span class="nx">boxes$</span><span class="p">.</span><span class="nx">zip</span><span class="p">(</span><span class="nx">Rx</span><span class="p">.</span><span class="nx">Observable</span><span class="p">.</span><span class="nx">interval</span><span class="p">(</span><span class="mi">100</span><span class="p">).</span><span class="nx">startWith</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="nx">box</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">box</span><span class="p">)</span></code></pre></figure>
+
+<p>假定 7 个 boxes 在 Marble Diagram 中分别表示为 <code>a</code>, <code>b</code>, <code>c</code>, <code>d</code>, <code>e</code>, <code>f</code>, <code>g</code>：</p>
+
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">boxes$          : (abcdefg)|</span>
+<span class="go">interval(100)   : 0---0---1---2---3---4---5---6---7---8---</span>
+
+<span class="go">   delayBoxes$ = boxes$.zip(Rx.Observable.interval(100).startWith(0), (box) =&gt; box)</span>
+
+<span class="go">delayBoxes$     : a---b---c---d---e---f---g|</span></code></pre></figure>
+
+<p>只要将原本用于修改方块位置的 mousemove 事件流 mergeMap 到上面例子中的 delayBoxes$ 上，即可完成“拖拽接龙”。伪代码如下所示：</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">mousedown</span><span class="p">.</span><span class="nx">switchMap</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">mousemove</span><span class="p">.</span><span class="nx">takeUntil</span><span class="p">(</span><span class="nx">mouseup</span><span class="p">))</span>
+  <span class="p">.</span><span class="nx">mergeMap</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">delayBoxes$</span><span class="p">.</span><span class="k">do</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="cm">/* 此处更新各个小方块的位置 */</span> <span class="p">}))</span></code></pre></figure>
+
+<p>让我们继续着眼于 Marble Diagram：</p>
+
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">delayBoxes$     : ---a---b---c---d---e---f---g|</span>
+<span class="go">dragUpdate$     : -----m--------m----------m-------</span>
+
+<span class="go">   stream1$ = dragUpdate$.map(() =&gt; delayBoxes$)</span>
+
+<span class="go">stream1$        : -----m-------m----------m-------</span>
+<span class="go">                        \       \          \</span>
+<span class="go">                         \       \          a---b---c---d---e---f---g|</span>
+<span class="go">                          \       a---b---c---d---e---f---g|</span>
+<span class="go">                           a---b---c---d---e---f---g|</span>
+
+<span class="go">   result$ = dragUpdate$.mergeMap(() =&gt; delayBoxes$)</span>
+
+<span class="go">result$         : ---------a---b--ac--bd--cea-dfb-egc-f-d-g-e---f---g|</span></code></pre></figure>
+
+<p>正如上面 Marble Diagram 所示，我们可以借助流的力量从容地在合适的时机修改对应的小方块的位置。具体的实现代码如下所示：</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">headBox</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">)</span>
+<span class="kr">const</span> <span class="nx">boxes</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s1">&#39;box&#39;</span><span class="p">)</span>
+<span class="kr">const</span> <span class="nx">mouseDown$</span> <span class="o">=</span> <span class="nx">Rx</span><span class="p">.</span><span class="nx">Observable</span><span class="p">.</span><span class="nx">fromEvent</span><span class="p">(</span><span class="nx">headBox</span><span class="p">,</span> <span class="s1">&#39;mousedown&#39;</span><span class="p">)</span>
+<span class="kr">const</span> <span class="nx">mouseMove$</span> <span class="o">=</span> <span class="nx">Rx</span><span class="p">.</span><span class="nx">Observable</span><span class="p">.</span><span class="nx">fromEvent</span><span class="p">(</span><span class="nb">document</span><span class="p">,</span> <span class="s1">&#39;mousemove&#39;</span><span class="p">)</span>
+<span class="kr">const</span> <span class="nx">mouseUp$</span> <span class="o">=</span> <span class="nx">Rx</span><span class="p">.</span><span class="nx">Observable</span><span class="p">.</span><span class="nx">fromEvent</span><span class="p">(</span><span class="nb">document</span><span class="p">,</span> <span class="s1">&#39;mouseup&#39;</span><span class="p">)</span>
+<span class="kr">const</span> <span class="nx">delayBoxes$</span> <span class="o">=</span> <span class="nx">Rx</span><span class="p">.</span><span class="nx">Observable</span><span class="p">.</span><span class="nx">from</span><span class="p">([].</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">boxes</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+  <span class="p">.</span><span class="nx">zip</span><span class="p">(</span><span class="nx">Rx</span><span class="p">.</span><span class="nx">Observable</span><span class="p">.</span><span class="nx">interval</span><span class="p">(</span><span class="mi">100</span><span class="p">).</span><span class="nx">startWith</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="nx">box</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">box</span><span class="p">)</span>
+
+<span class="nx">mouseDown$</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">pos</span> <span class="o">=</span> <span class="nx">getTranslate</span><span class="p">(</span><span class="nx">headBox</span><span class="p">)</span>
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="nx">pos</span><span class="p">,</span>
+    <span class="nx">event</span><span class="o">:</span> <span class="nx">e</span><span class="p">,</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">switchMap</span><span class="p">((</span><span class="nx">initialState</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">initialPos</span> <span class="o">=</span> <span class="nx">initialState</span><span class="p">.</span><span class="nx">pos</span>
+  <span class="kr">const</span> <span class="p">{</span> <span class="nx">clientX</span><span class="p">,</span> <span class="nx">clientY</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">initialState</span><span class="p">.</span><span class="nx">event</span>
+  <span class="k">return</span> <span class="nx">mouseMove$</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">moveEvent</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">({</span>
+    <span class="nx">x</span><span class="o">:</span> <span class="nx">moveEvent</span><span class="p">.</span><span class="nx">clientX</span> <span class="o">-</span> <span class="nx">clientX</span> <span class="o">+</span> <span class="nx">initialPos</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span>
+    <span class="nx">y</span><span class="o">:</span> <span class="nx">moveEvent</span><span class="p">.</span><span class="nx">clientY</span> <span class="o">-</span> <span class="nx">clientY</span> <span class="o">+</span> <span class="nx">initialPos</span><span class="p">.</span><span class="nx">y</span><span class="p">,</span>
+  <span class="p">}))</span>
+  <span class="p">.</span><span class="nx">takeUntil</span><span class="p">(</span><span class="nx">mouseUp$</span><span class="p">)</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">mergeMap</span><span class="p">((</span><span class="nx">pos</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">delayBoxes$</span><span class="p">.</span><span class="k">do</span><span class="p">((</span><span class="nx">box</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">setTranslate</span><span class="p">(</span><span class="nx">box</span><span class="p">,</span> <span class="nx">pos</span><span class="p">)</span>
+  <span class="p">})</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">subscribe</span><span class="p">()</span></code></pre></figure>
+
+<p>完整的实现代码见 <a href="https://codepen.io/jerryzou/pen/MoJpam?editors=0110">Codepen</a></p>
+
+<p data-height="265" data-theme-id="0" data-slug-hash="MoJpam" data-default-tab="js,result" data-user="jerryzou" data-embed-version="2" data-pen-title="drag-list" class="codepen">See the Pen <a href="https://codepen.io/jerryzou/pen/MoJpam/">drag-list</a> by Jerry Zou (<a href="https://codepen.io/jerryzou">@jerryzou</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+
+<h2 id="小结">小结</h2>
+
+<ul>
+  <li>这篇文章介绍了关于拖拽的三个实际场景：
+    <ul>
+      <li>在简单拖拽的实例中，使用到了 <code>takeUntil</code>, <code>switchMap</code> 操作符；</li>
+      <li>需要添加初始延迟时，我们额外使用到 <code>delay</code> 操作符；</li>
+      <li>在最后的拖拽接龙实例中，<code>mergeMap</code> 操作符和 <code>zip + interval</code> 的组合发挥了很大的作用</li>
+    </ul>
+  </li>
+  <li>相信看完本文以后，你们能够深刻体会到：结合 <strong>Marble Diagram</strong> 来理解 RxJS 的流是一个非常棒的方法！</li>
+</ul>
+
+<p>最后大家可以思考一下：在第三个例子中，如果把 <code>mergeMap</code> 改为 <code>switchMap</code> 或者 <code>concatMap</code> 会发生什么？这是课后作业。哈哈！</p>
+
+
+  </article>
+
+  
+  <p class="copyright">
+    本文的版权归作者 <a href="mailto:jerry.zry@outlook.com">邹润阳</a> 所有，采用 <a href="http://creativecommons.org/licenses/by-nc/3.0/">Attribution-NonCommercial 3.0 License</a>。任何人可以进行转载、分享，但不可在未经允许的情况下用于商业用途；转载请注明出处。感谢配合！
+  </p>
+  
+
+  
+    <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+var disqus_config = function () {
+this.page.url = "http://jerryzou.com/posts/rxjs-practice-01/";  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = "10039"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jerryzou.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                                
+  
+</div>
+
+        
+      </div>
+    </div>
+
+    <footer class="site-footer">
+    <div class="wrap">
+        <ul class="friend-links footer-text">
+            <li><a href="//blog.liqiang.me/">Jayce Li</a></li>
+            <li><a href="//zhangwenli.com/">羡辙</a></li>
+            <li><a href="//xidui.github.io/">xidui</a></li>
+            <li><a href="//www.dozer.cc/">Dozer</a></li>
+            <li><a href="//leuisken.github.io/">LeuisKen</a></li>
+            <li><a href="//szhshp.org">szhshp</a></li>
+            <li><a href="//dianying.taobao.com">淘宝电影</a></li>
+            <li><a href="//leetcode.com">LeetCode</a></li>
+            <li><a href="//efe.baidu.com/">Baidu EFE</a></li>
+            <li><a href="//fex.baidu.com/">Baidu FEX</a></li>
+        </ul>
+        <p class="footer-text">Powered by <a href="http://jekyllrb.com/">Jekyll</a> , <a href="https://pages.github.com/">Github Pages</a> and <a href="https://www.upyun.com/">UPYUN</a>.</p>
+    </div>
+</footer>
+
+    </body>
+</html>
