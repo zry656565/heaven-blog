@@ -1,7 +1,7 @@
 ---
-date: 2017-06-17 21:30:00 +0800
+date: 2017-06-20 22:55:00 +0800
 title: RxJS 实战篇（一）拖拽
-description: 123
+description: 很多人在接触到 RxJS 后会有一个共同的感觉：这个库虽然很强大，但奈何各种各样的 operators 太多了，在实际场景中根本不知道怎么运用！所以本文并不旨在阐释响应式编程的优越性，而是通过循序渐进的实例来展示 RxJS 常用 operators 的使用场景。
 permalink: /posts/rxjs-practice-01/
 key: 10039
 labels: [JavaScript, RxJS, drag]
