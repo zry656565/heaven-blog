@@ -256,7 +256,7 @@
 &lt;p&gt;最后大家可以思考一下：在第三个例子中，如果把 &lt;code&gt;mergeMap&lt;/code&gt; 改为 &lt;code&gt;switchMap&lt;/code&gt; 或者 &lt;code&gt;concatMap&lt;/code&gt; 会发生什么？这是课后作业。哈哈！&lt;/p&gt;
 
 </description>
-        <pubDate>Sat, 17 Jun 2017 21:30:00 +0800</pubDate>
+        <pubDate>Tue, 20 Jun 2017 22:55:00 +0800</pubDate>
         <link>http://jerryzou.com/posts/rxjs-practice-01/</link>
         <guid isPermaLink="true">http://jerryzou.com/posts/rxjs-practice-01/</guid>
       </item>
