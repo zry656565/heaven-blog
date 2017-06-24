@@ -9,6 +9,7 @@ pages/1_articles.md
 .tmp
 assets/css/main.css
 assets/css/posts.css
+assets/css/pages.css
 
 #PhpStorm configure files
 .idea

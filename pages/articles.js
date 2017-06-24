@@ -88,9 +88,11 @@
         render: function() {
             var post = this.props.post;
             return (
-                <li className="article">
+                <li className="article clearfix">
                     <span className="article-date">{post.date.substr(5)}</span>
-                    <a className="article-title" href={post.link}>{post.title}</a>
+                    <div className="article-title">
+                        <a href={post.link}>{post.title}</a>
+                    </div>
                 </li>
             );
         }

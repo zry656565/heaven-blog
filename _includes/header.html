@@ -2,6 +2,9 @@
   <div class="wrap">
     <a class="site-title" href="{{ site.baseurl }}/">{{ site.title }}</a>
     <nav class="site-nav">
+      <div class="menu-icon">
+        <img class="icon" src="{{ site.static_url }}/menu.svg" title="More"/>
+      </div>
       <div class="trigger">
         <a class="page-link" href="/">首页</a>
         {% for page in site.pages %}

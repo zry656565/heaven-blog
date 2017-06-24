@@ -2,6 +2,7 @@
  *===========================================================*/
 
 @import "config";
+@import "utils";
 
 @media-diverge-small: 600px;
 @media-diverge-medium: 840px;
@@ -90,7 +91,7 @@ hr{
   }
 
   @media screen and (max-width: @media-diverge-small) {
-    position: fixed;
+    position: absolute;
     z-index: 10;
     top: 14px;
     right: 8px;
@@ -104,12 +105,15 @@ hr{
       display: block;
       float: right;
       width: 36px;
-      font-size: 24px;
-      color: #505050;
+      height: 36px;
       text-align: center;
       line-height: 36px;
 
-      svg { width: 18px; height: 16px; }
+      img {
+        padding: 9px;
+        width: 18px;
+        height: 18px;
+      }
     }
 
     .trigger {
@@ -123,9 +127,13 @@ hr{
     .page-link {
       display: block;
       margin: 0;
-      padding: 5px 10px;
+      padding: 10px 20px;
       text-align: right;
       line-height: 1.25;
+    }
+
+    .page-link:last-child {
+      display: none;
     }
 
   }

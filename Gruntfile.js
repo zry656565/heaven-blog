@@ -15,6 +15,7 @@ module.exports = function(grunt) {
             },
             "<%= pkg.srcRoot %>/css/main.css": "<%= pkg.srcRoot %>/css/main.less",
             "<%= pkg.srcRoot %>/css/posts.css": "<%= pkg.srcRoot %>/css/posts.less",
+            "<%= pkg.srcRoot %>/css/pages.css": "<%= pkg.srcRoot %>/css/pages.less",
         },
         useminPrepare: {
             html: '_includes/head.html',
