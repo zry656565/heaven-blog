@@ -88,9 +88,11 @@
         render: function() {
             var post = this.props.post;
             return (
-                React.createElement("li", {className: "article"}, 
+                React.createElement("li", {className: "article clearfix"}, 
                     React.createElement("span", {className: "article-date"}, post.date.substr(5)), 
-                    React.createElement("a", {className: "article-title", href: post.link}, post.title)
+                    React.createElement("div", {className: "article-title"}, 
+                        React.createElement("a", {href: post.link}, post.title)
+                    )
                 )
             );
         }
