@@ -7,6 +7,8 @@ pages/1_articles.md
 
 #temporary files produced by grunt
 .tmp
+assets/css/main.css
+assets/css/posts.css
 
 #PhpStorm configure files
 .idea

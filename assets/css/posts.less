@@ -196,5 +196,10 @@
  *==========================*/
 
 .cp_embed_wrapper {
-  margin: 0.8em 2em
+  margin: 0.8em 2em;
+
+  @media screen and (max-width: 600px) {
+    max-width: 100%;
+    margin: 0.8em 0;
+  }
 }

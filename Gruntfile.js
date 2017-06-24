@@ -9,6 +9,13 @@ module.exports = function(grunt) {
                 dest: '_includes/head.html'
             }
         },
+        less: {
+            options: {
+                paths: ['<%= pkg.srcRoot %>/css']
+            },
+            "<%= pkg.srcRoot %>/css/main.css": "<%= pkg.srcRoot %>/css/main.less",
+            "<%= pkg.srcRoot %>/css/posts.css": "<%= pkg.srcRoot %>/css/posts.less",
+        },
         useminPrepare: {
             html: '_includes/head.html',
             options: {
@@ -69,6 +76,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
@@ -81,18 +89,21 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('build', [
+        'less',
         'copy:includes',
         'concat:react_debug',
         'shell:jekyll_build'
     ]);
 
     grunt.registerTask('debug', [
+        'less',        
         'copy:includes',
         'concat:react_debug',
         'shell:jekyll_serve'
     ]);
 
     grunt.registerTask('release', [
+        'less',    
         'copy:includes',
         'concat:react_release',
         'useminPrepare',
@@ -106,6 +117,7 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('serve', [
+        'less',
         'copy:includes',
         'concat:react_release',
         'useminPrepare',
