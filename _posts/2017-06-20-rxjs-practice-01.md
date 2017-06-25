@@ -45,7 +45,7 @@ mousedown  : --d----------------------d---------
 mousemove  : -m--m-m-m--m--m---m-m-------m-m-m--
 mouseup    : ---------u---------------------u---
      
-   stream1$ = mousemove.map(() => mousemove.takeUntil(mouseup))
+   stream1$ = mousedown.map(() => mousemove.takeUntil(mouseup))
 
 stream1$   : --d----------------------d---------
                 \                      \
