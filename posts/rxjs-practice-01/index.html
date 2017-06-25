@@ -152,7 +152,7 @@
 <span class="go">mousemove  : -m--m-m-m--m--m---m-m-------m-m-m--</span>
 <span class="go">mouseup    : ---------u---------------------u---</span>
 <span class="go">     </span>
-<span class="go">   stream1$ = mousemove.map(() =&gt; mousemove.takeUntil(mouseup))</span>
+<span class="go">   stream1$ = mousedown.map(() =&gt; mousemove.takeUntil(mouseup))</span>
 
 <span class="go">stream1$   : --d----------------------d---------</span>
 <span class="go">                \                      \</span>

@@ -44,7 +44,7 @@
 &lt;span class=&quot;go&quot;&gt;mousemove  : -m--m-m-m--m--m---m-m-------m-m-m--&lt;/span&gt;
 &lt;span class=&quot;go&quot;&gt;mouseup    : ---------u---------------------u---&lt;/span&gt;
 &lt;span class=&quot;go&quot;&gt;     &lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;   stream1$ = mousemove.map(() =&amp;gt; mousemove.takeUntil(mouseup))&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;   stream1$ = mousedown.map(() =&amp;gt; mousemove.takeUntil(mouseup))&lt;/span&gt;
 
 &lt;span class=&quot;go&quot;&gt;stream1$   : --d----------------------d---------&lt;/span&gt;
 &lt;span class=&quot;go&quot;&gt;                \                      \&lt;/span&gt;
