@@ -8,6 +8,70 @@
     <atom:link href="http://jerryzou.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>浅谈前端中的过早优化问题</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;Premature optimization is the root of all evil.
+过早优化是万恶之源。 —— &lt;a href=&quot;https://zh.wikipedia.org/zh-hans/%E9%AB%98%E5%BE%B7%E7%BA%B3&quot;&gt;Donald Knuth&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;还记得大四的软件优化课上，课的主题虽然是关于各种优化手段的，但老师讲的第一门课的 PPT 里依旧给这句话留了独立的一页。在近期的工作中，我就碰到了不少因为“过早优化”带来的麻烦。稍微整理了一下思绪，便有了这篇短文。&lt;/p&gt;
+
+&lt;h2 id=&quot;1-什么是过早优化&quot;&gt;1. 什么是过早优化？&lt;/h2&gt;
+
+&lt;p&gt;翻阅了一下知乎上&lt;a href=&quot;https://www.zhihu.com/question/24282796/answer/27279410&quot;&gt;轮子哥对于这个问题的看法&lt;/a&gt;，还是很符合我的看法的：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;过早指的不是在开发过程的早期，而是在还没弄清楚&lt;strong&gt;需求未来的变化的走向&lt;/strong&gt;的时候。你的优化不仅可能导致你无法很好地实现新的需求，而且你对优化的预期的猜测有可能还是错的，导致实际上你除了把代码变复杂以外什么都没得到。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;在我看来，过早优化的特征有二：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;对所要实现的系统没有一个全面的规划，是为其一；&lt;/li&gt;
+  &lt;li&gt;需求本身不够稳定，或对需求的理解不够透彻，是为其二。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;没有全面的规划，就容易拘泥于细节。对于需求分析不够清晰，则往往会制造许多南辕北辙的废代码。在时机仍不成熟时，就针对一些细节上动用太多的脑筋、早早地开始优化性能，不仅会大大地增加代码复杂度，而且这些优化在很多情况还会对后面的开发工作增添大量的障碍。&lt;/p&gt;
+
+&lt;p&gt;最近在开发基于 Draft 的富文本编辑器时，需要完成一个表格编辑的功能。由于 Draft 本身的扁平化结构，要在它上面构建一套表格编辑的交互是是一件非常麻烦的事。&lt;/p&gt;
+
+&lt;p&gt;在初期我并不知道如何去实现这个表格功能，所以写了好些预研性质的代码进行测试。其中，便使用了 &lt;code&gt;shouldComponentUpdate()&lt;/code&gt; 来避免&lt;strong&gt;不必要的渲染&lt;/strong&gt;。在不断补全各种功能的同时，表格渲染总会出现这样那样的问题。后来经过仔细检查，我发现原来我在表格组件生命周期中所实现的 &lt;code&gt;shouldComponentUpdate()&lt;/code&gt;，在某些情况下把需要重新渲染的状态也给跳过了。相信很多 React 开发者也会遇到此类问题，比如来自石墨的这位兄弟便在&lt;a href=&quot;https://zhuanlan.zhihu.com/p/29103532&quot;&gt;文章&lt;/a&gt;中把自己批判了一番。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;我们在迁移到 React 的初期，由于团队只有少数几个人接触过这个框架，所以经历了一段时间的「阵痛」，例如对于 shouldComponentUpdate 的错误使用使得一些错误变得不易追踪调试。……&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;另外，&lt;strong&gt;前端的缓存策略&lt;/strong&gt;也是一个单页应用需要好好考虑的优化点。如果缓存基本难以命中倒还好，如果应用一直在使用已经过期的缓存，问题就很大了。一旦在项目中使用了没有经过推敲的缓存失效策略，很容易就会导致很多难以预期的结果。（所以目前我们已经在我们的应用中把缓存暂时禁用了，等应用的大部分功能都稳定以后再去考虑怎么合理地控制缓存失效的策略）&lt;/p&gt;
+
+&lt;h2 id=&quot;2-避免过早优化的原则&quot;&gt;2. 避免过早优化的原则&lt;/h2&gt;
+
+&lt;p&gt;今天公司的 AMA 上，严老师展示了一下他上周去深圳学习交流的体验。其中他反复说道的，也是来自腾讯的讲师们反复提到的一句话是这样说的：&lt;strong&gt;先抗住，后优化&lt;/strong&gt;。这句话当然是很后端工程师做派的，不过我觉得对前端也适用。&lt;/p&gt;
+
+&lt;p&gt;展开来说，要避免过早优化，只需要注意两点：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;逐步完善系统，不追求一步到位；&lt;/li&gt;
+  &lt;li&gt;在考虑优化的同时，需要清楚它所带来的收益和影响范围。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;如果优化并不是在写代码时需要第一考虑的点，那什么才是更需要关注的呢？我的答案是：&lt;strong&gt;代码的可读性和可维护性&lt;/strong&gt;；展开说还包括了代码的复用性、抽象层次。别太担心性能。你要多好的性能，“比尔”都会帮你从“安迪”那儿抢过来的。[doge]&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;What Andy gives, Bill takes away. —— &lt;a href=&quot;https://baike.baidu.com/item/%E5%AE%89%E8%BF%AA%E6%AF%94%E5%B0%94%E5%AE%9A%E7%90%86?fromId=2066996&quot;&gt;安迪-比尔定律&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;尾声&quot;&gt;尾声&lt;/h2&gt;
+
+&lt;p&gt;过早优化时常出现在我们的开发过程中，不知不觉就会为我们的 code base 带来不必要的负担。时刻感知到这一问题的存在，知道何时该优化、何时不该优化，是一名优秀的软件工程师必备的素养之一。&lt;/p&gt;
+
+&lt;p&gt;避免过早优化不是说就不用优化了；当在系统遇到瓶颈时，优化在所难免。而如何进行系统性能瓶颈的检测以及如何进行优化又是另一个很大的话题了，此文就不做赘述啦。&lt;/p&gt;
+</description>
+        <pubDate>Mon, 25 Sep 2017 23:50:00 +0800</pubDate>
+        <link>http://jerryzou.com/posts/talk-about-premature-optimization/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/talk-about-premature-optimization/</guid>
+      </item>
+    
+      <item>
         <title>RxJS 实战篇（一）拖拽</title>
         <description>&lt;script async=&quot;&quot; src=&quot;https://production-assets.codepen.io/assets/embed/ei.js&quot;&gt;&lt;/script&gt;
 
@@ -1422,115 +1486,6 @@
         <pubDate>Sun, 16 Aug 2015 20:16:30 +0800</pubDate>
         <link>http://jerryzou.com/posts/use-css-to-paint-triangle-and-parallelogram/</link>
         <guid isPermaLink="true">http://jerryzou.com/posts/use-css-to-paint-triangle-and-parallelogram/</guid>
-      </item>
-    
-      <item>
-        <title>给迷茫的自学者指一条路</title>
-        <description>&lt;p&gt;不管是从零开始接触编程，还是从大学踏入社会，一个人踏入一个全新的领域时总是会产生迷茫的感觉。这篇文章的目的不在于教授自学者们学习的方法，而仅仅是把我自己的一些学习和总结的方法分享出来以供参考，希望对你们有所帮助。&lt;/p&gt;
-
-&lt;p&gt;我会以四个角度给你们介绍四个工具，&lt;strong&gt;XMind&lt;/strong&gt;、&lt;strong&gt;Trello&lt;/strong&gt;、&lt;strong&gt;Pocket&lt;/strong&gt; 和 &lt;strong&gt;Evernote&lt;/strong&gt;；我相信这些工具大家也大多耳熟能详，而我会讲述我是如何使用这些工具，以及这些工具是如何相辅相成的。可能因为我接触前端领域的知识较多，例子中也会以前端为主，但知识和方法都是相通的，所以这应该也不会成为什么大问题。&lt;/p&gt;
-
-&lt;h2 id=&quot;1-建立大局观思维导图&quot;&gt;1. 建立大局观：思维导图&lt;/h2&gt;
-
-&lt;p&gt;自学者们在没有得到指导的情况下通常会对未来行走的方向一片迷茫，此刻最重要的是建立起&lt;strong&gt;大局观&lt;/strong&gt;，也就是在宏观的角度建立起未来的蓝图。
-要做到这一点，思维导图 (Mind Map) 是个很好的工具。我自己比较常用的是 &lt;strong&gt;&lt;a href=&quot;http://www.xmind.net/cn/&quot;&gt;XMind&lt;/a&gt;&lt;/strong&gt;，免费版在大多数情况已经够用了。
-&lt;strong&gt;百度脑图&lt;/strong&gt; 是一个在线的思维导图工具，还支持同步到百度云；如果想用于分享的话，使用百度脑图也是不错的选择。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://jerryblog.qiniudn.com/xmind.png-h400&quot; alt=&quot;xmind&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;在你使用的思维导图的工具中，千万不要给你的导图添加过多的细节信息。那些细节信息应该被记录在其他的工具中，这在下文中会提到，
-而思维导图的作用更多地体现在作为蓝图。通过它，你可以比较清晰地认识到你未来三个月，半年，甚至一两年内的大致的学习方向。&lt;/p&gt;
-
-&lt;p&gt;关于前端技术，有很多前人总结的导图，有一定的借鉴意义：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://camo.githubusercontent.com/6797bdc1a11d35369611c817bbd5dae9a162d775/68747470733a2f2f7261772e6769746875622e636f6d2f4a61636b736f6e5469616e2f666b732f6d61737465722f666967757265732f666b732e6a7067&quot;&gt;拔赤的总结&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/JacksonTian/fks&quot;&gt;朴灵的 fks&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://www.w3cplus.com/sites/default/files/blogs/2015/1506/js-in-one-pic.png&quot;&gt;大漠的总结&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;但最最重要的是，你必须建立&lt;strong&gt;属于你自己的&lt;/strong&gt;思维导图！也许它一开始并不那么完整，一开始你只能做出一张很小的图，但那也就够了。
-如果直接把别人的一大张图拿来作为自己的蓝图，那么你依旧是迷茫而不知所措的。任何领域的知识都是汪洋大海，你永远不能指望能够完全掌握所有知识。
-所以你只需要在你学习的过程中，不断添加、修正、完善的你的导图就好，最理想的学习状态就是&lt;strong&gt;保持自己的节奏&lt;/strong&gt;。&lt;/p&gt;
-
-&lt;h2 id=&quot;2-知道自己该做什么trello&quot;&gt;2. 知道自己该做什么：Trello&lt;/h2&gt;
-
-&lt;p&gt;有了大局观，就要着眼于当下，踏踏实实地走出每一步了。这时我推荐你们使用 &lt;strong&gt;&lt;a href=&quot;https://trello.com/&quot;&gt;Trello&lt;/a&gt;&lt;/strong&gt;，
-它好处在于同时支持网页版和 App，不管在哪里都可以很方便的查看。而且 Trello 天然支持 4 层树状结构，很适合与思维导图的树状结构对应。
-这四层结构主要是：&lt;strong&gt;Organization - Board - List - Card&lt;/strong&gt;。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://jerryblog.qiniudn.com/trello-boards.png-h400&quot; alt=&quot;boards&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;我来举个例子可能比较直观，先来看第一层结构，把 Organization 作为根节点，创建一个新的 Organization “前端学习”。
-使用 Organization 作为树的根节点稍微有点 hack 的成分，不过对个人使用来说并没有大碍啦。如果你觉得你学习的终极目标只有一个根节点的话，也是可以不创建 Organization 的。&lt;/p&gt;
-
-&lt;p&gt;然后就可以在其中创建好多二层节点 Boards 了，就像上面这张图中，我大致创建了 7 个 Boards，大家也可以根据自己的实际情况来创建。
-接着我们随便打开一个 Board，比如 JavaScript：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://jerryblog.qiniudn.com/trello-lists.png-h400&quot; alt=&quot;lists&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;类似于上图的做法，你可以将你需要做的事分成几类，以便于你真正想学习时有的放矢。在每一个 Card 中，你都能添加一些详细的信息，能添加标签、描述，还能加 Checklist！
-可我还是建议你不要赋予 Trello 太多的责任，我觉得 Trello 作用应该局限于梳理待办事项，而已经得到的知识或者想要总结的东西，应该借助于下面要介绍的两个工具。&lt;/p&gt;
-
-&lt;h2 id=&quot;3-对文章进行整理归类pocket&quot;&gt;3. 对文章进行整理归类：Pocket&lt;/h2&gt;
-
-&lt;p&gt;在学习知识的过程中，你总是会参考不少的文章，而某些非常精彩的文章，你总是会想要记录下来的。有些人会使用书签，而这是最糟糕的做法。
-因为你想要检索内容的时候，你几乎没法从一堆书签的名字中找到你想要的内容，而且你也很难维护日益增长的书签数目。&lt;/p&gt;
-
-&lt;p&gt;我向你强烈推荐一个工具 &lt;a href=&quot;https://getpocket.com/chrome/&quot;&gt;Pocket&lt;/a&gt;。它支持网页版和各种移动平台，可以作为 Chrome 的扩展，使用起来也是相当的方便。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://jerryblog.qiniudn.com/pocket.png-h400&quot; alt=&quot;pocket&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;当你读完在 Trello 中记录的文章链接又觉得这篇文章带来非常大的帮助时，你就可以把它加入到 Pocket 中，并给这篇文章加上一些便于检索的标签。
-也许有人会推荐使用 Evernote 的剪藏来保存网上的文章，我对此是不推荐的。&lt;/p&gt;
-
-&lt;p&gt;首先在我自己使用的体验上来说，Evernote 剪藏出来的文章比起 Pocket 剪辑出来的显示效果要糟糕很多；
-其次，我个人也不太喜欢赋予一个工具太多职责，在用过一段时间剪藏后，我发现我的 Evernote 变得愈加混乱，有时也很难把某一篇文章简单地归类到某本笔记本中，这让我非常困扰。&lt;/p&gt;
-
-&lt;h2 id=&quot;4-记录学习的体会evernote&quot;&gt;4. 记录学习的体会：Evernote&lt;/h2&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://jerryblog.qiniudn.com/evernote.png-h100&quot; alt=&quot;evernote&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;最后登场的工具是大家非常熟悉的大象 &lt;a href=&quot;https://evernote.com/intl/zh-cn/&quot;&gt;Evernote&lt;/a&gt;，在国内的名字叫做印象笔记。其实前文也提到了，
-我并不喜欢在 Evernote 中保存网上的文章，因为这会使我的笔记们显得有些混乱。Evernote 支持笔记本组和笔记本，能构成 3 层的树状结构，
-因此 Evernote 也对应于思维导图的结构来创建笔记本组和笔记本。&lt;/p&gt;
-
-&lt;p&gt;在 Evernote 中，你可以记录你学习的过程，总结一些相似知识之间的关联，从而形成自己的观点。你还可以将一些你觉得写的比较不错的文章发布到你的博客上与大家一起分享。
-另外推荐一个付费的工具 &lt;a href=&quot;http://maxiang.info/&quot;&gt;马克飞象&lt;/a&gt;。依靠它，你就可以使用 Markdown 来编写你的笔记啦，没用过的同学打开试试吧！~&lt;/p&gt;
-
-&lt;h2 id=&quot;总结&quot;&gt;总结&lt;/h2&gt;
-
-&lt;p&gt;今天给大家介绍的是我个人的学习方法，主要就是借助了 &lt;strong&gt;XMind&lt;/strong&gt;、&lt;strong&gt;Trello&lt;/strong&gt;、&lt;strong&gt;Pocket&lt;/strong&gt; 和 &lt;strong&gt;Evernote&lt;/strong&gt; 四个工具来管理我的知识树。
-不管怎么样，希望对大家有所帮助吧！如果你有什么想法想要交流，欢迎直接在下面的评论框中留言。&lt;/p&gt;
-
-&lt;h3 id=&quot;update&quot;&gt;UPDATE&lt;/h3&gt;
-
-&lt;h4 id=&quot;20151022&quot;&gt;2015.10.22&lt;/h4&gt;
-
-&lt;p&gt;根据 &lt;a href=&quot;http://weibo.com/u/3140194393&quot;&gt;@普罗米修斯君&lt;/a&gt; 与 &lt;a href=&quot;http://www.zhihu.com/people/cuilei&quot;&gt;@Cuilei&lt;/a&gt; 等朋友的建议，添加几个可以作为替代的同类软件：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Trello 的同类软件
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;https://worktile.com/&quot;&gt;Worktile&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;https://www.wunderlist.com/zh/&quot;&gt;奇妙清单&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;http://doit.im/cn/&quot;&gt;Doit.im&lt;/a&gt; (付费)&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;https://www.dida365.com&quot;&gt;滴答清单&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Evernote 的同类软件
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;http://www.onenote.com/&quot;&gt;OneNote&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;http://www.wiz.cn/&quot;&gt;为知笔记&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;http://note.youdao.com/&quot;&gt;有道云笔记&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-</description>
-        <pubDate>Thu, 16 Jul 2015 19:16:30 +0800</pubDate>
-        <link>http://jerryzou.com/posts/method-of-self-learning/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/method-of-self-learning/</guid>
       </item>
     
   </channel>
