@@ -2,7 +2,7 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://jerryzou.com/posts/10-questions-about-graphql/</loc>
-<lastmod>2018-02-19T13:31:54+08:00</lastmod>
+<lastmod>2018-02-19T13:37:36+08:00</lastmod>
 </url>
 <url>
 <loc>http://jerryzou.com/posts/talk-about-premature-optimization/</loc>
@@ -177,6 +177,6 @@
 </url>
 <url>
 <loc>http://jerryzou.com/posts/shadowsocks-with-digitalocean/index.html</loc>
-<lastmod>2017-08-20T18:12:04+08:00</lastmod>
+<lastmod>2018-02-19T13:32:30+08:00</lastmod>
 </url>
 </urlset>
