@@ -48,10 +48,10 @@ module.exports = function(grunt) {
         },
         shell: {
             jekyll_build: {
-                command: 'jekyll build'
+                command: 'bundle exec jekyll build'
             },
             jekyll_serve: {
-                command: 'jekyll serve --incremental'
+                command: 'bundle exec jekyll serve --incremental'
             },
             clean_tmp: {
                 command: 'rm -r .tmp'
