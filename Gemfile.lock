@@ -64,7 +64,7 @@ DEPENDENCIES
   pygments.rb (= 0.6.3)
 
 RUBY VERSION
-   ruby 2.0.0p648
+   ruby 2.3.3p222
 
 BUNDLED WITH
-   1.13.6
+   1.16.1

@@ -8,6 +8,256 @@
     <atom:link href="http://jerryzou.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>阻碍你使用 GraphQL 的十个问题</title>
+        <description>&lt;p&gt;在最近半年中，LeetCode 的一些新功能已经开始尝试使用 GraphQL。如果你在 LeetCode 网站中查看一下开发者工具中收集到的请求，也许会发现一个与众不同的请求 &lt;code&gt;POST https://leetcode.com/graphql/&lt;/code&gt;。是的，要是你想给 LeetCode 写些爬虫的话，可得好好研究一下我们在这个 Endpoint 下挂载了哪些数据。&lt;/p&gt;
+
+&lt;p&gt;我在使用 GraphQL 的过程中经历了理解、误解、再理解的过程。作为吃了 GraphQL 这个螃蟹的人，希望能够通过这篇文章更好地帮助各位读者理解 GraphQL 是什么，GraphQL 会给你带来什么，以及将 GraphQL 应用于你的系统中需要注意哪些问题。这不是一篇系统的科普文，如果你有什么其他疑问可以评论中留言询问。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;以下内容皆为作者个人理解，如果错误，欢迎讨论指出。我会随时修正，拜谢！&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;1-什么是-graphql&quot;&gt;1. 什么是 GraphQL？&lt;/h2&gt;
+
+&lt;p&gt;从官方的定义来说，GraphQL 是一种针对 API 的查询语言；在我看来，&lt;a href=&quot;http://facebook.github.io/graphql/&quot;&gt;GraphQL 是一种标准&lt;/a&gt;，而与标准相对的便是实现。就像 EcmaScript 与 JavaScript 的关系，从一开始你就&lt;strong&gt;需要有这样一种认知&lt;/strong&gt;：GraphQL 只定义了这种查询语言语法如何、具体的语句如何执行等。&lt;strong&gt;但是&lt;/strong&gt;，你在真正使用&lt;strong&gt;某种 GraphQL 的服务端实现&lt;/strong&gt;时，是有可能发现 GraphQL 标准中所描述的特性尚未被实现；或者这种 GraphQL 的实现扩展了 GraphQL 标准所定义的内容。&lt;/p&gt;
+
+&lt;p&gt;举例来说，就像 ES 2017 标准正式纳入了 async/await，而从实现的角度上说，IE 没有实现这一标准，而 Edge 16 和 Chrome 62 则实现了这一标准（数据来源于 &lt;a href=&quot;https://caniuse.com/#feat=async-functions&quot;&gt;caniuse&lt;/a&gt;）说回 GraphQL 标准，与之相对的有&lt;a href=&quot;http://graphql.org/code/&quot;&gt;相当多的服务器端实现&lt;/a&gt;。他们的大多遵循 GraphQL 标准来实现，但也可能稍有差别，这一切需要你自己去探索。&lt;/p&gt;
+
+&lt;h2 id=&quot;2-如何从零入门-graphql&quot;&gt;2. 如何从零入门 GraphQL？&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;先看标准：http://graphql.org/ （纯 GraphQL，与任何什么 JavaScript, Python 都无关）&lt;/li&gt;
+  &lt;li&gt;再看服务端实现：到 http://graphql.org/code/ 里找到跟你的服务端技术有关的实现&lt;/li&gt;
+  &lt;li&gt;再看客户端实现：&lt;a href=&quot;https://facebook.github.io/relay/&quot;&gt;Relay&lt;/a&gt; 或 &lt;a href=&quot;https://www.apollographql.com/docs/react/&quot;&gt;appollo-client&lt;/a&gt;, etc.&lt;/li&gt;
+  &lt;li&gt;学习使用 DataLoader 来获取列表数据&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;3-graphql-与-restful-有什么区别&quot;&gt;3. GraphQL 与 RESTful 有什么区别？&lt;/h2&gt;
+
+&lt;p&gt;首先放上一张来自于 graphql.org 的图片。REST 与 GraphQL 都是服务端所承载的系统对外的服务接口，因此两者肯定是可以共存的，甚至可以共用一套 Authorization 等业务逻辑。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/backend-arch.png&quot; alt=&quot;Architecture&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;那么 GraphQL 与 RESTful 的具体区别有什么呢？我觉得主要是两点。&lt;/p&gt;
+
+&lt;h4 id=&quot;1-入口-entry-point&quot;&gt;1. 入口 (entry point)&lt;/h4&gt;
+
+&lt;p&gt;RESTful 的核心理念在于资源 (resource)，且讲究一个 RESTful 接口仅操作单一资源；因此在你使用 RESTful 时，会设计出大量的接口。GraphQL 是单一入口，一般配置在 &lt;code&gt;[host]/graphql/&lt;/code&gt;，所有的资源都从该入口通过 graphql 的语句获取或修改（当然 GraphQL 亦支持多入口，但显然多入口的数量也远小于 RESTful）。&lt;/p&gt;
+
+&lt;h4 id=&quot;2-数据的关联性&quot;&gt;2. 数据的关联性&lt;/h4&gt;
+
+&lt;p&gt;RESTful 所操作的资源相对是离散的；而 GraphQL 的数据更有整体性。&lt;/p&gt;
+
+&lt;p&gt;举个例子，如果要获取 A 的朋友的朋友，用 RESTful 该怎么做呢？&lt;/p&gt;
+
+&lt;p&gt;假设我们有这样一个接口：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;GET /user/:userId/friends/&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;而 A 有 20 个好朋友，那么我们总共需要发送 20 + 1 = 21 次 REST 请求。&lt;/p&gt;
+
+&lt;p&gt;或者我们为了这种特殊场景设计出以下接口：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;GET /user/:userId/friendsAndHisFriends/&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;emmmmm… 虽然看起来很别扭，但是只需要一次请求呢！&lt;/p&gt;
+
+&lt;p&gt;那么在 GraphQL 中，怎么做呢？&lt;/p&gt;
+
+&lt;p&gt;首先我们需要给 User 定义 Schema (GraphQL 有一套完整的&lt;a href=&quot;http://graphql.org/learn/schema/&quot;&gt;类型系统&lt;/a&gt;)：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;type User {&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;  id: ID!&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;  name: String!&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;  friends: [User]&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;假设我们在 Graph root 上只挂了一个 Node，叫 user:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;type Query {&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;  user(id: ID!): User&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;那么我们从客户端发送的 query 就可以写成这样：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;query ($userId: ID) {&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;  user(id: $userId) {&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;    name&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;    friends {&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;      name&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;      friends {&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;        name&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;      }&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;    }&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;  }&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;最后这一个请求就搞定查询朋友的朋友这个蛋疼的需求啦！机智的你肯定已经发现了：这个 query 是不是可以无限循环地写下去？你想的没错，确实可以这么干！在 GraphQL 的官网上是这么形容自己的：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;It’s Graphs All the Way Down &lt;a href=&quot;https://en.wikipedia.org/wiki/Turtles_all_the_way_down&quot;&gt;*&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;它就像是一颗无限向下延伸的树。所以在我看来，GraphQL 更应该叫 TreeQL，当然在图论里，Tree 就是 Graph 也没毛病啦。需要注意的是，这也会引出 “N + 1 problem” 的话题——naive 的 GraphQL 服务端实现会让这段 query 变得异常慢！&lt;/p&gt;
+
+&lt;p&gt;怎么解决这个棘手的问题？心急的小伙伴请跳转到 &lt;a href=&quot;&quot;&gt;7. 什么是 N + 1 问题&lt;/a&gt;！&lt;/p&gt;
+
+&lt;h2 id=&quot;4-graphql-能做到修改数据吗&quot;&gt;4. GraphQL 能做到修改数据吗？&lt;/h2&gt;
+
+&lt;p&gt;看了上面的 query 的例子，你肯定很好奇，graphql 这种看上去好像只为查询而存在的语言，是不是有办法做到修改数据呢？&lt;/p&gt;
+
+&lt;p&gt;答案是：能。&lt;/p&gt;
+
+&lt;p&gt;仅仅为了使得 GraphQL 这个 data platform &lt;strong&gt;变得更加完整&lt;/strong&gt;，GraphQL 标准中加入了一种操作符，名为 &lt;strong&gt;mutation&lt;/strong&gt;。因为我觉得这种设计确实比较一般，此处就不举例了，详情见：&lt;a href=&quot;http://graphql.org/learn/queries/#mutations&quot;&gt;http://graphql.org/learn/queries/#mutations&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;5-graphql-与-restful-相比有什么优点&quot;&gt;5. GraphQL 与 RESTful 相比有什么优点？&lt;/h2&gt;
+
+&lt;h4 id=&quot;1-数据的关联性和结构化更好&quot;&gt;1. 数据的关联性和结构化更好&lt;/h4&gt;
+
+&lt;p&gt;这一点已经在本文的第 3 个问题中有所描述。&lt;/p&gt;
+
+&lt;h4 id=&quot;2-更易于前端缓存数据&quot;&gt;2. 更易于前端缓存数据&lt;/h4&gt;
+
+&lt;p&gt;这个一般像 Relay 和 apollo-client 都替你做好了，如果你想了解它的缓存原理，请移步 &lt;a href=&quot;http://graphql.org/learn/caching/&quot;&gt;GraphQL Caching&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;3-versionless-api&quot;&gt;3. Versionless API&lt;/h4&gt;
+
+&lt;p&gt;相比于 RESTful 为了兼容新老客户端所添加的版本号，在 GraphQL 中，如果你需要服务端提供与以前不一样的行为，只需要修改 root Query 的定义，在上面额外添加你想要的 Node 即可。&lt;/p&gt;
+
+&lt;h4 id=&quot;4-更健壮的接口&quot;&gt;4. 更健壮的接口&lt;/h4&gt;
+
+&lt;p&gt;不用再因为在缺乏沟通的情况下修改接口，而为系统埋下不稳定的定时炸弹。一切面向前端的接口都有强类型的 Schema 做保证，且完整类型定义因 &lt;a href=&quot;http://graphql.org/learn/introspection/&quot;&gt;introspection&lt;/a&gt; 完全对前端可见，一旦前端发送的 query 与 Schema 不符，能快速感知到产生了错误。&lt;/p&gt;
+
+&lt;h4 id=&quot;5-令人期待的-subscription&quot;&gt;5. 令人期待的 subscription&lt;/h4&gt;
+
+&lt;p&gt;如何在浏览器中接受服务端的推送信息是个老生常谈的问题。从最初的轮询，到后来的 WebSocket。如今 GraphQL 也计划引入除了 &lt;code&gt;query&lt;/code&gt;, &lt;code&gt;mutation&lt;/code&gt; 以外的第三种操作符 &lt;code&gt;subscription&lt;/code&gt;，以便于直接接受服务器推送数据。在 2015 年底 GraphQL 官方发布了一篇博文：&lt;a href=&quot;http://graphql.org/blog/subscriptions-in-graphql-and-relay/&quot;&gt;Subscriptions in GraphQL and Relay&lt;/a&gt; 来介绍 &lt;code&gt;subscription&lt;/code&gt; 在他们的 iOS 和 Android App 中的应用。可惜的是相关的代码仍未开源，目前开源社区能找到的解决方案目前只有 Apollo 社区为 Node.js 写的 &lt;a href=&quot;https://github.com/apollographql/graphql-subscriptions&quot;&gt;graphql-subscriptions&lt;/a&gt;。&lt;/p&gt;
+
+&lt;h2 id=&quot;6-graphql-有什么缺点&quot;&gt;6. GraphQL 有什么缺点？&lt;/h2&gt;
+
+&lt;p&gt;说了 GraphQL 的那么多优点，那么它有没有缺点呢？当然也是有的。&lt;/p&gt;
+
+&lt;h4 id=&quot;61--n1-问题&quot;&gt;6.1.  N+1 问题&lt;/h4&gt;
+
+&lt;p&gt;最大的问题莫过于：在实现 GraphQL 服务端接口时，很容易就能写出效率极差的代码，引起 “N+1 问题”。&lt;/p&gt;
+
+&lt;p&gt;什么是 N+1 问题？首先我们来举个简单的例子：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;users&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;objects&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;users&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;score&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;这是一段简单的 python 代码，使用了 Django 的 QuerySet 来从数据库抓取数据。假设我们的数据库中有两张表 User 和 UserScore 这两张表的关系如下所示：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/graphql-uml.jpg&quot; alt=&quot;UML&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;由于用户的分数并没有保存在 User 表中，又因为 QuerySet 有 lazy load 的特性，所以在 for 循环中，每一次获取 &lt;code&gt;user.score&lt;/code&gt; 都会查一次表，最终原本 1 次数据库查询能搞定的问题，却在不恰当的实现中产生了 N+1 次对数据库的访问。&lt;/p&gt;
+
+&lt;p&gt;相对于 RESTful，在 GraphQL 中更加容易引起 N+1 问题。主要是由于 GraphQL query 的逐层解析方式所引起的，关于 GraphQL 如何执行 query 的细节，可以参阅 &lt;a href=&quot;http://graphql.org/learn/execution/&quot;&gt;Graphql Execution&lt;/a&gt;。&lt;/p&gt;
+
+&lt;h4 id=&quot;62-如何解决在-graphql-中的-n--1-问题&quot;&gt;6.2. 如何解决在 GraphQL 中的 N + 1 问题？&lt;/h4&gt;
+
+&lt;p&gt;以下解决方案仅针对关系型数据库，如果你的项目中使用的是 NoSQL，可能解决方案有较大差别。&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;针对&lt;strong&gt;一对一&lt;/strong&gt;的关系（比如我上面举例中提到的这个 User 与 UserScore 的关系），在从数据库里抓取数据时，就将所需数据 join 到一张表里。别等着 ORM 框架替你懒加载那些你需要的数据。&lt;/li&gt;
+  &lt;li&gt;针对&lt;strong&gt;多对一或者多对多&lt;/strong&gt;的关系，你就要用到一个叫做 &lt;strong&gt;DataLoader&lt;/strong&gt; 的工具库了。其中，Facebook 为 Node.js 社区提供了 &lt;a href=&quot;https://github.com/facebook/dataloader&quot;&gt;DataLoader 的实现&lt;/a&gt;。DataLoader 的主要功能是 batching &amp;amp; caching，可以将多次数据库查询的请求合并为一个，同时已经加载过的数据可以直接从 DataLoader 的缓存空间中获取到。这个话题要是展开说也得写一篇新的文章了，此处不多赘述。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;7-有什么可以快乐地调试-graphql-接口的方法&quot;&gt;7. 有什么可以快乐地调试 GraphQL 接口的方法？&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/graphql/graphiql&quot;&gt;GraphiQL&lt;/a&gt; / &lt;a href=&quot;http://graphql.org/swapi-graphql/&quot;&gt;live demo&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;使用 GraphiQL 可以很容易地让人感受到“代码即文档”的快乐。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/graphiql-screenshot.png&quot; alt=&quot;GraphiQL screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;8-如何选择-graphql-的客户端实现&quot;&gt;8. 如何选择 GraphQL 的客户端实现？&lt;/h2&gt;
+
+&lt;p&gt;客户端常见的框架有 &lt;a href=&quot;https://facebook.github.io/relay/&quot;&gt;Relay&lt;/a&gt; 和 &lt;a href=&quot;https://www.apollographql.com/client/&quot;&gt;Apollo Client&lt;/a&gt;。Relay 是由 Facebook 官方提供的解决方案，而 Apollo 则是在 GraphQL 方面热度超高的社区。&lt;/p&gt;
+
+&lt;p&gt;使用 Relay 的好处是，许多 GraphQL 的服务端框架都会支持 Relay 的标准（比如数据的分页接口）。而 apollo-client 的实现其实又在诸多方面宣称自己兼容 Relay 的风格，所以使用起来应该也是大同小异。当然笔者并没有真实地使用过 Relay，在  GraphQL 方面的经验也不够深刻，所以也不好妄下断言。&lt;/p&gt;
+
+&lt;p&gt;做技术选型时，同事 Ashish 说担心 Relay 太过于重量级，所以并没有决定使用 Relay。这种选择的正确性尚待考证，目前在 LeetCode 实际项目中使用了 apollo-client。&lt;/p&gt;
+
+&lt;h2 id=&quot;9-graphql-中是怎么处理分页的&quot;&gt;9. GraphQL 中是怎么处理分页的？&lt;/h2&gt;
+
+&lt;p&gt;这是一个可能让 GraphQL 初学者担忧的问题，又是一个可以从&lt;a href=&quot;http://graphql.org/learn/pagination/&quot;&gt;官方文档&lt;/a&gt;中找到答案的问题。&lt;/p&gt;
+
+&lt;p&gt;再以找朋友为例，借用 SQL 查询中常用的筛选方法，分页接口可以设计为：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;query ($userId: ID) {&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;  user(id: $userId) {&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;    name&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;    friends(first: 2, offset: 3) {&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;      name&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;    }&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;  }&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;上面的例子意为从 $userId 的第 4 个朋友开始算起，取前 2 个朋友。&lt;/p&gt;
+
+&lt;p&gt;类似地，分页接口还可以设计为&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code&gt;friends(first: 2, after: $friendId)&lt;/code&gt;;&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;friends(first: 2, after: $friendCursor)&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;无论分页接口设计成怎么样，都需要&lt;strong&gt;前后端共同的&lt;/strong&gt;封装与支持。其中 Relay 风格的分页接口在各大前后端 GraphQL 框架中基本都已有比较完整的实现。&lt;/p&gt;
+
+&lt;h4 id=&quot;91-relay-风格的分页接口&quot;&gt;9.1 Relay 风格的分页接口&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;参阅 &lt;a href=&quot;https://facebook.github.io/relay/graphql/connections.htm&quot;&gt;Relay Cursor Connections Specification&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;注：apollo-client 兼容该分页接口&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;query {&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;  user {&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;    name&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;    friends(first: 2, after: $cursor) {&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;      edges {&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;        cursor&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;        node {&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;          id&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;          name&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;        }&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;      }&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;      pageInfo {&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;        hasNextPage&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;      }&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;    }&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;  }&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;10-graphql-中是怎么实现用户校验的&quot;&gt;10. GraphQL 中是怎么实现用户校验的？&lt;/h2&gt;
+
+&lt;p&gt;你可以回看一下 &lt;a href=&quot;&quot;&gt;3. GraphQL 与 RESTful 有什么区别&lt;/a&gt; 中展示的图片，答案就在其中：Authentication 属于业务逻辑层干的事情，别让 GraphQL 承担太多工作啦。&lt;/p&gt;
+
+&lt;p&gt;扩展阅读：&lt;a href=&quot;http://graphql.org/learn/authorization/&quot;&gt;GraphQL Authentication&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;小结&quot;&gt;小结&lt;/h2&gt;
+
+&lt;p&gt;鉴于网上中文的 GraphQL 资料比较有限，所以根据笔者自己的理解，总结出了此文。这十个问题可能是我入门 GraphQL 时比较关心的问题，不一定完全适用于所有人。由于篇幅所限，文中有很多细节并未展开，如果你对哪些问题想要有更深入的理解，GraphQL 官方文档是很重要的资源。此文仅作抛砖引玉之用，希望社区中能有更多关于 GraphQL 使用姿势的分享。&lt;/p&gt;
+
+&lt;p&gt;另外，我们 LeetCode 上海的招聘工作会在春节后全面展开，欢迎投递简历。&lt;a href=&quot;https://leetcodechina.com/jobs/&quot;&gt;https://leetcodechina.com/jobs/&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;参考文献&quot;&gt;参考文献&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://facebook.github.io/graphql/&quot;&gt;GraphQL Specification&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://caniuse.com/#feat=async-functions&quot;&gt;Async functions - caniuse&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://graphql.org/&quot;&gt;Learn GraphQL&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://segmentfault.com/a/1190000004586237#articleHeader5&quot;&gt;GraphQL and Relay 浅析&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://graphql.org/blog/subscriptions-in-graphql-and-relay/&quot;&gt;Subscriptions in GraphQL and Relay&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://facebook.github.io/relay/graphql/connections.htm&quot;&gt;Relay Cursor Connections Specification&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Mon, 19 Feb 2018 12:57:00 +0800</pubDate>
+        <link>http://jerryzou.com/posts/10-questions-about-graphql/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/10-questions-about-graphql/</guid>
+      </item>
+    
+      <item>
         <title>浅谈前端中的过早优化问题</title>
         <description>&lt;blockquote&gt;
   &lt;p&gt;Premature optimization is the root of all evil.
@@ -1310,182 +1560,6 @@
         <pubDate>Sun, 25 Oct 2015 22:19:00 +0800</pubDate>
         <link>http://jerryzou.com/posts/webhook-practice/</link>
         <guid isPermaLink="true">http://jerryzou.com/posts/webhook-practice/</guid>
-      </item>
-    
-      <item>
-        <title>用 CSS 实现三角形与平行四边形</title>
-        <description>&lt;p&gt;最近在逛某个技术网站的时候，感觉文章关键词上的样式好酷炫啊。于是我将那种写法照搬到了我的博客中，也许最近逛过我博客的小伙伴已经发现了它出现在哪儿了——分页的样式。来张截图：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/pagination.png!0.5&quot; alt=&quot;分页样式的截图&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;你在首页的底部也可以看到这样一个分页栏；是不是看上去还不错？下面就来看看这是如何实现的吧~&lt;/p&gt;
-
-&lt;h2 id=&quot;第一种方法利用border&quot;&gt;第一种方法：利用&lt;code&gt;border&lt;/code&gt;&lt;/h2&gt;
-
-&lt;p&gt;第一种方法是借助&lt;code&gt;border&lt;/code&gt;属性 hack 出三角形，然后通过一个矩形拼接两个三角形最终制造出一个平行四边形。为什么使用&lt;code&gt;border&lt;/code&gt;可以产生三角形呢？先来看看一张图片：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/triangle.png!0.5&quot; alt=&quot;CSS triangle&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;看了图中的三个小图形的变化过程，你应该已经清楚了一半。其实 hack 出三角形只需要两个条件，第一，元素本身的长宽为0；其次，将不需要的部分通过 border-color 来设置隐藏。通过类似的方法，你还可以创造出梯形，上图中的三个图形的代码如下。（另附 &lt;a href=&quot;http://codepen.io/jerryzou/pen/mJYJym&quot;&gt;CodePen 示例&lt;/a&gt;）&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;nf&quot;&gt;#first&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;20px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;20px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;border-width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;border-style&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;solid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;border-color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;red&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;green&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;blue&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;brown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;nf&quot;&gt;#second&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;border-width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;border-style&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;solid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;border-color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;red&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;green&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;blue&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;brown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;nf&quot;&gt;#third&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;border-width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;border-style&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;solid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;border-color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;red&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;transparent&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;transparent&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;transparent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;接下来就要考虑如何拼接出一个平行四边形了。在&lt;code&gt;border&lt;/code&gt;法中，它由三部分组成，分别是左三角形、矩形、右三角形。如果每次绘制平行四边形都要创建三个元素显然过于麻烦了，所以在这里&lt;code&gt;:before&lt;/code&gt;和&lt;code&gt;:after&lt;/code&gt;伪元素是个不错的选择。下面我们实现一下这样的效果：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/parallelogram.png!0.5&quot; alt=&quot;three parallelogram&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;为了将三角形与矩形无缝拼接到一起，多处属性要保持一致，所以使用类似 Less, Sass, Stylus 等 CSS 预处理器来写这段代码会更容易维护，下面给出 Scss 版本的代码。（另附 &lt;a href=&quot;http://codepen.io/jerryzou/pen/ZGNGWZ?editors=110&quot;&gt;CodePen 链接&lt;/a&gt;）&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-scss&quot; data-lang=&quot;scss&quot;&gt;&lt;span class=&quot;c1&quot;&gt;//三角形的宽高&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;$height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;$width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;//对平行四边形三部分的颜色进行赋值&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;@mixin&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt; parallelogram-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;background&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:before&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;border-color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;transparent&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$color&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$color&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;transparent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:after&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;border-color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$color&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;transparent&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;transparent&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;//单个三角形的样式&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;@mixin&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt; triangle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;absolute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;border-style&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;solid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;border-width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;top&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;//平行四边形的样式&lt;/span&gt;
-&lt;span class=&quot;nc&quot;&gt;.para&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;inline&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;relative&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;line-height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;margin-left&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;#fff&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-  &lt;span class=&quot;k&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:after&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;@include&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt; triangle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-  &lt;span class=&quot;k&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:before&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;@include&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt; triangle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-  &lt;span class=&quot;k&quot;&gt;@include&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt; parallelogram-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;需要注意的是，如果通过 &lt;code&gt;$height&lt;/code&gt;、&lt;code&gt;$width&lt;/code&gt; 设置的三角形斜率太小或太大都有可能造成渲染出锯齿，所以使用起来要多多测试一下不同的宽高所得到的视觉效果如何。&lt;/p&gt;
-
-&lt;h2 id=&quot;第二种方法利用transform&quot;&gt;第二种方法：利用&lt;code&gt;transform&lt;/code&gt;&lt;/h2&gt;
-
-&lt;p&gt;使用&lt;code&gt;transform&lt;/code&gt;来实现平行四边形的方法是我在逛&lt;a href=&quot;http://www.alitrip.com/&quot;&gt;去啊&lt;/a&gt;的时候看到的，效果大概是这个样子：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/qua_parallelogram.png!0.5&quot; alt=&quot;去啊中的平行四边形&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;看到之后觉得好神奇啊，原来还可以只有平行四边形的外轮廓。（因为方法一只能创造填充效果的平行四边形）实现起来非常简单，主要是借助了&lt;code&gt;transform: skew(...)&lt;/code&gt;，下面就来看看源码吧。&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;style&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nc&quot;&gt;.city&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;inline&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;5px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;20px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;border&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1px&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;solid&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;#44a5fc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;#333&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;skew&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;-20&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/style&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;city&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;上海&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;于是我们得到了这样的效果：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/shanghai_skew.png!0.5&quot; alt=&quot;skew shanghai&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;看到图片的你一定是这样想的：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/damn.gif&quot; alt=&quot;坑爹呢这是&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;别着急嘛，我们的确是把整个 div 进行了歪曲，导致中间的文字也是倾斜的，而这显然不是我们所要的效果。所以我们需要加一个内层元素，并对内层元素做一次逆向的歪曲，从而得到我们想要的效果：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/shanghai_normal.png!0.5&quot; alt=&quot;normal shanghai&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;实现代码如下，另附 &lt;a href=&quot;http://codepen.io/jerryzou/pen/BNeNwV?editors=110&quot;&gt;CodePen 示例&lt;/a&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;style&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nc&quot;&gt;.city&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;inline&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;5px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;20px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;border&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1px&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;solid&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;#44a5fc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;#333&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;skew&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;-20&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;nc&quot;&gt;.city&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;div&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;skew&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/style&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;city&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&amp;gt;&lt;/span&gt;上海&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h2 id=&quot;总结&quot;&gt;总结&lt;/h2&gt;
-
-&lt;p&gt;第一种方法使用 &lt;code&gt;border&lt;/code&gt; 属性 hack 出三角形，并通过对三个元素进行拼接最终实现了平行四边形；而第二种方法则通过 &lt;code&gt;transform: skew&lt;/code&gt; 来得到平行四边形。总体来说，第二种方法相对于第一种代码量小得多，而且也很好理解。唯一的不足是无法构造像本站的分页中所使用的梯形。希望本文对各位有所帮助。&lt;/p&gt;
-
-&lt;h3 id=&quot;update&quot;&gt;UPDATE&lt;/h3&gt;
-
-&lt;h4 id=&quot;2015818&quot;&gt;2015.8.18&lt;/h4&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://weibo.com/fouber&quot;&gt;@前端农民工&lt;/a&gt; 给出了一个 CSS-Tricks 的&lt;a href=&quot;https://css-tricks.com/examples/ShapesOfCSS/&quot;&gt;链接&lt;/a&gt;，是关于各种用 CSS 绘制几何图形的方法，浅显易懂，推荐大家看看！&lt;/p&gt;
-
-&lt;h4 id=&quot;2015914&quot;&gt;2015.9.14&lt;/h4&gt;
-
-&lt;p&gt;Groune 指出在缩放页面的情况下，本博客的分页均会出现白边。我自己重现了一下这个问题，截图如下。&lt;/p&gt;
-
-&lt;p&gt;在 150% 放大倍率下，Safari 8 的显示效果：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/pagination_safari_scale.png&quot; alt=&quot;pagination_safari_scale&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;在 125% 放大倍率下，Chrome 45 的显示效果：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/pagination_chrome_scale.png&quot; alt=&quot;pagination_chrome_scale&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;此例暴露出不同浏览器在缩放的情况下对于 &lt;strong&gt;Border Triangle&lt;/strong&gt; 的渲染还是有一定差异的（具体是怎样的差异，大家可以在 &lt;a href=&quot;http://codepen.io/jerryzou/pen/ZGNGWZ?editors=110&quot;&gt;CodePen&lt;/a&gt; 上尝试一下）。目前暂时没有找到解决这一问题的方法。所以还是采用了本文提到的第二种方法重新实现了一下本博客的分页；具体效果还请各位看官返回主页查看咯~&lt;/p&gt;
-
-</description>
-        <pubDate>Sun, 16 Aug 2015 20:16:30 +0800</pubDate>
-        <link>http://jerryzou.com/posts/use-css-to-paint-triangle-and-parallelogram/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/use-css-to-paint-triangle-and-parallelogram/</guid>
       </item>
     
   </channel>
