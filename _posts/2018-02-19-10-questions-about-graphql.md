@@ -102,7 +102,7 @@ query ($userId: ID) {
 
 它就像是一颗无限向下延伸的树。所以在我看来，GraphQL 更应该叫 TreeQL，当然在图论里，Tree 就是 Graph 也没毛病啦。需要注意的是，这也会引出 "N + 1 problem" 的话题——naive 的 GraphQL 服务端实现会让这段 query 变得异常慢！
 
-怎么解决这个棘手的问题？心急的小伙伴请跳转到 [7. 什么是 N + 1 问题]()！
+怎么解决这个棘手的问题？心急的小伙伴请跳转到 [6.1 N+1 问题](#61-n1-问题)！
 
 ## 4. GraphQL 能做到修改数据吗？
 
@@ -139,7 +139,7 @@ query ($userId: ID) {
 
 说了 GraphQL 的那么多优点，那么它有没有缺点呢？当然也是有的。
 
-#### 6.1.  N+1 问题
+#### 6.1. N+1 问题
 
 最大的问题莫过于：在实现 GraphQL 服务端接口时，很容易就能写出效率极差的代码，引起 “N+1 问题”。
 
@@ -235,7 +235,7 @@ query {
 
 ## 10. GraphQL 中是怎么实现用户校验的？
 
-你可以回看一下 [3. GraphQL 与 RESTful 有什么区别]() 中展示的图片，答案就在其中：Authentication 属于业务逻辑层干的事情，别让 GraphQL 承担太多工作啦。
+你可以回看一下 [3. GraphQL 与 RESTful 有什么区别](#3-graphql-与-restful-有什么区别) 中展示的图片，答案就在其中：Authentication 属于业务逻辑层干的事情，别让 GraphQL 承担太多工作啦。
 
 扩展阅读：[GraphQL Authentication](http://graphql.org/learn/authorization/)
 
