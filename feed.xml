@@ -4,8 +4,8 @@
     <title>咀嚼之味</title>
     <description>咀嚼之味是我分享我对编程与生活的见解之地。在我看来，编程不仅仅是我与生俱来的使命，也是我快乐的源泉。在业余时间，我喜欢研究一些跟技术相关的东西。同时，我也喜欢做一些安静的事，比如看书、看电影、听音乐、一个人散步以及旅行。
 </description>
-    <link>https://jerryzou.com/</link>
-    <atom:link href="https://jerryzou.com/feed.xml" rel="self" type="application/rss+xml" />
+    <link>http://jerryzou.com/</link>
+    <atom:link href="http://jerryzou.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
         <title>阻碍你使用 GraphQL 的十个问题</title>
@@ -253,8 +253,8 @@
 
 </description>
         <pubDate>Mon, 19 Feb 2018 12:57:00 +0800</pubDate>
-        <link>https://jerryzou.com/posts/10-questions-about-graphql/</link>
-        <guid isPermaLink="true">https://jerryzou.com/posts/10-questions-about-graphql/</guid>
+        <link>http://jerryzou.com/posts/10-questions-about-graphql/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/10-questions-about-graphql/</guid>
       </item>
     
       <item>
@@ -317,8 +317,8 @@
 &lt;p&gt;避免过早优化不是说就不用优化了；当在系统遇到瓶颈时，优化在所难免。而如何进行系统性能瓶颈的检测以及如何进行优化又是另一个很大的话题了，此文就不做赘述啦。&lt;/p&gt;
 </description>
         <pubDate>Mon, 25 Sep 2017 23:50:00 +0800</pubDate>
-        <link>https://jerryzou.com/posts/talk-about-premature-optimization/</link>
-        <guid isPermaLink="true">https://jerryzou.com/posts/talk-about-premature-optimization/</guid>
+        <link>http://jerryzou.com/posts/talk-about-premature-optimization/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/talk-about-premature-optimization/</guid>
       </item>
     
       <item>
@@ -571,8 +571,8 @@
 
 </description>
         <pubDate>Tue, 20 Jun 2017 22:55:00 +0800</pubDate>
-        <link>https://jerryzou.com/posts/rxjs-practice-01/</link>
-        <guid isPermaLink="true">https://jerryzou.com/posts/rxjs-practice-01/</guid>
+        <link>http://jerryzou.com/posts/rxjs-practice-01/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/rxjs-practice-01/</guid>
       </item>
     
       <item>
@@ -757,8 +757,8 @@
 
 </description>
         <pubDate>Sat, 20 May 2017 19:50:00 +0800</pubDate>
-        <link>https://jerryzou.com/posts/vscode-debug-guide/</link>
-        <guid isPermaLink="true">https://jerryzou.com/posts/vscode-debug-guide/</guid>
+        <link>http://jerryzou.com/posts/vscode-debug-guide/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/vscode-debug-guide/</guid>
       </item>
     
       <item>
@@ -799,7 +799,7 @@
 
 &lt;p&gt;如果你希望在文章列表页中显示各个页面的访问量分别是多少，那么你就要使用一个 url 来填充 &lt;code&gt;data-hk-page&lt;/code&gt; 的属性值，就像这样：&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-hk-page=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;https://jerryzou.com/posts/design-for-all-mobile-resolution/&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; - &lt;span class=&quot;nt&quot;&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-hk-page=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://jerryzou.com/posts/design-for-all-mobile-resolution/&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; - &lt;span class=&quot;nt&quot;&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;那么 Hit Kounter 检测到这个标签以后，就会向服务器请求该地址的具体访问量，并将默认值 ` - ` 替换为实际值。可以参考 &lt;a href=&quot;https://github.com/zry656565/heaven-blog/blob/5f19693ac0fb5723ef18d69b57106d2f95021400/index.html#L13&quot;&gt;我博客中的例子&lt;/a&gt;。&lt;/p&gt;
 
@@ -909,8 +909,8 @@
 &lt;p&gt;我偷偷地把原文介绍的 v0.2 改成的 v0.3，仅仅多加了全站总访问数显示的功能。由于个人精力比较有限，所以后续很有可能不会再添加新的功能了。&lt;strong&gt;全站总访问数显示的功能&lt;/strong&gt; 也是在一年半以前就完成的，只是这次正式地在文中介绍一下而已。&lt;/p&gt;
 </description>
         <pubDate>Sun, 24 Apr 2016 00:20:00 +0800</pubDate>
-        <link>https://jerryzou.com/posts/introduction-to-hit-kounter-lc/</link>
-        <guid isPermaLink="true">https://jerryzou.com/posts/introduction-to-hit-kounter-lc/</guid>
+        <link>http://jerryzou.com/posts/introduction-to-hit-kounter-lc/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/introduction-to-hit-kounter-lc/</guid>
       </item>
     
       <item>
@@ -1045,8 +1045,8 @@
 
 </description>
         <pubDate>Mon, 21 Mar 2016 23:20:00 +0800</pubDate>
-        <link>https://jerryzou.com/posts/record-and-playback-for-kinect/</link>
-        <guid isPermaLink="true">https://jerryzou.com/posts/record-and-playback-for-kinect/</guid>
+        <link>http://jerryzou.com/posts/record-and-playback-for-kinect/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/record-and-playback-for-kinect/</guid>
       </item>
     
       <item>
@@ -1085,7 +1085,7 @@
 
 &lt;p&gt;如果你希望在文章列表页中显示各个页面的访问量分别是多少，那么你就要使用一个 url 来填充 &lt;code&gt;data-hk-page&lt;/code&gt; 的属性值，就像这样：&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-hk-page=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;https://jerryzou.com/posts/design-for-all-mobile-resolution/&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; - &lt;span class=&quot;nt&quot;&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-hk-page=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://jerryzou.com/posts/design-for-all-mobile-resolution/&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; - &lt;span class=&quot;nt&quot;&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;那么 Hit Kounter 检测到这个标签以后，就会向服务器请求该地址的具体访问量，并最终将默认值 ` - ` 替换为实际值。可以参考&lt;a href=&quot;https://github.com/zry656565/heaven-blog/blob/5f19693ac0fb5723ef18d69b57106d2f95021400/index.html#L13&quot;&gt;我博客中的例子&lt;/a&gt;。&lt;/p&gt;
 
@@ -1136,8 +1136,8 @@
 &lt;p&gt;TODO List 可以在 &lt;a href=&quot;https://github.com/zry656565/Hit-Kounter/issues/1&quot;&gt;这个 issue&lt;/a&gt; 中看到，而且因为 &lt;a href=&quot;https://github.com/zry656565/Hit-Kounter&quot;&gt;Hit Kounter&lt;/a&gt; 是开源项目，也很期待大家能够多吐槽，如果能给 Hit Kounter 贡献代码那就再好不过啦~。&lt;/p&gt;
 </description>
         <pubDate>Sat, 27 Feb 2016 13:20:00 +0800</pubDate>
-        <link>https://jerryzou.com/posts/introduction-to-hit-kounter/</link>
-        <guid isPermaLink="true">https://jerryzou.com/posts/introduction-to-hit-kounter/</guid>
+        <link>http://jerryzou.com/posts/introduction-to-hit-kounter/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/introduction-to-hit-kounter/</guid>
       </item>
     
       <item>
@@ -1393,8 +1393,8 @@
 
 </description>
         <pubDate>Tue, 08 Dec 2015 13:36:00 +0800</pubDate>
-        <link>https://jerryzou.com/posts/design-for-all-mobile-resolution/</link>
-        <guid isPermaLink="true">https://jerryzou.com/posts/design-for-all-mobile-resolution/</guid>
+        <link>http://jerryzou.com/posts/design-for-all-mobile-resolution/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/design-for-all-mobile-resolution/</guid>
       </item>
     
       <item>
@@ -1457,8 +1457,8 @@
 
 </description>
         <pubDate>Thu, 26 Nov 2015 00:20:00 +0800</pubDate>
-        <link>https://jerryzou.com/posts/leetcode-benchmark/</link>
-        <guid isPermaLink="true">https://jerryzou.com/posts/leetcode-benchmark/</guid>
+        <link>http://jerryzou.com/posts/leetcode-benchmark/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/leetcode-benchmark/</guid>
       </item>
     
       <item>
@@ -1475,7 +1475,7 @@
 
 &lt;h2 id=&quot;面临的问题&quot;&gt;面临的问题&lt;/h2&gt;
 
-&lt;p&gt;我目前正好面临了这样一个问题 —— 麻烦的人肉部署。也许有人看过我之前的一篇博文《&lt;a href=&quot;https://jerryzou.com/posts/feasibility-of-allowing-baiduSpider-for-Github-Pages/&quot;&gt;解决 Github Pages 禁止百度爬虫的方法与可行性分析&lt;/a&gt;》。为了解决文章中的这个问题，我最后建立了一个只服务于百度爬虫的一个备份服务器。但是随之而来的问题是，每次我的博客有些更新，都不得不 ssh 到那台服务器上把代码 pull 下来。如此做了两三次以后，我觉得我不能再这么堕落下去，于是还是决定尝试一下 Webhook。&lt;/p&gt;
+&lt;p&gt;我目前正好面临了这样一个问题 —— 麻烦的人肉部署。也许有人看过我之前的一篇博文《&lt;a href=&quot;http://jerryzou.com/posts/feasibility-of-allowing-baiduSpider-for-Github-Pages/&quot;&gt;解决 Github Pages 禁止百度爬虫的方法与可行性分析&lt;/a&gt;》。为了解决文章中的这个问题，我最后建立了一个只服务于百度爬虫的一个备份服务器。但是随之而来的问题是，每次我的博客有些更新，都不得不 ssh 到那台服务器上把代码 pull 下来。如此做了两三次以后，我觉得我不能再这么堕落下去，于是还是决定尝试一下 Webhook。&lt;/p&gt;
 
 &lt;p&gt;于是我要完成的事情便是完成一个能够将我最新版本的博客，随时同步到备份服务器的 Webhook。简单分析一下我需要什么：&lt;/p&gt;
 
@@ -1568,8 +1568,8 @@
 
 </description>
         <pubDate>Sun, 25 Oct 2015 22:19:00 +0800</pubDate>
-        <link>https://jerryzou.com/posts/webhook-practice/</link>
-        <guid isPermaLink="true">https://jerryzou.com/posts/webhook-practice/</guid>
+        <link>http://jerryzou.com/posts/webhook-practice/</link>
+        <guid isPermaLink="true">http://jerryzou.com/posts/webhook-practice/</guid>
       </item>
     
   </channel>
