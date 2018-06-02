@@ -5,16 +5,14 @@ email: jerry.zry@outlook.com
 description: >
   咀嚼之味是我分享我对编程与生活的见解之地。在我看来，编程不仅仅是我与生俱来的使命，也是我快乐的源泉。在业余时间，我喜欢研究一些跟技术相关的东西。同时，我也喜欢做一些安静的事，比如看书、看电影、听音乐、一个人散步以及旅行。
 baseurl: ""
-url: "http://jerryzou.com"
+url: "https://jerryzou.com"
 
 #static images
 local_url: "/assets/images"
 #github source
 #static_url: "/assets/images"
 #upyun source
-static_url: "http://jerryblog-image.b0.upaiyun.com/blog"
-#qiniu source
-qiniu_static_url: "http://jerryblog.qiniudn.com"
+static_url: "https://jerryblog-image.b0.upaiyun.com/blog"
 
 # Build settings
 markdown: kramdown

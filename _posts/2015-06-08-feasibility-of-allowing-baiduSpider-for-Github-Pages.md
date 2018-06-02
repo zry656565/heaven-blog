@@ -131,7 +131,7 @@ $ipList = [
 ];
 
 foreach ($ipList as $ip) {
-    Curl('http://jerryzou.com', $ip);
+    Curl('https://jerryzou.com', $ip);
     echo "$ip\n";
 }
 
@@ -156,7 +156,7 @@ echo "Done\n";
 
 ## 更新 (2015.11.26)
 
-如果大家自己搭了服务器，可以参考一下我上个月写的这篇：[Webhook 实践 —— 自动部署](http://jerryzou.com/posts/webhook-practice/)
+如果大家自己搭了服务器，可以参考一下我上个月写的这篇：[Webhook 实践 —— 自动部署](https://jerryzou.com/posts/webhook-practice/)
 
 
 ## 参考资料
@@ -165,7 +165,7 @@ echo "Done\n";
 - [How content delivery networks (CDNs) work](http://www.nczonline.net/blog/2011/11/29/how-content-delivery-networks-cdns-work/)
 - [Baiduspider using multiple User Agents how to stop them?](http://forums.oscommerce.com/topic/382923-baiduspider-using-multiple-user-agents-how-to-stop-them/)
 
-[1]: {{ site.qiniu_static_url }}/cdn2.png
-[2]: {{ site.qiniu_static_url }}/cdn3.png
-[3]: {{ site.qiniu_static_url }}/crawl_test.png-h400
-[4]: {{ site.qiniu_static_url }}/dnspod.png-h400
+[1]: {{ site.static_url }}/posts/cdn2.png
+[2]: {{ site.static_url }}/posts/cdn3.png
+[3]: {{ site.static_url }}/posts/crawl_test.png!h400
+[4]: {{ site.static_url }}/posts/dnspod.png!h400
