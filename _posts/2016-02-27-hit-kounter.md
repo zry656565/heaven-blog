@@ -7,7 +7,7 @@ key: 10035
 labels: [博客, JavaScript, PHP]
 ---
 
-> **2016.04.23 通告：** Hit Kounter 原本部署于 SAE 上，而近期 SAE 针对使用 MySQL 的应用开始收费。本项目只是一个本人使用业余时间开发的小工具；它本身包含的功能也很精简，并不适合使用付费服务。所以我已经将 Hit Kounter 服务迁移至 **LeanCloud** 上，有兴趣的同学请移步最新的一篇博文 [博客访问量统计工具 Hit Kounter v0.2](/posts/introduction-to-hit-kounter-lc) 查看最新版本的使用方法。原本部署在 SAE 上的服务预计在 **五一假期** 后下线，对已经使用 Hit Kounter 的一些用户，我深感抱歉！
+> **2016.04.23 通告：** Hit Kounter 原本部署于 SAE 上，而近期 SAE 针对使用 MySQL 的应用开始收费。本项目只是一个本人使用业余时间开发的小工具；它本身包含的功能也很精简，并不适合使用付费服务。所以我已经将 Hit Kounter 服务迁移至 **LeanCloud** 上，有兴趣的同学请移步最新的一篇博文 [博客访问量统计工具 Hit Kounter v0.3](/posts/introduction-to-hit-kounter-lc) 查看最新版本的使用方法。原本部署在 SAE 上的服务预计在 **五一假期** 后下线，对已经使用 Hit Kounter 的一些用户，我深感抱歉！
 
 
 相信很多程序员朋友们都拥有了自己的技术博客。像 Hexo, Jekyll 这样的静态网站生成器甚是好用，而对于相对动态的内容，比如评论框，也有诸如多说和 Disqus 的工具可以使用。

@@ -1,7 +1,7 @@
 ---
 date: 2016-04-24 0:20:00 +0800
-title: 访问量统计工具 Hit Kounter v0.2
-description: Hit Kounter 是一个简单的访问量统计工具。据我从数据库里的数据目测，现在已经拥有了 9 位用户！不过我要对这九位用户说声抱歉啦。Hit Kounter 原本部署于 SAE 上，而近期 SAE 针对使用 MySQL 的应用开始收费。本项目只是一个本人使用业余时间开发的小工具；它本身包含的功能也很精简，并不适合使用付费服务。所以我已经将 Hit Kounter 服务迁移至 LeanCloud 上。原本部署在 SAE 上的服务预计在五一假期后下线，对已经使用 Hit Kounter 的一些用户，我再次表达我的歉意！使用方式上，目前 v0.2 版本相比于 v0.1 并没有什么改变…
+title: 访问量统计工具 Hit Kounter v0.3
+description: Hit Kounter 是一个简单的访问量统计工具。据我从数据库里的数据目测，现在已经拥有了 9 位用户！不过我要对这九位用户说声抱歉啦。Hit Kounter 原本部署于 SAE 上，而近期 SAE 针对使用 MySQL 的应用开始收费。本项目只是一个本人使用业余时间开发的小工具；它本身包含的功能也很精简，并不适合使用付费服务。所以我已经将 Hit Kounter 服务迁移至 LeanCloud 上。原本部署在 SAE 上的服务预计在五一假期后下线，对已经使用 Hit Kounter 的一些用户，我再次表达我的歉意！使用方式上，目前 v0.3 版本相比于 v0.1 并没有什么改变…
 permalink: /posts/introduction-to-hit-kounter-lc/
 key: 10037
 labels: [博客, JavaScript]
@@ -13,22 +13,22 @@ Hit Kounter 原本部署于 SAE 上，而近期 SAE 针对使用 MySQL 的应用
 
 由于此次改版改动比较大，我是 fork 了一份代码出来进行修改的；**改版后的 Hit Kounter** 在 Github 上仓库地址是 [zry656565/Hit-Kounter-LC](https://github.com/zry656565/Hit-Kounter-LC)，区别于原来的 Hit Kounter PHP 版：[zry656565/Hit-Kounter](https://github.com/zry656565/Hit-Kounter)
 
-使用方式上，目前 **v0.2** 版本相比于 **v0.1** 并没有什么改变，接下来会从以下几个方面介绍一下：
+使用方式上，目前 **v0.3** 版本相比于 **v0.1** 并没有什么改变，接下来会从以下几个方面介绍一下：
 
 - 如何为你的博客添加访问统计
 - Hit Kounter 的 JS 接口
-- 如何从 v0.1.1 版本迁移到 v0.2.0
+- 如何从 v0.1.1 版本迁移到 v0.3.0
 - 小结：Hit Kounter 的未来
 
-如果你是 Hit Kounter v0.1 的用户，可以直接阅读 **如何从 v0.1.1 版本迁移到 v0.2.0**。
+如果你是 Hit Kounter v0.1 的用户，可以直接阅读 **如何从 v0.1.1 版本迁移到 v0.3.0**。
 
 ## 如何为你的博客添加访问量统计
 
 #### 1. 引入脚本
 
 {% highlight html %}
-<script src="https://cdn1.lncld.net/static/js/av-mini-0.6.10.js"></script>
-<script src="http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.2.0.js"></script>
+<script src="https://cdn1.lncld.net/static/js/av-min-1.5.0.js"></script>
+<script src="http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.3.0.js"></script>
 {% endhighlight %}
 
 首先，在你的页面中引入这两个脚本，第一个脚本是 LeanCloud 的库脚本，引入了它我们才能使用 LeanCloud 的服务；由于你可能在每个页面都需要显示访问量，把它加入根模板也许是个不错的选择。
@@ -50,6 +50,14 @@ Hit Kounter 原本部署于 SAE 上，而近期 SAE 针对使用 MySQL 的应用
 {% endhighlight %}
 
 那么 Hit Kounter 检测到这个标签以后，就会向服务器请求该地址的具体访问量，并将默认值 ` - ` 替换为实际值。可以参考 [我博客中的例子](https://github.com/zry656565/heaven-blog/blob/5f19693ac0fb5723ef18d69b57106d2f95021400/index.html#L13)。
+
+#### 4. 显示全站的访问量
+
+{% highlight html %}
+<span data-hk-site> - </span>
+{% endhighlight %}
+
+可以参考 [我博客中的例子](https://github.com/zry656565/heaven-blog/blob/5846c8b98db003e88b0e2aed6bcf6a810c168d78/_includes/sidebar.html#L7)
 
 ## Hit Kounter 的 JS 接口
 
@@ -86,7 +94,7 @@ Icarus.request({
 
 至于如何使用就由你们自由发挥啦。
 
-## 如何从 v0.1.1 版本迁移到 v0.2.0
+## 如何从 v0.1.1 版本迁移到 v0.3.0
 
 我已经把迁移的成本降到最低，只要替换引入的文件即可：
 
@@ -95,11 +103,11 @@ Icarus.request({
 <script src="http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-0.1.1.js"></script>
 
 <!-- 新版本需要引入的文件 -->
-<script src="https://cdn1.lncld.net/static/js/av-mini-0.6.10.js"></script>
-<script src="http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.2.0.js"></script>
+<script src="https://cdn1.lncld.net/static/js/av-min-1.5.0.js"></script>
+<script src="http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.3.0.js"></script>
 {% endhighlight %}
 
-因为 v0.2 版本基于 LeanCloud 的服务，所以需要额外引入 LeanCloud 的一个库文件。另外需要注意的是，第二个文件除了版本号做了更新，还多了 `-lc` 几个字符哦。
+因为 v0.3 版本基于 LeanCloud 的服务，所以需要额外引入 LeanCloud 的一个库文件。另外需要注意的是，第二个文件除了版本号做了更新，还多了 `-lc` 几个字符哦。
 
 本次更新在将后端服务从 SAE 替换为 LeanCloud 的同时并没有做太多的功能改进。最主要的一点功能改进是引入缓存机制，在数据超过默认的五分钟之前，**Icarus** 不会向服务器发送新的 get 请求。（increment 请求当然还是照发不误的啦）
 
@@ -147,3 +155,7 @@ Icarus.request({
 - 完善各种可能的错误信息（包括服务端和浏览器端的错误）
 
 TODO List 可以在 [这个 issue](https://github.com/zry656565/Hit-Kounter-LC/issues/1) 中看到，而且因为 [zry656565/Hit-Kounter-LC](https://github.com/zry656565/Hit-Kounter-LC) 是开源项目，也很期待大家能够多吐槽，如果能给 **Hit-Kounter-LC** 贡献代码那就再好不过啦~。
+
+### Update 2018.06.02
+
+我偷偷地把原文介绍的 v0.2 改成的 v0.3，仅仅多加了全站总访问数显示的功能。由于个人精力比较有限，所以后续很有可能不会再添加新的功能了。**全站总访问数显示的功能** 也是在一年半以前就完成的，只是这次正式地在文中介绍一下而已。
