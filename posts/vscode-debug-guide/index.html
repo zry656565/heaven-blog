@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="Visual Studio Code (以下简称 vscode) 如今已经代替 Sublime，成为前端工程师们最喜爱的代码编辑器。它作为一个大型的开源项目，不断推陈出新；社区中涌现出大量优质的插件，以支持我们更加舒服地进行开发工作。在近期的工作中，我尝试通过 vscode 来提升调试代码的幸福度，积累了一点点小心得在此与大家分享一下 ">
     <link rel="alternate" type="application/rss+xml" title="咀嚼之味 RSS" href="/feed.xml">
-    <link rel="canonical" href="http://jerryzou.com/posts/vscode-debug-guide/">
+    <link rel="canonical" href="https://jerryzou.com/posts/vscode-debug-guide/">
     <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     <!-- Custom CSS -->
@@ -57,7 +57,7 @@
     <a class="site-title" href="/">咀嚼之味</a>
     <nav class="site-nav">
       <div class="menu-icon">
-        <img class="icon" src="http://jerryblog-image.b0.upaiyun.com/blog/menu.svg" title="More"/>
+        <img class="icon" src="https://jerryblog-image.b0.upaiyun.com/blog/menu.svg" title="More"/>
       </div>
       <div class="trigger">
         <a class="page-link" href="/">首页</a>
@@ -93,7 +93,7 @@
     </nav>
   </div>
   <!-- fork me on github -->
-  <a id="fork-me" href="https://github.com/zry656565/heaven-blog"><img src="http://jerryblog-image.b0.upaiyun.com/blog/forkme.png" alt="Fork me on GitHub"></a>
+  <a id="fork-me" href="https://github.com/zry656565/heaven-blog"><img src="https://jerryblog-image.b0.upaiyun.com/blog/forkme.png" alt="Fork me on GitHub"></a>
 </header>
 
 
@@ -164,7 +164,7 @@
 
 <p>通过 vscode 调试前端代码主要依赖于一个插件：<a href="https://github.com/Microsoft/vscode-chrome-debug">Debugger for Chrome</a>，该插件主要利用 <a href="https://chromedevtools.github.io/devtools-protocol/">Chrome 所开放出来的接口</a> 来实现对其渲染的页面进行调试。可以通过 <code>Shift + Cmd + X</code> 打开插件中心，搜索对应插件后直接安装。安装完成并重新加载 vscode 后，可以直接点击调试按钮并创建新的启动配置。如果你之前已经创建过启动配置了，就可以直接打开 <code>.vscode/launch.json</code> 进行修改。</p>
 
-<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/vscode-debug-chrome.png" alt="vscode-debug-chrome" /></p>
+<p><img src="https://jerryblog-image.b0.upaiyun.com/blog/posts/vscode-debug-chrome.png" alt="vscode-debug-chrome" /></p>
 
 <p>其中调试 Chrome 页面的配置如下所示：</p>
 
@@ -194,7 +194,7 @@
 
 <p>使用 <code>launch</code> 模式调试前端代码存在一个问题，就是 vscode 会以新访客的身份打开一个新的 Chrome 进程，也就是说你<strong>之前在 Chrome 上装的插件都没法在这个页面上生效</strong>（如下图所示）。</p>
 
-<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/vscode-debug-launch.png" alt="vscode-debug-launch" /></p>
+<p><img src="https://jerryblog-image.b0.upaiyun.com/blog/posts/vscode-debug-launch.png" alt="vscode-debug-launch" /></p>
 
 <p>在这种情况下 <code>attach</code> 模式就有它存在的意义了：对一个已经启动的 Chrome 进行监听调试。</p>
 
@@ -314,7 +314,7 @@
 *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
 *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 var disqus_config = function () {
-this.page.url = "http://jerryzou.com/posts/vscode-debug-guide/";  // Replace PAGE_URL with your page's canonical URL variable
+this.page.url = "https://jerryzou.com/posts/vscode-debug-guide/";  // Replace PAGE_URL with your page's canonical URL variable
 this.page.identifier = "10038"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
 };
 (function() { // DON'T EDIT BELOW THIS LINE
@@ -347,7 +347,7 @@ s.setAttribute('data-timestamp', +new Date());
             <li><a href="//efe.baidu.com/">Baidu EFE</a></li>
             <li><a href="//fex.baidu.com/">Baidu FEX</a></li>
         </ul>
-        <p class="footer-text">Powered by <a href="http://jekyllrb.com/">Jekyll</a> , <a href="https://pages.github.com/">Github Pages</a> and <a href="https://www.upyun.com/">UPYUN</a>.</p>
+        <p class="footer-text">Powered by <a href="https://jekyllrb.com/">Jekyll</a> , <a href="https://pages.github.com/">Github Pages</a> and <a href="https://www.upyun.com/">UPYUN</a>.</p>
     </div>
 </footer>
 

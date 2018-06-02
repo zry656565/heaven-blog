@@ -4,8 +4,8 @@
     <title>咀嚼之味</title>
     <description>咀嚼之味是我分享我对编程与生活的见解之地。在我看来，编程不仅仅是我与生俱来的使命，也是我快乐的源泉。在业余时间，我喜欢研究一些跟技术相关的东西。同时，我也喜欢做一些安静的事，比如看书、看电影、听音乐、一个人散步以及旅行。
 </description>
-    <link>http://jerryzou.com/</link>
-    <atom:link href="http://jerryzou.com/feed.xml" rel="self" type="application/rss+xml" />
+    <link>https://jerryzou.com/</link>
+    <atom:link href="https://jerryzou.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
         <title>阻碍你使用 GraphQL 的十个问题</title>
@@ -34,7 +34,7 @@
 
 &lt;p&gt;首先放上一张来自于 graphql.org 的图片。REST 与 GraphQL 都是服务端所承载的系统对外的服务接口，因此两者肯定是可以共存的，甚至可以共用一套 Authorization 等业务逻辑。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/backend-arch.png&quot; alt=&quot;Architecture&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/backend-arch.png&quot; alt=&quot;Architecture&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;那么 GraphQL 与 RESTful 的具体区别有什么呢？我觉得主要是两点。&lt;/p&gt;
 
@@ -147,7 +147,7 @@
 
 &lt;p&gt;这是一段简单的 python 代码，使用了 Django 的 QuerySet 来从数据库抓取数据。假设我们的数据库中有两张表 User 和 UserScore 这两张表的关系如下所示：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/graphql-uml.jpg&quot; alt=&quot;UML&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/graphql-uml.jpg&quot; alt=&quot;UML&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;由于用户的分数并没有保存在 User 表中，又因为 QuerySet 有 lazy load 的特性，所以在 for 循环中，每一次获取 &lt;code&gt;user.score&lt;/code&gt; 都会查一次表，最终原本 1 次数据库查询能搞定的问题，却在不恰当的实现中产生了 N+1 次对数据库的访问。&lt;/p&gt;
 
@@ -168,7 +168,7 @@
 
 &lt;p&gt;使用 GraphiQL 可以很容易地让人感受到“代码即文档”的快乐。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/graphiql-screenshot.png&quot; alt=&quot;GraphiQL screenshot&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/graphiql-screenshot.png&quot; alt=&quot;GraphiQL screenshot&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;8-如何选择-graphql-的客户端实现&quot;&gt;8. 如何选择 GraphQL 的客户端实现？&lt;/h2&gt;
 
@@ -253,8 +253,8 @@
 
 </description>
         <pubDate>Mon, 19 Feb 2018 12:57:00 +0800</pubDate>
-        <link>http://jerryzou.com/posts/10-questions-about-graphql/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/10-questions-about-graphql/</guid>
+        <link>https://jerryzou.com/posts/10-questions-about-graphql/</link>
+        <guid isPermaLink="true">https://jerryzou.com/posts/10-questions-about-graphql/</guid>
       </item>
     
       <item>
@@ -317,8 +317,8 @@
 &lt;p&gt;避免过早优化不是说就不用优化了；当在系统遇到瓶颈时，优化在所难免。而如何进行系统性能瓶颈的检测以及如何进行优化又是另一个很大的话题了，此文就不做赘述啦。&lt;/p&gt;
 </description>
         <pubDate>Mon, 25 Sep 2017 23:50:00 +0800</pubDate>
-        <link>http://jerryzou.com/posts/talk-about-premature-optimization/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/talk-about-premature-optimization/</guid>
+        <link>https://jerryzou.com/posts/talk-about-premature-optimization/</link>
+        <guid isPermaLink="true">https://jerryzou.com/posts/talk-about-premature-optimization/</guid>
       </item>
     
       <item>
@@ -402,7 +402,7 @@
   &lt;p&gt;&lt;strong&gt;需求&lt;/strong&gt;：在拖拽的实际应用中，有时会希望有个初始延迟。就像手机屏幕上的诸多 App 图标，在你想要拖拽它们进行排序时，通常需要按住图标一小段时间，比如 &lt;strong&gt;200ms&lt;/strong&gt;（如下图所示），这时该如何操作呢？&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/iPhone-drag.gif&quot; alt=&quot;iPhone drag&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/iPhone-drag.gif&quot; alt=&quot;iPhone drag&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;为了演示方便，这里我们先定义一个简单的动画，当用户鼠标按下超过一定时间后，播放一个闪烁动画：&lt;/p&gt;
 
@@ -471,7 +471,7 @@
   &lt;p&gt;需求：给定 n 个小方块，要求拖拽第一个小方块进行移动，后续的小方块能够以间隔 0.1s 的时间跟着之前的小方块进行延迟模仿运动。&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/drag-list.gif&quot; alt=&quot;drag list&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/drag-list.gif&quot; alt=&quot;drag list&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;此例中，我们不再要求“初始延迟”，因此针对正在拖拽着的红色小方块，只要沿用第一个例子中的简单拖拽的方法，即可获取我们需要改变方块位置的事件流：&lt;/p&gt;
 
@@ -571,8 +571,8 @@
 
 </description>
         <pubDate>Tue, 20 Jun 2017 22:55:00 +0800</pubDate>
-        <link>http://jerryzou.com/posts/rxjs-practice-01/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/rxjs-practice-01/</guid>
+        <link>https://jerryzou.com/posts/rxjs-practice-01/</link>
+        <guid isPermaLink="true">https://jerryzou.com/posts/rxjs-practice-01/</guid>
       </item>
     
       <item>
@@ -622,7 +622,7 @@
 
 &lt;p&gt;通过 vscode 调试前端代码主要依赖于一个插件：&lt;a href=&quot;https://github.com/Microsoft/vscode-chrome-debug&quot;&gt;Debugger for Chrome&lt;/a&gt;，该插件主要利用 &lt;a href=&quot;https://chromedevtools.github.io/devtools-protocol/&quot;&gt;Chrome 所开放出来的接口&lt;/a&gt; 来实现对其渲染的页面进行调试。可以通过 &lt;code&gt;Shift + Cmd + X&lt;/code&gt; 打开插件中心，搜索对应插件后直接安装。安装完成并重新加载 vscode 后，可以直接点击调试按钮并创建新的启动配置。如果你之前已经创建过启动配置了，就可以直接打开 &lt;code&gt;.vscode/launch.json&lt;/code&gt; 进行修改。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/vscode-debug-chrome.png&quot; alt=&quot;vscode-debug-chrome&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/vscode-debug-chrome.png&quot; alt=&quot;vscode-debug-chrome&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;其中调试 Chrome 页面的配置如下所示：&lt;/p&gt;
 
@@ -652,7 +652,7 @@
 
 &lt;p&gt;使用 &lt;code&gt;launch&lt;/code&gt; 模式调试前端代码存在一个问题，就是 vscode 会以新访客的身份打开一个新的 Chrome 进程，也就是说你&lt;strong&gt;之前在 Chrome 上装的插件都没法在这个页面上生效&lt;/strong&gt;（如下图所示）。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/vscode-debug-launch.png&quot; alt=&quot;vscode-debug-launch&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/vscode-debug-launch.png&quot; alt=&quot;vscode-debug-launch&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;在这种情况下 &lt;code&gt;attach&lt;/code&gt; 模式就有它存在的意义了：对一个已经启动的 Chrome 进行监听调试。&lt;/p&gt;
 
@@ -757,8 +757,8 @@
 
 </description>
         <pubDate>Sat, 20 May 2017 19:50:00 +0800</pubDate>
-        <link>http://jerryzou.com/posts/vscode-debug-guide/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/vscode-debug-guide/</guid>
+        <link>https://jerryzou.com/posts/vscode-debug-guide/</link>
+        <guid isPermaLink="true">https://jerryzou.com/posts/vscode-debug-guide/</guid>
       </item>
     
       <item>
@@ -799,7 +799,7 @@
 
 &lt;p&gt;如果你希望在文章列表页中显示各个页面的访问量分别是多少，那么你就要使用一个 url 来填充 &lt;code&gt;data-hk-page&lt;/code&gt; 的属性值，就像这样：&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-hk-page=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://jerryzou.com/posts/design-for-all-mobile-resolution/&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; - &lt;span class=&quot;nt&quot;&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-hk-page=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;https://jerryzou.com/posts/design-for-all-mobile-resolution/&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; - &lt;span class=&quot;nt&quot;&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;那么 Hit Kounter 检测到这个标签以后，就会向服务器请求该地址的具体访问量，并将默认值 ` - ` 替换为实际值。可以参考 &lt;a href=&quot;https://github.com/zry656565/heaven-blog/blob/5f19693ac0fb5723ef18d69b57106d2f95021400/index.html#L13&quot;&gt;我博客中的例子&lt;/a&gt;。&lt;/p&gt;
 
@@ -909,8 +909,8 @@
 &lt;p&gt;我偷偷地把原文介绍的 v0.2 改成的 v0.3，仅仅多加了全站总访问数显示的功能。由于个人精力比较有限，所以后续很有可能不会再添加新的功能了。&lt;strong&gt;全站总访问数显示的功能&lt;/strong&gt; 也是在一年半以前就完成的，只是这次正式地在文中介绍一下而已。&lt;/p&gt;
 </description>
         <pubDate>Sun, 24 Apr 2016 00:20:00 +0800</pubDate>
-        <link>http://jerryzou.com/posts/introduction-to-hit-kounter-lc/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/introduction-to-hit-kounter-lc/</guid>
+        <link>https://jerryzou.com/posts/introduction-to-hit-kounter-lc/</link>
+        <guid isPermaLink="true">https://jerryzou.com/posts/introduction-to-hit-kounter-lc/</guid>
       </item>
     
       <item>
@@ -932,7 +932,7 @@
 
 &lt;p&gt;你可以依照下图的三个小步骤来录制你想要的场景数据；等录制完毕以后，你可以在 &lt;code&gt;C:\Users\${你的用户名}\Documents\Kinect Studio\Repository&lt;/code&gt; 下找到你录制好的 xef 文件，比如我刚刚录制的 &lt;code&gt;20160317_111153_00.xef&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/kinect-studio.png&quot; alt=&quot;Kinect Studio Sample&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/kinect-studio.png&quot; alt=&quot;Kinect Studio Sample&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;回放&quot;&gt;回放&lt;/h2&gt;
 
@@ -947,7 +947,7 @@
   &lt;li&gt;将 &lt;strong&gt;KStudioService.dll&lt;/strong&gt; 复制到你的 Debug / Release 文件夹&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/vs-reference.png&quot; alt=&quot;add References to your project&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/vs-reference.png&quot; alt=&quot;add References to your project&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;接下来，你需要编写一些代码来调用回放的功能。以官方的例子 &lt;strong&gt;DepthBasics-WPF&lt;/strong&gt; 为例，首先你需要定义一个新的类，并在这个类中定义一个静态方法，如下所示：&lt;/p&gt;
 
@@ -1034,7 +1034,7 @@
 
 &lt;p&gt;完成了以上这些以后，拔掉你的 Kinect 并重启你的程序。如果程序依然能够很顺利的执行，&lt;strong&gt;那么恭喜你，你成功啦&lt;/strong&gt;！&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/kinect-result.jpg!0.5&quot; alt=&quot;Sample Result&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/kinect-result.jpg!0.5&quot; alt=&quot;Sample Result&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;参考文献&quot;&gt;参考文献&lt;/h2&gt;
 
@@ -1045,8 +1045,8 @@
 
 </description>
         <pubDate>Mon, 21 Mar 2016 23:20:00 +0800</pubDate>
-        <link>http://jerryzou.com/posts/record-and-playback-for-kinect/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/record-and-playback-for-kinect/</guid>
+        <link>https://jerryzou.com/posts/record-and-playback-for-kinect/</link>
+        <guid isPermaLink="true">https://jerryzou.com/posts/record-and-playback-for-kinect/</guid>
       </item>
     
       <item>
@@ -1085,7 +1085,7 @@
 
 &lt;p&gt;如果你希望在文章列表页中显示各个页面的访问量分别是多少，那么你就要使用一个 url 来填充 &lt;code&gt;data-hk-page&lt;/code&gt; 的属性值，就像这样：&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-hk-page=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://jerryzou.com/posts/design-for-all-mobile-resolution/&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; - &lt;span class=&quot;nt&quot;&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-hk-page=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;https://jerryzou.com/posts/design-for-all-mobile-resolution/&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; - &lt;span class=&quot;nt&quot;&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;那么 Hit Kounter 检测到这个标签以后，就会向服务器请求该地址的具体访问量，并最终将默认值 ` - ` 替换为实际值。可以参考&lt;a href=&quot;https://github.com/zry656565/heaven-blog/blob/5f19693ac0fb5723ef18d69b57106d2f95021400/index.html#L13&quot;&gt;我博客中的例子&lt;/a&gt;。&lt;/p&gt;
 
@@ -1136,8 +1136,8 @@
 &lt;p&gt;TODO List 可以在 &lt;a href=&quot;https://github.com/zry656565/Hit-Kounter/issues/1&quot;&gt;这个 issue&lt;/a&gt; 中看到，而且因为 &lt;a href=&quot;https://github.com/zry656565/Hit-Kounter&quot;&gt;Hit Kounter&lt;/a&gt; 是开源项目，也很期待大家能够多吐槽，如果能给 Hit Kounter 贡献代码那就再好不过啦~。&lt;/p&gt;
 </description>
         <pubDate>Sat, 27 Feb 2016 13:20:00 +0800</pubDate>
-        <link>http://jerryzou.com/posts/introduction-to-hit-kounter/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/introduction-to-hit-kounter/</guid>
+        <link>https://jerryzou.com/posts/introduction-to-hit-kounter/</link>
+        <guid isPermaLink="true">https://jerryzou.com/posts/introduction-to-hit-kounter/</guid>
       </item>
     
       <item>
@@ -1306,7 +1306,7 @@
 &lt;p&gt;如果是 iPhone 或者 Android 4.4+ 的机器，在使用 scale 相关的属性时要非常谨慎，包括 &lt;code&gt;initial-scale&lt;/code&gt;, &lt;code&gt;maximum-scale&lt;/code&gt; 和 &lt;code&gt;minimum-scale&lt;/code&gt;。
 要么保证 &lt;strong&gt;Scale = deviceWidth / vWidth&lt;/strong&gt;，要么就尽量不用。来看一个例子：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/viewport.png&quot; alt=&quot;Android 4.4+ 和 iPhone 在缩放时的行为不一致&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/viewport.png&quot; alt=&quot;Android 4.4+ 和 iPhone 在缩放时的行为不一致&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;在缩放比不能保证的情况下，即使设置同样的 &lt;code&gt;width&lt;/code&gt; 和 &lt;code&gt;initial-scale&lt;/code&gt; 后，两者的表现也是不一致。具体两种机型采用的策略如何我还没有探索出来，有兴趣的同学可以研究看看。最省事的办法就是在 iPhone 和 Android 4.4+ 上不设置 scale 相关的属性。&lt;/p&gt;
 
@@ -1393,8 +1393,8 @@
 
 </description>
         <pubDate>Tue, 08 Dec 2015 13:36:00 +0800</pubDate>
-        <link>http://jerryzou.com/posts/design-for-all-mobile-resolution/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/design-for-all-mobile-resolution/</guid>
+        <link>https://jerryzou.com/posts/design-for-all-mobile-resolution/</link>
+        <guid isPermaLink="true">https://jerryzou.com/posts/design-for-all-mobile-resolution/</guid>
       </item>
     
       <item>
@@ -1439,7 +1439,7 @@
 
 &lt;p&gt;我直接把之前发送的两个 ajax 请求用 Curl 的形式保存下来：（感谢 Chrome ╰(￣▽￣)╮)&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/curl.jpg!0.5&quot; alt=&quot;如何通过chrome开发者工具获取请求的curl形式&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/curl.jpg!0.5&quot; alt=&quot;如何通过chrome开发者工具获取请求的curl形式&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;然后我写了个 Nodejs 的小程序，每隔&lt;strong&gt;一分钟&lt;/strong&gt;调用上面保存的两个脚本来进行一次提交，并把当次的执行速度保存到 Mongodb 中。代码我就不贴啦，有兴趣的话可以到 &lt;a href=&quot;https://github.com/zry656565/Leetcode-Benchmark&quot;&gt;zry656565/Leetcode-Benchmark&lt;/a&gt; 看看。&lt;/p&gt;
 
@@ -1449,7 +1449,7 @@
 
 &lt;p&gt;当然啦，采集到了 300 多条数据也不能白费了，画个图出来看看吧。任意一个节点所提交的程序片段都是同一个，大概最终的结果是这样的：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/leetcode-benchmark.png!0.5&quot; alt=&quot;结果&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/leetcode-benchmark.png!0.5&quot; alt=&quot;结果&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;(⊙o⊙)…本来想着是不是能找到某个 Leetcode 的服务器稍微稳定一点的时刻，不过似乎并不存在这样的时刻呢。呵呵，然并卵。不过好消息是，在事件发生的二十四小时以后，我发现我的账号解禁了，哈哈哈哈。&lt;/p&gt;
 
@@ -1457,8 +1457,8 @@
 
 </description>
         <pubDate>Thu, 26 Nov 2015 00:20:00 +0800</pubDate>
-        <link>http://jerryzou.com/posts/leetcode-benchmark/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/leetcode-benchmark/</guid>
+        <link>https://jerryzou.com/posts/leetcode-benchmark/</link>
+        <guid isPermaLink="true">https://jerryzou.com/posts/leetcode-benchmark/</guid>
       </item>
     
       <item>
@@ -1475,7 +1475,7 @@
 
 &lt;h2 id=&quot;面临的问题&quot;&gt;面临的问题&lt;/h2&gt;
 
-&lt;p&gt;我目前正好面临了这样一个问题 —— 麻烦的人肉部署。也许有人看过我之前的一篇博文《&lt;a href=&quot;http://jerryzou.com/posts/feasibility-of-allowing-baiduSpider-for-Github-Pages/&quot;&gt;解决 Github Pages 禁止百度爬虫的方法与可行性分析&lt;/a&gt;》。为了解决文章中的这个问题，我最后建立了一个只服务于百度爬虫的一个备份服务器。但是随之而来的问题是，每次我的博客有些更新，都不得不 ssh 到那台服务器上把代码 pull 下来。如此做了两三次以后，我觉得我不能再这么堕落下去，于是还是决定尝试一下 Webhook。&lt;/p&gt;
+&lt;p&gt;我目前正好面临了这样一个问题 —— 麻烦的人肉部署。也许有人看过我之前的一篇博文《&lt;a href=&quot;https://jerryzou.com/posts/feasibility-of-allowing-baiduSpider-for-Github-Pages/&quot;&gt;解决 Github Pages 禁止百度爬虫的方法与可行性分析&lt;/a&gt;》。为了解决文章中的这个问题，我最后建立了一个只服务于百度爬虫的一个备份服务器。但是随之而来的问题是，每次我的博客有些更新，都不得不 ssh 到那台服务器上把代码 pull 下来。如此做了两三次以后，我觉得我不能再这么堕落下去，于是还是决定尝试一下 Webhook。&lt;/p&gt;
 
 &lt;p&gt;于是我要完成的事情便是完成一个能够将我最新版本的博客，随时同步到备份服务器的 Webhook。简单分析一下我需要什么：&lt;/p&gt;
 
@@ -1562,14 +1562,14 @@
 
 &lt;p&gt;此处只需要配置 Webhook 所发出的 POST 请求发往何处即可，于是我们就配置我们所需要的路径： &lt;strong&gt;http://104.236.xxx.xxx:9988/deploy/&lt;/strong&gt;。这个地址指向的就是那个能够响应 Webhook 所发出请求的服务器。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/webhooks-config.png&quot; alt=&quot;webhooks configuration&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/webhooks-config.png&quot; alt=&quot;webhooks configuration&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;配置好 Webhook 后，Github 会发送一个 ping 来测试这个地址。如果成功了，那么这个 Webhook 前就会加上一个绿色的勾；如果你得到的是一个红色的叉，那就好好检查一下哪儿出问题了吧！&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 25 Oct 2015 22:19:00 +0800</pubDate>
-        <link>http://jerryzou.com/posts/webhook-practice/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/webhook-practice/</guid>
+        <link>https://jerryzou.com/posts/webhook-practice/</link>
+        <guid isPermaLink="true">https://jerryzou.com/posts/webhook-practice/</guid>
       </item>
     
   </channel>

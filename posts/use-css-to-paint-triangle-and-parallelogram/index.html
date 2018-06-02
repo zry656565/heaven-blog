@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="本文将介绍使用纯 CSS 来构造三角形与平行四边形的两种方法。 ">
     <link rel="alternate" type="application/rss+xml" title="咀嚼之味 RSS" href="/feed.xml">
-    <link rel="canonical" href="http://jerryzou.com/posts/use-css-to-paint-triangle-and-parallelogram/">
+    <link rel="canonical" href="https://jerryzou.com/posts/use-css-to-paint-triangle-and-parallelogram/">
     <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     <!-- Custom CSS -->
@@ -57,7 +57,7 @@
     <a class="site-title" href="/">咀嚼之味</a>
     <nav class="site-nav">
       <div class="menu-icon">
-        <img class="icon" src="http://jerryblog-image.b0.upaiyun.com/blog/menu.svg" title="More"/>
+        <img class="icon" src="https://jerryblog-image.b0.upaiyun.com/blog/menu.svg" title="More"/>
       </div>
       <div class="trigger">
         <a class="page-link" href="/">首页</a>
@@ -93,7 +93,7 @@
     </nav>
   </div>
   <!-- fork me on github -->
-  <a id="fork-me" href="https://github.com/zry656565/heaven-blog"><img src="http://jerryblog-image.b0.upaiyun.com/blog/forkme.png" alt="Fork me on GitHub"></a>
+  <a id="fork-me" href="https://github.com/zry656565/heaven-blog"><img src="https://jerryblog-image.b0.upaiyun.com/blog/forkme.png" alt="Fork me on GitHub"></a>
 </header>
 
 
@@ -119,7 +119,7 @@
   <article class="post-content">
   <p>最近在逛某个技术网站的时候，感觉文章关键词上的样式好酷炫啊。于是我将那种写法照搬到了我的博客中，也许最近逛过我博客的小伙伴已经发现了它出现在哪儿了——分页的样式。来张截图：</p>
 
-<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/pagination.png!0.5" alt="分页样式的截图" /></p>
+<p><img src="https://jerryblog-image.b0.upaiyun.com/blog/posts/pagination.png!0.5" alt="分页样式的截图" /></p>
 
 <p>你在首页的底部也可以看到这样一个分页栏；是不是看上去还不错？下面就来看看这是如何实现的吧~</p>
 
@@ -127,7 +127,7 @@
 
 <p>第一种方法是借助<code>border</code>属性 hack 出三角形，然后通过一个矩形拼接两个三角形最终制造出一个平行四边形。为什么使用<code>border</code>可以产生三角形呢？先来看看一张图片：</p>
 
-<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/triangle.png!0.5" alt="CSS triangle" /></p>
+<p><img src="https://jerryblog-image.b0.upaiyun.com/blog/posts/triangle.png!0.5" alt="CSS triangle" /></p>
 
 <p>看了图中的三个小图形的变化过程，你应该已经清楚了一半。其实 hack 出三角形只需要两个条件，第一，元素本身的长宽为0；其次，将不需要的部分通过 border-color 来设置隐藏。通过类似的方法，你还可以创造出梯形，上图中的三个图形的代码如下。（另附 <a href="http://codepen.io/jerryzou/pen/mJYJym">CodePen 示例</a>）</p>
 
@@ -157,7 +157,7 @@
 
 <p>接下来就要考虑如何拼接出一个平行四边形了。在<code>border</code>法中，它由三部分组成，分别是左三角形、矩形、右三角形。如果每次绘制平行四边形都要创建三个元素显然过于麻烦了，所以在这里<code>:before</code>和<code>:after</code>伪元素是个不错的选择。下面我们实现一下这样的效果：</p>
 
-<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/parallelogram.png!0.5" alt="three parallelogram" /></p>
+<p><img src="https://jerryblog-image.b0.upaiyun.com/blog/posts/parallelogram.png!0.5" alt="three parallelogram" /></p>
 
 <p>为了将三角形与矩形无缝拼接到一起，多处属性要保持一致，所以使用类似 Less, Sass, Stylus 等 CSS 预处理器来写这段代码会更容易维护，下面给出 Scss 版本的代码。（另附 <a href="http://codepen.io/jerryzou/pen/ZGNGWZ?editors=110">CodePen 链接</a>）</p>
 
@@ -213,7 +213,7 @@
 
 <p>使用<code>transform</code>来实现平行四边形的方法是我在逛<a href="http://www.alitrip.com/">去啊</a>的时候看到的，效果大概是这个样子：</p>
 
-<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/qua_parallelogram.png!0.5" alt="去啊中的平行四边形" /></p>
+<p><img src="https://jerryblog-image.b0.upaiyun.com/blog/posts/qua_parallelogram.png!0.5" alt="去啊中的平行四边形" /></p>
 
 <p>看到之后觉得好神奇啊，原来还可以只有平行四边形的外轮廓。（因为方法一只能创造填充效果的平行四边形）实现起来非常简单，主要是借助了<code>transform: skew(...)</code>，下面就来看看源码吧。</p>
 
@@ -231,15 +231,15 @@
 
 <p>于是我们得到了这样的效果：</p>
 
-<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/shanghai_skew.png!0.5" alt="skew shanghai" /></p>
+<p><img src="https://jerryblog-image.b0.upaiyun.com/blog/posts/shanghai_skew.png!0.5" alt="skew shanghai" /></p>
 
 <p>看到图片的你一定是这样想的：</p>
 
-<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/damn.gif" alt="坑爹呢这是" /></p>
+<p><img src="https://jerryblog-image.b0.upaiyun.com/blog/posts/damn.gif" alt="坑爹呢这是" /></p>
 
 <p>别着急嘛，我们的确是把整个 div 进行了歪曲，导致中间的文字也是倾斜的，而这显然不是我们所要的效果。所以我们需要加一个内层元素，并对内层元素做一次逆向的歪曲，从而得到我们想要的效果：</p>
 
-<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/shanghai_normal.png!0.5" alt="normal shanghai" /></p>
+<p><img src="https://jerryblog-image.b0.upaiyun.com/blog/posts/shanghai_normal.png!0.5" alt="normal shanghai" /></p>
 
 <p>实现代码如下，另附 <a href="http://codepen.io/jerryzou/pen/BNeNwV?editors=110">CodePen 示例</a></p>
 
@@ -277,11 +277,11 @@
 
 <p>在 150% 放大倍率下，Safari 8 的显示效果：</p>
 
-<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/pagination_safari_scale.png" alt="pagination_safari_scale" /></p>
+<p><img src="https://jerryblog-image.b0.upaiyun.com/blog/posts/pagination_safari_scale.png" alt="pagination_safari_scale" /></p>
 
 <p>在 125% 放大倍率下，Chrome 45 的显示效果：</p>
 
-<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/pagination_chrome_scale.png" alt="pagination_chrome_scale" /></p>
+<p><img src="https://jerryblog-image.b0.upaiyun.com/blog/posts/pagination_chrome_scale.png" alt="pagination_chrome_scale" /></p>
 
 <p>此例暴露出不同浏览器在缩放的情况下对于 <strong>Border Triangle</strong> 的渲染还是有一定差异的（具体是怎样的差异，大家可以在 <a href="http://codepen.io/jerryzou/pen/ZGNGWZ?editors=110">CodePen</a> 上尝试一下）。目前暂时没有找到解决这一问题的方法。所以还是采用了本文提到的第二种方法重新实现了一下本博客的分页；具体效果还请各位看官返回主页查看咯~</p>
 
@@ -302,7 +302,7 @@
 *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
 *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 var disqus_config = function () {
-this.page.url = "http://jerryzou.com/posts/use-css-to-paint-triangle-and-parallelogram/";  // Replace PAGE_URL with your page's canonical URL variable
+this.page.url = "https://jerryzou.com/posts/use-css-to-paint-triangle-and-parallelogram/";  // Replace PAGE_URL with your page's canonical URL variable
 this.page.identifier = "10031"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
 };
 (function() { // DON'T EDIT BELOW THIS LINE
@@ -335,7 +335,7 @@ s.setAttribute('data-timestamp', +new Date());
             <li><a href="//efe.baidu.com/">Baidu EFE</a></li>
             <li><a href="//fex.baidu.com/">Baidu FEX</a></li>
         </ul>
-        <p class="footer-text">Powered by <a href="http://jekyllrb.com/">Jekyll</a> , <a href="https://pages.github.com/">Github Pages</a> and <a href="https://www.upyun.com/">UPYUN</a>.</p>
+        <p class="footer-text">Powered by <a href="https://jekyllrb.com/">Jekyll</a> , <a href="https://pages.github.com/">Github Pages</a> and <a href="https://www.upyun.com/">UPYUN</a>.</p>
     </div>
 </footer>
 

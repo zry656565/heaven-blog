@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="我在使用 GraphQL 的过程中经历了理解、误解、再理解的过程。作为吃了 GraphQL 这个螃蟹的人，希望能够通过这篇文章更好地帮助各位读者理解 GraphQL 是什么，GraphQL 会给你带来什么，以及将 GraphQL 应用于你的系统中需要注意哪些问题。这不是一篇系统的科普文，如果你有什么其他疑问可以评论中留言询问。 ">
     <link rel="alternate" type="application/rss+xml" title="咀嚼之味 RSS" href="/feed.xml">
-    <link rel="canonical" href="http://jerryzou.com/posts/10-questions-about-graphql/">
+    <link rel="canonical" href="https://jerryzou.com/posts/10-questions-about-graphql/">
     <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     <!-- Custom CSS -->
@@ -57,7 +57,7 @@
     <a class="site-title" href="/">咀嚼之味</a>
     <nav class="site-nav">
       <div class="menu-icon">
-        <img class="icon" src="http://jerryblog-image.b0.upaiyun.com/blog/menu.svg" title="More"/>
+        <img class="icon" src="https://jerryblog-image.b0.upaiyun.com/blog/menu.svg" title="More"/>
       </div>
       <div class="trigger">
         <a class="page-link" href="/">首页</a>
@@ -93,7 +93,7 @@
     </nav>
   </div>
   <!-- fork me on github -->
-  <a id="fork-me" href="https://github.com/zry656565/heaven-blog"><img src="http://jerryblog-image.b0.upaiyun.com/blog/forkme.png" alt="Fork me on GitHub"></a>
+  <a id="fork-me" href="https://github.com/zry656565/heaven-blog"><img src="https://jerryblog-image.b0.upaiyun.com/blog/forkme.png" alt="Fork me on GitHub"></a>
 </header>
 
 
@@ -144,7 +144,7 @@
 
 <p>首先放上一张来自于 graphql.org 的图片。REST 与 GraphQL 都是服务端所承载的系统对外的服务接口，因此两者肯定是可以共存的，甚至可以共用一套 Authorization 等业务逻辑。</p>
 
-<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/backend-arch.png" alt="Architecture" /></p>
+<p><img src="https://jerryblog-image.b0.upaiyun.com/blog/posts/backend-arch.png" alt="Architecture" /></p>
 
 <p>那么 GraphQL 与 RESTful 的具体区别有什么呢？我觉得主要是两点。</p>
 
@@ -257,7 +257,7 @@
 
 <p>这是一段简单的 python 代码，使用了 Django 的 QuerySet 来从数据库抓取数据。假设我们的数据库中有两张表 User 和 UserScore 这两张表的关系如下所示：</p>
 
-<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/graphql-uml.jpg" alt="UML" /></p>
+<p><img src="https://jerryblog-image.b0.upaiyun.com/blog/posts/graphql-uml.jpg" alt="UML" /></p>
 
 <p>由于用户的分数并没有保存在 User 表中，又因为 QuerySet 有 lazy load 的特性，所以在 for 循环中，每一次获取 <code>user.score</code> 都会查一次表，最终原本 1 次数据库查询能搞定的问题，却在不恰当的实现中产生了 N+1 次对数据库的访问。</p>
 
@@ -278,7 +278,7 @@
 
 <p>使用 GraphiQL 可以很容易地让人感受到“代码即文档”的快乐。</p>
 
-<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/graphiql-screenshot.png" alt="GraphiQL screenshot" /></p>
+<p><img src="https://jerryblog-image.b0.upaiyun.com/blog/posts/graphiql-screenshot.png" alt="GraphiQL screenshot" /></p>
 
 <h2 id="8-如何选择-graphql-的客户端实现">8. 如何选择 GraphQL 的客户端实现？</h2>
 
@@ -378,7 +378,7 @@
 *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
 *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 var disqus_config = function () {
-this.page.url = "http://jerryzou.com/posts/10-questions-about-graphql/";  // Replace PAGE_URL with your page's canonical URL variable
+this.page.url = "https://jerryzou.com/posts/10-questions-about-graphql/";  // Replace PAGE_URL with your page's canonical URL variable
 this.page.identifier = "10041"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
 };
 (function() { // DON'T EDIT BELOW THIS LINE
@@ -411,7 +411,7 @@ s.setAttribute('data-timestamp', +new Date());
             <li><a href="//efe.baidu.com/">Baidu EFE</a></li>
             <li><a href="//fex.baidu.com/">Baidu FEX</a></li>
         </ul>
-        <p class="footer-text">Powered by <a href="http://jekyllrb.com/">Jekyll</a> , <a href="https://pages.github.com/">Github Pages</a> and <a href="https://www.upyun.com/">UPYUN</a>.</p>
+        <p class="footer-text">Powered by <a href="https://jekyllrb.com/">Jekyll</a> , <a href="https://pages.github.com/">Github Pages</a> and <a href="https://www.upyun.com/">UPYUN</a>.</p>
     </div>
 </footer>
 
