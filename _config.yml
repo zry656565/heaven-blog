@@ -12,7 +12,7 @@ local_url: "/assets/images"
 #github source
 #static_url: "/assets/images"
 #upyun source
-static_url: "https://jerryblog-image.b0.upaiyun.com/blog"
+static_url: "http://jerryblog-image.b0.upaiyun.com/blog"
 
 # Build settings
 markdown: kramdown
