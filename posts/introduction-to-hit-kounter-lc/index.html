@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>
         
-            访问量统计工具 Hit Kounter v0.2 | 咀嚼之味
+            访问量统计工具 Hit Kounter v0.3 | 咀嚼之味
         </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="description" content="Hit Kounter 是一个简单的访问量统计工具。据我从数据库里的数据目测，现在已经拥有了 9 位用户！不过我要对这九位用户说声抱歉啦。Hit Kounter 原本部署于 SAE 上，而近期 SAE 针对使用 MySQL 的应用开始收费。本项目只是一个本人使用业余时间开发的小工具；它本身包含的功能也很精简，并不适合使用付费服务。所以我已经将 Hit Kounter 服务迁移至 LeanCloud 上。原本部署在 SAE 上的服务预计在五一假期后下线，对已经使用 Hit Kounter 的一些用户，我再次表达我的歉意！使用方式上，目前 v0.2 版本相比于 v0.1 并没有什么改变… ">
+    <meta name="description" content="Hit Kounter 是一个简单的访问量统计工具。据我从数据库里的数据目测，现在已经拥有了 9 位用户！不过我要对这九位用户说声抱歉啦。Hit Kounter 原本部署于 SAE 上，而近期 SAE 针对使用 MySQL 的应用开始收费。本项目只是一个本人使用业余时间开发的小工具；它本身包含的功能也很精简，并不适合使用付费服务。所以我已经将 Hit Kounter 服务迁移至 LeanCloud 上。原本部署在 SAE 上的服务预计在五一假期后下线，对已经使用 Hit Kounter 的一些用户，我再次表达我的歉意！使用方式上，目前 v0.3 版本相比于 v0.1 并没有什么改变… ">
     <link rel="alternate" type="application/rss+xml" title="咀嚼之味 RSS" href="/feed.xml">
     <link rel="canonical" href="http://jerryzou.com/posts/introduction-to-hit-kounter-lc/">
     <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
@@ -103,7 +103,7 @@
         <div class="post">
 
   <header class="post-header">
-    <h1>访问量统计工具 Hit Kounter v0.2</h1>
+    <h1>访问量统计工具 Hit Kounter v0.3</h1>
     <p class="meta">Apr 24, 2016 <span class="pause"> - </span>
         浏览量：<span data-hk-page="current"> - </span>次<span class="pause"> | </span>
         
@@ -123,23 +123,23 @@
 
 <p>由于此次改版改动比较大，我是 fork 了一份代码出来进行修改的；<strong>改版后的 Hit Kounter</strong> 在 Github 上仓库地址是 <a href="https://github.com/zry656565/Hit-Kounter-LC">zry656565/Hit-Kounter-LC</a>，区别于原来的 Hit Kounter PHP 版：<a href="https://github.com/zry656565/Hit-Kounter">zry656565/Hit-Kounter</a></p>
 
-<p>使用方式上，目前 <strong>v0.2</strong> 版本相比于 <strong>v0.1</strong> 并没有什么改变，接下来会从以下几个方面介绍一下：</p>
+<p>使用方式上，目前 <strong>v0.3</strong> 版本相比于 <strong>v0.1</strong> 并没有什么改变，接下来会从以下几个方面介绍一下：</p>
 
 <ul>
   <li>如何为你的博客添加访问统计</li>
   <li>Hit Kounter 的 JS 接口</li>
-  <li>如何从 v0.1.1 版本迁移到 v0.2.0</li>
+  <li>如何从 v0.1.1 版本迁移到 v0.3.0</li>
   <li>小结：Hit Kounter 的未来</li>
 </ul>
 
-<p>如果你是 Hit Kounter v0.1 的用户，可以直接阅读 <strong>如何从 v0.1.1 版本迁移到 v0.2.0</strong>。</p>
+<p>如果你是 Hit Kounter v0.1 的用户，可以直接阅读 <strong>如何从 v0.1.1 版本迁移到 v0.3.0</strong>。</p>
 
 <h2 id="如何为你的博客添加访问量统计">如何为你的博客添加访问量统计</h2>
 
 <h4 id="1-引入脚本">1. 引入脚本</h4>
 
-<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;https://cdn1.lncld.net/static/js/av-mini-0.6.10.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
-<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.2.0.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;https://cdn1.lncld.net/static/js/av-min-1.5.0.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.3.0.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></figure>
 
 <p>首先，在你的页面中引入这两个脚本，第一个脚本是 LeanCloud 的库脚本，引入了它我们才能使用 LeanCloud 的服务；由于你可能在每个页面都需要显示访问量，把它加入根模板也许是个不错的选择。</p>
 
@@ -156,6 +156,12 @@
 <figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;span</span> <span class="na">data-hk-page=</span><span class="s">&quot;http://jerryzou.com/posts/design-for-all-mobile-resolution/&quot;</span><span class="nt">&gt;</span> - <span class="nt">&lt;/span&gt;</span></code></pre></figure>
 
 <p>那么 Hit Kounter 检测到这个标签以后，就会向服务器请求该地址的具体访问量，并将默认值 ` - ` 替换为实际值。可以参考 <a href="https://github.com/zry656565/heaven-blog/blob/5f19693ac0fb5723ef18d69b57106d2f95021400/index.html#L13">我博客中的例子</a>。</p>
+
+<h4 id="4-显示全站的访问量">4. 显示全站的访问量</h4>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;span</span> <span class="na">data-hk-site</span><span class="nt">&gt;</span> - <span class="nt">&lt;/span&gt;</span></code></pre></figure>
+
+<p>可以参考 <a href="https://github.com/zry656565/heaven-blog/blob/5846c8b98db003e88b0e2aed6bcf6a810c168d78/_includes/sidebar.html#L7">我博客中的例子</a></p>
 
 <h2 id="hit-kounter-的-js-接口">Hit Kounter 的 JS 接口</h2>
 
@@ -192,7 +198,7 @@
 
 <p>至于如何使用就由你们自由发挥啦。</p>
 
-<h2 id="如何从-v011-版本迁移到-v020">如何从 v0.1.1 版本迁移到 v0.2.0</h2>
+<h2 id="如何从-v011-版本迁移到-v030">如何从 v0.1.1 版本迁移到 v0.3.0</h2>
 
 <p>我已经把迁移的成本降到最低，只要替换引入的文件即可：</p>
 
@@ -200,10 +206,10 @@
 <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-0.1.1.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
 
 <span class="c">&lt;!-- 新版本需要引入的文件 --&gt;</span>
-<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;https://cdn1.lncld.net/static/js/av-mini-0.6.10.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
-<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.2.0.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></figure>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;https://cdn1.lncld.net/static/js/av-min-1.5.0.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.3.0.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></figure>
 
-<p>因为 v0.2 版本基于 LeanCloud 的服务，所以需要额外引入 LeanCloud 的一个库文件。另外需要注意的是，第二个文件除了版本号做了更新，还多了 <code>-lc</code> 几个字符哦。</p>
+<p>因为 v0.3 版本基于 LeanCloud 的服务，所以需要额外引入 LeanCloud 的一个库文件。另外需要注意的是，第二个文件除了版本号做了更新，还多了 <code>-lc</code> 几个字符哦。</p>
 
 <p>本次更新在将后端服务从 SAE 替换为 LeanCloud 的同时并没有做太多的功能改进。最主要的一点功能改进是引入缓存机制，在数据超过默认的五分钟之前，<strong>Icarus</strong> 不会向服务器发送新的 get 请求。（increment 请求当然还是照发不误的啦）</p>
 
@@ -251,6 +257,10 @@
 </ul>
 
 <p>TODO List 可以在 <a href="https://github.com/zry656565/Hit-Kounter-LC/issues/1">这个 issue</a> 中看到，而且因为 <a href="https://github.com/zry656565/Hit-Kounter-LC">zry656565/Hit-Kounter-LC</a> 是开源项目，也很期待大家能够多吐槽，如果能给 <strong>Hit-Kounter-LC</strong> 贡献代码那就再好不过啦~。</p>
+
+<h3 id="update-20180602">Update 2018.06.02</h3>
+
+<p>我偷偷地把原文介绍的 v0.2 改成的 v0.3，仅仅多加了全站总访问数显示的功能。由于个人精力比较有限，所以后续很有可能不会再添加新的功能了。<strong>全站总访问数显示的功能</strong> 也是在一年半以前就完成的，只是这次正式地在文中介绍一下而已。</p>
 
   </article>
 
