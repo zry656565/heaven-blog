@@ -7,7 +7,7 @@ key: 10011
 labels: [JavaScript, 深复制]
 ---
 
-> 针对本话题，我在2015年5月发布了新的文章：[深入剖析 JavaScript 的深复制](https://jerryzou.com/posts/dive-into-deep-clone-in-javascript/)
+> 针对本话题，我在2015年5月发布了新的文章：[深入剖析 JavaScript 的深复制](http://jerryzou.com/posts/dive-into-deep-clone-in-javascript/)
 
 要实现深复制有很多办法，比如最简单的办法有：
 
