@@ -98,8 +98,8 @@ labels: ["自学", "思维导图"]
     - [为知笔记](http://www.wiz.cn/)
     - [有道云笔记](http://note.youdao.com/)
 
-[1]: {{ site.qiniu_static_url }}/xmind.png-h400
-[2]: {{ site.qiniu_static_url }}/trello-boards.png-h400
-[3]: {{ site.qiniu_static_url }}/trello-lists.png-h400
-[4]: {{ site.qiniu_static_url }}/pocket.png-h400
-[5]: {{ site.qiniu_static_url }}/evernote.png-h100
+[1]: {{ site.static_url }}/posts/xmind.png!h400
+[2]: {{ site.static_url }}/posts/trello-boards.png!h400
+[3]: {{ site.static_url }}/posts/trello-lists.png!h400
+[4]: {{ site.static_url }}/posts/pocket.png!h400
+[5]: {{ site.static_url }}/posts/evernote.png!h100
