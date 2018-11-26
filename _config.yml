@@ -20,7 +20,7 @@ permalink: pretty
 highlighter: pygments
 paginate: 7
 paginate_path: ":num/"
-exclude: [node_modules, .tmp, Gruntfile.js, _config, package.json, articles.raw]
+exclude: [node_modules, .tmp, Gruntfile.js, _config, package.json, articles.raw, vendor]
 
 # default Front matter
 defaults:

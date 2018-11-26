@@ -36,20 +36,18 @@ GEM
     mercenary (0.3.6)
     minima (2.1.0)
       jekyll (~> 3.3)
+    multi_json (1.13.1)
     pathutil (0.14.0)
       forwardable-extended (~> 2.6)
-    posix-spawn (0.3.12)
     public_suffix (2.0.4)
-    pygments.rb (0.6.3)
-      posix-spawn (~> 0.3.6)
-      yajl-ruby (~> 1.2.0)
+    pygments.rb (1.1.0)
+      multi_json (>= 1.0.0)
     rb-fsevent (0.9.8)
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
     rouge (1.11.1)
     safe_yaml (1.0.4)
     sass (3.4.22)
-    yajl-ruby (1.2.1)
 
 PLATFORMS
   ruby
@@ -61,10 +59,10 @@ DEPENDENCIES
   jekyll-paginate (= 1.1.0)
   jekyll-sitemap
   minima (~> 2.0)
-  pygments.rb (= 0.6.3)
+  pygments.rb (= 1.1.0)
 
 RUBY VERSION
-   ruby 2.3.3p222
+   ruby 2.3.7p456
 
 BUNDLED WITH
    1.16.1

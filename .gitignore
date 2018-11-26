@@ -20,3 +20,6 @@ node_modules
 #react cache
 build/.module-cache
 build/articles.js
+
+#bundler
+vendor
