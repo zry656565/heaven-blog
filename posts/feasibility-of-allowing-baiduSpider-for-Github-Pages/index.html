@@ -170,7 +170,7 @@ Alex</p>
 
 <p>来看一个例子，假设服务器端有这样一个PHP文件 hello.php：</p>
 
-<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="x">&lt;html&gt;</span>
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span></span><span class="x">&lt;html&gt;</span>
 <span class="x">    &lt;head&gt;...&lt;/head&gt;</span>
 <span class="x">    &lt;body&gt;Hello, </span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$name</span> <span class="cp">?&gt;</span><span class="x"> &lt;/body&gt;</span>
 <span class="x">&lt;/html&gt;</span></code></pre></figure>
@@ -217,7 +217,7 @@ Alex</p>
 
 <p>当然，不死心的我还是做了件奇怪的事……首先我在找到了<a href="http://forums.oscommerce.com/topic/382923-baiduspider-using-multiple-user-agents-how-to-stop-them/">所有 BaiduSpider 的 IP</a>，然后想要伪装成这些 IP 来请求内容，以此想在所有百度爬虫可能爬取的边缘服务器上都建立缓存。</p>
 
-<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span></span><span class="cp">&lt;?php</span>
 <span class="k">function</span> <span class="nf">Curl</span><span class="p">(</span><span class="nv">$url</span><span class="p">,</span> <span class="nv">$ip</span><span class="p">){</span>
     <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
     <span class="nb">curl_setopt_array</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="p">[</span>

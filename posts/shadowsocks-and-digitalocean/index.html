@@ -139,16 +139,16 @@
 
 <p>第一步，首先查看你本地设备上是否有 SSH keys。你可以运行以下指令：</p>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">cd ~/.ssh</span>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">cd ~/.ssh</span>
 <span class="go">ls *.pub</span></code></pre></figure>
 
 <p>如果没有任何输出，说明你需要创建一个新的 SSH key：</p>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">ssh-keygen -t rsa -C &quot;email@example.com&quot;</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">ssh-keygen -t rsa -C &quot;email@example.com&quot;</span></code></pre></figure>
 
 <p>后面的 email 请替换成你自己的 email。接着你就会看到类似下面的信息：</p>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">Generating public/private rsa key pair.</span>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">Generating public/private rsa key pair.</span>
 <span class="go">Enter file in which to save the key (/Users/you/.ssh/id_rsa): [Press enter]</span>
 <span class="go">Enter passphrase (empty for no passphrase): [Type a passphrase]</span>
 <span class="go">Enter same passphrase again: [Type passphrase again]</span>
@@ -170,23 +170,23 @@
 
 <p>首先需要远程登录到 DigitalOcean 的主机上，我租用的 San Francisco 的机房 IP 地址是 104.236.177.232。而因为之前已经建好了 SSH Key，所以直接用 root 用户登录即可：</p>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">ssh root@104.236.177.232</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">ssh root@104.236.177.232</span></code></pre></figure>
 
 <p>在 Debian / Ubuntu 下 安装 shadowsocks</p>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">apt-get install python-pip</span>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">apt-get install python-pip</span>
 <span class="go">pip install shadowsocks</span></code></pre></figure>
 
 <p>我在实际安装下发现很多依赖缺失，所以需要先执行一下：apt-get update。另外也有一些同学会选择 CentOS 的服务器，附上在 CentOS 下安装 shadowsocks 的方法：</p>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">yum install python-setuptools &amp;&amp; easy_install pip</span>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">yum install python-setuptools &amp;&amp; easy_install pip</span>
 <span class="go">pip install shadowsocks</span></code></pre></figure>
 
 <h3 id="启动-shadowsocks-服务">启动 shadowsocks 服务</h3>
 
 <p>安装好 shadowsocks 以后，启动 shadowsocks 服务可以通过以下指令：</p>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">ssserver -p 8836 -k 你设置的密码 -m rc4-md5</span>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">ssserver -p 8836 -k 你设置的密码 -m rc4-md5</span>
 
 <span class="gp">#</span> 或者可以通过以下指令在后台启动shadowsocks的服务：
 <span class="go">ssserver -p 8836 -k 你设置的密码 -m rc4-md5 -d start</span>
@@ -194,7 +194,7 @@
 
 <p>但上面的方法很不方便，我还是推荐使用配置文件的方法。首先创建一个文件：/etc/shadowsocks.json，示例如下：</p>
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span></span><span class="p">{</span>
     <span class="nt">&quot;server&quot;</span><span class="p">:</span><span class="s2">&quot;你的服务器ip地址&quot;</span><span class="p">,</span>
     <span class="nt">&quot;server_port&quot;</span><span class="p">:</span><span class="mi">8388</span><span class="p">,</span>
     <span class="nt">&quot;local_address&quot;</span><span class="p">:</span> <span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span>
@@ -207,7 +207,7 @@
 
 <p>接下来你就可以使用下面这个指令启动服务</p>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">ssserver -c /etc/shadowsocks.json</span>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">ssserver -c /etc/shadowsocks.json</span>
 
 <span class="gp">#</span> 或者在后台运行
 <span class="go">ssserver -c /etc/shadowsocks.json -d start</span>

@@ -146,7 +146,7 @@
 
 <p>举一些例子，应该能帮助你理解这个公式：</p>
 
-<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">3ff0 0000 0000 0000  =  1</span>
+<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span></span><span class="go">3ff0 0000 0000 0000  =  1</span>
 <span class="go">c000 0000 0000 0000  =  -2</span>
 <span class="go">3fd5 5555 5555 5555  ~  1/3</span>
 <span class="go">0000 0000 0000 0000  =  0</span>
@@ -163,7 +163,7 @@
 
 <p>熟悉 C 或者 C++ 的同学一定对位操作符不陌生。位操作符最主要的应用大概就是作为标志位与掩码。这是一种节省存储空间的高明手段，在曾经内存的大小以 KB 为单位计算时，每多一个变量就是一份额外的开销。而使用位操作符的掩码则在很大程度上缓解了这个问题：</p>
 
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#define LOG_ERRORS            1  </span><span class="c1">// 0001</span>
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span></span><span class="cp">#define LOG_ERRORS            1  </span><span class="c1">// 0001</span>
 <span class="cp">#define LOG_WARNINGS          2  </span><span class="c1">// 0010</span>
 <span class="cp">#define LOG_NOTICES           4  </span><span class="c1">// 0100</span>
 <span class="cp">#define LOG_INCOMING          8  </span><span class="c1">// 1000</span>
@@ -177,7 +177,7 @@
 
 <p>可惜位操作符在 JavaScript 中的表现就比较诡异了，因为 JavaScript 没有真正意义上的整型。看看如下代码的运行结果吧：</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">;</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kd">var</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">;</span>
 
 <span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span><span class="nx">e9</span><span class="p">;</span>   <span class="c1">// 2000000000</span>
 <span class="nx">a</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">;</span>    <span class="c1">// -294967296</span>

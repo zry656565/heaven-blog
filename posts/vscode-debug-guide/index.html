@@ -133,7 +133,7 @@
 
 <p>要使用 vscode 的调试功能，首先就得配置 <code>.vscode/launch.json</code> 文件。以最简单的 Node 调试配置为例：</p>
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span></span><span class="p">{</span>
     <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.2.0&quot;</span><span class="p">,</span>
     <span class="nt">&quot;configurations&quot;</span><span class="p">:</span> <span class="p">[</span>
         <span class="p">{</span>
@@ -168,7 +168,7 @@
 
 <p>其中调试 Chrome 页面的配置如下所示：</p>
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span></span><span class="p">{</span>
     <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.2.0&quot;</span><span class="p">,</span>
     <span class="nt">&quot;configurations&quot;</span><span class="p">:</span> <span class="p">[</span>
         <span class="p">{</span>
@@ -198,7 +198,7 @@
 
 <p>在这种情况下 <code>attach</code> 模式就有它存在的意义了：对一个已经启动的 Chrome 进行监听调试。</p>
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span></span><span class="p">{</span>
     <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.2.0&quot;</span><span class="p">,</span>
     <span class="nt">&quot;configurations&quot;</span><span class="p">:</span> <span class="p">[</span>
         <span class="p">{</span>
@@ -224,7 +224,7 @@
 
 <p>如今，使用 Node 服务器开发一些中间层的服务也慢慢纳入了所谓“大前端”的范畴。而在开发 Node 服务时，我们通常要借助类似于 <a href="https://github.com/remy/nodemon">nodemon</a> 这样的工具来避免频繁手动重启服务器。在这种情况下，我们又如何利用 vscode 来进行断点调试呢？先来看看示例配置文件：</p>
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span></span><span class="p">{</span>
     <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.2.0&quot;</span><span class="p">,</span>
     <span class="nt">&quot;configurations&quot;</span><span class="p">:</span> <span class="p">[</span>
         <span class="p">{</span>
@@ -282,7 +282,7 @@
 
 <p>需要注意的是，在启动 nodemon 程序时，也要添加对应的参数，比如：</p>
 
-<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">nodemon --debug server/app.js</span>
+<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span></span><span class="go">nodemon --debug server/app.js</span>
 <span class="go">nodemon --inspect server/app.js</span></code></pre></figure>
 
 <p>详细的例子同样可以在 <a href="https://github.com/zry656565/vscode-debug-sample">zry656565/vscode-debug-sample</a> 中找到。</p>

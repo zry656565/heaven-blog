@@ -140,34 +140,34 @@
 
 <p>因此我们需要先<a href="http://lbsyun.baidu.com/apiconsole/key?application=key">申请密钥</a>，过程非常简单，几步就完成，在此就不多赘述了。申请完毕你就得到了属于自己的ak，接下来就可以建立如下的hello world网页了哦！别忘了把<code>ak=您的密钥</code>这部分改称你申请好的密钥。</p>
 
-<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
-<span class="nt">&lt;html&gt;</span>
-<span class="nt">&lt;head&gt;</span>
-    <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">&quot;Content-Type&quot;</span> <span class="na">content=</span><span class="s">&quot;text/html; charset=utf-8&quot;</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content=</span><span class="s">&quot;initial-scale=1.0, user-scalable=no&quot;</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;style </span><span class="na">type=</span><span class="s">&quot;text/css&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">body</span><span class="o">,</span> <span class="nt">html</span><span class="o">,</span><span class="nf">#allmap</span> <span class="p">{</span><span class="k">width</span><span class="o">:</span> <span class="m">100%</span><span class="p">;</span><span class="k">height</span><span class="o">:</span> <span class="m">100%</span><span class="p">;</span><span class="k">overflow</span><span class="o">:</span> <span class="k">hidden</span><span class="p">;</span><span class="k">margin</span><span class="o">:</span><span class="m">0</span><span class="p">;</span><span class="k">font-family</span><span class="o">:</span><span class="s2">&quot;微软雅黑&quot;</span><span class="p">;}</span>
-    <span class="nt">&lt;/style&gt;</span>
-    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;http://api.map.baidu.com/api?v=2.0&amp;ak=您的密钥&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
-    <span class="nt">&lt;title&gt;</span>地图展示<span class="nt">&lt;/title&gt;</span>
-<span class="nt">&lt;/head&gt;</span>
-<span class="nt">&lt;body&gt;</span>
-    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;allmap&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
-<span class="nt">&lt;/body&gt;</span>
-<span class="nt">&lt;/html&gt;</span>
-<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">http-equiv</span><span class="o">=</span><span class="s">&quot;Content-Type&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;text/html; charset=utf-8&quot;</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;initial-scale=1.0, user-scalable=no&quot;</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">style</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/css&quot;</span><span class="p">&gt;</span>
+    <span class="nt">body</span><span class="o">,</span> <span class="nt">html</span><span class="o">,</span><span class="p">#</span><span class="nn">allmap</span> <span class="p">{</span><span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span><span class="k">height</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span><span class="k">overflow</span><span class="p">:</span> <span class="kc">hidden</span><span class="p">;</span><span class="k">margin</span><span class="p">:</span><span class="mi">0</span><span class="p">;</span><span class="k">font-family</span><span class="p">:</span><span class="s2">&quot;微软雅黑&quot;</span><span class="p">;}</span>
+    <span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;http://api.map.baidu.com/api?v=2.0&amp;ak=您的密钥&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>地图展示<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;allmap&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
     <span class="c1">// 百度地图API功能</span>
     <span class="kd">var</span> <span class="nx">map</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BMap</span><span class="p">.</span><span class="nx">Map</span><span class="p">(</span><span class="s2">&quot;allmap&quot;</span><span class="p">);</span>    <span class="c1">// 创建Map实例</span>
     <span class="nx">map</span><span class="p">.</span><span class="nx">centerAndZoom</span><span class="p">(</span><span class="k">new</span> <span class="nx">BMap</span><span class="p">.</span><span class="nx">Point</span><span class="p">(</span><span class="mf">116.404</span><span class="p">,</span> <span class="mf">39.915</span><span class="p">),</span> <span class="mi">11</span><span class="p">);</span>  <span class="c1">// 初始化地图,设置中心点坐标和地图级别</span>
     <span class="nx">map</span><span class="p">.</span><span class="nx">addControl</span><span class="p">(</span><span class="k">new</span> <span class="nx">BMap</span><span class="p">.</span><span class="nx">MapTypeControl</span><span class="p">());</span>   <span class="c1">//添加地图类型控件</span>
     <span class="nx">map</span><span class="p">.</span><span class="nx">setCurrentCity</span><span class="p">(</span><span class="s2">&quot;北京&quot;</span><span class="p">);</span>          <span class="c1">// 设置地图显示的城市 此项是必须设置的</span>
-<span class="nt">&lt;/script&gt;</span></code></pre></figure>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code></pre></figure>
 
 <h2 id="2添加校园巴士车站">2.添加校园巴士车站</h2>
 
 <p>首先本应用所有的数据都存储在一个<code>data.json</code>文件中，其中校园巴士车站存储的数据结构如下。数组中每一个子数组代表一个车站，子数组的三个元素分别代表站点名和经纬度。</p>
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span></span><span class="p">{</span>
     <span class="nt">&quot;stopList&quot;</span><span class="p">:[</span>
         <span class="p">[</span><span class="s2">&quot;东川路地铁站&quot;</span><span class="p">,</span> <span class="mf">121.426814</span><span class="p">,</span> <span class="mf">31.023853</span><span class="p">],</span>
         <span class="p">[</span><span class="s2">&quot;菁菁堂&quot;</span><span class="p">,</span> <span class="mf">121.436534</span><span class="p">,</span> <span class="mf">31.02475</span><span class="p">],</span>
@@ -183,7 +183,7 @@
 
 <p>在设计好了上面的数据结构后，添加车站就非常容易了：</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">stopList</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">stopList</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">point</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BMap</span><span class="p">.</span><span class="nx">Point</span><span class="p">(</span><span class="nx">stopList</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="nx">stopList</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]);</span>
     <span class="kd">var</span> <span class="nx">marker</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BMap</span><span class="p">.</span><span class="nx">Marker</span><span class="p">(</span><span class="nx">point</span><span class="p">);</span>
     <span class="kd">var</span> <span class="nx">label</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BMap</span><span class="p">.</span><span class="nx">Label</span><span class="p">(</span><span class="nx">stopList</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],{</span><span class="nx">offset</span><span class="o">:</span><span class="k">new</span> <span class="nx">BMap</span><span class="p">.</span><span class="nx">Size</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="o">-</span><span class="mi">10</span><span class="p">)});</span>
@@ -194,7 +194,7 @@
 <h2 id="3绘制校园巴士路径">3.绘制校园巴士路径</h2>
 <p>校园巴士行车路径存储的数据结构如下，就是由一堆点的经纬度构成的。</p>
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span></span><span class="p">{</span>
     <span class="nt">&quot;lineList&quot;</span><span class="p">:</span> <span class="p">[</span>
         <span class="p">[</span><span class="mf">121.436534</span><span class="p">,</span> <span class="mf">31.02475</span><span class="p">],</span>
         <span class="p">[</span><span class="mf">121.439911</span><span class="p">,</span> <span class="mf">31.025764</span><span class="p">],</span>
@@ -209,7 +209,7 @@
 
 <p>在设计好了上面的数据结构后，依样画葫芦，我们就能得到想要的路径了：</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//绘制路线</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="c1">//绘制路线</span>
 <span class="kd">var</span> <span class="nx">pointArr</span> <span class="o">=</span> <span class="p">[];</span>
 <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">lineList</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">pointArr</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="k">new</span> <span class="nx">BMap</span><span class="p">.</span><span class="nx">Point</span><span class="p">(</span><span class="nx">lineList</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="nx">lineList</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]));</span>
@@ -220,7 +220,7 @@
 <h2 id="4弹出校园巴士时刻表">4.弹出校园巴士时刻表</h2>
 <p>校园巴士行车时刻表存储的数据结构如下，就是由一堆点的经纬度构成的。</p>
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span></span><span class="p">{</span>
     <span class="nt">&quot;stopTime&quot;</span><span class="p">:{</span>
         <span class="nt">&quot;东川路地铁站&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="nt">&quot;direct1&quot;</span><span class="p">:</span> <span class="s2">&quot;07:24 07:39 07:54 08:09 17:03 17:28 17:58 18:43 19:28 20:28&quot;</span><span class="p">,</span>

@@ -127,7 +127,7 @@
 
 <p>在 Underscore 中有这样一个方法：<code>_.clone()</code>，这个方法实际上是一种浅复制 (shallow-copy)，所有嵌套的对象和数组都是直接复制引用而并没有进行深复制。来看一下例子应该会更加直观：</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="p">{</span>
     <span class="nx">a</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
     <span class="nx">b</span><span class="o">:</span> <span class="p">{</span> <span class="nx">z</span><span class="o">:</span> <span class="mi">0</span> <span class="p">}</span>
 <span class="p">};</span>
@@ -142,7 +142,7 @@
 
 <p>让我们来看一下 <a href="https://github.com/jashkenas/underscore/blob/e4743ab712b8ab42ad4ccb48b155034d02394e4d/underscore.js#L1068">Underscore 的源码</a>：</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// Create a (shallow-cloned) duplicate of an object.</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="c1">// Create a (shallow-cloned) duplicate of an object.</span>
 <span class="nx">_</span><span class="p">.</span><span class="nx">clone</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">_</span><span class="p">.</span><span class="nx">isObject</span><span class="p">(</span><span class="nx">obj</span><span class="p">))</span> <span class="k">return</span> <span class="nx">obj</span><span class="p">;</span>
   <span class="k">return</span> <span class="nx">_</span><span class="p">.</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="o">?</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">slice</span><span class="p">()</span> <span class="o">:</span> <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">obj</span><span class="p">);</span>
@@ -152,7 +152,7 @@
 
 <p>Underscore 的 <code>clone()</code> 不能算作深复制，但它至少比直接赋值来得“深”一些，它创建了一个新的对象。另外，你也可以通过以下比较 tricky 的方法来完成<strong>单层</strong>嵌套的深复制：</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">_</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;underscore&#39;</span><span class="p">);</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kd">var</span> <span class="nx">_</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;underscore&#39;</span><span class="p">);</span>
 <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">[{</span><span class="nx">f</span><span class="o">:</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="nx">f</span><span class="o">:</span><span class="mi">5</span><span class="p">},</span> <span class="p">{</span><span class="nx">f</span><span class="o">:</span><span class="mi">10</span><span class="p">}];</span>
 <span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">_</span><span class="p">.</span><span class="nx">clone</span><span class="p">);</span>       <span class="c1">// &lt;----</span>
 <span class="nx">b</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">f</span> <span class="o">=</span> <span class="mi">55</span><span class="p">;</span>
@@ -162,7 +162,7 @@
 
 <p>在 jQuery 中也有这么一个叫 <code>$.clone()</code> 的方法，可是它并不是用于一般的 JS 对象的深复制，而是用于 DOM 对象。这不是这篇文章的重点，所以感兴趣的同学可以参考<a href="http://api.jquery.com/clone/">jQuery的文档</a>。与 Underscore 类似，我们也是可以通过 <code>$.extend()</code> 方法来完成深复制。值得庆幸的是，我们在 jQuery 中可以通过添加一个参数来实现<strong>递归extend</strong>。调用<code>$.extend(true, {}, ...)</code>就可以实现深复制啦，参考下面的例子：</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="p">{</span>
     <span class="nx">a</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
     <span class="nx">b</span><span class="o">:</span> <span class="p">{</span> <span class="nx">f</span><span class="o">:</span> <span class="p">{</span> <span class="nx">g</span><span class="o">:</span> <span class="mi">1</span> <span class="p">}</span> <span class="p">},</span>
     <span class="nx">c</span><span class="o">:</span> <span class="p">[</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span> <span class="p">]</span>
@@ -180,7 +180,7 @@
 
 <p>在lodash中关于复制的方法有两个，分别是<code>_.clone()</code>和<code>_.cloneDeep()</code>。其中<code>_.clone(obj, true)</code>等价于<code>_.cloneDeep(obj)</code>。使用上，lodash和前两者并没有太大的区别，但看了源码会发现，Underscore 的实现只有30行左右，而 jQuery 也不过60多行。可 lodash 中与深复制相关的代码却有上百行，这是什么道理呢？</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">$</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;jquery&quot;</span><span class="p">),</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kd">var</span> <span class="nx">$</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;jquery&quot;</span><span class="p">),</span>
     <span class="nx">_</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;lodash&quot;</span><span class="p">);</span>
 
 <span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Int16Array</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>
@@ -207,7 +207,7 @@
 
 <p>通过上面这个例子可以初见端倪，jQuery 无法正确深复制 JSON 对象以外的对象，而我们可以从下面这段代码片段可以看出 lodash 花了大量的代码来实现 ES6 引入的大量新的标准对象。更厉害的是，lodash 针对<strong>存在环的对象</strong>的处理也是非常出色的。因此相较而言，lodash 在深复制上的行为反馈比前两个库好很多，是更拥抱未来的一个第三方库。</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="cm">/** `Object#toString` result references. */</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="cm">/** `Object#toString` result references. */</span>
 <span class="kd">var</span> <span class="nx">argsTag</span> <span class="o">=</span> <span class="s1">&#39;[object Arguments]&#39;</span><span class="p">,</span>
     <span class="nx">arrayTag</span> <span class="o">=</span> <span class="s1">&#39;[object Array]&#39;</span><span class="p">,</span>
     <span class="nx">boolTag</span> <span class="o">=</span> <span class="s1">&#39;[object Boolean]&#39;</span><span class="p">,</span>
@@ -237,7 +237,7 @@
 
 <p>相比于上面介绍的三个库的做法，针对纯 JSON 数据对象的深复制，使用 JSON 全局对象的 <code>parse</code> 和 <code>stringify</code> 方法来实现深复制也算是一个简单讨巧的方法。然而使用这种方法会有一些隐藏的坑，它能正确处理的对象只有 Number, String, Boolean, Array, 扁平对象，即那些能够被 json 直接表示的数据结构。</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">jsonClone</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kd">function</span> <span class="nx">jsonClone</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">obj</span><span class="p">));</span>
 <span class="p">}</span>
 <span class="kd">var</span> <span class="nx">clone</span> <span class="o">=</span> <span class="nx">jsonClone</span><span class="p">({</span> <span class="nx">a</span><span class="o">:</span><span class="mi">1</span> <span class="p">});</span></code></pre></figure>
@@ -248,7 +248,7 @@
 
 <p>这个实现方法具体可以看我写的一个小玩意儿——<a href="https://github.com/cherryjs/cherry.js">Cherry.js</a>，使用方法大概是这样的：</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">X</span><span class="p">()</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kd">function</span> <span class="nx">X</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span>
 <span class="p">}</span>
@@ -262,7 +262,7 @@
 
 <p>首先定义一个辅助函数，用于在预定义对象的 Prototype 上定义方法：</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">defineMethods</span><span class="p">(</span><span class="nx">protoArray</span><span class="p">,</span> <span class="nx">nameToFunc</span><span class="p">)</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kd">function</span> <span class="nx">defineMethods</span><span class="p">(</span><span class="nx">protoArray</span><span class="p">,</span> <span class="nx">nameToFunc</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">protoArray</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">proto</span><span class="p">)</span> <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">names</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">nameToFunc</span><span class="p">),</span>
             <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
@@ -280,7 +280,7 @@
 
 <p>为了避免和源生方法冲突，我在方法名前加了一个 <code>$</code> 符号。而这个方法的具体实现很简单，就是递归深复制。其中我需要解释一下两个参数：<code>srcStack</code>和<code>dstStack</code>。它们的主要用途是对存在环的对象进行深复制。比如源对象中的子对象<code>srcStack[7]</code>在深复制以后，对应于<code>dstStack[7]</code>。该实现方法参考了 lodash 的实现。关于递归最重要的就是 Object 和 Array 对象：</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="cm">/*=====================================*</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="cm">/*=====================================*</span>
 <span class="cm"> * Object.prototype</span>
 <span class="cm"> * - $clone()</span>
 <span class="cm">*=====================================*/</span>
@@ -356,7 +356,7 @@
 
 <p>接下来要针对 Date 和 RegExp 对象的深复制进行一些特殊处理：</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="cm">/*=====================================*</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="cm">/*=====================================*</span>
 <span class="cm"> * Date.prototype</span>
 <span class="cm"> * - $clone</span>
 <span class="cm"> *=====================================*/</span>
@@ -383,7 +383,7 @@
 
 <p>接下来就是 Number, Boolean 和 String 的 <code>$clone</code> 方法，虽然很简单，但这也是必不可少的。这样就能防止像单个字符串这样的对象错误地去调用 <code>Object.prototype.$clone</code>。</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="cm">/*=====================================*</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="cm">/*=====================================*</span>
 <span class="cm"> * Number / Boolean / String.prototype</span>
 <span class="cm"> * - $clone()</span>
 <span class="cm"> *=====================================*/</span>
@@ -472,7 +472,7 @@
 
 <p>为了测试各种深复制方法的执行效率，我使用了如下的测试用例：</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="p">{};</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="p">{};</span>
 <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">x</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">{};</span>
     <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>

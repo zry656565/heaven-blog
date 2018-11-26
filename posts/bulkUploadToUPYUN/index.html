@@ -141,7 +141,7 @@
 
 <p>在这里我们仅使用它的核心API，只需要引入一个文件即可。</p>
 
-<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;lib/plupload-2.1.2/js/plupload.full.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;lib/plupload-2.1.2/js/plupload.full.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code></pre></figure>
 
 <p>官方给出的核心API例子非常简单，可以直接移步<a href="http://www.plupload.com/examples/core">http://www.plupload.com/examples/core</a>查看。核心API在理解上不存在什么困难，如果需要帮助可以在本文后面向我提问。</p>
 
@@ -151,7 +151,7 @@
 
 <p>图片的本地压缩功能在plupload中是支持的，只要在初始化它的时候传入一个<code>resize</code>参数就好了。其中，宽度和高度可以根据实际情况设置，而<code>quality</code>是比较重要的一个参数，顾名思义，这个值设置得越小，图片越小，但显示的质量也会越差，这个就需要你自己权衡一下啦。</p>
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span></span><span class="p">{</span>
     <span class="nt">&quot;resize&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="nt">&quot;width&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
         <span class="nt">&quot;height&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
@@ -163,10 +163,10 @@
 
 <p>批量上传图片的一个前置条件就是能够多选图片。多选文件是HTML5的一个标准特性，我们可以通过如下方式来开启多选模式：</p>
 
-<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">&quot;xxx&quot;</span><span class="nt">&gt;</span>
-  Select images: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;file&quot;</span> <span class="na">name=</span><span class="s">&quot;img&quot;</span> <span class="na">multiple</span><span class="nt">&gt;</span> <span class="c">&lt;!-- multiple 在这儿是关键！--&gt;</span>
-  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span><span class="nt">&gt;</span>
-<span class="nt">&lt;/form&gt;</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span></span><span class="p">&lt;</span><span class="nt">form</span> <span class="na">action</span><span class="o">=</span><span class="s">&quot;xxx&quot;</span><span class="p">&gt;</span>
+  Select images: <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;file&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;img&quot;</span> <span class="na">multiple</span><span class="p">&gt;</span> <span class="c">&lt;!-- multiple 在这儿是关键！--&gt;</span>
+  <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span></code></pre></figure>
 
 <p>根据一个非常优秀的jquery插件jQuery-File-Upload的<a href="https://github.com/blueimp/jQuery-File-Upload/wiki/Browser-support">浏览器支持</a>中<strong>Multiple File selection</strong>这个小节所写的那样，IE一直发展到<code>IE10</code>才刚开始支持这个HTML5的特性，那么我们又不得不借助Flash神奇的力量来对低版本浏览器进行多选图片的支持。幸运的是plupload已经帮我们做到了这一点，而且这一开关是默认开启的。如果你觉得你不需要用到多选图片，你可以设置<code>multi_selection: false</code>来关闭这个特性。</p>
 
@@ -180,7 +180,7 @@
 
 <p>为了演示方便，此处直接使用javascript来生成Policy和Signature。<strong>但在实际使用中，为了安全性考虑，请在服务器端完成这个过程。</strong>下面的代码在官方的demo基础上做了些许修改，主要是使用了官方的测试帐号，关于这两个参数的具体生成方法，请参考官方的文档：<a href="http://docs.upyun.com/api/form_api/">http://docs.upyun.com/api/form_api/</a>。</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;bucket&#39;</span><span class="o">:</span> <span class="s1">&#39;demonstration&#39;</span><span class="p">,</span>
     <span class="s1">&#39;save-key&#39;</span><span class="o">:</span> <span class="s1">&#39;/test/filename.txt&#39;</span><span class="p">,</span>
     <span class="s1">&#39;expiration&#39;</span><span class="o">:</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">+</span> <span class="mi">86400</span>
@@ -198,7 +198,7 @@
 
 <p>于是根据这篇文章中关于浏览器端配置的介绍，我琢磨出了上传到又拍云所需要的配置。其实说起来也很简单，主要就是对<code>url</code>和<code>multipart_params</code>两个参数进行配置。下面的例子中的<code>options.bucket</code>、<code>policy</code>和<code>signature</code>直接使用上一节计算出来的值。</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">uploader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">plupload</span><span class="p">.</span><span class="nx">Uploader</span><span class="p">({</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kd">var</span> <span class="nx">uploader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">plupload</span><span class="p">.</span><span class="nx">Uploader</span><span class="p">({</span>
     <span class="p">...</span>
     <span class="nx">url</span> <span class="o">:</span> <span class="s1">&#39;http://v0.api.upyun.com/&#39;</span> <span class="o">+</span> <span class="nx">options</span><span class="p">.</span><span class="nx">bucket</span><span class="p">,</span>
     <span class="nx">multipart_params</span><span class="o">:</span> <span class="p">{</span>

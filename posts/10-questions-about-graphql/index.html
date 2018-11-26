@@ -160,13 +160,13 @@
 
 <p>假设我们有这样一个接口：</p>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">GET /user/:userId/friends/</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">GET /user/:userId/friends/</span></code></pre></figure>
 
 <p>而 A 有 20 个好朋友，那么我们总共需要发送 20 + 1 = 21 次 REST 请求。</p>
 
 <p>或者我们为了这种特殊场景设计出以下接口：</p>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">GET /user/:userId/friendsAndHisFriends/</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">GET /user/:userId/friendsAndHisFriends/</span></code></pre></figure>
 
 <p>emmmmm… 虽然看起来很别扭，但是只需要一次请求呢！</p>
 
@@ -174,7 +174,7 @@
 
 <p>首先我们需要给 User 定义 Schema (GraphQL 有一套完整的<a href="http://graphql.org/learn/schema/">类型系统</a>)：</p>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">type User {</span>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">type User {</span>
 <span class="go">  id: ID!</span>
 <span class="go">  name: String!</span>
 <span class="go">  friends: [User]</span>
@@ -182,13 +182,13 @@
 
 <p>假设我们在 Graph root 上只挂了一个 Node，叫 user:</p>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">type Query {</span>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">type Query {</span>
 <span class="go">  user(id: ID!): User</span>
 <span class="go">}</span></code></pre></figure>
 
 <p>那么我们从客户端发送的 query 就可以写成这样：</p>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">query ($userId: ID) {</span>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">query ($userId: ID) {</span>
 <span class="go">  user(id: $userId) {</span>
 <span class="go">    name</span>
 <span class="go">    friends {</span>
@@ -250,7 +250,7 @@
 
 <p>什么是 N+1 问题？首先我们来举个简单的例子：</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">get</span><span class="p">:</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">def</span> <span class="nf">get</span><span class="p">:</span>
     <span class="n">users</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">users</span><span class="p">:</span>
         <span class="k">print</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">score</span><span class="p">)</span></code></pre></figure>
@@ -294,7 +294,7 @@
 
 <p>再以找朋友为例，借用 SQL 查询中常用的筛选方法，分页接口可以设计为：</p>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">query ($userId: ID) {</span>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">query ($userId: ID) {</span>
 <span class="go">  user(id: $userId) {</span>
 <span class="go">    name</span>
 <span class="go">    friends(first: 2, offset: 3) {</span>
@@ -320,7 +320,7 @@
   <li>注：apollo-client 兼容该分页接口</li>
 </ul>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">query {</span>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">query {</span>
 <span class="go">  user {</span>
 <span class="go">    name</span>
 <span class="go">    friends(first: 2, after: $cursor) {</span>

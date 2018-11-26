@@ -158,25 +158,25 @@
 
 <p>可以看以下这个例子，看看对于HTML5中新出现的<code>input</code>类型<code>search</code>，<code>Normalize.css</code>是如何保证跨浏览器的一致性的。</p>
 
-<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="c">/**</span>
+<figure class="highlight"><pre><code class="language-css" data-lang="css"><span></span><span class="c">/**</span>
 <span class="c"> * 1. Addresses appearance set to searchfield in S5, Chrome</span>
 <span class="c"> * 2. Addresses box-sizing set to border-box in S5, Chrome (include -moz to future-proof)</span>
 <span class="c"> */</span>
 
 <span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="s2">&quot;search&quot;</span><span class="o">]</span> <span class="p">{</span>
-  <span class="o">-</span><span class="n">webkit</span><span class="o">-</span><span class="n">appearance</span><span class="o">:</span> <span class="n">textfield</span><span class="p">;</span> <span class="c">/* 1 */</span>
-  <span class="o">-</span><span class="n">moz</span><span class="o">-</span><span class="n">box</span><span class="o">-</span><span class="n">sizing</span><span class="o">:</span> <span class="k">content</span><span class="o">-</span><span class="n">box</span><span class="p">;</span>
-  <span class="o">-</span><span class="n">webkit</span><span class="o">-</span><span class="n">box</span><span class="o">-</span><span class="n">sizing</span><span class="o">:</span> <span class="k">content</span><span class="o">-</span><span class="n">box</span><span class="p">;</span> <span class="c">/* 2 */</span>
-  <span class="n">box</span><span class="o">-</span><span class="n">sizing</span><span class="o">:</span> <span class="k">content</span><span class="o">-</span><span class="n">box</span><span class="p">;</span>
+  <span class="kp">-webkit-</span><span class="k">appearance</span><span class="p">:</span> <span class="n">textfield</span><span class="p">;</span> <span class="c">/* 1 */</span>
+  <span class="kp">-moz-</span><span class="k">box-sizing</span><span class="p">:</span> <span class="kc">content-box</span><span class="p">;</span>
+  <span class="kp">-webkit-</span><span class="k">box-sizing</span><span class="p">:</span> <span class="kc">content-box</span><span class="p">;</span> <span class="c">/* 2 */</span>
+  <span class="k">box-sizing</span><span class="p">:</span> <span class="kc">content-box</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="c">/**</span>
 <span class="c"> * Removes inner padding and search cancel button in S5, Chrome on OS X</span>
 <span class="c"> */</span>
 
-<span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="s2">&quot;search&quot;</span><span class="o">]:</span><span class="nd">:-webkit-search-decoration</span><span class="o">,</span>
-<span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="s2">&quot;search&quot;</span><span class="o">]:</span><span class="nd">:-webkit-search-cancel-button</span> <span class="p">{</span>
-  <span class="o">-</span><span class="n">webkit</span><span class="o">-</span><span class="n">appearance</span><span class="o">:</span> <span class="k">none</span><span class="p">;</span>
+<span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="s2">&quot;search&quot;</span><span class="o">]</span><span class="p">::</span><span class="nd">-webkit-search-decoration</span><span class="o">,</span>
+<span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="s2">&quot;search&quot;</span><span class="o">]</span><span class="p">::</span><span class="nd">-webkit-search-cancel-button</span> <span class="p">{</span>
+  <span class="kp">-webkit-</span><span class="k">appearance</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
 <span class="p">}</span></code></pre></figure>
 
 <h5 id="3-normalizecss-不会让你的调试工具变的杂乱">3. Normalize.css 不会让你的调试工具变的杂乱</h5>

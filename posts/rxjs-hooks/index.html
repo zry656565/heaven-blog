@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+        
+            像呼吸一样自然：React hooks + RxJS | 咀嚼之味
+        </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="上个月的 React Conf 上，React 核心团队首次将 hooks 带到的公众们的眼前。起初我看到这样奇怪的东西，对它是很抗拒的。Dan 说 JavaScript 里的 this 太黑了，从其他语言转来写 React 的人会很不适应。然而 hooks 本质上也是一种黑魔法，需要理解它的本质依旧需要对 JS 的各种闭包和作用域的问题搞得很透彻才行。然而后来，跟 hooks 打了几天交道以后，我感觉这个想法还是挺有意思的。 ">
+    <link rel="alternate" type="application/rss+xml" title="咀嚼之味 RSS" href="/feed.xml">
+    <link rel="canonical" href="http://jerryzou.com/posts/rxjs-hooks/">
+    <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/release/style.7785cd8c.css">
+
+    <!-- Baidu Analysis -->
+    <script>
+        if (window.location.href.substr(7, 9) !== 'localhost') {
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?2744fd74aa568e064f9986394a60ead1";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+            })();
+        }
+    </script>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-47842677-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+    <!-- Hit Kounter LC -->
+    <script src="https://cdn1.lncld.net/static/js/av-min-1.5.0.js"></script>
+    <script src="https://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.3.0.js"></script>
+    
+    <!-- handle external js files -->
+    <script src="/assets/js/lib/jquery/jquery-1.11.1.min.js"></script>
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+  <div class="wrap">
+    <a class="site-title" href="/">咀嚼之味</a>
+    <nav class="site-nav">
+      <div class="menu-icon">
+        <img class="icon" src="http://jerryblog-image.b0.upaiyun.com/blog/menu.svg" title="More"/>
+      </div>
+      <div class="trigger">
+        <a class="page-link" href="/">首页</a>
+        
+          
+          <a class="page-link" href="/all-articles/">所有文章</a>
+          
+        
+          
+          <a class="page-link" href="/about/">关于我</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          <a class="page-link" href="/feed.xml">RSS订阅</a>
+      </div>
+    </nav>
+  </div>
+  <!-- fork me on github -->
+  <a id="fork-me" href="https://github.com/zry656565/heaven-blog"><img src="http://jerryblog-image.b0.upaiyun.com/blog/forkme.png" alt="Fork me on GitHub"></a>
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+        
+        <div class="post">
+
+  <header class="post-header">
+    <h1>像呼吸一样自然：React hooks + RxJS</h1>
+    <p class="meta">Nov 27, 2018 <span class="pause"> - </span>
+        浏览量：<span data-hk-page="current"> - </span>次<span class="pause"> | </span>
+        
+            
+                <a class="label" href="/all-articles/?label=RxJS">RxJS</a>
+            
+                <a class="label" href="/all-articles/?label=React">React</a>
+            
+                <a class="label" href="/all-articles/?label=react-hooks">react-hooks</a>
+            
+        
+    </p>
+  </header>
+
+  <article class="post-content">
+  <p>上个月的 React Conf 上，React 核心团队首次将 hooks 带到的公众们的眼前。起初我看到这样奇怪的东西，对它是很抗拒的。Dan 说 JavaScript 里的 this 太黑了，从其他语言转来写 React 的人会很不适应。然而 hooks 本质上也是一种黑魔法，需要理解它的本质依旧需要对 JS 的各种闭包和作用域的问题搞得很透彻才行。</p>
+
+<p>然而后来，跟 hooks 打了几天交道以后，我感觉这个想法还是挺有意思的。首先推荐一下 React Conf 上的开篇演讲：<a href="https://www.youtube.com/watch?v=dpw9EHDh2bM">React Today and Tomorrow and 90% Cleaner React With Hooks</a>，值得一看。</p>
+
+<p>我们团队一直对 RxJS 青睐有加，但一直苦于它和 React 结合起来使用实在是有些繁琐。上周 @太狼 就决定在 hooks api 上试试水。结果那一整天我都听见身边在喊，“真香”。</p>
+
+<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/rxjs-hooks/真香.gif" alt="真香" /></p>
+
+<h2 id="rxjs-hooks">rxjs-hooks</h2>
+
+<p>那么用 hooks 写 RxJS 代码究竟有多香呢？让我们一起来看看，这个让妈妈开心，开了又开的开源项目：<a href="https://github.com/LeetCode-OpenSource/rxjs-hooks">LeetCode-OpenSource/rxjs-hooks</a></p>
+
+<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/rxjs-hooks/ben-lesh.png" alt="ben-lesh-twitter" /></p>
+
+<p>我们有完整的测试用例，测试覆盖率 100%。目前一共只有两个 hooks：<code>useObservable</code> 和 <code>useEventCallback</code>。还是直接用例子解释来得简单明了，让我们首先回想一下，怎么在 React Component 中创建、订阅，并销毁一个流。大概是这个样子：</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kr">import</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">interval</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;rxjs&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">tap</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;rxjs/operators&#39;</span><span class="p">;</span>
+
+<span class="kr">class</span> <span class="nx">Timer</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">val</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="p">};</span>
+
+  <span class="nx">subscription</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Subscription</span><span class="p">();</span>
+
+  <span class="nx">componentDidMount</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">sub</span> <span class="o">=</span> <span class="nx">interval</span><span class="p">(</span><span class="mi">1000</span><span class="p">).</span><span class="nx">pipe</span><span class="p">(</span>
+	  <span class="nx">tap</span><span class="p">((</span><span class="nx">val</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span> <span class="nx">val</span> <span class="p">}))</span>
+	<span class="p">)</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">subscription</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">sub</span><span class="p">)</span>
+  <span class="p">}</span>
+
+  <span class="nx">componentWillUnmount</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">subscription</span><span class="p">.</span><span class="nx">unsubscribe</span><span class="p">()</span>
+  <span class="p">}</span>
+
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">val</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>手动订阅，手动管理声明周期，还要通过 React 中的 state 搭建一个与 render 函数 (UI) 之间的桥梁。那么使用 rxjs-hooks 之后呢：</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kr">import</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">interval</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;rxjs&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">useObservable</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;rxjs-hooks&#39;</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nx">Timer</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">val</span> <span class="o">=</span> <span class="nx">useObservable</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">interval</span><span class="p">(</span><span class="mi">1000</span><span class="p">),</span> <span class="mi">0</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">val</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>没有手动订阅，不需要再理会生命周期的管理。只需要一个<a href="https://bundlephobia.com/result?p=rxjs-hooks@0.2.0">不到 1kb 的依赖</a>，就能在 React 世界里快乐地拥抱 RxJS 。</p>
+
+<h3 id="api-详解">API 详解</h3>
+
+<p>本小节中将结合一些例子来简单介绍一下 rxjs-hooks 中的两个 API。详细的类型定义可以 <a href="https://github.com/LeetCode-OpenSource/rxjs-hooks#apis">访问这里</a> 查看。下面会结合例子进行讲解，这样应该会比较通俗易懂一点。</p>
+
+<p><strong>注意</strong></p>
+
+<ul>
+  <li>以下案例均基于 RxJS 6</li>
+  <li>如果对 React hooks 不够了解，建议先看文首推荐的视频或 <a href="https://reactjs.org/docs/hooks-intro.html">React 官方博客</a>。</li>
+</ul>
+
+<h4 id="useobservable">useObservable</h4>
+
+<p><strong>案例 1：无默认值，不依赖外部状态</strong></p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kd">function</span> <span class="nx">Timer</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">val</span> <span class="o">=</span> <span class="nx">useObservable</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">interval</span><span class="p">(</span><span class="mi">1000</span><span class="p">));</span>
+
+  <span class="k">return</span> <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">val</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>在此案例中，仅传递了第一个参数，它是 Observable 的工厂函数，需要返回一个 Observable，而 useObservable 的返回值永远是流的最新值。首次渲染只有一个内容为空的 <code>&lt;h1&gt;</code>；1 秒后，内容变为 <code>0</code>；2 秒后，内容变为 <code>1</code>…</p>
+
+<p><strong>案例 2：有默认值</strong></p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kd">function</span> <span class="nx">Timer</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">val</span> <span class="o">=</span> <span class="nx">useObservable</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">interval</span><span class="p">(</span><span class="mi">1000</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">val</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>在第二个案例中，我们传递了第二个参数，它就是 <code>val</code> 的默认值。所以在这种情况下，首次渲染的内容不再为空，而是 <code>-1</code>。</p>
+
+<p><strong>案例 3：依赖上一次的执行状态</strong></p>
+
+<p>如果你需要在流中获得上一次输出的结果时，工厂函数会传入一个 <code>state$</code> 流来帮助你做到这一点。（此处一定要使用 <code>withLatestFrom</code> 来结合这个流，否则会造成无限循环）</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kd">function</span> <span class="nx">Timer</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">val</span> <span class="o">=</span> <span class="nx">useObservable</span><span class="p">((</span><span class="nx">state$</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">interval</span><span class="p">(</span><span class="mi">1000</span><span class="p">).</span><span class="nx">pipe</span><span class="p">(</span>
+	<span class="nx">withLatestFrom</span><span class="p">(</span><span class="nx">state$</span><span class="p">),</span>
+	<span class="nx">map</span><span class="p">(([</span><span class="nx">index</span><span class="p">,</span> <span class="nx">prevVal</span><span class="p">])</span> <span class="o">=&gt;</span> <span class="nx">index</span> <span class="o">+</span> <span class="nx">prevVal</span><span class="p">),</span>
+  <span class="p">),</span> <span class="mi">0</span><span class="p">);</span>
+
+  <span class="c1">// first render:    0</span>
+  <span class="c1">// 1s later:        1    (1 + 0)</span>
+  <span class="c1">// 2s later:        3    (2 + 1)  </span>
+  <span class="c1">// 3s later:        6    (3 + 3)</span>
+  <span class="c1">// 4s later:       10    (4 + 6)</span>
+  <span class="k">return</span> <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">val</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p><strong>案例 4：依赖外部状态</strong></p>
+
+<p>工厂函数可以依赖一些外部传入的状态，通过 useObservable 的第三个参数传入（和 <a href="https://reactjs.org/docs/hooks-reference.html#useeffect">useEffect</a>，<a href="https://reactjs.org/docs/hooks-reference.html#usememo">useMemo</a> 的接口类似）</p>
+
+<p>如果传递了第三个参数，那么工厂函数中，就会得到两个流，分别为 <code>input$</code> 和 <code>state$</code>。在下面的例子中，<code>input$</code> 流发出的值总是一个 <code>[a, b]</code> 元组。为了使例子比较易于理解，所以我们暂时不使用 <code>state$</code> 流。</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kd">function</span> <span class="nx">Timer</span><span class="p">({</span> <span class="nx">a</span> <span class="p">})</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="p">[</span><span class="nx">b</span><span class="p">,</span> <span class="nx">setB</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="kr">const</span> <span class="nx">val</span> <span class="o">=</span> <span class="nx">useObservable</span><span class="p">(</span>
+    <span class="p">(</span><span class="nx">inputs$</span><span class="p">,</span> <span class="nx">_state$</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">timer</span><span class="p">(</span><span class="mi">1000</span><span class="p">).</span><span class="nx">pipe</span><span class="p">(</span>
+      <span class="nx">combineLatest</span><span class="p">(</span><span class="nx">inputs$</span><span class="p">),</span>
+      <span class="nx">map</span><span class="p">(([</span><span class="nx">_</span><span class="p">,</span> <span class="p">[</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">]])</span> <span class="o">=&gt;</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">),</span>
+    <span class="p">),</span>
+    <span class="mi">0</span><span class="p">,</span>
+    <span class="p">[</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">],</span>
+  <span class="p">);</span>
+
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">val</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
+      <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{()</span> <span class="o">=&gt;</span> <span class="nx">setB</span><span class="p">(</span><span class="nx">b</span> <span class="o">+</span> <span class="mi">10</span><span class="p">)}</span><span class="o">&gt;</span><span class="nx">b</span><span class="o">:</span> <span class="o">+</span><span class="mi">10</span><span class="o">&lt;</span><span class="err">/button&gt;</span>
+    <span class="o">&lt;</span><span class="err">/div&gt;</span>
+  <span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">App</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="p">[</span><span class="nx">a</span><span class="p">,</span> <span class="nx">setA</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">Timer</span> <span class="nx">a</span><span class="o">=</span><span class="p">{</span><span class="nx">a</span><span class="p">}</span> <span class="o">/&gt;</span>
+      <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{()</span> <span class="o">=&gt;</span> <span class="nx">setA</span><span class="p">(</span><span class="nx">a</span> <span class="o">+</span> <span class="mi">100</span><span class="p">)}</span><span class="o">&gt;</span><span class="nx">a</span><span class="o">:</span> <span class="o">+</span><span class="mi">100</span><span class="o">&lt;</span><span class="err">/button&gt;</span>
+    <span class="o">&lt;</span><span class="err">/div&gt;</span>
+  <span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>这个例子相对较为复杂，可以结合 <a href="https://codesandbox.io/s/8y5nx3pyo8">live demo</a> 理解。</p>
+
+<h4 id="useeventcallback">useEventCallback</h4>
+
+<p>我们相信 RxJS 不仅十分擅长处理数据流，同时在处理一些交互逻辑上也有很大的帮助。因此我们设计了第二个 API <code>useEventCallback</code>，它接受的三个参数。其中，后两个参数与 <code>useObservable</code> 有很大相似之处，因此这边着重介绍第一个形参与返回值。</p>
+
+<p>首先来看看下面的例子 (<a href="https://codesandbox.io/s/jpjr31qmw">live demo</a>)，可以很容易地看出：返回值和 useEventCallback 不一样了，它会返回一个 <code>[callback, value]</code> 元组。同时接受的工厂函数，接受一个 <code>event$</code> 参数，每当 <code>callback</code> 被调用时，<code>event$</code> 流总会有一个新的值流出。而 <code>useEventCallback</code> 函数的第二个参数依旧是我们熟悉的默认值。</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kd">function</span> <span class="nx">App</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="p">[</span><span class="nx">clickCallback</span><span class="p">,</span> <span class="p">[</span><span class="nx">description</span><span class="p">,</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">useEventCallback</span><span class="p">((</span><span class="nx">event$</span><span class="p">)</span> <span class="o">=&gt;</span>
+    <span class="nx">event$</span><span class="p">.</span><span class="nx">pipe</span><span class="p">(</span>
+      <span class="nx">map</span><span class="p">((</span><span class="nx">event</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">innerHTML</span><span class="p">,</span> <span class="nx">event</span><span class="p">.</span><span class="nx">clientX</span><span class="p">,</span> <span class="nx">event</span><span class="p">.</span><span class="nx">clientY</span><span class="p">]),</span>
+    <span class="p">),</span>
+    <span class="p">[</span><span class="s2">&quot;nothing&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+  <span class="p">)</span>
+
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;App&quot;</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">click</span> <span class="nx">position</span><span class="o">:</span> <span class="p">{</span><span class="nx">x</span><span class="p">},</span> <span class="p">{</span><span class="nx">y</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
+      <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="s2">&quot;{description}&quot;</span> <span class="nx">was</span> <span class="nx">clicked</span><span class="p">.</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
+      <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">clickCallback</span><span class="p">}</span><span class="o">&gt;</span><span class="nx">click</span> <span class="nx">me</span><span class="o">&lt;</span><span class="err">/button&gt;</span>
+      <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">clickCallback</span><span class="p">}</span><span class="o">&gt;</span><span class="nx">click</span> <span class="nx">you</span><span class="o">&lt;</span><span class="err">/button&gt;</span>
+      <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">clickCallback</span><span class="p">}</span><span class="o">&gt;</span><span class="nx">click</span> <span class="nx">him</span><span class="o">&lt;</span><span class="err">/button&gt;</span>
+    <span class="o">&lt;</span><span class="err">/div&gt;</span>
+  <span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<h3 id="更多实际案例">更多实际案例</h3>
+
+<p>这里附上一些简单的实际案例，可以帮助大家进一步理解 rxjs-hooks 的用法。代码就不贴在正文中啦，有兴趣的小伙伴可以访问下面案例中的在线链接玩一下。</p>
+
+<h4 id="案例-1drag-me">案例 1：Drag me</h4>
+
+<p><a href="https://codesandbox.io/s/9382vrr4xy">live demo</a></p>
+
+<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/rxjs-hooks/drag.gif" alt="drag" /></p>
+
+<h4 id="案例两栏-resizable-布局">案例：两栏 resizable 布局</h4>
+
+<p><a href="https://codesandbox.io/s/k9609z20w5">live demo</a></p>
+
+<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/rxjs-hooks/resizer.gif" alt="resizer" /></p>
+
+<h4 id="案例尾随队列">案例：尾随队列</h4>
+
+<p><a href="https://codesandbox.io/s/94qm201pw4">live demo</a></p>
+
+<p><img src="http://jerryblog-image.b0.upaiyun.com/blog/posts/rxjs-hooks/drag-list.gif" alt="drag-list" /></p>
+
+<h2 id="小结">小结</h2>
+
+<p>至此 <a href="https://github.com/LeetCode-OpenSource/rxjs-hooks">rxjs-hooks</a> 就先介绍到这儿。我们的实现不一定是对 hooks 最好的理解，权当抛砖引玉。很期待社区有更多人能参与到这项变革中来，我们也很乐意和大家分享所遇到的各种踩坑之旅。同时，随时欢迎大家给这个项目提 issue 或者 PR。</p>
+
+
+  </article>
+
+  
+  <p class="copyright">
+    本文的版权归作者 <a href="mailto:jerry.zry@outlook.com">邹润阳</a> 所有，采用 <a href="http://creativecommons.org/licenses/by-nc/3.0/">Attribution-NonCommercial 3.0 License</a>。任何人可以进行转载、分享，但不可在未经允许的情况下用于商业用途；转载请注明出处。感谢配合！
+  </p>
+  
+
+  
+    <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+var disqus_config = function () {
+this.page.url = "http://jerryzou.com/posts/rxjs-hooks/";  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = "10042"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jerryzou.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                                
+  
+</div>
+
+        
+      </div>
+    </div>
+
+    <footer class="site-footer">
+    <div class="wrap">
+        <ul class="friend-links footer-text">
+            <li><a href="//blog.liqiang.me/">Jayce Li</a></li>
+            <li><a href="//zhangwenli.com/">羡辙</a></li>
+            <li><a href="//xidui.github.io/">xidui</a></li>
+            <li><a href="//www.dozer.cc/">Dozer</a></li>
+            <li><a href="//leuisken.github.io/">LeuisKen</a></li>
+            <li><a href="//szhshp.org">szhshp</a></li>
+            <li><a href="//dianying.taobao.com">淘宝电影</a></li>
+            <li><a href="//leetcode.com">LeetCode</a></li>
+            <li><a href="//efe.baidu.com/">Baidu EFE</a></li>
+            <li><a href="//fex.baidu.com/">Baidu FEX</a></li>
+        </ul>
+        <p class="footer-text">Powered by <a href="http://jekyllrb.com/">Jekyll</a> , <a href="https://pages.github.com/">Github Pages</a> and <a href="https://www.upyun.com/">UPYUN</a>.</p>
+    </div>
+</footer>
+
+    </body>
+</html>
