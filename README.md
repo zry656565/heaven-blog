@@ -19,7 +19,7 @@
 gem install jekyll bundler
 
 # 安装依赖的 gem 包
-bundler install
+bundler install --path vendor/bundle
 
 # 全局安装 grunt
 npm install -g grunt
