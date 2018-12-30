@@ -1,6 +1,8 @@
 《咀嚼之味》博客
 ===========
 
+[![CircleCI](https://circleci.com/gh/zry656565/heaven-blog.svg?style=svg)](https://circleci.com/gh/zry656565/heaven-blog)
+
 本博客遵循MIT开源协议。
 
 ## 如何组建出我的博客
