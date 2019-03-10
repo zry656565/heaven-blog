@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="在过去的很长一段时间中，我们都说 CSS 是不带有任何逻辑的，意思是在 CSS 中没有控制流，也没有某种类似于其他编程语言的方式来组织 CSS。CSS 天生缺乏逻辑性的问题导致了预处理器的出现。然而业界却对 CSS 预处理器褒贬不一，支持预处理器的人认为这弥补了 CSS 缺失的特性；而反对预处理器的人则认为 CSS 的设计初衷就不应该带有逻辑性，他们认为根本不应该引入预处理器这个概念... ">
     <link rel="alternate" type="application/rss+xml" title="咀嚼之味 RSS" href="/feed.xml">
-    <link rel="canonical" href="http://jerryzou.com/posts/cyclomatic-complexity-logic-in-css/">
+    <link rel="canonical" href="https://jerryzou.com/posts/cyclomatic-complexity-logic-in-css/">
     <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     <!-- Custom CSS -->
@@ -57,7 +57,7 @@
     <a class="site-title" href="/">咀嚼之味</a>
     <nav class="site-nav">
       <div class="menu-icon">
-        <img class="icon" src="http://jerryblog-image.b0.upaiyun.com/blog/menu.svg" title="More"/>
+        <img class="icon" src="https://jerryblog-image.b0.upaiyun.com/blog/menu.svg" title="More"/>
       </div>
       <div class="trigger">
         <a class="page-link" href="/">首页</a>
@@ -93,7 +93,7 @@
     </nav>
   </div>
   <!-- fork me on github -->
-  <a id="fork-me" href="https://github.com/zry656565/heaven-blog"><img src="http://jerryblog-image.b0.upaiyun.com/blog/forkme.png" alt="Fork me on GitHub"></a>
+  <a id="fork-me" href="https://github.com/zry656565/heaven-blog"><img src="https://jerryblog-image.b0.upaiyun.com/blog/forkme.png" alt="Fork me on GitHub"></a>
 </header>
 
 
@@ -118,7 +118,7 @@
 
   <article class="post-content">
   <blockquote>
-  <p>本文在征得原作者 <a href="https://twitter.com/csswizardry">@csswizardry</a> 同意的情况下，翻译自他博客中的文章：<a href="http://csswizardry.com/2015/04/cyclomatic-complexity-logic-in-css/">Cyclomatic Complexity: Logic in CSS</a></p>
+  <p>本文在征得原作者 <a href="https://twitter.com/csswizardry">@csswizardry</a> 同意的情况下，翻译自他博客中的文章：<a href="https://csswizardry.com/2015/04/cyclomatic-complexity-logic-in-css/">Cyclomatic Complexity: Logic in CSS</a></p>
 </blockquote>
 
 <p>在过去的很长一段时间中，我们都说 CSS 是不带有任何逻辑的，意思是在 CSS 中没有控制流，也没有某种类似于其他编程语言的方式来组织 CSS。CSS 天生缺乏逻辑性的问题导致了预处理器的出现。然而业界却对 CSS 预处理器褒贬不一，支持预处理器的人认为这弥补了 CSS 缺失的特性；而反对预处理器的人则认为 CSS 的设计初衷就不应该带有逻辑性，他们认为根本不应该引入预处理器这个概念。</p>
@@ -161,7 +161,7 @@
 
 <h2 id="圈复杂度">圈复杂度</h2>
 
-<p>在软件工程中，<a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity">圈复杂度</a>是一种程序复杂性的一种度量标准，它一般计算程序中的控制流的数量（如 <code>if</code>, <code>else</code>, <code>while</code> 等）。程序中存在越多的控制流，则圈复杂度就越高。我们自然想要保证圈复杂度能够尽量地低，因为圈复杂度越高：</p>
+<p>在软件工程中，<a href="https://en.wikipedia.org/wiki/Cyclomatic_complexity">圈复杂度</a>是一种程序复杂性的一种度量标准，它一般计算程序中的控制流的数量（如 <code>if</code>, <code>else</code>, <code>while</code> 等）。程序中存在越多的控制流，则圈复杂度就越高。我们自然想要保证圈复杂度能够尽量地低，因为圈复杂度越高：</p>
 
 <ul>
   <li>代码就越难推导</li>
@@ -188,7 +188,7 @@
   <li><strong>保证圈复杂度最小化</strong>: 使用像 <a href="https://github.com/katiefenn/parker">Parker</a> 这样的工具来测试你写的选择器的圈复杂度（参考文档：<a href="https://github.com/katiefenn/parker/tree/master/docs/metrics#identifiers-per-selector">Identifiers Per Selector</a>）</li>
   <li><strong>如果你不需要这个检验条件，那就不要把它放进选择器</strong>: 有时在 CSS 中使用嵌套结构是有必要的，可在大多数时候并不是，你甚至不能完全相信<a href="http://thesassway.com/beginner/the-inception-rule">Inception Rule</a>。</li>
   <li><strong>从右边考虑选择器如何编写</strong>: 从需要匹配的那类元素开始，写尽量少的额外的 CSS 代码来完成一次正确的匹配。</li>
-  <li><strong>写选择器时拥有<a href="http://csswizardry.com/2012/07/shoot-to-kill-css-selector-intent/">明确的目的性</a></strong>: 确保你写的选择器确实是你想要的，而不是那些碰巧能使得页面正常显示的代码。</li>
+  <li><strong>写选择器时拥有<a href="https://csswizardry.com/2012/07/shoot-to-kill-css-selector-intent/">明确的目的性</a></strong>: 确保你写的选择器确实是你想要的，而不是那些碰巧能使得页面正常显示的代码。</li>
 </ul>
 
 <p>你的选择器是你的 CSS 结构最基本的组成部分，一定要确保你写的代码足够合理而简练。</p>
@@ -198,7 +198,7 @@
 
   
   <p class="copyright">
-    本文的版权归作者 <a href="mailto:jerry.zry@outlook.com">邹润阳</a> 所有，采用 <a href="http://creativecommons.org/licenses/by-nc/3.0/">Attribution-NonCommercial 3.0 License</a>。任何人可以进行转载、分享，但不可在未经允许的情况下用于商业用途；转载请注明出处。感谢配合！
+    本文的版权归作者 <a href="mailto:jerry.zry@outlook.com">邹润阳</a> 所有，采用 <a href="https://creativecommons.org/licenses/by-nc/3.0/">Attribution-NonCommercial 3.0 License</a>。任何人可以进行转载、分享，但不可在未经允许的情况下用于商业用途；转载请注明出处。感谢配合！
   </p>
   
 
@@ -210,7 +210,7 @@
 *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
 *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 var disqus_config = function () {
-this.page.url = "http://jerryzou.com/posts/cyclomatic-complexity-logic-in-css/";  // Replace PAGE_URL with your page's canonical URL variable
+this.page.url = "https://jerryzou.com/posts/cyclomatic-complexity-logic-in-css/";  // Replace PAGE_URL with your page's canonical URL variable
 this.page.identifier = "10027"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
 };
 (function() { // DON'T EDIT BELOW THIS LINE
@@ -243,7 +243,7 @@ s.setAttribute('data-timestamp', +new Date());
             <li><a href="//efe.baidu.com/">Baidu EFE</a></li>
             <li><a href="//fex.baidu.com/">Baidu FEX</a></li>
         </ul>
-        <p class="footer-text">Powered by <a href="http://jekyllrb.com/">Jekyll</a> , <a href="https://pages.github.com/">Github Pages</a> and <a href="https://www.upyun.com/">UPYUN</a>.</p>
+        <p class="footer-text">Powered by <a href="https://jekyllrb.com/">Jekyll</a> , <a href="https://pages.github.com/">Github Pages</a> and <a href="https://www.upyun.com/">UPYUN</a>.</p>
     </div>
 </footer>
 

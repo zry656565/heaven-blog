@@ -1,1 +1,1 @@
-Sitemap: http://jerryzou.com/sitemap.xml
+Sitemap: https://jerryzou.com/sitemap.xml

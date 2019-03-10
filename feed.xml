@@ -4,8 +4,8 @@
     <title>咀嚼之味</title>
     <description>咀嚼之味是我分享我对编程与生活的见解之地。在我看来，编程不仅仅是我与生俱来的使命，也是我快乐的源泉。在业余时间，我喜欢研究一些跟技术相关的东西。同时，我也喜欢做一些安静的事，比如看书、看电影、听音乐、一个人散步以及旅行。
 </description>
-    <link>http://jerryzou.com/</link>
-    <atom:link href="http://jerryzou.com/feed.xml" rel="self" type="application/rss+xml" />
+    <link>https://jerryzou.com/</link>
+    <atom:link href="https://jerryzou.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
         <title>像呼吸一样自然：React hooks + RxJS</title>
@@ -15,13 +15,13 @@
 
 &lt;p&gt;我们团队一直对 RxJS 青睐有加，但一直苦于它和 React 结合起来使用实在是有些繁琐。上周 @太狼 就决定在 hooks api 上试试水。结果那一整天我都听见身边在喊，“真香”。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/rxjs-hooks/真香.gif&quot; alt=&quot;真香&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/rxjs-hooks/真香.gif&quot; alt=&quot;真香&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;rxjs-hooks&quot;&gt;rxjs-hooks&lt;/h2&gt;
 
 &lt;p&gt;那么用 hooks 写 RxJS 代码究竟有多香呢？让我们一起来看看，这个让妈妈开心，开了又开的开源项目：&lt;a href=&quot;https://github.com/LeetCode-OpenSource/rxjs-hooks&quot;&gt;LeetCode-OpenSource/rxjs-hooks&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/rxjs-hooks/ben-lesh.png&quot; alt=&quot;ben-lesh-twitter&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/rxjs-hooks/ben-lesh.png&quot; alt=&quot;ben-lesh-twitter&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;我们有完整的测试用例，测试覆盖率 100%。目前一共只有两个 hooks：&lt;code&gt;useObservable&lt;/code&gt; 和 &lt;code&gt;useEventCallback&lt;/code&gt;。还是直接用例子解释来得简单明了，让我们首先回想一下，怎么在 React Component 中创建、订阅，并销毁一个流。大概是这个样子：&lt;/p&gt;
 
@@ -188,19 +188,19 @@
 
 &lt;p&gt;&lt;a href=&quot;https://codesandbox.io/s/9382vrr4xy&quot;&gt;live demo&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/rxjs-hooks/drag.gif&quot; alt=&quot;drag&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/rxjs-hooks/drag.gif&quot; alt=&quot;drag&quot; /&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;案例两栏-resizable-布局&quot;&gt;案例：两栏 resizable 布局&lt;/h4&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://codesandbox.io/s/k9609z20w5&quot;&gt;live demo&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/rxjs-hooks/resizer.gif&quot; alt=&quot;resizer&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/rxjs-hooks/resizer.gif&quot; alt=&quot;resizer&quot; /&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;案例尾随队列&quot;&gt;案例：尾随队列&lt;/h4&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://codesandbox.io/s/94qm201pw4&quot;&gt;live demo&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/rxjs-hooks/drag-list.gif&quot; alt=&quot;drag-list&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/rxjs-hooks/drag-list.gif&quot; alt=&quot;drag-list&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;小结&quot;&gt;小结&lt;/h2&gt;
 
@@ -208,8 +208,8 @@
 
 </description>
         <pubDate>Mon, 26 Nov 2018 16:53:00 +0000</pubDate>
-        <link>http://jerryzou.com/posts/rxjs-hooks/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/rxjs-hooks/</guid>
+        <link>https://jerryzou.com/posts/rxjs-hooks/</link>
+        <guid isPermaLink="true">https://jerryzou.com/posts/rxjs-hooks/</guid>
       </item>
     
       <item>
@@ -222,15 +222,15 @@
 
 &lt;h2 id=&quot;1-什么是-graphql&quot;&gt;1. 什么是 GraphQL？&lt;/h2&gt;
 
-&lt;p&gt;从官方的定义来说，GraphQL 是一种针对 API 的查询语言；在我看来，&lt;a href=&quot;http://facebook.github.io/graphql/&quot;&gt;GraphQL 是一种标准&lt;/a&gt;，而与标准相对的便是实现。就像 EcmaScript 与 JavaScript 的关系，从一开始你就&lt;strong&gt;需要有这样一种认知&lt;/strong&gt;：GraphQL 只定义了这种查询语言语法如何、具体的语句如何执行等。&lt;strong&gt;但是&lt;/strong&gt;，你在真正使用&lt;strong&gt;某种 GraphQL 的服务端实现&lt;/strong&gt;时，是有可能发现 GraphQL 标准中所描述的特性尚未被实现；或者这种 GraphQL 的实现扩展了 GraphQL 标准所定义的内容。&lt;/p&gt;
+&lt;p&gt;从官方的定义来说，GraphQL 是一种针对 API 的查询语言；在我看来，&lt;a href=&quot;https://facebook.github.io/graphql/&quot;&gt;GraphQL 是一种标准&lt;/a&gt;，而与标准相对的便是实现。就像 EcmaScript 与 JavaScript 的关系，从一开始你就&lt;strong&gt;需要有这样一种认知&lt;/strong&gt;：GraphQL 只定义了这种查询语言语法如何、具体的语句如何执行等。&lt;strong&gt;但是&lt;/strong&gt;，你在真正使用&lt;strong&gt;某种 GraphQL 的服务端实现&lt;/strong&gt;时，是有可能发现 GraphQL 标准中所描述的特性尚未被实现；或者这种 GraphQL 的实现扩展了 GraphQL 标准所定义的内容。&lt;/p&gt;
 
-&lt;p&gt;举例来说，就像 ES 2017 标准正式纳入了 async/await，而从实现的角度上说，IE 没有实现这一标准，而 Edge 16 和 Chrome 62 则实现了这一标准（数据来源于 &lt;a href=&quot;https://caniuse.com/#feat=async-functions&quot;&gt;caniuse&lt;/a&gt;）说回 GraphQL 标准，与之相对的有&lt;a href=&quot;http://graphql.org/code/&quot;&gt;相当多的服务器端实现&lt;/a&gt;。他们的大多遵循 GraphQL 标准来实现，但也可能稍有差别，这一切需要你自己去探索。&lt;/p&gt;
+&lt;p&gt;举例来说，就像 ES 2017 标准正式纳入了 async/await，而从实现的角度上说，IE 没有实现这一标准，而 Edge 16 和 Chrome 62 则实现了这一标准（数据来源于 &lt;a href=&quot;https://caniuse.com/#feat=async-functions&quot;&gt;caniuse&lt;/a&gt;）说回 GraphQL 标准，与之相对的有&lt;a href=&quot;https://graphql.org/code/&quot;&gt;相当多的服务器端实现&lt;/a&gt;。他们的大多遵循 GraphQL 标准来实现，但也可能稍有差别，这一切需要你自己去探索。&lt;/p&gt;
 
 &lt;h2 id=&quot;2-如何从零入门-graphql&quot;&gt;2. 如何从零入门 GraphQL？&lt;/h2&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;先看标准：http://graphql.org/ （纯 GraphQL，与任何什么 JavaScript, Python 都无关）&lt;/li&gt;
-  &lt;li&gt;再看服务端实现：到 http://graphql.org/code/ 里找到跟你的服务端技术有关的实现&lt;/li&gt;
+  &lt;li&gt;先看标准：https://graphql.org/ （纯 GraphQL，与任何什么 JavaScript, Python 都无关）&lt;/li&gt;
+  &lt;li&gt;再看服务端实现：到 https://graphql.org/code/ 里找到跟你的服务端技术有关的实现&lt;/li&gt;
   &lt;li&gt;再看客户端实现：&lt;a href=&quot;https://facebook.github.io/relay/&quot;&gt;Relay&lt;/a&gt; 或 &lt;a href=&quot;https://www.apollographql.com/docs/react/&quot;&gt;appollo-client&lt;/a&gt;, etc.&lt;/li&gt;
   &lt;li&gt;学习使用 DataLoader 来获取列表数据&lt;/li&gt;
 &lt;/ol&gt;
@@ -239,7 +239,7 @@
 
 &lt;p&gt;首先放上一张来自于 graphql.org 的图片。REST 与 GraphQL 都是服务端所承载的系统对外的服务接口，因此两者肯定是可以共存的，甚至可以共用一套 Authorization 等业务逻辑。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/backend-arch.png&quot; alt=&quot;Architecture&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/backend-arch.png&quot; alt=&quot;Architecture&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;那么 GraphQL 与 RESTful 的具体区别有什么呢？我觉得主要是两点。&lt;/p&gt;
 
@@ -267,7 +267,7 @@
 
 &lt;p&gt;那么在 GraphQL 中，怎么做呢？&lt;/p&gt;
 
-&lt;p&gt;首先我们需要给 User 定义 Schema (GraphQL 有一套完整的&lt;a href=&quot;http://graphql.org/learn/schema/&quot;&gt;类型系统&lt;/a&gt;)：&lt;/p&gt;
+&lt;p&gt;首先我们需要给 User 定义 Schema (GraphQL 有一套完整的&lt;a href=&quot;https://graphql.org/learn/schema/&quot;&gt;类型系统&lt;/a&gt;)：&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;go&quot;&gt;type User {&lt;/span&gt;
 &lt;span class=&quot;go&quot;&gt;  id: ID!&lt;/span&gt;
@@ -311,7 +311,7 @@
 
 &lt;p&gt;答案是：能。&lt;/p&gt;
 
-&lt;p&gt;仅仅为了使得 GraphQL 这个 data platform &lt;strong&gt;变得更加完整&lt;/strong&gt;，GraphQL 标准中加入了一种操作符，名为 &lt;strong&gt;mutation&lt;/strong&gt;。因为我觉得这种设计确实比较一般，此处就不举例了，详情见：&lt;a href=&quot;http://graphql.org/learn/queries/#mutations&quot;&gt;http://graphql.org/learn/queries/#mutations&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;仅仅为了使得 GraphQL 这个 data platform &lt;strong&gt;变得更加完整&lt;/strong&gt;，GraphQL 标准中加入了一种操作符，名为 &lt;strong&gt;mutation&lt;/strong&gt;。因为我觉得这种设计确实比较一般，此处就不举例了，详情见：&lt;a href=&quot;https://graphql.org/learn/queries/#mutations&quot;&gt;https://graphql.org/learn/queries/#mutations&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;5-graphql-与-restful-相比有什么优点&quot;&gt;5. GraphQL 与 RESTful 相比有什么优点？&lt;/h2&gt;
 
@@ -321,7 +321,7 @@
 
 &lt;h4 id=&quot;2-更易于前端缓存数据&quot;&gt;2. 更易于前端缓存数据&lt;/h4&gt;
 
-&lt;p&gt;这个一般像 Relay 和 apollo-client 都替你做好了，如果你想了解它的缓存原理，请移步 &lt;a href=&quot;http://graphql.org/learn/caching/&quot;&gt;GraphQL Caching&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这个一般像 Relay 和 apollo-client 都替你做好了，如果你想了解它的缓存原理，请移步 &lt;a href=&quot;https://graphql.org/learn/caching/&quot;&gt;GraphQL Caching&lt;/a&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;3-versionless-api&quot;&gt;3. Versionless API&lt;/h4&gt;
 
@@ -329,11 +329,11 @@
 
 &lt;h4 id=&quot;4-更健壮的接口&quot;&gt;4. 更健壮的接口&lt;/h4&gt;
 
-&lt;p&gt;不用再因为在缺乏沟通的情况下修改接口，而为系统埋下不稳定的定时炸弹。一切面向前端的接口都有强类型的 Schema 做保证，且完整类型定义因 &lt;a href=&quot;http://graphql.org/learn/introspection/&quot;&gt;introspection&lt;/a&gt; 完全对前端可见，一旦前端发送的 query 与 Schema 不符，能快速感知到产生了错误。&lt;/p&gt;
+&lt;p&gt;不用再因为在缺乏沟通的情况下修改接口，而为系统埋下不稳定的定时炸弹。一切面向前端的接口都有强类型的 Schema 做保证，且完整类型定义因 &lt;a href=&quot;https://graphql.org/learn/introspection/&quot;&gt;introspection&lt;/a&gt; 完全对前端可见，一旦前端发送的 query 与 Schema 不符，能快速感知到产生了错误。&lt;/p&gt;
 
 &lt;h4 id=&quot;5-令人期待的-subscription&quot;&gt;5. 令人期待的 subscription&lt;/h4&gt;
 
-&lt;p&gt;如何在浏览器中接受服务端的推送信息是个老生常谈的问题。从最初的轮询，到后来的 WebSocket。如今 GraphQL 也计划引入除了 &lt;code&gt;query&lt;/code&gt;, &lt;code&gt;mutation&lt;/code&gt; 以外的第三种操作符 &lt;code&gt;subscription&lt;/code&gt;，以便于直接接受服务器推送数据。在 2015 年底 GraphQL 官方发布了一篇博文：&lt;a href=&quot;http://graphql.org/blog/subscriptions-in-graphql-and-relay/&quot;&gt;Subscriptions in GraphQL and Relay&lt;/a&gt; 来介绍 &lt;code&gt;subscription&lt;/code&gt; 在他们的 iOS 和 Android App 中的应用。可惜的是相关的代码仍未开源，目前开源社区能找到的解决方案目前只有 Apollo 社区为 Node.js 写的 &lt;a href=&quot;https://github.com/apollographql/graphql-subscriptions&quot;&gt;graphql-subscriptions&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;如何在浏览器中接受服务端的推送信息是个老生常谈的问题。从最初的轮询，到后来的 WebSocket。如今 GraphQL 也计划引入除了 &lt;code&gt;query&lt;/code&gt;, &lt;code&gt;mutation&lt;/code&gt; 以外的第三种操作符 &lt;code&gt;subscription&lt;/code&gt;，以便于直接接受服务器推送数据。在 2015 年底 GraphQL 官方发布了一篇博文：&lt;a href=&quot;https://graphql.org/blog/subscriptions-in-graphql-and-relay/&quot;&gt;Subscriptions in GraphQL and Relay&lt;/a&gt; 来介绍 &lt;code&gt;subscription&lt;/code&gt; 在他们的 iOS 和 Android App 中的应用。可惜的是相关的代码仍未开源，目前开源社区能找到的解决方案目前只有 Apollo 社区为 Node.js 写的 &lt;a href=&quot;https://github.com/apollographql/graphql-subscriptions&quot;&gt;graphql-subscriptions&lt;/a&gt;。&lt;/p&gt;
 
 &lt;h2 id=&quot;6-graphql-有什么缺点&quot;&gt;6. GraphQL 有什么缺点？&lt;/h2&gt;
 
@@ -352,11 +352,11 @@
 
 &lt;p&gt;这是一段简单的 python 代码，使用了 Django 的 QuerySet 来从数据库抓取数据。假设我们的数据库中有两张表 User 和 UserScore 这两张表的关系如下所示：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/graphql-uml.jpg&quot; alt=&quot;UML&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/graphql-uml.jpg&quot; alt=&quot;UML&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;由于用户的分数并没有保存在 User 表中，又因为 QuerySet 有 lazy load 的特性，所以在 for 循环中，每一次获取 &lt;code&gt;user.score&lt;/code&gt; 都会查一次表，最终原本 1 次数据库查询能搞定的问题，却在不恰当的实现中产生了 N+1 次对数据库的访问。&lt;/p&gt;
 
-&lt;p&gt;相对于 RESTful，在 GraphQL 中更加容易引起 N+1 问题。主要是由于 GraphQL query 的逐层解析方式所引起的，关于 GraphQL 如何执行 query 的细节，可以参阅 &lt;a href=&quot;http://graphql.org/learn/execution/&quot;&gt;Graphql Execution&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;相对于 RESTful，在 GraphQL 中更加容易引起 N+1 问题。主要是由于 GraphQL query 的逐层解析方式所引起的，关于 GraphQL 如何执行 query 的细节，可以参阅 &lt;a href=&quot;https://graphql.org/learn/execution/&quot;&gt;Graphql Execution&lt;/a&gt;。&lt;/p&gt;
 
 &lt;h4 id=&quot;62-如何解决在-graphql-中的-n--1-问题&quot;&gt;6.2. 如何解决在 GraphQL 中的 N + 1 问题？&lt;/h4&gt;
 
@@ -369,11 +369,11 @@
 
 &lt;h2 id=&quot;7-有什么可以快乐地调试-graphql-接口的方法&quot;&gt;7. 有什么可以快乐地调试 GraphQL 接口的方法？&lt;/h2&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://github.com/graphql/graphiql&quot;&gt;GraphiQL&lt;/a&gt; / &lt;a href=&quot;http://graphql.org/swapi-graphql/&quot;&gt;live demo&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/graphql/graphiql&quot;&gt;GraphiQL&lt;/a&gt; / &lt;a href=&quot;https://graphql.org/swapi-graphql/&quot;&gt;live demo&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;使用 GraphiQL 可以很容易地让人感受到“代码即文档”的快乐。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/graphiql-screenshot.png&quot; alt=&quot;GraphiQL screenshot&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/graphiql-screenshot.png&quot; alt=&quot;GraphiQL screenshot&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;8-如何选择-graphql-的客户端实现&quot;&gt;8. 如何选择 GraphQL 的客户端实现？&lt;/h2&gt;
 
@@ -385,7 +385,7 @@
 
 &lt;h2 id=&quot;9-graphql-中是怎么处理分页的&quot;&gt;9. GraphQL 中是怎么处理分页的？&lt;/h2&gt;
 
-&lt;p&gt;这是一个可能让 GraphQL 初学者担忧的问题，又是一个可以从&lt;a href=&quot;http://graphql.org/learn/pagination/&quot;&gt;官方文档&lt;/a&gt;中找到答案的问题。&lt;/p&gt;
+&lt;p&gt;这是一个可能让 GraphQL 初学者担忧的问题，又是一个可以从&lt;a href=&quot;https://graphql.org/learn/pagination/&quot;&gt;官方文档&lt;/a&gt;中找到答案的问题。&lt;/p&gt;
 
 &lt;p&gt;再以找朋友为例，借用 SQL 查询中常用的筛选方法，分页接口可以设计为：&lt;/p&gt;
 
@@ -437,7 +437,7 @@
 
 &lt;p&gt;你可以回看一下 &lt;a href=&quot;#3-graphql-与-restful-有什么区别&quot;&gt;3. GraphQL 与 RESTful 有什么区别&lt;/a&gt; 中展示的图片，答案就在其中：Authentication 属于业务逻辑层干的事情，别让 GraphQL 承担太多工作啦。&lt;/p&gt;
 
-&lt;p&gt;扩展阅读：&lt;a href=&quot;http://graphql.org/learn/authorization/&quot;&gt;GraphQL Authentication&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;扩展阅读：&lt;a href=&quot;https://graphql.org/learn/authorization/&quot;&gt;GraphQL Authentication&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;小结&quot;&gt;小结&lt;/h2&gt;
 
@@ -448,18 +448,18 @@
 &lt;h2 id=&quot;参考文献&quot;&gt;参考文献&lt;/h2&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;http://facebook.github.io/graphql/&quot;&gt;GraphQL Specification&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://facebook.github.io/graphql/&quot;&gt;GraphQL Specification&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://caniuse.com/#feat=async-functions&quot;&gt;Async functions - caniuse&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://graphql.org/&quot;&gt;Learn GraphQL&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://graphql.org/&quot;&gt;Learn GraphQL&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://segmentfault.com/a/1190000004586237#articleHeader5&quot;&gt;GraphQL and Relay 浅析&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://graphql.org/blog/subscriptions-in-graphql-and-relay/&quot;&gt;Subscriptions in GraphQL and Relay&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://graphql.org/blog/subscriptions-in-graphql-and-relay/&quot;&gt;Subscriptions in GraphQL and Relay&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://facebook.github.io/relay/graphql/connections.htm&quot;&gt;Relay Cursor Connections Specification&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 </description>
         <pubDate>Mon, 19 Feb 2018 04:57:00 +0000</pubDate>
-        <link>http://jerryzou.com/posts/10-questions-about-graphql/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/10-questions-about-graphql/</guid>
+        <link>https://jerryzou.com/posts/10-questions-about-graphql/</link>
+        <guid isPermaLink="true">https://jerryzou.com/posts/10-questions-about-graphql/</guid>
       </item>
     
       <item>
@@ -522,8 +522,8 @@
 &lt;p&gt;避免过早优化不是说就不用优化了；当在系统遇到瓶颈时，优化在所难免。而如何进行系统性能瓶颈的检测以及如何进行优化又是另一个很大的话题了，此文就不做赘述啦。&lt;/p&gt;
 </description>
         <pubDate>Mon, 25 Sep 2017 15:50:00 +0000</pubDate>
-        <link>http://jerryzou.com/posts/talk-about-premature-optimization/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/talk-about-premature-optimization/</guid>
+        <link>https://jerryzou.com/posts/talk-about-premature-optimization/</link>
+        <guid isPermaLink="true">https://jerryzou.com/posts/talk-about-premature-optimization/</guid>
       </item>
     
       <item>
@@ -533,7 +533,7 @@
 &lt;p&gt;面对交互性很强、数据变化复杂的场景，传统的前端开发方式往往存在一些共有的问题：&lt;strong&gt;1).&lt;/strong&gt; UI 状态与数据难以追踪；&lt;strong&gt;2).&lt;/strong&gt; 写出的代码可读性很差，逻辑代码分布离散。
 相比之下，响应式编程（Reactive Programming）在解决此类问题上有着得天独厚的优势。Vue、Mobx、RxJS 这些库都是响应式编程思想的结晶。&lt;/p&gt;
 
-&lt;p&gt;很多人在接触到 RxJS 后会有一个共同的感觉：这个库虽然很强大，但奈何各种各样的 operators 太多了，在实际场景中根本不知道怎么运用！所以本文并不旨在阐释响应式编程的优越性，而是通过循序渐进的实例来展示 RxJS 常用 operators 的使用场景。如果你尚未入门 RxJS，推荐你可以先看看一位来自台湾的前端工程师 Jerry Hong 写的 &lt;a href=&quot;http://ithelp.ithome.com.tw/articles/10186103&quot;&gt;30 天精通 RxJS 系列&lt;/a&gt;。不要被三十天这个标题给吓到啦，如果你有一些函数式编程的经验的话，周末花一天时间就能看完。当然要加深对 RxJS 的理解还是得多多实战。毕竟实践出真知嘛！&lt;/p&gt;
+&lt;p&gt;很多人在接触到 RxJS 后会有一个共同的感觉：这个库虽然很强大，但奈何各种各样的 operators 太多了，在实际场景中根本不知道怎么运用！所以本文并不旨在阐释响应式编程的优越性，而是通过循序渐进的实例来展示 RxJS 常用 operators 的使用场景。如果你尚未入门 RxJS，推荐你可以先看看一位来自台湾的前端工程师 Jerry Hong 写的 &lt;a href=&quot;https://ithelp.ithome.com.tw/articles/10186103&quot;&gt;30 天精通 RxJS 系列&lt;/a&gt;。不要被三十天这个标题给吓到啦，如果你有一些函数式编程的经验的话，周末花一天时间就能看完。当然要加深对 RxJS 的理解还是得多多实战。毕竟实践出真知嘛！&lt;/p&gt;
 
 &lt;p&gt;本文不适合 &lt;strong&gt;未入门的新手&lt;/strong&gt; 与 &lt;strong&gt;已精通的高手&lt;/strong&gt;。如果你觉得你对 RxJS 有了初步的认识，但掌握程度不高，可能这篇文章就比较适合你了。你可以尝试跟着本文的三个实例自己先做做看，再对比一下本文给出的解决方案，相信你能对 RxJS 有更深入的理解。注意，本文给出的解决方案并不一定是最优的解决方案，如果你有什么改进的建议，可以在文末留言，谢谢！&lt;/p&gt;
 
@@ -607,7 +607,7 @@
   &lt;p&gt;&lt;strong&gt;需求&lt;/strong&gt;：在拖拽的实际应用中，有时会希望有个初始延迟。就像手机屏幕上的诸多 App 图标，在你想要拖拽它们进行排序时，通常需要按住图标一小段时间，比如 &lt;strong&gt;200ms&lt;/strong&gt;（如下图所示），这时该如何操作呢？&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/iPhone-drag.gif&quot; alt=&quot;iPhone drag&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/iPhone-drag.gif&quot; alt=&quot;iPhone drag&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;为了演示方便，这里我们先定义一个简单的动画，当用户鼠标按下超过一定时间后，播放一个闪烁动画：&lt;/p&gt;
 
@@ -676,7 +676,7 @@
   &lt;p&gt;需求：给定 n 个小方块，要求拖拽第一个小方块进行移动，后续的小方块能够以间隔 0.1s 的时间跟着之前的小方块进行延迟模仿运动。&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/drag-list.gif&quot; alt=&quot;drag list&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/drag-list.gif&quot; alt=&quot;drag list&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;此例中，我们不再要求“初始延迟”，因此针对正在拖拽着的红色小方块，只要沿用第一个例子中的简单拖拽的方法，即可获取我们需要改变方块位置的事件流：&lt;/p&gt;
 
@@ -776,8 +776,8 @@
 
 </description>
         <pubDate>Tue, 20 Jun 2017 14:55:00 +0000</pubDate>
-        <link>http://jerryzou.com/posts/rxjs-practice-01/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/rxjs-practice-01/</guid>
+        <link>https://jerryzou.com/posts/rxjs-practice-01/</link>
+        <guid isPermaLink="true">https://jerryzou.com/posts/rxjs-practice-01/</guid>
       </item>
     
       <item>
@@ -827,7 +827,7 @@
 
 &lt;p&gt;通过 vscode 调试前端代码主要依赖于一个插件：&lt;a href=&quot;https://github.com/Microsoft/vscode-chrome-debug&quot;&gt;Debugger for Chrome&lt;/a&gt;，该插件主要利用 &lt;a href=&quot;https://chromedevtools.github.io/devtools-protocol/&quot;&gt;Chrome 所开放出来的接口&lt;/a&gt; 来实现对其渲染的页面进行调试。可以通过 &lt;code&gt;Shift + Cmd + X&lt;/code&gt; 打开插件中心，搜索对应插件后直接安装。安装完成并重新加载 vscode 后，可以直接点击调试按钮并创建新的启动配置。如果你之前已经创建过启动配置了，就可以直接打开 &lt;code&gt;.vscode/launch.json&lt;/code&gt; 进行修改。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/vscode-debug-chrome.png&quot; alt=&quot;vscode-debug-chrome&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/vscode-debug-chrome.png&quot; alt=&quot;vscode-debug-chrome&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;其中调试 Chrome 页面的配置如下所示：&lt;/p&gt;
 
@@ -857,7 +857,7 @@
 
 &lt;p&gt;使用 &lt;code&gt;launch&lt;/code&gt; 模式调试前端代码存在一个问题，就是 vscode 会以新访客的身份打开一个新的 Chrome 进程，也就是说你&lt;strong&gt;之前在 Chrome 上装的插件都没法在这个页面上生效&lt;/strong&gt;（如下图所示）。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/vscode-debug-launch.png&quot; alt=&quot;vscode-debug-launch&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/vscode-debug-launch.png&quot; alt=&quot;vscode-debug-launch&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;在这种情况下 &lt;code&gt;attach&lt;/code&gt; 模式就有它存在的意义了：对一个已经启动的 Chrome 进行监听调试。&lt;/p&gt;
 
@@ -962,8 +962,8 @@
 
 </description>
         <pubDate>Sat, 20 May 2017 11:50:00 +0000</pubDate>
-        <link>http://jerryzou.com/posts/vscode-debug-guide/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/vscode-debug-guide/</guid>
+        <link>https://jerryzou.com/posts/vscode-debug-guide/</link>
+        <guid isPermaLink="true">https://jerryzou.com/posts/vscode-debug-guide/</guid>
       </item>
     
       <item>
@@ -990,7 +990,7 @@
 &lt;h4 id=&quot;1-引入脚本&quot;&gt;1. 引入脚本&lt;/h4&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;script&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;https://cdn1.lncld.net/static/js/av-min-1.5.0.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;script&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.3.0.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;script&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;https://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.3.0.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;首先，在你的页面中引入这两个脚本，第一个脚本是 LeanCloud 的库脚本，引入了它我们才能使用 LeanCloud 的服务；由于你可能在每个页面都需要显示访问量，把它加入根模板也许是个不错的选择。&lt;/p&gt;
 
@@ -1004,7 +1004,7 @@
 
 &lt;p&gt;如果你希望在文章列表页中显示各个页面的访问量分别是多少，那么你就要使用一个 url 来填充 &lt;code&gt;data-hk-page&lt;/code&gt; 的属性值，就像这样：&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;span&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-hk-page&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://jerryzou.com/posts/design-for-all-mobile-resolution/&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; - &lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;span&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;span&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-hk-page&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;https://jerryzou.com/posts/design-for-all-mobile-resolution/&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; - &lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;span&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;那么 Hit Kounter 检测到这个标签以后，就会向服务器请求该地址的具体访问量，并将默认值 ` - ` 替换为实际值。可以参考 &lt;a href=&quot;https://github.com/zry656565/heaven-blog/blob/5f19693ac0fb5723ef18d69b57106d2f95021400/index.html#L13&quot;&gt;我博客中的例子&lt;/a&gt;。&lt;/p&gt;
 
@@ -1114,8 +1114,8 @@
 &lt;p&gt;我偷偷地把原文介绍的 v0.2 改成的 v0.3，仅仅多加了全站总访问数显示的功能。由于个人精力比较有限，所以后续很有可能不会再添加新的功能了。&lt;strong&gt;全站总访问数显示的功能&lt;/strong&gt; 也是在一年半以前就完成的，只是这次正式地在文中介绍一下而已。&lt;/p&gt;
 </description>
         <pubDate>Sat, 23 Apr 2016 16:20:00 +0000</pubDate>
-        <link>http://jerryzou.com/posts/introduction-to-hit-kounter-lc/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/introduction-to-hit-kounter-lc/</guid>
+        <link>https://jerryzou.com/posts/introduction-to-hit-kounter-lc/</link>
+        <guid isPermaLink="true">https://jerryzou.com/posts/introduction-to-hit-kounter-lc/</guid>
       </item>
     
       <item>
@@ -1137,7 +1137,7 @@
 
 &lt;p&gt;你可以依照下图的三个小步骤来录制你想要的场景数据；等录制完毕以后，你可以在 &lt;code&gt;C:\Users\${你的用户名}\Documents\Kinect Studio\Repository&lt;/code&gt; 下找到你录制好的 xef 文件，比如我刚刚录制的 &lt;code&gt;20160317_111153_00.xef&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/kinect-studio.png&quot; alt=&quot;Kinect Studio Sample&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/kinect-studio.png&quot; alt=&quot;Kinect Studio Sample&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;回放&quot;&gt;回放&lt;/h2&gt;
 
@@ -1152,7 +1152,7 @@
   &lt;li&gt;将 &lt;strong&gt;KStudioService.dll&lt;/strong&gt; 复制到你的 Debug / Release 文件夹&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/vs-reference.png&quot; alt=&quot;add References to your project&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/vs-reference.png&quot; alt=&quot;add References to your project&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;接下来，你需要编写一些代码来调用回放的功能。以官方的例子 &lt;strong&gt;DepthBasics-WPF&lt;/strong&gt; 为例，首先你需要定义一个新的类，并在这个类中定义一个静态方法，如下所示：&lt;/p&gt;
 
@@ -1239,19 +1239,19 @@
 
 &lt;p&gt;完成了以上这些以后，拔掉你的 Kinect 并重启你的程序。如果程序依然能够很顺利的执行，&lt;strong&gt;那么恭喜你，你成功啦&lt;/strong&gt;！&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/kinect-result.jpg!0.5&quot; alt=&quot;Sample Result&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/kinect-result.jpg!0.5&quot; alt=&quot;Sample Result&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;参考文献&quot;&gt;参考文献&lt;/h2&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/questions/27280689/kinect-v2-read-out-data-from-xef-files&quot;&gt;Stackoverflow - Kinect v2, read out data from .xef files&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://stackoverflow.com/questions/27280689/kinect-v2-read-out-data-from-xef-files&quot;&gt;Stackoverflow - Kinect v2, read out data from .xef files&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://social.msdn.microsoft.com/Forums/en-US/59c97d1e-79f6-4dd0-8fae-73080a2c7b18/documentation-for-microsoftkinecttools-api?forum=kinectv2sdk&amp;amp;prof=required&quot;&gt;MSDN - Sample codes from Carmine&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 </description>
         <pubDate>Mon, 21 Mar 2016 15:20:00 +0000</pubDate>
-        <link>http://jerryzou.com/posts/record-and-playback-for-kinect/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/record-and-playback-for-kinect/</guid>
+        <link>https://jerryzou.com/posts/record-and-playback-for-kinect/</link>
+        <guid isPermaLink="true">https://jerryzou.com/posts/record-and-playback-for-kinect/</guid>
       </item>
     
       <item>
@@ -1276,7 +1276,7 @@
 
 &lt;h4 id=&quot;1-引入脚本&quot;&gt;1. 引入脚本&lt;/h4&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;script&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-0.1.1.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;script&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;https://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-0.1.1.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;首先，在你的页面中引入这个脚本；由于你可能在每个页面都需要显示访问量，把它加入根模板也许是个不错的选择。&lt;/p&gt;
 
@@ -1290,7 +1290,7 @@
 
 &lt;p&gt;如果你希望在文章列表页中显示各个页面的访问量分别是多少，那么你就要使用一个 url 来填充 &lt;code&gt;data-hk-page&lt;/code&gt; 的属性值，就像这样：&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;span&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-hk-page&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://jerryzou.com/posts/design-for-all-mobile-resolution/&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; - &lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;span&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;span&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-hk-page&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;https://jerryzou.com/posts/design-for-all-mobile-resolution/&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; - &lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;span&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;那么 Hit Kounter 检测到这个标签以后，就会向服务器请求该地址的具体访问量，并最终将默认值 ` - ` 替换为实际值。可以参考&lt;a href=&quot;https://github.com/zry656565/heaven-blog/blob/5f19693ac0fb5723ef18d69b57106d2f95021400/index.html#L13&quot;&gt;我博客中的例子&lt;/a&gt;。&lt;/p&gt;
 
@@ -1341,8 +1341,8 @@
 &lt;p&gt;TODO List 可以在 &lt;a href=&quot;https://github.com/zry656565/Hit-Kounter/issues/1&quot;&gt;这个 issue&lt;/a&gt; 中看到，而且因为 &lt;a href=&quot;https://github.com/zry656565/Hit-Kounter&quot;&gt;Hit Kounter&lt;/a&gt; 是开源项目，也很期待大家能够多吐槽，如果能给 Hit Kounter 贡献代码那就再好不过啦~。&lt;/p&gt;
 </description>
         <pubDate>Sat, 27 Feb 2016 05:20:00 +0000</pubDate>
-        <link>http://jerryzou.com/posts/introduction-to-hit-kounter/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/introduction-to-hit-kounter/</guid>
+        <link>https://jerryzou.com/posts/introduction-to-hit-kounter/</link>
+        <guid isPermaLink="true">https://jerryzou.com/posts/introduction-to-hit-kounter/</guid>
       </item>
     
       <item>
@@ -1511,7 +1511,7 @@
 &lt;p&gt;如果是 iPhone 或者 Android 4.4+ 的机器，在使用 scale 相关的属性时要非常谨慎，包括 &lt;code&gt;initial-scale&lt;/code&gt;, &lt;code&gt;maximum-scale&lt;/code&gt; 和 &lt;code&gt;minimum-scale&lt;/code&gt;。
 要么保证 &lt;strong&gt;Scale = deviceWidth / vWidth&lt;/strong&gt;，要么就尽量不用。来看一个例子：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/viewport.png&quot; alt=&quot;Android 4.4+ 和 iPhone 在缩放时的行为不一致&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/viewport.png&quot; alt=&quot;Android 4.4+ 和 iPhone 在缩放时的行为不一致&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;在缩放比不能保证的情况下，即使设置同样的 &lt;code&gt;width&lt;/code&gt; 和 &lt;code&gt;initial-scale&lt;/code&gt; 后，两者的表现也是不一致。具体两种机型采用的策略如何我还没有探索出来，有兴趣的同学可以研究看看。最省事的办法就是在 iPhone 和 Android 4.4+ 上不设置 scale 相关的属性。&lt;/p&gt;
 
@@ -1598,8 +1598,8 @@
 
 </description>
         <pubDate>Tue, 08 Dec 2015 05:36:00 +0000</pubDate>
-        <link>http://jerryzou.com/posts/design-for-all-mobile-resolution/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/design-for-all-mobile-resolution/</guid>
+        <link>https://jerryzou.com/posts/design-for-all-mobile-resolution/</link>
+        <guid isPermaLink="true">https://jerryzou.com/posts/design-for-all-mobile-resolution/</guid>
       </item>
     
       <item>
@@ -1608,7 +1608,7 @@
 
 &lt;h2 id=&quot;起因&quot;&gt;起因&lt;/h2&gt;
 
-&lt;p&gt;我和我的同学 &lt;a href=&quot;http://xidui.github.io/&quot;&gt;@xidui&lt;/a&gt; 正在维护一个项目 &lt;a href=&quot;https://github.com/xidui/algorithm-training&quot;&gt;xidui/algorithm-training&lt;/a&gt;。其实就是收录一些算法题的解答，目前主要对象就是 Leetcode。我前几天正好做到 &lt;a href=&quot;https://leetcode.com/problems/letter-combinations-of-a-phone-number/&quot;&gt;#17 Letter Combinations of a Phone Number&lt;/a&gt;。题目也蛮简单的，我写好以后提交了一下，发现跑出来的结果是 152 ms —— &lt;strong&gt;“哇哦，你打败了 2.44% 的提交”&lt;/strong&gt;。好差！！我瞬间满脸黑线。而之前提到的项目中正好有另一个同学写的关于这一题的解答，我赶紧去参考了一下，感觉空间复杂度比我小很多，但时间复杂度应该差不多呀，然后注释中有这么一句：&lt;/p&gt;
+&lt;p&gt;我和我的同学 &lt;a href=&quot;https://xidui.github.io/&quot;&gt;@xidui&lt;/a&gt; 正在维护一个项目 &lt;a href=&quot;https://github.com/xidui/algorithm-training&quot;&gt;xidui/algorithm-training&lt;/a&gt;。其实就是收录一些算法题的解答，目前主要对象就是 Leetcode。我前几天正好做到 &lt;a href=&quot;https://leetcode.com/problems/letter-combinations-of-a-phone-number/&quot;&gt;#17 Letter Combinations of a Phone Number&lt;/a&gt;。题目也蛮简单的，我写好以后提交了一下，发现跑出来的结果是 152 ms —— &lt;strong&gt;“哇哦，你打败了 2.44% 的提交”&lt;/strong&gt;。好差！！我瞬间满脸黑线。而之前提到的项目中正好有另一个同学写的关于这一题的解答，我赶紧去参考了一下，感觉空间复杂度比我小很多，但时间复杂度应该差不多呀，然后注释中有这么一句：&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;I think this is an O(n^3) solution, but still runs faster than 100% submissions&lt;/p&gt;
@@ -1644,7 +1644,7 @@
 
 &lt;p&gt;我直接把之前发送的两个 ajax 请求用 Curl 的形式保存下来：（感谢 Chrome ╰(￣▽￣)╮)&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/curl.jpg!0.5&quot; alt=&quot;如何通过chrome开发者工具获取请求的curl形式&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/curl.jpg!0.5&quot; alt=&quot;如何通过chrome开发者工具获取请求的curl形式&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;然后我写了个 Nodejs 的小程序，每隔&lt;strong&gt;一分钟&lt;/strong&gt;调用上面保存的两个脚本来进行一次提交，并把当次的执行速度保存到 Mongodb 中。代码我就不贴啦，有兴趣的话可以到 &lt;a href=&quot;https://github.com/zry656565/Leetcode-Benchmark&quot;&gt;zry656565/Leetcode-Benchmark&lt;/a&gt; 看看。&lt;/p&gt;
 
@@ -1654,7 +1654,7 @@
 
 &lt;p&gt;当然啦，采集到了 300 多条数据也不能白费了，画个图出来看看吧。任意一个节点所提交的程序片段都是同一个，大概最终的结果是这样的：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://jerryblog-image.b0.upaiyun.com/blog/posts/leetcode-benchmark.png!0.5&quot; alt=&quot;结果&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://jerryblog-image.b0.upaiyun.com/blog/posts/leetcode-benchmark.png!0.5&quot; alt=&quot;结果&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;(⊙o⊙)…本来想着是不是能找到某个 Leetcode 的服务器稍微稳定一点的时刻，不过似乎并不存在这样的时刻呢。呵呵，然并卵。不过好消息是，在事件发生的二十四小时以后，我发现我的账号解禁了，哈哈哈哈。&lt;/p&gt;
 
@@ -1662,8 +1662,8 @@
 
 </description>
         <pubDate>Wed, 25 Nov 2015 16:20:00 +0000</pubDate>
-        <link>http://jerryzou.com/posts/leetcode-benchmark/</link>
-        <guid isPermaLink="true">http://jerryzou.com/posts/leetcode-benchmark/</guid>
+        <link>https://jerryzou.com/posts/leetcode-benchmark/</link>
+        <guid isPermaLink="true">https://jerryzou.com/posts/leetcode-benchmark/</guid>
       </item>
     
   </channel>

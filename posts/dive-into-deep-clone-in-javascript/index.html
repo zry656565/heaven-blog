@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="一年前我曾写过一篇 Javascript 中的一种深复制实现，当时写这篇文章的时候还比较稚嫩，有很多地方没有考虑仔细。为了不误人子弟，我决定结合 Underscore、lodash 和 jQuery 这些主流的第三方库来重新谈一谈在 JavaScript 中的深复制。 ">
     <link rel="alternate" type="application/rss+xml" title="咀嚼之味 RSS" href="/feed.xml">
-    <link rel="canonical" href="http://jerryzou.com/posts/dive-into-deep-clone-in-javascript/">
+    <link rel="canonical" href="https://jerryzou.com/posts/dive-into-deep-clone-in-javascript/">
     <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     <!-- Custom CSS -->
@@ -57,7 +57,7 @@
     <a class="site-title" href="/">咀嚼之味</a>
     <nav class="site-nav">
       <div class="menu-icon">
-        <img class="icon" src="http://jerryblog-image.b0.upaiyun.com/blog/menu.svg" title="More"/>
+        <img class="icon" src="https://jerryblog-image.b0.upaiyun.com/blog/menu.svg" title="More"/>
       </div>
       <div class="trigger">
         <a class="page-link" href="/">首页</a>
@@ -93,7 +93,7 @@
     </nav>
   </div>
   <!-- fork me on github -->
-  <a id="fork-me" href="https://github.com/zry656565/heaven-blog"><img src="http://jerryblog-image.b0.upaiyun.com/blog/forkme.png" alt="Fork me on GitHub"></a>
+  <a id="fork-me" href="https://github.com/zry656565/heaven-blog"><img src="https://jerryblog-image.b0.upaiyun.com/blog/forkme.png" alt="Fork me on GitHub"></a>
 </header>
 
 
@@ -117,7 +117,7 @@
   </header>
 
   <article class="post-content">
-  <p>一年前我曾写过一篇 <a href="http://jerryzou.com/posts/deepcopy/">Javascript 中的一种深复制实现</a>，当时写这篇文章的时候还比较稚嫩，有很多地方没有考虑仔细。为了不误人子弟，我决定结合 Underscore、lodash 和 jQuery 这些主流的第三方库来重新谈一谈这个问题。</p>
+  <p>一年前我曾写过一篇 <a href="https://jerryzou.com/posts/deepcopy/">Javascript 中的一种深复制实现</a>，当时写这篇文章的时候还比较稚嫩，有很多地方没有考虑仔细。为了不误人子弟，我决定结合 Underscore、lodash 和 jQuery 这些主流的第三方库来重新谈一谈这个问题。</p>
 
 <h2 id="第三方库的实现">第三方库的实现</h2>
 
@@ -160,7 +160,7 @@
 
 <h3 id="jquery--clone--extend">jQuery —— $.clone() / $.extend()</h3>
 
-<p>在 jQuery 中也有这么一个叫 <code>$.clone()</code> 的方法，可是它并不是用于一般的 JS 对象的深复制，而是用于 DOM 对象。这不是这篇文章的重点，所以感兴趣的同学可以参考<a href="http://api.jquery.com/clone/">jQuery的文档</a>。与 Underscore 类似，我们也是可以通过 <code>$.extend()</code> 方法来完成深复制。值得庆幸的是，我们在 jQuery 中可以通过添加一个参数来实现<strong>递归extend</strong>。调用<code>$.extend(true, {}, ...)</code>就可以实现深复制啦，参考下面的例子：</p>
+<p>在 jQuery 中也有这么一个叫 <code>$.clone()</code> 的方法，可是它并不是用于一般的 JS 对象的深复制，而是用于 DOM 对象。这不是这篇文章的重点，所以感兴趣的同学可以参考<a href="https://api.jquery.com/clone/">jQuery的文档</a>。与 Underscore 类似，我们也是可以通过 <code>$.extend()</code> 方法来完成深复制。值得庆幸的是，我们在 jQuery 中可以通过添加一个参数来实现<strong>递归extend</strong>。调用<code>$.extend(true, {}, ...)</code>就可以实现深复制啦，参考下面的例子：</p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="p">{</span>
     <span class="nx">a</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
@@ -244,7 +244,7 @@
 
 <h2 id="拥抱未来的深复制方法">拥抱未来的深复制方法</h2>
 
-<p>我自己实现了一个深复制的方法，因为用到了<code>Object.create</code>、<code>Object.isPrototypeOf</code>等比较新的方法，所以基本只能在 IE9+ 中使用。而且，我的实现是<strong>直接定义在 prototype 上</strong>的，很有可能引起大多数的前端同行们的不适。(关于这个我还曾在知乎上提问过：<a href="http://www.zhihu.com/question/26924011">为什么不要直接在Object.prototype上定义方法？</a>）只是实验性质的，大家参考一下就好，改成非 prototype 版本也是很容易的，不过就是要不断地去<strong>判断对象的类型</strong>了。~</p>
+<p>我自己实现了一个深复制的方法，因为用到了<code>Object.create</code>、<code>Object.isPrototypeOf</code>等比较新的方法，所以基本只能在 IE9+ 中使用。而且，我的实现是<strong>直接定义在 prototype 上</strong>的，很有可能引起大多数的前端同行们的不适。(关于这个我还曾在知乎上提问过：<a href="https://www.zhihu.com/question/26924011">为什么不要直接在Object.prototype上定义方法？</a>）只是实验性质的，大家参考一下就好，改成非 prototype 版本也是很容易的，不过就是要不断地去<strong>判断对象的类型</strong>了。~</p>
 
 <p>这个实现方法具体可以看我写的一个小玩意儿——<a href="https://github.com/cherryjs/cherry.js">Cherry.js</a>，使用方法大概是这样的：</p>
 
@@ -531,9 +531,9 @@
 <h2 id="参考资料">参考资料</h2>
 
 <ul>
-  <li><a href="http://underscorejs.org/#clone">Underscore - clone</a></li>
-  <li><a href="http://stackoverflow.com/questions/21003059/how-do-you-clone-an-array-of-objects-using-underscore">Stackoverflow - How do you clone an array of objects using underscore?</a></li>
-  <li><a href="http://api.jquery.com/">jQuery API</a></li>
+  <li><a href="https://underscorejs.org/#clone">Underscore - clone</a></li>
+  <li><a href="https://stackoverflow.com/questions/21003059/how-do-you-clone-an-array-of-objects-using-underscore">Stackoverflow - How do you clone an array of objects using underscore?</a></li>
+  <li><a href="https://api.jquery.com/">jQuery API</a></li>
   <li><a href="https://lodash.com/docs#clone">lodash docs #clone</a></li>
   <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify">MDN - JSON.stringify</a></li>
 </ul>
@@ -542,7 +542,7 @@
 
   
   <p class="copyright">
-    本文的版权归作者 <a href="mailto:jerry.zry@outlook.com">邹润阳</a> 所有，采用 <a href="http://creativecommons.org/licenses/by-nc/3.0/">Attribution-NonCommercial 3.0 License</a>。任何人可以进行转载、分享，但不可在未经允许的情况下用于商业用途；转载请注明出处。感谢配合！
+    本文的版权归作者 <a href="mailto:jerry.zry@outlook.com">邹润阳</a> 所有，采用 <a href="https://creativecommons.org/licenses/by-nc/3.0/">Attribution-NonCommercial 3.0 License</a>。任何人可以进行转载、分享，但不可在未经允许的情况下用于商业用途；转载请注明出处。感谢配合！
   </p>
   
 
@@ -554,7 +554,7 @@
 *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
 *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 var disqus_config = function () {
-this.page.url = "http://jerryzou.com/posts/dive-into-deep-clone-in-javascript/";  // Replace PAGE_URL with your page's canonical URL variable
+this.page.url = "https://jerryzou.com/posts/dive-into-deep-clone-in-javascript/";  // Replace PAGE_URL with your page's canonical URL variable
 this.page.identifier = "10028"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
 };
 (function() { // DON'T EDIT BELOW THIS LINE
@@ -587,7 +587,7 @@ s.setAttribute('data-timestamp', +new Date());
             <li><a href="//efe.baidu.com/">Baidu EFE</a></li>
             <li><a href="//fex.baidu.com/">Baidu FEX</a></li>
         </ul>
-        <p class="footer-text">Powered by <a href="http://jekyllrb.com/">Jekyll</a> , <a href="https://pages.github.com/">Github Pages</a> and <a href="https://www.upyun.com/">UPYUN</a>.</p>
+        <p class="footer-text">Powered by <a href="https://jekyllrb.com/">Jekyll</a> , <a href="https://pages.github.com/">Github Pages</a> and <a href="https://www.upyun.com/">UPYUN</a>.</p>
     </div>
 </footer>
 
