@@ -25,8 +25,8 @@ sitemap:
 你可以在网络上的很多其他地方找到我，比如：
 
 - [GitHub](https://github.com/zry656565)
-- [LinkedIn](http://www.linkedin.com/profile/view?id=289040657)
-- [Segmentfault](http://segmentfault.com/u/jerryzou)
-- [Stackoverflow](http://stackoverflow.com/users/3152296/jerryddg)
-- [Douban](http://www.douban.com/people/jerry_zou/)
-- [Weibo](http://weibo.com/u/1943775181)
+- [LinkedIn](https://www.linkedin.com/profile/view?id=289040657)
+- [Segmentfault](https://segmentfault.com/u/jerryzou)
+- [Stackoverflow](https://stackoverflow.com/users/3152296/jerryddg)
+- [Douban](https://www.douban.com/people/jerry_zou/)
+- [Weibo](https://weibo.com/u/1943775181)

@@ -7,7 +7,7 @@ key: 10008
 labels: [JavaScript, 模块化]
 ---
 
->本文译自Ben Cherry的《[JavaScript Module Pattern: In-Depth](http://www.adequatelygood.com/JavaScript-Module-Pattern-In-Depth.html)》。虽然个人不太认同js中私有变量存在的必要性，但是本文非常全面地介绍了JavaScript中模块化模式地方方面面。我读完之后还是受益匪浅，所以翻译出来希望对各位也有些帮助。
+>本文译自Ben Cherry的《[JavaScript Module Pattern: In-Depth](https://www.adequatelygood.com/JavaScript-Module-Pattern-In-Depth.html)》。虽然个人不太认同js中私有变量存在的必要性，但是本文非常全面地介绍了JavaScript中模块化模式地方方面面。我读完之后还是受益匪浅，所以翻译出来希望对各位也有些帮助。
 
 模块化编程是一种非常常见JavaScript编程模式。它一般来说可以使得代码更易于理解，但是有许多优秀的实践还没有广为人知。在这篇文章中，我将会回顾一下js模块化编程的基础，并且将会讲到一些真的非常值得一提的进阶话题，包括一个我认为是我自创的模式。
 <br/>

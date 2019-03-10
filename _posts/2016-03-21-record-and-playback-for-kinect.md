@@ -131,7 +131,7 @@ namespace Microsoft.Samples.Kinect.DepthBasics
 
 ## 参考文献
 
-- [Stackoverflow - Kinect v2, read out data from .xef files](http://stackoverflow.com/questions/27280689/kinect-v2-read-out-data-from-xef-files)
+- [Stackoverflow - Kinect v2, read out data from .xef files](https://stackoverflow.com/questions/27280689/kinect-v2-read-out-data-from-xef-files)
 - [MSDN - Sample codes from Carmine](https://social.msdn.microsoft.com/Forums/en-US/59c97d1e-79f6-4dd0-8fae-73080a2c7b18/documentation-for-microsoftkinecttools-api?forum=kinectv2sdk&prof=required)
 
 [1]: {{ site.static_url }}/posts/kinect-studio.png

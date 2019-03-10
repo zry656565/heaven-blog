@@ -86,7 +86,7 @@ a | b;                         // 15
 // 啊啊啊，为毛我的 a 丝毫不起作用，JavaScript真是门吊诡的语言！！！
 {% endhighlight %}
 
-好吧，虽然我说过大家可以近似地认为，JS 的数字类型可以表示 53 位的整型。但事实上，位操作符并不是这么认为的。在 [ECMAScript® Language Specification](http://www.ecma-international.org/ecma-262/5.1/#sec-11.10) 中是这样描述位操作符的：
+好吧，虽然我说过大家可以近似地认为，JS 的数字类型可以表示 53 位的整型。但事实上，位操作符并不是这么认为的。在 [ECMAScript® Language Specification](https://www.ecma-international.org/ecma-262/5.1/#sec-11.10) 中是这样描述位操作符的：
 
 >The production A : A @ B, where @ is one of the bitwise operators in the productions above, is evaluated as follows:
 >
@@ -108,10 +108,10 @@ a | b;                         // 15
 
 ## 参考资料
 
-1. [维基百科：双精度浮点数](http://zh.wikipedia.org/wiki/%E9%9B%99%E7%B2%BE%E5%BA%A6%E6%B5%AE%E9%BB%9E%E6%95%B8)
+1. [维基百科：双精度浮点数](https://zh.wikipedia.org/wiki/%E9%9B%99%E7%B2%BE%E5%BA%A6%E6%B5%AE%E9%BB%9E%E6%95%B8)
 2. [MDN：JavaScript数据结构](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Data_structures)
 3. [MDN：按位操作符](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Bitwise_Operators)
-4. [How to use bitmask?](http://stackoverflow.com/questions/18591924/how-to-use-bitmask)
-5. [ECMAScript® Language Specification - 11.10 Binary Bitwise Operators](http://www.ecma-international.org/ecma-262/5.1/#sec-11.10)
+4. [How to use bitmask?](https://stackoverflow.com/questions/18591924/how-to-use-bitmask)
+5. [ECMAScript® Language Specification - 11.10 Binary Bitwise Operators](https://www.ecma-international.org/ecma-262/5.1/#sec-11.10)
 
 [1]: {{ site.static_url }}/posts/double_float.png

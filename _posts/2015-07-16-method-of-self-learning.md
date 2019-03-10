@@ -14,7 +14,7 @@ labels: ["自学", "思维导图"]
 ## 1. 建立大局观：思维导图
 
 自学者们在没有得到指导的情况下通常会对未来行走的方向一片迷茫，此刻最重要的是建立起**大局观**，也就是在宏观的角度建立起未来的蓝图。
-要做到这一点，思维导图 (Mind Map) 是个很好的工具。我自己比较常用的是 **[XMind](http://www.xmind.net/cn/)**，免费版在大多数情况已经够用了。
+要做到这一点，思维导图 (Mind Map) 是个很好的工具。我自己比较常用的是 **[XMind](https://www.xmind.net/cn/)**，免费版在大多数情况已经够用了。
 **百度脑图** 是一个在线的思维导图工具，还支持同步到百度云；如果想用于分享的话，使用百度脑图也是不错的选择。
 
 ![xmind][1]
@@ -26,7 +26,7 @@ labels: ["自学", "思维导图"]
 
 - [拔赤的总结](https://camo.githubusercontent.com/6797bdc1a11d35369611c817bbd5dae9a162d775/68747470733a2f2f7261772e6769746875622e636f6d2f4a61636b736f6e5469616e2f666b732f6d61737465722f666967757265732f666b732e6a7067)
 - [朴灵的 fks](https://github.com/JacksonTian/fks)
-- [大漠的总结](http://www.w3cplus.com/sites/default/files/blogs/2015/1506/js-in-one-pic.png)
+- [大漠的总结](https://www.w3cplus.com/sites/default/files/blogs/2015/1506/js-in-one-pic.png)
 
 但最最重要的是，你必须建立**属于你自己的**思维导图！也许它一开始并不那么完整，一开始你只能做出一张很小的图，但那也就够了。
 如果直接把别人的一大张图拿来作为自己的蓝图，那么你依旧是迷茫而不知所措的。任何领域的知识都是汪洋大海，你永远不能指望能够完全掌握所有知识。
@@ -75,7 +75,7 @@ labels: ["自学", "思维导图"]
 因此 Evernote 也对应于思维导图的结构来创建笔记本组和笔记本。
 
 在 Evernote 中，你可以记录你学习的过程，总结一些相似知识之间的关联，从而形成自己的观点。你还可以将一些你觉得写的比较不错的文章发布到你的博客上与大家一起分享。
-另外推荐一个付费的工具 [马克飞象](http://maxiang.info/)。依靠它，你就可以使用 Markdown 来编写你的笔记啦，没用过的同学打开试试吧！~
+另外推荐一个付费的工具 [马克飞象](https://maxiang.io/)。依靠它，你就可以使用 Markdown 来编写你的笔记啦，没用过的同学打开试试吧！~
 
 ## 总结
 
@@ -86,17 +86,17 @@ labels: ["自学", "思维导图"]
 
 #### 2015.10.22
 
-根据 [@普罗米修斯君](http://weibo.com/u/3140194393) 与 [@Cuilei](http://www.zhihu.com/people/cuilei) 等朋友的建议，添加几个可以作为替代的同类软件：
+根据 [@普罗米修斯君](https://weibo.com/u/3140194393) 与 [@Cuilei](https://www.zhihu.com/people/cuilei) 等朋友的建议，添加几个可以作为替代的同类软件：
 
 - Trello 的同类软件
     - [Worktile](https://worktile.com/)
     - [奇妙清单](https://www.wunderlist.com/zh/)
-    - [Doit.im](http://doit.im/cn/) (付费)
+    - [Doit.im](https://doit.im/cn/) (付费)
     - [滴答清单](https://www.dida365.com)
 - Evernote 的同类软件
-    - [OneNote](http://www.onenote.com/)
-    - [为知笔记](http://www.wiz.cn/)
-    - [有道云笔记](http://note.youdao.com/)
+    - [OneNote](https://www.onenote.com/)
+    - [为知笔记](https://www.wiz.cn/)
+    - [有道云笔记](https://note.youdao.com/)
 
 [1]: {{ site.static_url }}/posts/xmind.png!h400
 [2]: {{ site.static_url }}/posts/trello-boards.png!h400

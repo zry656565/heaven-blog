@@ -103,7 +103,7 @@ pygmentize -f html -a .highlight -S default > pygments.css
 
 ### 参考资料：
 1. [http://pygments.org/](http://pygments.org/)
-2. [http://segmentfault.com/q/1010000000261050](http://segmentfault.com/q/1010000000261050)
-3. [http://havee.me/internet/2013-07/jekyll-install.html](http://havee.me/internet/2013-07/jekyll-install.html)
+2. [https://segmentfault.com/q/1010000000261050](https://segmentfault.com/q/1010000000261050)
+3. [https://havee.me/internet/2013-07/jekyll-install.html](https://havee.me/internet/2013-07/jekyll-install.html)
 
 [1]: {{ site.static_url }}/pygments1.png

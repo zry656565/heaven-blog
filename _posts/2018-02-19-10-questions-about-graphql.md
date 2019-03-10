@@ -15,14 +15,14 @@ labels: [GraphQL, Apollo, Relay]
 
 ## 1. 什么是 GraphQL？
 
-从官方的定义来说，GraphQL 是一种针对 API 的查询语言；在我看来，[GraphQL 是一种标准](http://facebook.github.io/graphql/)，而与标准相对的便是实现。就像 EcmaScript 与 JavaScript 的关系，从一开始你就**需要有这样一种认知**：GraphQL 只定义了这种查询语言语法如何、具体的语句如何执行等。**但是**，你在真正使用**某种 GraphQL 的服务端实现**时，是有可能发现 GraphQL 标准中所描述的特性尚未被实现；或者这种 GraphQL 的实现扩展了 GraphQL 标准所定义的内容。
+从官方的定义来说，GraphQL 是一种针对 API 的查询语言；在我看来，[GraphQL 是一种标准](https://facebook.github.io/graphql/)，而与标准相对的便是实现。就像 EcmaScript 与 JavaScript 的关系，从一开始你就**需要有这样一种认知**：GraphQL 只定义了这种查询语言语法如何、具体的语句如何执行等。**但是**，你在真正使用**某种 GraphQL 的服务端实现**时，是有可能发现 GraphQL 标准中所描述的特性尚未被实现；或者这种 GraphQL 的实现扩展了 GraphQL 标准所定义的内容。
 
-举例来说，就像 ES 2017 标准正式纳入了 async/await，而从实现的角度上说，IE 没有实现这一标准，而 Edge 16 和 Chrome 62 则实现了这一标准（数据来源于 [caniuse](https://caniuse.com/#feat=async-functions)）说回 GraphQL 标准，与之相对的有[相当多的服务器端实现](http://graphql.org/code/)。他们的大多遵循 GraphQL 标准来实现，但也可能稍有差别，这一切需要你自己去探索。
+举例来说，就像 ES 2017 标准正式纳入了 async/await，而从实现的角度上说，IE 没有实现这一标准，而 Edge 16 和 Chrome 62 则实现了这一标准（数据来源于 [caniuse](https://caniuse.com/#feat=async-functions)）说回 GraphQL 标准，与之相对的有[相当多的服务器端实现](https://graphql.org/code/)。他们的大多遵循 GraphQL 标准来实现，但也可能稍有差别，这一切需要你自己去探索。
 
 ## 2. 如何从零入门 GraphQL？
 
-1. 先看标准：http://graphql.org/ （纯 GraphQL，与任何什么 JavaScript, Python 都无关）
-2. 再看服务端实现：到 http://graphql.org/code/ 里找到跟你的服务端技术有关的实现
+1. 先看标准：https://graphql.org/ （纯 GraphQL，与任何什么 JavaScript, Python 都无关）
+2. 再看服务端实现：到 https://graphql.org/code/ 里找到跟你的服务端技术有关的实现
 3. 再看客户端实现：[Relay](https://facebook.github.io/relay/) 或 [appollo-client](https://www.apollographql.com/docs/react/), etc.
 4. 学习使用 DataLoader 来获取列表数据
 
@@ -62,7 +62,7 @@ emmmmm... 虽然看起来很别扭，但是只需要一次请求呢！
 
 那么在 GraphQL 中，怎么做呢？
 
-首先我们需要给 User 定义 Schema (GraphQL 有一套完整的[类型系统](http://graphql.org/learn/schema/))：
+首先我们需要给 User 定义 Schema (GraphQL 有一套完整的[类型系统](https://graphql.org/learn/schema/))：
 
 {% highlight console %}
 type User {
@@ -110,7 +110,7 @@ query ($userId: ID) {
 
 答案是：能。
 
-仅仅为了使得 GraphQL 这个 data platform **变得更加完整**，GraphQL 标准中加入了一种操作符，名为 **mutation**。因为我觉得这种设计确实比较一般，此处就不举例了，详情见：[http://graphql.org/learn/queries/#mutations](http://graphql.org/learn/queries/#mutations)
+仅仅为了使得 GraphQL 这个 data platform **变得更加完整**，GraphQL 标准中加入了一种操作符，名为 **mutation**。因为我觉得这种设计确实比较一般，此处就不举例了，详情见：[https://graphql.org/learn/queries/#mutations](https://graphql.org/learn/queries/#mutations)
 
 ## 5. GraphQL 与 RESTful 相比有什么优点？
 
@@ -120,7 +120,7 @@ query ($userId: ID) {
 
 #### 2. 更易于前端缓存数据
 
-这个一般像 Relay 和 apollo-client 都替你做好了，如果你想了解它的缓存原理，请移步 [GraphQL Caching](http://graphql.org/learn/caching/)
+这个一般像 Relay 和 apollo-client 都替你做好了，如果你想了解它的缓存原理，请移步 [GraphQL Caching](https://graphql.org/learn/caching/)
 
 
 #### 3. Versionless API
@@ -129,11 +129,11 @@ query ($userId: ID) {
 
 #### 4. 更健壮的接口
 
-不用再因为在缺乏沟通的情况下修改接口，而为系统埋下不稳定的定时炸弹。一切面向前端的接口都有强类型的 Schema 做保证，且完整类型定义因 [introspection](http://graphql.org/learn/introspection/) 完全对前端可见，一旦前端发送的 query 与 Schema 不符，能快速感知到产生了错误。
+不用再因为在缺乏沟通的情况下修改接口，而为系统埋下不稳定的定时炸弹。一切面向前端的接口都有强类型的 Schema 做保证，且完整类型定义因 [introspection](https://graphql.org/learn/introspection/) 完全对前端可见，一旦前端发送的 query 与 Schema 不符，能快速感知到产生了错误。
 
 #### 5. 令人期待的 subscription
 
-如何在浏览器中接受服务端的推送信息是个老生常谈的问题。从最初的轮询，到后来的 WebSocket。如今 GraphQL 也计划引入除了 `query`, `mutation` 以外的第三种操作符 `subscription`，以便于直接接受服务器推送数据。在 2015 年底 GraphQL 官方发布了一篇博文：[Subscriptions in GraphQL and Relay](http://graphql.org/blog/subscriptions-in-graphql-and-relay/) 来介绍 `subscription` 在他们的 iOS 和 Android App 中的应用。可惜的是相关的代码仍未开源，目前开源社区能找到的解决方案目前只有 Apollo 社区为 Node.js 写的 [graphql-subscriptions](https://github.com/apollographql/graphql-subscriptions)。
+如何在浏览器中接受服务端的推送信息是个老生常谈的问题。从最初的轮询，到后来的 WebSocket。如今 GraphQL 也计划引入除了 `query`, `mutation` 以外的第三种操作符 `subscription`，以便于直接接受服务器推送数据。在 2015 年底 GraphQL 官方发布了一篇博文：[Subscriptions in GraphQL and Relay](https://graphql.org/blog/subscriptions-in-graphql-and-relay/) 来介绍 `subscription` 在他们的 iOS 和 Android App 中的应用。可惜的是相关的代码仍未开源，目前开源社区能找到的解决方案目前只有 Apollo 社区为 Node.js 写的 [graphql-subscriptions](https://github.com/apollographql/graphql-subscriptions)。
 
 ## 6. GraphQL 有什么缺点？
 
@@ -158,7 +158,7 @@ def get:
 
 由于用户的分数并没有保存在 User 表中，又因为 QuerySet 有 lazy load 的特性，所以在 for 循环中，每一次获取 `user.score` 都会查一次表，最终原本 1 次数据库查询能搞定的问题，却在不恰当的实现中产生了 N+1 次对数据库的访问。
 
-相对于 RESTful，在 GraphQL 中更加容易引起 N+1 问题。主要是由于 GraphQL query 的逐层解析方式所引起的，关于 GraphQL 如何执行 query 的细节，可以参阅 [Graphql Execution](http://graphql.org/learn/execution/)。
+相对于 RESTful，在 GraphQL 中更加容易引起 N+1 问题。主要是由于 GraphQL query 的逐层解析方式所引起的，关于 GraphQL 如何执行 query 的细节，可以参阅 [Graphql Execution](https://graphql.org/learn/execution/)。
 
 #### 6.2. 如何解决在 GraphQL 中的 N + 1 问题？
 
@@ -169,7 +169,7 @@ def get:
 
 ## 7. 有什么可以快乐地调试 GraphQL 接口的方法？
 
-[GraphiQL](https://github.com/graphql/graphiql) / [live demo](http://graphql.org/swapi-graphql/)
+[GraphiQL](https://github.com/graphql/graphiql) / [live demo](https://graphql.org/swapi-graphql/)
 
 使用 GraphiQL 可以很容易地让人感受到“代码即文档”的快乐。
 
@@ -185,7 +185,7 @@ def get:
 
 ## 9. GraphQL 中是怎么处理分页的？
 
-这是一个可能让 GraphQL 初学者担忧的问题，又是一个可以从[官方文档](http://graphql.org/learn/pagination/)中找到答案的问题。
+这是一个可能让 GraphQL 初学者担忧的问题，又是一个可以从[官方文档](https://graphql.org/learn/pagination/)中找到答案的问题。
 
 再以找朋友为例，借用 SQL 查询中常用的筛选方法，分页接口可以设计为：
 
@@ -237,7 +237,7 @@ query {
 
 你可以回看一下 [3. GraphQL 与 RESTful 有什么区别](#3-graphql-与-restful-有什么区别) 中展示的图片，答案就在其中：Authentication 属于业务逻辑层干的事情，别让 GraphQL 承担太多工作啦。
 
-扩展阅读：[GraphQL Authentication](http://graphql.org/learn/authorization/)
+扩展阅读：[GraphQL Authentication](https://graphql.org/learn/authorization/)
 
 ## 小结
 
@@ -247,11 +247,11 @@ query {
 
 ## 参考文献
 
-- [GraphQL Specification](http://facebook.github.io/graphql/)
+- [GraphQL Specification](https://facebook.github.io/graphql/)
 - [Async functions - caniuse](https://caniuse.com/#feat=async-functions)
-- [Learn GraphQL](http://graphql.org/)
+- [Learn GraphQL](https://graphql.org/)
 - [GraphQL and Relay 浅析](https://segmentfault.com/a/1190000004586237#articleHeader5)
-- [Subscriptions in GraphQL and Relay](http://graphql.org/blog/subscriptions-in-graphql-and-relay/)
+- [Subscriptions in GraphQL and Relay](https://graphql.org/blog/subscriptions-in-graphql-and-relay/)
 - [Relay Cursor Connections Specification](https://facebook.github.io/relay/graphql/connections.htm)
 
 [1]: {{ site.static_url }}/posts/backend-arch.png

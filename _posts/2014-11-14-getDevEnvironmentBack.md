@@ -29,7 +29,7 @@ labels: [Mac, "开发环境"]
 
 > Current JDK 1.7 and 1.8 versions have several critical issues. We can’t default to the new JDK version until these issues are resolved.
 
-好了，解决方法就是下个jre6嘛！结果我在oracle的网站上找了半天却只能找到提供给OS X的jre7和jre8。好吧，其实直接在苹果官网上就可以找到下载链接：[http://support.apple.com/kb/DL1572](http://support.apple.com/kb/DL1572)
+好了，解决方法就是下个jre6嘛！结果我在oracle的网站上找了半天却只能找到提供给OS X的jre7和jre8。好吧，其实直接在苹果官网上就可以找到下载链接：[https://support.apple.com/kb/DL1572](https://support.apple.com/kb/DL1572)
 
 ### 2. Homebrew
 
@@ -141,10 +141,10 @@ alias stop_mysql='sudo $MYSQL_HOME/mysqladmin shutdown'
 
 ## 参考资料
 
-1. [Homebrew, Ruby, and Rails on OS X 10.10](http://www.tuicool.com/articles/iIvy2e)
-2. [Fix the PhpStorm Java Error with Yosemite](http://laravel-news.com/2014/10/fix-phpstorm-java-error-yosemite/)
-3. [Error message “Forbidden You don't have permission to access / on this server”](http://stackoverflow.com/questions/10873295/error-message-forbidden-you-dont-have-permission-to-access-on-this-server#)
-4. [start mySQL server from command line on Mac OS Lion](http://stackoverflow.com/questions/7927854/start-mysql-server-from-command-line-on-mac-os-lion)
+1. [Homebrew, Ruby, and Rails on OS X 10.10](https://www.tuicool.com/articles/iIvy2e)
+2. [Fix the PhpStorm Java Error with Yosemite](https://laravel-news.com/2014/10/fix-phpstorm-java-error-yosemite/)
+3. [Error message “Forbidden You don't have permission to access / on this server”](https://stackoverflow.com/questions/10873295/error-message-forbidden-you-dont-have-permission-to-access-on-this-server#)
+4. [start mySQL server from command line on Mac OS Lion](https://stackoverflow.com/questions/7927854/start-mysql-server-from-command-line-on-mac-os-lion)
 
 ## 更新
 

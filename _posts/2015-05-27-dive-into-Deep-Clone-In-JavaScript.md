@@ -7,7 +7,7 @@ key: 10028
 labels: ["JavaScript", "深复制"]
 ---
 
-一年前我曾写过一篇 [Javascript 中的一种深复制实现](http://jerryzou.com/posts/deepcopy/)，当时写这篇文章的时候还比较稚嫩，有很多地方没有考虑仔细。为了不误人子弟，我决定结合 Underscore、lodash 和 jQuery 这些主流的第三方库来重新谈一谈这个问题。
+一年前我曾写过一篇 [Javascript 中的一种深复制实现](https://jerryzou.com/posts/deepcopy/)，当时写这篇文章的时候还比较稚嫩，有很多地方没有考虑仔细。为了不误人子弟，我决定结合 Underscore、lodash 和 jQuery 这些主流的第三方库来重新谈一谈这个问题。
 
 ## 第三方库的实现
 
@@ -56,7 +56,7 @@ console.log(JSON.stringify(a));  // [{"f":1},{"f":5},{"f":10}]
 
 ### jQuery —— $.clone() / $.extend()
 
-在 jQuery 中也有这么一个叫 `$.clone()` 的方法，可是它并不是用于一般的 JS 对象的深复制，而是用于 DOM 对象。这不是这篇文章的重点，所以感兴趣的同学可以参考[jQuery的文档](http://api.jquery.com/clone/)。与 Underscore 类似，我们也是可以通过 `$.extend()` 方法来完成深复制。值得庆幸的是，我们在 jQuery 中可以通过添加一个参数来实现**递归extend**。调用`$.extend(true, {}, ...)`就可以实现深复制啦，参考下面的例子：
+在 jQuery 中也有这么一个叫 `$.clone()` 的方法，可是它并不是用于一般的 JS 对象的深复制，而是用于 DOM 对象。这不是这篇文章的重点，所以感兴趣的同学可以参考[jQuery的文档](https://api.jquery.com/clone/)。与 Underscore 类似，我们也是可以通过 `$.extend()` 方法来完成深复制。值得庆幸的是，我们在 jQuery 中可以通过添加一个参数来实现**递归extend**。调用`$.extend(true, {}, ...)`就可以实现深复制啦，参考下面的例子：
 
 {% highlight javascript %}
 var x = {
@@ -149,7 +149,7 @@ var clone = jsonClone({ a:1 });
 
 ## 拥抱未来的深复制方法
 
-我自己实现了一个深复制的方法，因为用到了`Object.create`、`Object.isPrototypeOf`等比较新的方法，所以基本只能在 IE9+ 中使用。而且，我的实现是**直接定义在 prototype 上**的，很有可能引起大多数的前端同行们的不适。(关于这个我还曾在知乎上提问过：[为什么不要直接在Object.prototype上定义方法？](http://www.zhihu.com/question/26924011)）只是实验性质的，大家参考一下就好，改成非 prototype 版本也是很容易的，不过就是要不断地去**判断对象的类型**了。~
+我自己实现了一个深复制的方法，因为用到了`Object.create`、`Object.isPrototypeOf`等比较新的方法，所以基本只能在 IE9+ 中使用。而且，我的实现是**直接定义在 prototype 上**的，很有可能引起大多数的前端同行们的不适。(关于这个我还曾在知乎上提问过：[为什么不要直接在Object.prototype上定义方法？](https://www.zhihu.com/question/26924011)）只是实验性质的，大家参考一下就好，改成非 prototype 版本也是很容易的，不过就是要不断地去**判断对象的类型**了。~
 
 这个实现方法具体可以看我写的一个小玩意儿——[Cherry.js](https://github.com/cherryjs/cherry.js)，使用方法大概是这样的：
 
@@ -359,8 +359,8 @@ Average | 478.7 | 293 | 656.7 | 332.3
 
 ## 参考资料
 
-- [Underscore - clone](http://underscorejs.org/#clone)
-- [Stackoverflow - How do you clone an array of objects using underscore?](http://stackoverflow.com/questions/21003059/how-do-you-clone-an-array-of-objects-using-underscore)
-- [jQuery API](http://api.jquery.com/)
+- [Underscore - clone](https://underscorejs.org/#clone)
+- [Stackoverflow - How do you clone an array of objects using underscore?](https://stackoverflow.com/questions/21003059/how-do-you-clone-an-array-of-objects-using-underscore)
+- [jQuery API](https://api.jquery.com/)
 - [lodash docs #clone](https://lodash.com/docs#clone)
 - [MDN - JSON.stringify](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)

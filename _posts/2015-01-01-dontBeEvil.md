@@ -15,7 +15,7 @@ labels: [Google, 生活]
 
 这让我陷入了思考。我一直以来关注地都是谷歌在技术方面的成就，而忽视了其他方面。所以说，谷歌曾经在我心目中的形象是被神化的，它并不真实！我觉得我应该从“don't be evil”开始，重新审视一下这家公司。
 
-Don't be evil 是一句广为流传的体现谷歌价值观的话。在谷歌官网上的[《Ten things we know to be true》](http://www.google.com/about/company/philosophy/)第六条的正式描述是："You can make money without doing evil"。我节选了几句核心的话放在下面，其实也就是每一段的第一句啦：
+Don't be evil 是一句广为流传的体现谷歌价值观的话。在谷歌官网上的[《Ten things we know to be true》](https://www.google.com/about/company/philosophy/)第六条的正式描述是："You can make money without doing evil"。我节选了几句核心的话放在下面，其实也就是每一段的第一句啦：
 
 >
 - Google is a business...

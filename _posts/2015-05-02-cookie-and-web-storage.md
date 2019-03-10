@@ -77,10 +77,10 @@ sessionStorage 与 localStorage 的接口类似，但保存数据的生命周期
 需要注意的是，不是什么数据都适合放在 Cookie、localStorage 和 sessionStorage 中的。使用它们的时候，需要时刻注意是否有代码存在 XSS 注入的风险。因为只要打开控制台，你就随意修改它们的值，也就是说如果你的网站中有 XSS 的风险，它们就能对你的 localStorage 肆意妄为。所以千万不要用它们存储你系统中的敏感数据。
 
 ## 参考资料
-- [what is the difference between localStorage, sessionStorage, session and cookie?](http://stackoverflow.com/questions/19867599/what-is-the-difference-between-localstorage-sessionstorage-session-and-cookie)
-- [HTML5 localStorage security](http://stackoverflow.com/questions/3718349/html5-localstorage-security)
-- [维基百科 - Cookie](http://zh.wikipedia.org/wiki/Cookie)
+- [what is the difference between localStorage, sessionStorage, session and cookie?](https://stackoverflow.com/questions/19867599/what-is-the-difference-between-localstorage-sessionstorage-session-and-cookie)
+- [HTML5 localStorage security](https://stackoverflow.com/questions/3718349/html5-localstorage-security)
+- [维基百科 - Cookie](https://zh.wikipedia.org/wiki/Cookie)
 - [Web Storage API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API)
 - [浏览器本地数据（sessionStorage、localStorage、cookie）与server端数据](http://han.guokai.blog.163.com/blog/static/13671827120112694851799/)
-- [HTMl5的sessionStorage和localStorage](http://www.cnblogs.com/yuzhongwusan/archive/2011/12/19/2293347.html)
-- [HTML5 LocalStorage 本地存储](http://www.cnblogs.com/xiaowei0705/archive/2011/04/19/2021372.html)
+- [HTMl5的sessionStorage和localStorage](https://www.cnblogs.com/yuzhongwusan/archive/2011/12/19/2293347.html)
+- [HTML5 LocalStorage 本地存储](https://www.cnblogs.com/xiaowei0705/archive/2011/04/19/2021372.html)

@@ -7,7 +7,7 @@ key: 10027
 labels: ["CSS", "选择器"]
 ---
 
-> 本文在征得原作者 [@csswizardry](https://twitter.com/csswizardry) 同意的情况下，翻译自他博客中的文章：[Cyclomatic Complexity: Logic in CSS](http://csswizardry.com/2015/04/cyclomatic-complexity-logic-in-css/)
+> 本文在征得原作者 [@csswizardry](https://twitter.com/csswizardry) 同意的情况下，翻译自他博客中的文章：[Cyclomatic Complexity: Logic in CSS](https://csswizardry.com/2015/04/cyclomatic-complexity-logic-in-css/)
 
 在过去的很长一段时间中，我们都说 CSS 是不带有任何逻辑的，意思是在 CSS 中没有控制流，也没有某种类似于其他编程语言的方式来组织 CSS。CSS 天生缺乏逻辑性的问题导致了预处理器的出现。然而业界却对 CSS 预处理器褒贬不一，支持预处理器的人认为这弥补了 CSS 缺失的特性；而反对预处理器的人则认为 CSS 的设计初衷就不应该带有逻辑性，他们认为根本不应该引入预处理器这个概念。
 
@@ -55,7 +55,7 @@ div.sidebar .login-box a.btn span {
 
 ## 圈复杂度
 
-在软件工程中，[圈复杂度](http://en.wikipedia.org/wiki/Cyclomatic_complexity)是一种程序复杂性的一种度量标准，它一般计算程序中的控制流的数量（如 `if`, `else`, `while` 等）。程序中存在越多的控制流，则圈复杂度就越高。我们自然想要保证圈复杂度能够尽量地低，因为圈复杂度越高：
+在软件工程中，[圈复杂度](https://en.wikipedia.org/wiki/Cyclomatic_complexity)是一种程序复杂性的一种度量标准，它一般计算程序中的控制流的数量（如 `if`, `else`, `while` 等）。程序中存在越多的控制流，则圈复杂度就越高。我们自然想要保证圈复杂度能够尽量地低，因为圈复杂度越高：
 
 - 代码就越难推导
 - 更多潜藏着的、可能会导致失败的问题
@@ -79,7 +79,7 @@ div.sidebar .login-box a.btn span {
 - **保证圈复杂度最小化**: 使用像 [Parker](https://github.com/katiefenn/parker) 这样的工具来测试你写的选择器的圈复杂度（参考文档：[Identifiers Per Selector](https://github.com/katiefenn/parker/tree/master/docs/metrics#identifiers-per-selector)）
 - **如果你不需要这个检验条件，那就不要把它放进选择器**: 有时在 CSS 中使用嵌套结构是有必要的，可在大多数时候并不是，你甚至不能完全相信[Inception Rule](http://thesassway.com/beginner/the-inception-rule)。
 - **从右边考虑选择器如何编写**: 从需要匹配的那类元素开始，写尽量少的额外的 CSS 代码来完成一次正确的匹配。
-- **写选择器时拥有[明确的目的性](http://csswizardry.com/2012/07/shoot-to-kill-css-selector-intent/)**: 确保你写的选择器确实是你想要的，而不是那些碰巧能使得页面正常显示的代码。
+- **写选择器时拥有[明确的目的性](https://csswizardry.com/2012/07/shoot-to-kill-css-selector-intent/)**: 确保你写的选择器确实是你想要的，而不是那些碰巧能使得页面正常显示的代码。
 
 你的选择器是你的 CSS 结构最基本的组成部分，一定要确保你写的代码足够合理而简练。
 
