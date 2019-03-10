@@ -44,6 +44,8 @@ jobs:
       - restore_cache:
           keys:
           - build-{{ .Environment.CIRCLE_SHA1 }}
+      - run: |
+          echo 'export COMMIT_SHA="$CIRCLE_SHA1"' >> $BASH_ENV
       # check https://stackoverflow.com/questions/44773415/
       - run: |
           git clone https://${GITHUB_TOKEN}@github.com/zry656565/heaven-blog.git
@@ -56,7 +58,8 @@ jobs:
           git config credential.helper 'cache --timeout=120'
           git config user.email "<email>"
           git config user.name "CircleCI Bot"
-          git commit --allow-empty -m "rebuild for ${CIRCLE_SHA1}"
+          echo "rebuild for ${COMMIT_SHA}"
+          git commit --allow-empty -m "rebuild for ${COMMIT_SHA}"
           git push -q origin gh-pages
 
 workflows:
