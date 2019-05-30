@@ -43,7 +43,7 @@
 
     <!-- Hit Kounter LC -->
     <script src="https://cdn1.lncld.net/static/js/av-min-1.5.0.js"></script>
-    <script src="https://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.3.0.js"></script>
+    <script src="https://jerryz.sgp1.cdn.digitaloceanspaces.com/lib/hit-kounter/hit-kounter-lc-0.3.0.js"></script>
     
     <!-- handle external js files -->
     <script src="/assets/js/lib/jquery/jquery-1.11.1.min.js"></script>
@@ -57,7 +57,7 @@
     <a class="site-title" href="/">咀嚼之味</a>
     <nav class="site-nav">
       <div class="menu-icon">
-        <img class="icon" src="https://jerryblog-image.b0.upaiyun.com/blog/menu.svg" title="More"/>
+        <img class="icon" src="https://jerryz.sgp1.cdn.digitaloceanspaces.com/resources/blog/menu.svg" title="More"/>
       </div>
       <div class="trigger">
         <a class="page-link" href="/">首页</a>
@@ -93,7 +93,7 @@
     </nav>
   </div>
   <!-- fork me on github -->
-  <a id="fork-me" href="https://github.com/zry656565/heaven-blog"><img src="https://jerryblog-image.b0.upaiyun.com/blog/forkme.png" alt="Fork me on GitHub"></a>
+  <a id="fork-me" href="https://github.com/zry656565/heaven-blog"><img src="https://jerryz.sgp1.cdn.digitaloceanspaces.com/resources/blog/forkme.png" alt="Fork me on GitHub"></a>
 </header>
 
 
@@ -144,7 +144,7 @@
 
 <p>首先放上一张来自于 graphql.org 的图片。REST 与 GraphQL 都是服务端所承载的系统对外的服务接口，因此两者肯定是可以共存的，甚至可以共用一套 Authorization 等业务逻辑。</p>
 
-<p><img src="https://jerryblog-image.b0.upaiyun.com/blog/posts/backend-arch.png" alt="Architecture" /></p>
+<p><img src="https://jerryz.sgp1.cdn.digitaloceanspaces.com/resources/blog/posts/backend-arch.png" alt="Architecture" /></p>
 
 <p>那么 GraphQL 与 RESTful 的具体区别有什么呢？我觉得主要是两点。</p>
 
@@ -257,7 +257,7 @@
 
 <p>这是一段简单的 python 代码，使用了 Django 的 QuerySet 来从数据库抓取数据。假设我们的数据库中有两张表 User 和 UserScore 这两张表的关系如下所示：</p>
 
-<p><img src="https://jerryblog-image.b0.upaiyun.com/blog/posts/graphql-uml.jpg" alt="UML" /></p>
+<p><img src="https://jerryz.sgp1.cdn.digitaloceanspaces.com/resources/blog/posts/graphql-uml.jpg" alt="UML" /></p>
 
 <p>由于用户的分数并没有保存在 User 表中，又因为 QuerySet 有 lazy load 的特性，所以在 for 循环中，每一次获取 <code>user.score</code> 都会查一次表，最终原本 1 次数据库查询能搞定的问题，却在不恰当的实现中产生了 N+1 次对数据库的访问。</p>
 
@@ -278,7 +278,7 @@
 
 <p>使用 GraphiQL 可以很容易地让人感受到“代码即文档”的快乐。</p>
 
-<p><img src="https://jerryblog-image.b0.upaiyun.com/blog/posts/graphiql-screenshot.png" alt="GraphiQL screenshot" /></p>
+<p><img src="https://jerryz.sgp1.cdn.digitaloceanspaces.com/resources/blog/posts/graphiql-screenshot.png" alt="GraphiQL screenshot" /></p>
 
 <h2 id="8-如何选择-graphql-的客户端实现">8. 如何选择 GraphQL 的客户端实现？</h2>
 

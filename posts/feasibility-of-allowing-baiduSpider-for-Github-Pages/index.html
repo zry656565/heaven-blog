@@ -43,7 +43,7 @@
 
     <!-- Hit Kounter LC -->
     <script src="https://cdn1.lncld.net/static/js/av-min-1.5.0.js"></script>
-    <script src="https://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.3.0.js"></script>
+    <script src="https://jerryz.sgp1.cdn.digitaloceanspaces.com/lib/hit-kounter/hit-kounter-lc-0.3.0.js"></script>
     
     <!-- handle external js files -->
     <script src="/assets/js/lib/jquery/jquery-1.11.1.min.js"></script>
@@ -57,7 +57,7 @@
     <a class="site-title" href="/">咀嚼之味</a>
     <nav class="site-nav">
       <div class="menu-icon">
-        <img class="icon" src="https://jerryblog-image.b0.upaiyun.com/blog/menu.svg" title="More"/>
+        <img class="icon" src="https://jerryz.sgp1.cdn.digitaloceanspaces.com/resources/blog/menu.svg" title="More"/>
       </div>
       <div class="trigger">
         <a class="page-link" href="/">首页</a>
@@ -93,7 +93,7 @@
     </nav>
   </div>
   <!-- fork me on github -->
-  <a id="fork-me" href="https://github.com/zry656565/heaven-blog"><img src="https://jerryblog-image.b0.upaiyun.com/blog/forkme.png" alt="Fork me on GitHub"></a>
+  <a id="fork-me" href="https://github.com/zry656565/heaven-blog"><img src="https://jerryz.sgp1.cdn.digitaloceanspaces.com/resources/blog/forkme.png" alt="Fork me on GitHub"></a>
 </header>
 
 
@@ -154,13 +154,13 @@ Alex</p>
 
 <p>CDN 的全称是 <a href="http://en.wikipedia.org/wiki/Content_delivery_network">Content Delivery Network</a>，即内容分发网络，一般用于分发静态内容，比如图片、视频、CSS、JS文件。</p>
 
-<p><img src="https://jerryblog-image.b0.upaiyun.com/blog/posts/cdn2.png" alt="CDN结构示意图" /></p>
+<p><img src="https://jerryz.sgp1.cdn.digitaloceanspaces.com/resources/blog/posts/cdn2.png" alt="CDN结构示意图" /></p>
 
 <p>如果不使用 CDN，那所有用户的请求都会直接导向单一的源服务器(Origin Server)。而如果启用了 CDN 服务，那么 CDN 服务提供商会分配给你若干个节点，这里以上图为例，比如分配给你的服务器 3 个东海岸的节点和 3 个西海岸的节点。</p>
 
 <p>此时用户就不会直接向源服务器发送请求，而是向边缘服务器(Edge Server)发送请求。再看下面这张示意图，当你第一次访问资源 foo.png 时，边缘服务器没有 foo.png 的缓存。所以会由它向源服务器发送请求，并获取到 foo.png。下一次所有经过这个节点的请求，因为存在缓存的缘故，都不用再次向源服务器发送请求，而是由边缘服务器直接返回该文件的缓存即可。这样一来就可以大大降低时延，也减小了源服务器的压力。</p>
 
-<p><img src="https://jerryblog-image.b0.upaiyun.com/blog/posts/cdn3.png" alt="CDN访问示意图" /></p>
+<p><img src="https://jerryz.sgp1.cdn.digitaloceanspaces.com/resources/blog/posts/cdn3.png" alt="CDN访问示意图" /></p>
 
 <p>那 CDN 服务是如何决定你从哪个边缘服务器获取资源的呢？其实就是在发送 DNS 请求的时候，将你要访问的域名映射到最近的节点的 IP 上。具体判定哪个是最近的节点，最简单的策略就是根据 IP，但各个 CDN 的服务提供商的策略可能各不相同，这里就不展开讨论了。</p>
 
@@ -195,7 +195,7 @@ Alex</p>
 
 <p>来看一下，我使用<a href="http://zhanzhang.baidu.com">百度站长工具</a>来进行抓取诊断的测试结果：</p>
 
-<p><img src="https://jerryblog-image.b0.upaiyun.com/blog/posts/crawl_test.png!h400" alt="抓取诊断的测试结果" /></p>
+<p><img src="https://jerryz.sgp1.cdn.digitaloceanspaces.com/resources/blog/posts/crawl_test.png!h400" alt="抓取诊断的测试结果" /></p>
 
 <p>结果是只有偶尔能够抓取成功，结果很让人失望吧？让我们来分析以下原因，首先罗列我目前可知的一些情况：</p>
 
@@ -265,7 +265,7 @@ Alex</p>
 
 <p>如果没有自己的服务器，而且又想要解决这个问题的同学，推荐大家看 Dozer 的一篇文章：<a href="http://www.dozer.cc/2015/06/github-pages-and-cdn.html">利用 CDN 解决百度爬虫被 Github Pages 拒绝的问题</a></p>
 
-<p><img src="https://jerryblog-image.b0.upaiyun.com/blog/posts/dnspod.png!h400" alt="Dnspod的智能DNS服务" /></p>
+<p><img src="https://jerryz.sgp1.cdn.digitaloceanspaces.com/resources/blog/posts/dnspod.png!h400" alt="Dnspod的智能DNS服务" /></p>
 
 <h2 id="更新-20151126">更新 (2015.11.26)</h2>
 
