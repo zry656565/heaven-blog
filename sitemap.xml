@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>https://jerryzou.com/posts/hit-kounter-notification/</loc>
+<lastmod>2019-05-31T15:54:51+00:00</lastmod>
+</url>
+<url>
 <loc>https://jerryzou.com/posts/rxjs-hooks/</loc>
 <lastmod>2018-11-26T17:26:58+00:00</lastmod>
 </url>
@@ -181,6 +185,6 @@
 </url>
 <url>
 <loc>https://jerryzou.com/posts/shadowsocks-with-digitalocean/index.html</loc>
-<lastmod>2019-05-30T15:19:38+00:00</lastmod>
+<lastmod>2019-05-31T15:55:25+00:00</lastmod>
 </url>
 </urlset>

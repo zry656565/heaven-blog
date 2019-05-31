@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+        
+            HitKounter 替换 CDN 服务地址的公告 | 咀嚼之味
+        </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="三年前，我发布了一个用于统计博客访问量的小工具，HitKounter。这些年来不少用户正在使用这个小玩意儿，这让我感到很开心！但是最近出了一些小问题。之前我将 HitKounter JavaScript 脚本直接上传到了又拍云的对象存储中。那时我直接将又拍云提供的测试访问链接开放出来，以供大家使用。 ">
+    <link rel="alternate" type="application/rss+xml" title="咀嚼之味 RSS" href="/feed.xml">
+    <link rel="canonical" href="https://jerryzou.com/posts/hit-kounter-notification/">
+    <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/release/style.7785cd8c.css">
+
+    <!-- Baidu Analysis -->
+    <script>
+        if (window.location.href.substr(7, 9) !== 'localhost') {
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?2744fd74aa568e064f9986394a60ead1";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+            })();
+        }
+    </script>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-47842677-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+    <!-- Hit Kounter LC -->
+    <script src="https://cdn1.lncld.net/static/js/av-min-1.5.0.js"></script>
+    <script src="https://jerryz.sgp1.cdn.digitaloceanspaces.com/lib/hit-kounter/hit-kounter-lc-0.3.0.js"></script>
+    
+    <!-- handle external js files -->
+    <script src="/assets/js/lib/jquery/jquery-1.11.1.min.js"></script>
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+  <div class="wrap">
+    <a class="site-title" href="/">咀嚼之味</a>
+    <nav class="site-nav">
+      <div class="menu-icon">
+        <img class="icon" src="https://jerryz.sgp1.cdn.digitaloceanspaces.com/resources/blog/menu.svg" title="More"/>
+      </div>
+      <div class="trigger">
+        <a class="page-link" href="/">首页</a>
+        
+          
+          <a class="page-link" href="/all-articles/">所有文章</a>
+          
+        
+          
+          <a class="page-link" href="/about/">关于我</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          <a class="page-link" href="/feed.xml">RSS订阅</a>
+      </div>
+    </nav>
+  </div>
+  <!-- fork me on github -->
+  <a id="fork-me" href="https://github.com/zry656565/heaven-blog"><img src="https://jerryz.sgp1.cdn.digitaloceanspaces.com/resources/blog/forkme.png" alt="Fork me on GitHub"></a>
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+        
+        <div class="post">
+
+  <header class="post-header">
+    <h1>HitKounter 替换 CDN 服务地址的公告</h1>
+    <p class="meta">May 31, 2019 <span class="pause"> - </span>
+        浏览量：<span data-hk-page="current"> - </span>次<span class="pause"> | </span>
+        
+            
+                <a class="label" href="/all-articles/?label=博客">博客</a>
+            
+                <a class="label" href="/all-articles/?label=HitKounter">HitKounter</a>
+            
+        
+    </p>
+  </header>
+
+  <article class="post-content">
+  <p>三年前，我发布了一个用于统计博客访问量的小工具，HitKounter。这些年来不少用户正在使用这个小玩意儿，这让我感到很开心！</p>
+
+<p>但是最近出了一些小问题。之前我将 HitKounter JavaScript 脚本直接上传到了又拍云的对象存储中。那时我直接将又拍云提供的测试访问链接开放出来，以供大家使用。</p>
+
+<p>由于本站一直使用的是 Github Pages 服务，尚未备案。因此无法享受到又拍云的服务。曾经公布的 CDN 地址不得不作废了，将在 2019 年 6 月 5 日失效。现在大家可以通过以下链接进行访问：</p>
+
+<pre><code>&lt;script src="https://jerryz.sgp1.cdn.digitaloceanspaces.com/lib/hit-kounter/hit-kounter-lc-0.3.0.js"&gt;&lt;/script&gt;
+</code></pre>
+
+<p>感谢大家一如既往的支持。</p>
+
+
+  </article>
+
+  
+  <p class="copyright">
+    本文的版权归作者 <a href="mailto:jerry.zry@outlook.com">邹润阳</a> 所有，采用 <a href="https://creativecommons.org/licenses/by-nc/3.0/">Attribution-NonCommercial 3.0 License</a>。任何人可以进行转载、分享，但不可在未经允许的情况下用于商业用途；转载请注明出处。感谢配合！
+  </p>
+  
+
+  
+    <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+var disqus_config = function () {
+this.page.url = "https://jerryzou.com/posts/hit-kounter-notification/";  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = "10043"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jerryzou.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                                
+  
+</div>
+
+        
+      </div>
+    </div>
+
+    <footer class="site-footer">
+    <div class="wrap">
+        <ul class="friend-links footer-text">
+            <li><a href="//blog.liqiang.me/">Jayce Li</a></li>
+            <li><a href="//zhangwenli.com/">羡辙</a></li>
+            <li><a href="//xidui.github.io/">xidui</a></li>
+            <li><a href="//www.dozer.cc/">Dozer</a></li>
+            <li><a href="//leuisken.github.io/">LeuisKen</a></li>
+            <li><a href="//szhshp.org">szhshp</a></li>
+            <li><a href="//dianying.taobao.com">淘宝电影</a></li>
+            <li><a href="//leetcode.com">LeetCode</a></li>
+            <li><a href="//efe.baidu.com/">Baidu EFE</a></li>
+            <li><a href="//fex.baidu.com/">Baidu FEX</a></li>
+        </ul>
+        <p class="footer-text">Powered by <a href="https://jekyllrb.com/">Jekyll</a> , <a href="https://pages.github.com/">Github Pages</a> and <a href="https://www.upyun.com/">UPYUN</a>.</p>
+    </div>
+</footer>
+
+    </body>
+</html>
