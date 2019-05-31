@@ -11,12 +11,10 @@ labels: [博客, HitKounter]
 
 但是最近出了一些小问题。之前我将 HitKounter JavaScript 脚本直接上传到了又拍云的对象存储中。那时我直接将又拍云提供的测试访问链接开放出来，以供大家使用。
 
-由于本站一直使用的是 Github Pages 服务，尚未备案。因此无法享受到又拍云的服务。曾经公布的 CDN 地址不得不作废了，将在 2019 年 6 月 5 日失效。现在大家可以通过以下链接进行访问：
+由于本站一直使用的是 Github Pages 服务，尚未备案。因此由于最近又拍云服务政策的更变，已无法再享受到又拍云的服务。曾经公布的 CDN 地址不得不作废了，将在 2019 年 6 月 5 日失效。现在大家可以通过以下链接进行访问：
 
 {% highlight html %}
 <script src="https://jerryz.sgp1.cdn.digitaloceanspaces.com/lib/hit-kounter/hit-kounter-lc-0.3.0.js"></script>
 {% endhighlight %}
 
-感谢大家一如既往的支持。
-
-
+感谢大家一如既往的支持！
