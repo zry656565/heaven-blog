@@ -46,6 +46,9 @@ jobs:
           - build-{{ .Environment.CIRCLE_SHA1 }}
       - run: |
           echo 'export COMMIT_SHA="$CIRCLE_SHA1"' >> $BASH_ENV
+      - add_ssh_keys:
+          fingerprints:
+            - "65:22:88:82:e5:50:30:a9:e3:15:d7:cc:7a:d4:5c:93"
       # check https://stackoverflow.com/questions/44773415/
       - run: |
           git checkout -b gh-pages origin/gh-pages
