@@ -48,8 +48,6 @@ jobs:
           echo 'export COMMIT_SHA="$CIRCLE_SHA1"' >> $BASH_ENV
       # check https://stackoverflow.com/questions/44773415/
       - run: |
-          git clone https://${GITHUB_TOKEN}@github.com/zry656565/heaven-blog.git
-          cd heaven-blog
           git checkout -b gh-pages origin/gh-pages
           cd ../_site && cp -r * ../heaven-blog
           cd ../heaven-blog
