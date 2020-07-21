@@ -30,7 +30,7 @@ jobs:
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "yarn.lock" }}
 
       - run: |
-          yarn global add grunt
+          yarn global add grunt@1.0.4
           export PATH="$PATH:$(yarn global bin)"
           grunt release
       - save_cache:
