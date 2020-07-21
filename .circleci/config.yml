@@ -30,7 +30,7 @@ jobs:
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "yarn.lock" }}
 
       - run: |
-          yarn global add grunt
+          yarn global add grunt@1.0.4
           export PATH="$PATH:$(yarn global bin)"
           grunt release
       - save_cache:
@@ -46,19 +46,19 @@ jobs:
           - build-{{ .Environment.CIRCLE_SHA1 }}
       - run: |
           echo 'export COMMIT_SHA="$CIRCLE_SHA1"' >> $BASH_ENV
+      - add_ssh_keys:
+          fingerprints:
+            - "65:22:88:82:e5:50:30:a9:e3:15:d7:cc:7a:d4:5c:93"
       # check https://stackoverflow.com/questions/44773415/
       - run: |
-          git clone https://${GITHUB_TOKEN}@github.com/zry656565/heaven-blog.git
-          cd heaven-blog
           git checkout -b gh-pages origin/gh-pages
-          cd ../_site && cp -r * ../heaven-blog
-          cd ../heaven-blog
-          cp -r ../.circleci .
-          git add .
+          cd _site && cp -r * ../
+          cd ..
           git config credential.helper 'cache --timeout=120'
           git config user.email "<email>"
           git config user.name "CircleCI Bot"
           echo "rebuild for ${COMMIT_SHA}"
+          git add .
           git commit --allow-empty -m "rebuild for ${COMMIT_SHA}"
           git push -q origin gh-pages
 
