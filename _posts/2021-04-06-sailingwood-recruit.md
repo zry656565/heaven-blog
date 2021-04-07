@@ -86,3 +86,5 @@ labels: [招聘, 航木]
 - 具备较强的英语沟通和阅读能力。
 
 简历投递，请邮件标注投递岗位，联系 [jerry.zry@outlook.com](mailto:jerry.zry@outlook.com)
+
+想了解更多细节，可以加我微信：JerryZou121
