@@ -48,7 +48,7 @@ jobs:
           echo 'export COMMIT_SHA="$CIRCLE_SHA1"' >> $BASH_ENV
       - add_ssh_keys:
           fingerprints:
-            - "65:22:88:82:e5:50:30:a9:e3:15:d7:cc:7a:d4:5c:93"
+            - "2a:94:e2:f9:57:a8:e5:2b:d4:9f:dc:81:f8:e3:0c:08"
       # check https://stackoverflow.com/questions/44773415/
       - run: |
           git checkout -b gh-pages origin/gh-pages
