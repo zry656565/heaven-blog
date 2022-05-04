@@ -4,6 +4,7 @@ release
 _includes/head.html
 pages/1_articles.md
 .jekyll-metadata
+.jekyll-cache
 
 #temporary files produced by grunt
 .tmp

@@ -21,12 +21,7 @@
 gem install jekyll bundler
 
 # 安装依赖的 gem 包
-bundler install --path vendor/bundle
-
-# 全局安装 grunt
-npm install -g grunt
-# or
-yarn global add grunt
+bundle install
 
 # 安装依赖的 npm 包
 npm install
@@ -34,14 +29,16 @@ npm install
 yarn
 ```
 
-如果使用 yarn 全局安装 grunt 成功后，在 Terminal 中依然无法使用 grunt，请参考 [yarn#1321](https://github.com/yarnpkg/yarn/issues/1321)
+## FAQ
+
+1. 如果你无法在 Mac 上启动 Jekyll 参见[Jekyll on macOS](https://jekyllrb.com/docs/installation/macos/)
 
 ## 编译与部署
 
 ```bash
-grunt build      # 本地编译
-grunt debug      # 本地编译并启动测试服务器
-grunt release    # 本地编译出线上版本（应用各种优化）
-grunt serve      # 本地编译并启动测试服务器（应用各种优化）
-grunt deploy     # 将站点发布到 gh-pages 分支下
+npx grunt build      # 本地编译
+npx grunt debug      # 本地编译并启动测试服务器
+npx grunt release    # 本地编译出线上版本（应用各种优化）
+npx grunt serve      # 本地编译并启动测试服务器（应用各种优化）
+npx grunt deploy     # 将站点发布到 gh-pages 分支下
 ```
