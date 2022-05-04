@@ -11,10 +11,8 @@ url: "https://jerryzou.com"
 local_url: "/assets/images"
 #github source
 #static_url: "/assets/images"
-#upyun source
-#static_url: "https://jerryblog-image.b0.upaiyun.com/blog"
 #digitalocean cdn
-static_url: "https://jerryz.sgp1.cdn.digitaloceanspaces.com/resources/blog"
+static_url: "https://sinacloud.net/heaven-blog-files/images/"
 
 # Build settings
 markdown: kramdown
