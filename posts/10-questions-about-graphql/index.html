@@ -119,7 +119,7 @@
   </header>
 
   <article class="post-content">
-  <p>在最近半年中，LeetCode 的一些新功能已经开始尝试使用 GraphQL。如果你在 LeetCode 网站中查看一下开发者工具中收集到的请求，也许会发现一个与众不同的请求 <code>POST https://leetcode.com/graphql/</code>。是的，要是你想给 LeetCode 写些爬虫的话，可得好好研究一下我们在这个 Endpoint 下挂载了哪些数据。</p>
+  <p>在最近半年中，LeetCode 的一些新功能已经开始尝试使用 GraphQL。如果你在 LeetCode 网站中查看一下开发者工具中收集到的请求，也许会发现一个与众不同的请求 <code class="language-plaintext highlighter-rouge">POST https://leetcode.com/graphql/</code>。是的，要是你想给 LeetCode 写些爬虫的话，可得好好研究一下我们在这个 Endpoint 下挂载了哪些数据。</p>
 
 <p>我在使用 GraphQL 的过程中经历了理解、误解、再理解的过程。作为吃了 GraphQL 这个螃蟹的人，希望能够通过这篇文章更好地帮助各位读者理解 GraphQL 是什么，GraphQL 会给你带来什么，以及将 GraphQL 应用于你的系统中需要注意哪些问题。这不是一篇系统的科普文，如果你有什么其他疑问可以评论中留言询问。</p>
 
@@ -150,7 +150,7 @@
 
 <h4 id="1-入口-entry-point">1. 入口 (entry point)</h4>
 
-<p>RESTful 的核心理念在于资源 (resource)，且讲究一个 RESTful 接口仅操作单一资源；因此在你使用 RESTful 时，会设计出大量的接口。GraphQL 是单一入口，一般配置在 <code>[host]/graphql/</code>，所有的资源都从该入口通过 graphql 的语句获取或修改（当然 GraphQL 亦支持多入口，但显然多入口的数量也远小于 RESTful）。</p>
+<p>RESTful 的核心理念在于资源 (resource)，且讲究一个 RESTful 接口仅操作单一资源；因此在你使用 RESTful 时，会设计出大量的接口。GraphQL 是单一入口，一般配置在 <code class="language-plaintext highlighter-rouge">[host]/graphql/</code>，所有的资源都从该入口通过 graphql 的语句获取或修改（当然 GraphQL 亦支持多入口，但显然多入口的数量也远小于 RESTful）。</p>
 
 <h4 id="2-数据的关联性">2. 数据的关联性</h4>
 
@@ -160,13 +160,13 @@
 
 <p>假设我们有这样一个接口：</p>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">GET /user/:userId/friends/</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">GET /user/:userId/friends/</span></code></pre></figure>
 
 <p>而 A 有 20 个好朋友，那么我们总共需要发送 20 + 1 = 21 次 REST 请求。</p>
 
 <p>或者我们为了这种特殊场景设计出以下接口：</p>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">GET /user/:userId/friendsAndHisFriends/</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">GET /user/:userId/friendsAndHisFriends/</span></code></pre></figure>
 
 <p>emmmmm… 虽然看起来很别扭，但是只需要一次请求呢！</p>
 
@@ -174,31 +174,31 @@
 
 <p>首先我们需要给 User 定义 Schema (GraphQL 有一套完整的<a href="https://graphql.org/learn/schema/">类型系统</a>)：</p>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">type User {</span>
-<span class="go">  id: ID!</span>
-<span class="go">  name: String!</span>
-<span class="go">  friends: [User]</span>
-<span class="go">}</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">type User {
+  id: ID!
+  name: String!
+  friends: [User]
+}</span></code></pre></figure>
 
 <p>假设我们在 Graph root 上只挂了一个 Node，叫 user:</p>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">type Query {</span>
-<span class="go">  user(id: ID!): User</span>
-<span class="go">}</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">type Query {
+  user(id: ID!): User
+}</span></code></pre></figure>
 
 <p>那么我们从客户端发送的 query 就可以写成这样：</p>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">query ($userId: ID) {</span>
-<span class="go">  user(id: $userId) {</span>
-<span class="go">    name</span>
-<span class="go">    friends {</span>
-<span class="go">      name</span>
-<span class="go">      friends {</span>
-<span class="go">        name</span>
-<span class="go">      }</span>
-<span class="go">    }</span>
-<span class="go">  }</span>
-<span class="go">}</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">query ($</span>userId: ID<span class="o">)</span> <span class="o">{</span>
+<span class="gp">  user(id: $</span>userId<span class="o">)</span> <span class="o">{</span>
+<span class="go">    name
+    friends {
+      name
+      friends {
+        name
+      }
+    }
+  }
+}</span></code></pre></figure>
 
 <p>最后这一个请求就搞定查询朋友的朋友这个蛋疼的需求啦！机智的你肯定已经发现了：这个 query 是不是可以无限循环地写下去？你想的没错，确实可以这么干！在 GraphQL 的官网上是这么形容自己的：</p>
 
@@ -238,7 +238,7 @@
 
 <h4 id="5-令人期待的-subscription">5. 令人期待的 subscription</h4>
 
-<p>如何在浏览器中接受服务端的推送信息是个老生常谈的问题。从最初的轮询，到后来的 WebSocket。如今 GraphQL 也计划引入除了 <code>query</code>, <code>mutation</code> 以外的第三种操作符 <code>subscription</code>，以便于直接接受服务器推送数据。在 2015 年底 GraphQL 官方发布了一篇博文：<a href="https://graphql.org/blog/subscriptions-in-graphql-and-relay/">Subscriptions in GraphQL and Relay</a> 来介绍 <code>subscription</code> 在他们的 iOS 和 Android App 中的应用。可惜的是相关的代码仍未开源，目前开源社区能找到的解决方案目前只有 Apollo 社区为 Node.js 写的 <a href="https://github.com/apollographql/graphql-subscriptions">graphql-subscriptions</a>。</p>
+<p>如何在浏览器中接受服务端的推送信息是个老生常谈的问题。从最初的轮询，到后来的 WebSocket。如今 GraphQL 也计划引入除了 <code class="language-plaintext highlighter-rouge">query</code>, <code class="language-plaintext highlighter-rouge">mutation</code> 以外的第三种操作符 <code class="language-plaintext highlighter-rouge">subscription</code>，以便于直接接受服务器推送数据。在 2015 年底 GraphQL 官方发布了一篇博文：<a href="https://graphql.org/blog/subscriptions-in-graphql-and-relay/">Subscriptions in GraphQL and Relay</a> 来介绍 <code class="language-plaintext highlighter-rouge">subscription</code> 在他们的 iOS 和 Android App 中的应用。可惜的是相关的代码仍未开源，目前开源社区能找到的解决方案目前只有 Apollo 社区为 Node.js 写的 <a href="https://github.com/apollographql/graphql-subscriptions">graphql-subscriptions</a>。</p>
 
 <h2 id="6-graphql-有什么缺点">6. GraphQL 有什么缺点？</h2>
 
@@ -250,16 +250,16 @@
 
 <p>什么是 N+1 问题？首先我们来举个简单的例子：</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">def</span> <span class="nf">get</span><span class="p">:</span>
-    <span class="n">users</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">get</span><span class="p">:</span>
+    <span class="n">users</span> <span class="o">=</span> <span class="n">User</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="nb">all</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">users</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">score</span><span class="p">)</span></code></pre></figure>
+        <span class="k">print</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="n">score</span><span class="p">)</span></code></pre></figure>
 
 <p>这是一段简单的 python 代码，使用了 Django 的 QuerySet 来从数据库抓取数据。假设我们的数据库中有两张表 User 和 UserScore 这两张表的关系如下所示：</p>
 
 <p><img src="https://sinacloud.net/heaven-blog-files/images/posts/graphql-uml.jpg" alt="UML" /></p>
 
-<p>由于用户的分数并没有保存在 User 表中，又因为 QuerySet 有 lazy load 的特性，所以在 for 循环中，每一次获取 <code>user.score</code> 都会查一次表，最终原本 1 次数据库查询能搞定的问题，却在不恰当的实现中产生了 N+1 次对数据库的访问。</p>
+<p>由于用户的分数并没有保存在 User 表中，又因为 QuerySet 有 lazy load 的特性，所以在 for 循环中，每一次获取 <code class="language-plaintext highlighter-rouge">user.score</code> 都会查一次表，最终原本 1 次数据库查询能搞定的问题，却在不恰当的实现中产生了 N+1 次对数据库的访问。</p>
 
 <p>相对于 RESTful，在 GraphQL 中更加容易引起 N+1 问题。主要是由于 GraphQL query 的逐层解析方式所引起的，关于 GraphQL 如何执行 query 的细节，可以参阅 <a href="https://graphql.org/learn/execution/">Graphql Execution</a>。</p>
 
@@ -294,21 +294,21 @@
 
 <p>再以找朋友为例，借用 SQL 查询中常用的筛选方法，分页接口可以设计为：</p>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">query ($userId: ID) {</span>
-<span class="go">  user(id: $userId) {</span>
-<span class="go">    name</span>
-<span class="go">    friends(first: 2, offset: 3) {</span>
-<span class="go">      name</span>
-<span class="go">    }</span>
-<span class="go">  }</span>
-<span class="go">}</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">query ($</span>userId: ID<span class="o">)</span> <span class="o">{</span>
+<span class="gp">  user(id: $</span>userId<span class="o">)</span> <span class="o">{</span>
+<span class="go">    name
+    friends(first: 2, offset: 3) {
+      name
+    }
+  }
+}</span></code></pre></figure>
 
 <p>上面的例子意为从 $userId 的第 4 个朋友开始算起，取前 2 个朋友。</p>
 
 <p>类似地，分页接口还可以设计为</p>
 <ul>
-  <li><code>friends(first: 2, after: $friendId)</code>;</li>
-  <li><code>friends(first: 2, after: $friendCursor)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">friends(first: 2, after: $friendId)</code>;</li>
+  <li><code class="language-plaintext highlighter-rouge">friends(first: 2, after: $friendCursor)</code></li>
 </ul>
 
 <p>无论分页接口设计成怎么样，都需要<strong>前后端共同的</strong>封装与支持。其中 Relay 风格的分页接口在各大前后端 GraphQL 框架中基本都已有比较完整的实现。</p>
@@ -320,23 +320,23 @@
   <li>注：apollo-client 兼容该分页接口</li>
 </ul>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">query {</span>
-<span class="go">  user {</span>
-<span class="go">    name</span>
-<span class="go">    friends(first: 2, after: $cursor) {</span>
-<span class="go">      edges {</span>
-<span class="go">        cursor</span>
-<span class="go">        node {</span>
-<span class="go">          id</span>
-<span class="go">          name</span>
-<span class="go">        }</span>
-<span class="go">      }</span>
-<span class="go">      pageInfo {</span>
-<span class="go">        hasNextPage</span>
-<span class="go">      }</span>
-<span class="go">    }</span>
-<span class="go">  }</span>
-<span class="go">}</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">query {
+  user {
+    name
+</span><span class="gp">    friends(first: 2, after: $</span>cursor<span class="o">)</span> <span class="o">{</span>
+<span class="go">      edges {
+        cursor
+        node {
+          id
+          name
+        }
+      }
+      pageInfo {
+        hasNextPage
+      }
+    }
+  }
+}</span></code></pre></figure>
 
 <h2 id="10-graphql-中是怎么实现用户校验的">10. GraphQL 中是怎么实现用户校验的？</h2>
 

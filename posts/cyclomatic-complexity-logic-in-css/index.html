@@ -127,41 +127,41 @@
 
 <p>我发现我们可以将复合选择器理解为：主体部分 + <strong>条件部分</strong>。首先来看一个例子：</p>
 
-<figure class="highlight"><pre><code class="language-css" data-lang="css"><span></span><span class="nt">div</span><span class="p">.</span><span class="nc">sidebar</span> <span class="p">.</span><span class="nc">login-box</span> <span class="nt">a</span><span class="p">.</span><span class="nc">btn</span> <span class="nt">span</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">div</span><span class="nc">.sidebar</span> <span class="nc">.login-box</span> <span class="nt">a</span><span class="nc">.btn</span> <span class="nt">span</span> <span class="p">{</span>
     <span class="c">/*...*/</span>
 <span class="p">}</span></code></pre></figure>
 
-<p>在这个复合选择器由主体部分是 <code>span</code>，而条件部分是 <code>IF (inside .btn) AND IF (on a) AND IF (inside .login-box) AND IF (inside .sidebar) AND IF (on div)</code>。</p>
+<p>在这个复合选择器由主体部分是 <code class="language-plaintext highlighter-rouge">span</code>，而条件部分是 <code class="language-plaintext highlighter-rouge">IF (inside .btn) AND IF (on a) AND IF (inside .login-box) AND IF (inside .sidebar) AND IF (on div)</code>。</p>
 
-<p>也就是说，一个选择器的每一部分都是一个 <code>if</code> 语句，需要在解析选择器时被满足（或者不满足）。有了这种微妙的而又全新的认识，如今我们回头再看看自己曾经写出的 CSS 代码，我们将会意识到选择器写的好或者坏，会对效率产生直接的影响。我们真的会写出下面这段逻辑吗？（伪代码）：</p>
+<p>也就是说，一个选择器的每一部分都是一个 <code class="language-plaintext highlighter-rouge">if</code> 语句，需要在解析选择器时被满足（或者不满足）。有了这种微妙的而又全新的认识，如今我们回头再看看自己曾经写出的 CSS 代码，我们将会意识到选择器写的好或者坏，会对效率产生直接的影响。我们真的会写出下面这段逻辑吗？（伪代码）：</p>
 
-<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span></span><span class="go">@if exists(span) {</span>
-<span class="go">  @if is-inside(.btn) {</span>
-<span class="go">    @if is-on(a) {</span>
-<span class="go">      @if is-inside(.login-box) {</span>
-<span class="go">        @if is-inside(.sidebar) {</span>
-<span class="go">          @if is-on(div) {</span>
-<span class="gp">            #</span> Do this.
-<span class="go">          }</span>
-<span class="go">        }</span>
-<span class="go">      }</span>
-<span class="go">    }</span>
-<span class="go">  }</span>
-<span class="go">}</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">@if exists(span) {
+  @if is-inside(.btn) {
+    @if is-on(a) {
+      @if is-inside(.login-box) {
+        @if is-inside(.sidebar) {
+          @if is-on(div) {
+</span><span class="gp">            #</span><span class="w"> </span>Do this.
+<span class="go">          }
+        }
+      }
+    }
+  }
+}</span></code></pre></figure>
 
 <p>也许不会。这看上去太不直接，也太啰嗦了。我们也许只需要这么写：</p>
 
-<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span></span><span class="go">@if exists(.btn-text) {</span>
+<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">@if exists(.btn-text) {
 
-<span class="gp">  #</span> Do this.
+</span><span class="gp">  #</span><span class="w"> </span>Do this.
+<span class="go">
+}</span></code></pre></figure>
 
-<span class="go">}</span></code></pre></figure>
-
-<p>每当为选择器添加一层限制，其实我们也就是添加了额外的一个 <code>if</code> 语句。这会导致圈复杂度问题(Cyclomatic Complexity)。</p>
+<p>每当为选择器添加一层限制，其实我们也就是添加了额外的一个 <code class="language-plaintext highlighter-rouge">if</code> 语句。这会导致圈复杂度问题(Cyclomatic Complexity)。</p>
 
 <h2 id="圈复杂度">圈复杂度</h2>
 
-<p>在软件工程中，<a href="https://en.wikipedia.org/wiki/Cyclomatic_complexity">圈复杂度</a>是一种程序复杂性的一种度量标准，它一般计算程序中的控制流的数量（如 <code>if</code>, <code>else</code>, <code>while</code> 等）。程序中存在越多的控制流，则圈复杂度就越高。我们自然想要保证圈复杂度能够尽量地低，因为圈复杂度越高：</p>
+<p>在软件工程中，<a href="https://en.wikipedia.org/wiki/Cyclomatic_complexity">圈复杂度</a>是一种程序复杂性的一种度量标准，它一般计算程序中的控制流的数量（如 <code class="language-plaintext highlighter-rouge">if</code>, <code class="language-plaintext highlighter-rouge">else</code>, <code class="language-plaintext highlighter-rouge">while</code> 等）。程序中存在越多的控制流，则圈复杂度就越高。我们自然想要保证圈复杂度能够尽量地低，因为圈复杂度越高：</p>
 
 <ul>
   <li>代码就越难推导</li>
@@ -171,11 +171,11 @@
   <li>编写测试代码的难度也会更高</li>
 </ul>
 
-<p>从圈复杂度的角度来思考 CSS 的解析过程，我们可以看到浏览器在渲染样式之前需要做许多的决定。我们写的选择器中的 <code>if</code> 语句越多，这个选择器的<strong>圈复杂度就越高</strong>，这也意味着我们写的选择器越糟糕，为了使得这一条选择器规则满足，就有需要匹配更多的条件。同时，我们写的选择器也会<strong>缺乏清晰度和复用性</strong>，因为引入了过多不必要的 <code>if</code> 语句会导致不准确的匹配(false positive)。</p>
+<p>从圈复杂度的角度来思考 CSS 的解析过程，我们可以看到浏览器在渲染样式之前需要做许多的决定。我们写的选择器中的 <code class="language-plaintext highlighter-rouge">if</code> 语句越多，这个选择器的<strong>圈复杂度就越高</strong>，这也意味着我们写的选择器越糟糕，为了使得这一条选择器规则满足，就有需要匹配更多的条件。同时，我们写的选择器也会<strong>缺乏清晰度和复用性</strong>，因为引入了过多不必要的 <code class="language-plaintext highlighter-rouge">if</code> 语句会导致不准确的匹配(false positive)。</p>
 
-<p>相比于将 <code>span</code> 嵌套于 <code>.btn</code> 内部并写一大堆限制条件，更好地做法应该是创建一个新的类 <code>.btn-text</code> 来描述这个 <code>span</code>。这样做更加直截了当，同时也更为简洁和健壮（越多的 <code>@if</code> 语句导致选择器规则越不容易被满足）。</p>
+<p>相比于将 <code class="language-plaintext highlighter-rouge">span</code> 嵌套于 <code class="language-plaintext highlighter-rouge">.btn</code> 内部并写一大堆限制条件，更好地做法应该是创建一个新的类 <code class="language-plaintext highlighter-rouge">.btn-text</code> 来描述这个 <code class="language-plaintext highlighter-rouge">span</code>。这样做更加直截了当，同时也更为简洁和健壮（越多的 <code class="language-plaintext highlighter-rouge">@if</code> 语句导致选择器规则越不容易被满足）。</p>
 
-<p>值得注意的是浏览器解析你写的选择器的方式：从右向左。如果你在写你的选择器时，第一个想到的问题是：“这是一个 <code>span</code> 元素吗？” 那你通常就会把选择器写的过于冗繁。你应该从另一个角度思考，写出清晰准确的选择器规则，彻底摒弃那些冗余的条件语句。</p>
+<p>值得注意的是浏览器解析你写的选择器的方式：从右向左。如果你在写你的选择器时，第一个想到的问题是：“这是一个 <code class="language-plaintext highlighter-rouge">span</code> 元素吗？” 那你通常就会把选择器写的过于冗繁。你应该从另一个角度思考，写出清晰准确的选择器规则，彻底摒弃那些冗余的条件语句。</p>
 
 <p><strong>请不要写过于宽泛的规则，导致你写的选择器在匹配开始时就选中大量的 DOM 元素——然后不得不逐步通过更多的条件语句来删减匹配的对象。从选择器的规则解析的一开始就匹配尽量少的元素才是一种更棒的方法。</strong></p>
 
@@ -184,7 +184,7 @@
 <p>一些易于遵守的小规则，</p>
 
 <ul>
-  <li><strong>让你的选择器最简化</strong>：每一次你想要为选择器添加规则时，你都在添加额外的 <code>if</code> 语句。将这些 <code>if</code> 语句大声地读出来，仔细考虑它们是否有添加的必要。你需要时刻保持你写的选择器足够合理与简洁。</li>
+  <li><strong>让你的选择器最简化</strong>：每一次你想要为选择器添加规则时，你都在添加额外的 <code class="language-plaintext highlighter-rouge">if</code> 语句。将这些 <code class="language-plaintext highlighter-rouge">if</code> 语句大声地读出来，仔细考虑它们是否有添加的必要。你需要时刻保持你写的选择器足够合理与简洁。</li>
   <li><strong>保证圈复杂度最小化</strong>: 使用像 <a href="https://github.com/katiefenn/parker">Parker</a> 这样的工具来测试你写的选择器的圈复杂度（参考文档：<a href="https://github.com/katiefenn/parker/tree/master/docs/metrics#identifiers-per-selector">Identifiers Per Selector</a>）</li>
   <li><strong>如果你不需要这个检验条件，那就不要把它放进选择器</strong>: 有时在 CSS 中使用嵌套结构是有必要的，可在大多数时候并不是，你甚至不能完全相信<a href="http://thesassway.com/beginner/the-inception-rule">Inception Rule</a>。</li>
   <li><strong>从右边考虑选择器如何编写</strong>: 从需要匹配的那类元素开始，写尽量少的额外的 CSS 代码来完成一次正确的匹配。</li>

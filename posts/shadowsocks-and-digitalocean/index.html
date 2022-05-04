@@ -125,7 +125,7 @@
 
 <p>首先注册账号，激活邮箱自不必说。激活后就会收到$10的奖励，但是仅仅这样还是无法在 DigitalOcean 上创建虚拟主机。你需要绑定信用卡或者直接向你的账户里冲入$5才能正式开始使用。我的话，是在 paypal 账号上绑定了一张银联的卡来付款的，按这几天的汇率大概¥31左右吧。（另外附上我的邀请链接，嘿嘿：<a href="https://www.digitalocean.com/?refcode=09e0142818aa">https://www.digitalocean.com/?refcode=09e0142818aa</a>）</p>
 
-<p>然后你就可以创建你的云主机了，选择 $5/mon 的那一档来支撑 shadowsocks 的服务足矣。经过测试 San Francisco 的机房延迟最低，平均在230ms左右。而 Singapore 的机房延迟在280ms，还有5%左右的丢包率。所以经过几次创建后又销毁重新创建地倒腾，我最后还是选择了使用 San Francisco 的节点。另外操作系统的话，我选择的是<code>ubuntu 14.04 x64</code>的。</p>
+<p>然后你就可以创建你的云主机了，选择 $5/mon 的那一档来支撑 shadowsocks 的服务足矣。经过测试 San Francisco 的机房延迟最低，平均在230ms左右。而 Singapore 的机房延迟在280ms，还有5%左右的丢包率。所以经过几次创建后又销毁重新创建地倒腾，我最后还是选择了使用 San Francisco 的节点。另外操作系统的话，我选择的是<code class="language-plaintext highlighter-rouge">ubuntu 14.04 x64</code>的。</p>
 
 <h3 id="创建-ssh-key">创建 SSH key</h3>
 
@@ -139,24 +139,24 @@
 
 <p>第一步，首先查看你本地设备上是否有 SSH keys。你可以运行以下指令：</p>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">cd ~/.ssh</span>
-<span class="go">ls *.pub</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">cd ~/.ssh
+ls *.pub</span></code></pre></figure>
 
 <p>如果没有任何输出，说明你需要创建一个新的 SSH key：</p>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">ssh-keygen -t rsa -C &quot;email@example.com&quot;</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">ssh-keygen -t rsa -C "email@example.com"</span></code></pre></figure>
 
 <p>后面的 email 请替换成你自己的 email。接着你就会看到类似下面的信息：</p>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">Generating public/private rsa key pair.</span>
-<span class="go">Enter file in which to save the key (/Users/you/.ssh/id_rsa): [Press enter]</span>
-<span class="go">Enter passphrase (empty for no passphrase): [Type a passphrase]</span>
-<span class="go">Enter same passphrase again: [Type passphrase again]</span>
-<span class="go">Now your SSH key will be generated.</span>
-<span class="go">Your identification has been saved in /Users/your_username/.ssh/id_rsa.</span>
-<span class="go">Your public key has been saved in /Users/your_username/.ssh/id_rsa.pub.</span>
-<span class="go">The key fingerprint is:</span>
-<span class="go">01:0f:f4:3b:ca:85:d6:17:a1:7d:f0:68:9d:f0:a2:db email@example.com</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">Generating public/private rsa key pair.
+Enter file in which to save the key (/Users/you/.ssh/id_rsa): [Press enter]
+Enter passphrase (empty for no passphrase): [Type a passphrase]
+Enter same passphrase again: [Type passphrase again]
+Now your SSH key will be generated.
+Your identification has been saved in /Users/your_username/.ssh/id_rsa.
+Your public key has been saved in /Users/your_username/.ssh/id_rsa.pub.
+The key fingerprint is:
+01:0f:f4:3b:ca:85:d6:17:a1:7d:f0:68:9d:f0:a2:db email@example.com</span></code></pre></figure>
 
 <p>比如我的公钥就生成于：/Users/Jerry/.ssh/id_rsa.pub，接下来就可以把公钥内容传到 DigitalOcean 上了，如下图所示：</p>
 
@@ -170,48 +170,48 @@
 
 <p>首先需要远程登录到 DigitalOcean 的主机上，我租用的 San Francisco 的机房 IP 地址是 104.236.177.232。而因为之前已经建好了 SSH Key，所以直接用 root 用户登录即可：</p>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">ssh root@104.236.177.232</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">ssh root@104.236.177.232</span></code></pre></figure>
 
 <p>在 Debian / Ubuntu 下 安装 shadowsocks</p>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">apt-get install python-pip</span>
-<span class="go">pip install shadowsocks</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">apt-get install python-pip
+pip install shadowsocks</span></code></pre></figure>
 
 <p>我在实际安装下发现很多依赖缺失，所以需要先执行一下：apt-get update。另外也有一些同学会选择 CentOS 的服务器，附上在 CentOS 下安装 shadowsocks 的方法：</p>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">yum install python-setuptools &amp;&amp; easy_install pip</span>
-<span class="go">pip install shadowsocks</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">yum install python-setuptools &amp;&amp; easy_install pip
+pip install shadowsocks</span></code></pre></figure>
 
 <h3 id="启动-shadowsocks-服务">启动 shadowsocks 服务</h3>
 
 <p>安装好 shadowsocks 以后，启动 shadowsocks 服务可以通过以下指令：</p>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">ssserver -p 8836 -k 你设置的密码 -m rc4-md5</span>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">ssserver -p 8836 -k 你设置的密码 -m rc4-md5
 
-<span class="gp">#</span> 或者可以通过以下指令在后台启动shadowsocks的服务：
-<span class="go">ssserver -p 8836 -k 你设置的密码 -m rc4-md5 -d start</span>
-<span class="go">ssserver -p 8836 -k 你设置的密码 -m rc4-md5 -d stop</span></code></pre></figure>
+</span><span class="gp">#</span><span class="w"> </span>或者可以通过以下指令在后台启动shadowsocks的服务：
+<span class="go">ssserver -p 8836 -k 你设置的密码 -m rc4-md5 -d start
+ssserver -p 8836 -k 你设置的密码 -m rc4-md5 -d stop</span></code></pre></figure>
 
 <p>但上面的方法很不方便，我还是推荐使用配置文件的方法。首先创建一个文件：/etc/shadowsocks.json，示例如下：</p>
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span></span><span class="p">{</span>
-    <span class="nt">&quot;server&quot;</span><span class="p">:</span><span class="s2">&quot;你的服务器ip地址&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;server_port&quot;</span><span class="p">:</span><span class="mi">8388</span><span class="p">,</span>
-    <span class="nt">&quot;local_address&quot;</span><span class="p">:</span> <span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;local_port&quot;</span><span class="p">:</span><span class="mi">1080</span><span class="p">,</span>
-    <span class="nt">&quot;password&quot;</span><span class="p">:</span><span class="s2">&quot;你设置的密码&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;timeout&quot;</span><span class="p">:</span><span class="mi">300</span><span class="p">,</span>
-    <span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="s2">&quot;aes-256-cfb&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;fast_open&quot;</span><span class="p">:</span> <span class="kc">false</span>
-<span class="p">}</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+    </span><span class="nl">"server"</span><span class="p">:</span><span class="s2">"你的服务器ip地址"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"server_port"</span><span class="p">:</span><span class="mi">8388</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"local_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"127.0.0.1"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"local_port"</span><span class="p">:</span><span class="mi">1080</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"password"</span><span class="p">:</span><span class="s2">"你设置的密码"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"timeout"</span><span class="p">:</span><span class="mi">300</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"method"</span><span class="p">:</span><span class="s2">"aes-256-cfb"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"fast_open"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
 
 <p>接下来你就可以使用下面这个指令启动服务</p>
 
-<figure class="highlight"><pre><code class="language-console" data-lang="console"><span></span><span class="go">ssserver -c /etc/shadowsocks.json</span>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">ssserver -c /etc/shadowsocks.json
 
-<span class="gp">#</span> 或者在后台运行
-<span class="go">ssserver -c /etc/shadowsocks.json -d start</span>
-<span class="go">ssserver -c /etc/shadowsocks.json -d stop</span></code></pre></figure>
+</span><span class="gp">#</span><span class="w"> </span>或者在后台运行
+<span class="go">ssserver -c /etc/shadowsocks.json -d start
+ssserver -c /etc/shadowsocks.json -d stop</span></code></pre></figure>
 
 <h3 id="使用shadowsocks客户端">使用shadowsocks客户端</h3>
 

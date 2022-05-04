@@ -134,15 +134,15 @@
 
 <p>录制数据相对来说比较简单，我们只需要借助 Kinect for Windows SDK 自带的 <strong>Kinect Studio</strong> 就可以达成这一目的。</p>
 
-<p>你可以依照下图的三个小步骤来录制你想要的场景数据；等录制完毕以后，你可以在 <code>C:\Users\${你的用户名}\Documents\Kinect Studio\Repository</code> 下找到你录制好的 xef 文件，比如我刚刚录制的 <code>20160317_111153_00.xef</code></p>
+<p>你可以依照下图的三个小步骤来录制你想要的场景数据；等录制完毕以后，你可以在 <code class="language-plaintext highlighter-rouge">C:\Users\${你的用户名}\Documents\Kinect Studio\Repository</code> 下找到你录制好的 xef 文件，比如我刚刚录制的 <code class="language-plaintext highlighter-rouge">20160317_111153_00.xef</code></p>
 
 <p><img src="https://sinacloud.net/heaven-blog-files/images/posts/kinect-studio.png" alt="Kinect Studio Sample" /></p>
 
 <h2 id="回放">回放</h2>
 
-<p><strong>实现回放的原理：</strong> 我们在正常使用 Kinect 的过程中，每当 Kinect 采集到一帧画面，就会触发一下 <code>FrameArrived</code> 事件。而我们写的程序总是会通过一个 <code>FrameReader</code> 来响应每一帧画面所触发的事件。所以只要通过读取 <strong>xef</strong> 文件中的数据，模拟触发 <code>FrameArrived</code> 事件；从而做到几乎不修改原本的代码，就能在原来程序中回放录制的场景。</p>
+<p><strong>实现回放的原理：</strong> 我们在正常使用 Kinect 的过程中，每当 Kinect 采集到一帧画面，就会触发一下 <code class="language-plaintext highlighter-rouge">FrameArrived</code> 事件。而我们写的程序总是会通过一个 <code class="language-plaintext highlighter-rouge">FrameReader</code> 来响应每一帧画面所触发的事件。所以只要通过读取 <strong>xef</strong> 文件中的数据，模拟触发 <code class="language-plaintext highlighter-rouge">FrameArrived</code> 事件；从而做到几乎不修改原本的代码，就能在原来程序中回放录制的场景。</p>
 
-<p>正常来说，<strong>xef</strong> 文件只能在 Kinect Studio 中播放出来。不过 Kinect 开发小组的成员 Carmine 在 MSDN 上发布了一些能够读取 <code>xef</code> 的示例代码。接下来我就来讲解一下具体的步骤：</p>
+<p>正常来说，<strong>xef</strong> 文件只能在 Kinect Studio 中播放出来。不过 Kinect 开发小组的成员 Carmine 在 MSDN 上发布了一些能够读取 <code class="language-plaintext highlighter-rouge">xef</code> 的示例代码。接下来我就来讲解一下具体的步骤：</p>
 
 <ol>
   <li>将项目的编译版本修改为 <strong>x64</strong> (否则你会得到 BadImageFormatException 错误)</li>
@@ -155,9 +155,9 @@
 
 <p>接下来，你需要编写一些代码来调用回放的功能。以官方的例子 <strong>DepthBasics-WPF</strong> 为例，首先你需要定义一个新的类，并在这个类中定义一个静态方法，如下所示：</p>
 
-<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span></span><span class="cm">/******</span>
-<span class="cm"> * PlaybackClip.cs</span>
-<span class="cm"> */</span>
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="cm">/******
+ * PlaybackClip.cs
+ */</span>
 
 <span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
@@ -173,37 +173,37 @@
     <span class="p">{</span>
         <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">PlaybackClip</span><span class="p">(</span><span class="kt">string</span> <span class="n">filePath</span><span class="p">,</span> <span class="kt">uint</span> <span class="n">loopCount</span><span class="p">)</span>
         <span class="p">{</span>
-            <span class="k">using</span> <span class="p">(</span><span class="n">KStudioClient</span> <span class="n">client</span> <span class="p">=</span> <span class="n">KStudio</span><span class="p">.</span><span class="n">CreateClient</span><span class="p">())</span>
+            <span class="k">using</span> <span class="p">(</span><span class="n">KStudioClient</span> <span class="n">client</span> <span class="p">=</span> <span class="n">KStudio</span><span class="p">.</span><span class="nf">CreateClient</span><span class="p">())</span>
             <span class="p">{</span>
-               <span class="n">client</span><span class="p">.</span><span class="n">ConnectToService</span><span class="p">();</span>
+               <span class="n">client</span><span class="p">.</span><span class="nf">ConnectToService</span><span class="p">();</span>
                
-               <span class="k">using</span> <span class="p">(</span><span class="n">KStudioPlayback</span> <span class="n">playback</span> <span class="p">=</span> <span class="n">client</span><span class="p">.</span><span class="n">CreatePlayback</span><span class="p">(</span><span class="n">filePath</span><span class="p">))</span>
+               <span class="k">using</span> <span class="p">(</span><span class="n">KStudioPlayback</span> <span class="n">playback</span> <span class="p">=</span> <span class="n">client</span><span class="p">.</span><span class="nf">CreatePlayback</span><span class="p">(</span><span class="n">filePath</span><span class="p">))</span>
                <span class="p">{</span>
                    <span class="n">playback</span><span class="p">.</span><span class="n">LoopCount</span> <span class="p">=</span> <span class="n">loopCount</span><span class="p">;</span>
-                   <span class="n">playback</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
+                   <span class="n">playback</span><span class="p">.</span><span class="nf">Start</span><span class="p">();</span>
         
                    <span class="k">while</span> <span class="p">(</span><span class="n">playback</span><span class="p">.</span><span class="n">State</span> <span class="p">==</span> <span class="n">KStudioPlaybackState</span><span class="p">.</span><span class="n">Playing</span><span class="p">)</span>
                    <span class="p">{</span>
-                       <span class="n">Thread</span><span class="p">.</span><span class="n">Sleep</span><span class="p">(</span><span class="m">500</span><span class="p">);</span>
+                       <span class="n">Thread</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="m">500</span><span class="p">);</span>
                    <span class="p">}</span>
         
                    <span class="k">if</span> <span class="p">(</span><span class="n">playback</span><span class="p">.</span><span class="n">State</span> <span class="p">==</span> <span class="n">KStudioPlaybackState</span><span class="p">.</span><span class="n">Error</span><span class="p">)</span>
                    <span class="p">{</span>
-                       <span class="k">throw</span> <span class="k">new</span> <span class="nf">InvalidOperationException</span><span class="p">(</span><span class="s">&quot;Error: Playback failed!&quot;</span><span class="p">);</span>
+                       <span class="k">throw</span> <span class="k">new</span> <span class="nf">InvalidOperationException</span><span class="p">(</span><span class="s">"Error: Playback failed!"</span><span class="p">);</span>
                    <span class="p">}</span>
                <span class="p">}</span>
         
-               <span class="n">client</span><span class="p">.</span><span class="n">DisconnectFromService</span><span class="p">();</span>
+               <span class="n">client</span><span class="p">.</span><span class="nf">DisconnectFromService</span><span class="p">();</span>
             <span class="p">}</span>
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span></code></pre></figure>
 
-<p>最后，你需要在现有的代码中使用 <code>PlaybackHelper.PlaybackClip</code> 方法来帮助你回放之前的数据。此处的示例代码在检测不到 Kinect 设备时会 <strong>启用一个新线程</strong> 来回放指定的数据，并指定循环回放 10 次，你可以根据需要进行修改。</p>
+<p>最后，你需要在现有的代码中使用 <code class="language-plaintext highlighter-rouge">PlaybackHelper.PlaybackClip</code> 方法来帮助你回放之前的数据。此处的示例代码在检测不到 Kinect 设备时会 <strong>启用一个新线程</strong> 来回放指定的数据，并指定循环回放 10 次，你可以根据需要进行修改。</p>
 
-<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span></span><span class="cm">/***</span>
-<span class="cm"> * MainWindow.xaml.cs</span>
-<span class="cm"> */</span>
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="cm">/***
+ * MainWindow.xaml.cs
+ */</span>
  
 <span class="k">namespace</span> <span class="nn">Microsoft.Samples.Kinect.DepthBasics</span>
 <span class="p">{</span>
@@ -218,8 +218,8 @@
             <span class="c1">//#begin</span>
             <span class="k">if</span> <span class="p">(!</span><span class="k">this</span><span class="p">.</span><span class="n">kinectSensor</span><span class="p">.</span><span class="n">IsAvailable</span><span class="p">)</span>
             <span class="p">{</span>
-                <span class="n">Thread</span> <span class="n">playbackThread</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="p">(</span><span class="n">startPlayback</span><span class="p">);</span>
-                <span class="n">playbackThread</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
+                <span class="n">Thread</span> <span class="n">playbackThread</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Thread</span><span class="p">(</span><span class="n">startPlayback</span><span class="p">);</span>
+                <span class="n">playbackThread</span><span class="p">.</span><span class="nf">Start</span><span class="p">();</span>
             <span class="p">}</span>
             <span class="c1">//#end</span>
         <span class="p">}</span>
@@ -228,7 +228,7 @@
         <span class="c1">//#begin</span>
         <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">startPlayback</span><span class="p">()</span>
         <span class="p">{</span>
-            <span class="n">PlaybackHelper</span><span class="p">.</span><span class="n">PlaybackClip</span><span class="p">(</span><span class="s">&quot;${此处填写 xef 的路径}&quot;</span><span class="p">,</span> <span class="m">10</span><span class="p">);</span>
+            <span class="n">PlaybackHelper</span><span class="p">.</span><span class="nf">PlaybackClip</span><span class="p">(</span><span class="s">"${此处填写 xef 的路径}"</span><span class="p">,</span> <span class="m">10</span><span class="p">);</span>
         <span class="p">}</span>
         <span class="c1">//#end</span>
         

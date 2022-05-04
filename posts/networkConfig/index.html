@@ -133,15 +133,15 @@
 <ul>
   <li>WAN口设置：
     <ul>
-      <li>IP: <code>192.168.1.x (x!=1 &amp;&amp; x &gt;= 0 &amp;&amp; x &lt;= 255)</code>：6个路由器的<code>x</code>不可重复，每个路由器对下都有一个各自的子网，对上需要有唯一的地址来收发数据，即 IP 地址。<code>x!=1</code>是为了防止和 Modem 的 IP 地址冲突。</li>
-      <li>子网掩码: <code>255.255.255.0</code></li>
-      <li>网关: <code>192.168.1.1</code> ：Modem 一般都是<code>192.168.1.1</code>，如果不是请修改成 Modem 的地址。</li>
+      <li>IP: <code class="language-plaintext highlighter-rouge">192.168.1.x (x!=1 &amp;&amp; x &gt;= 0 &amp;&amp; x &lt;= 255)</code>：6个路由器的<code class="language-plaintext highlighter-rouge">x</code>不可重复，每个路由器对下都有一个各自的子网，对上需要有唯一的地址来收发数据，即 IP 地址。<code class="language-plaintext highlighter-rouge">x!=1</code>是为了防止和 Modem 的 IP 地址冲突。</li>
+      <li>子网掩码: <code class="language-plaintext highlighter-rouge">255.255.255.0</code></li>
+      <li>网关: <code class="language-plaintext highlighter-rouge">192.168.1.1</code> ：Modem 一般都是<code class="language-plaintext highlighter-rouge">192.168.1.1</code>，如果不是请修改成 Modem 的地址。</li>
     </ul>
   </li>
   <li>LAN口设置：
     <ul>
-      <li>IP: <code>192.168.y.1 (y!=1 &amp;&amp; y &gt;= 0 &amp;&amp; y &lt;= 255)</code> ：LAN 口是路由器对下的接口，Client 可以通过 LAN 口的 IP 地址来访问路由器。</li>
-      <li>子网掩码: <code>255.255.255.0</code></li>
+      <li>IP: <code class="language-plaintext highlighter-rouge">192.168.y.1 (y!=1 &amp;&amp; y &gt;= 0 &amp;&amp; y &lt;= 255)</code> ：LAN 口是路由器对下的接口，Client 可以通过 LAN 口的 IP 地址来访问路由器。</li>
+      <li>子网掩码: <code class="language-plaintext highlighter-rouge">255.255.255.0</code></li>
     </ul>
   </li>
 </ul>

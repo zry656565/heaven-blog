@@ -170,10 +170,10 @@ Alex</p>
 
 <p>来看一个例子，假设服务器端有这样一个PHP文件 hello.php：</p>
 
-<figure class="highlight"><pre><code class="language-php" data-lang="php"><span></span><span class="x">&lt;html&gt;</span>
-<span class="x">    &lt;head&gt;...&lt;/head&gt;</span>
-<span class="x">    &lt;body&gt;Hello, </span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$name</span> <span class="cp">?&gt;</span><span class="x"> &lt;/body&gt;</span>
-<span class="x">&lt;/html&gt;</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>...<span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>Hello, <span class="cp">&lt;?=</span> <span class="nv">$name</span> <span class="cp">?&gt;</span> <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span></code></pre></figure>
 
 <p>如果 CDN 缓存了这个文件就会造成很糟糕的后果。比如 Jerry 先访问了 hello.php 页面，得到了 Hello, Jerry 的内容。此时这个内容已经被缓存到了节点 A，而 Tom 同学也是离节点 A 最近，那么 Tom 同学访问 hello.php 时，就会直接得到缓存内容：Hello, Jerry。这个时候 Tom 同学的内心一定是崩溃的。</p>
 
@@ -202,7 +202,7 @@ Alex</p>
 <ul>
   <li>所有抓取成功的页面都访问了 209.9.130.5 节点</li>
   <li>所有抓取失败的页面都访问了 209.9.130.6 节点</li>
-  <li>我本机<code>ping jerryzou.com</code>会 ping 到 209.9.130.8 节点</li>
+  <li>我本机<code class="language-plaintext highlighter-rouge">ping jerryzou.com</code>会 ping 到 209.9.130.8 节点</li>
 </ul>
 
 <p>好了，细心的同学应该已经发现问题所在了，百度爬虫大部分的请求被导到了 209.9.130.6 节点，但是<strong>这个节点上没有页面的缓存</strong>！！如果百度爬虫是某个页面的第一个访问者，CDN 的边缘服务器会用百度爬虫的 UA 去请求 Github 的服务器，得到的结果自然是被拒绝了。</p>
@@ -217,19 +217,19 @@ Alex</p>
 
 <p>当然，不死心的我还是做了件奇怪的事……首先我在找到了<a href="http://forums.oscommerce.com/topic/382923-baiduspider-using-multiple-user-agents-how-to-stop-them/">所有 BaiduSpider 的 IP</a>，然后想要伪装成这些 IP 来请求内容，以此想在所有百度爬虫可能爬取的边缘服务器上都建立缓存。</p>
 
-<figure class="highlight"><pre><code class="language-php" data-lang="php"><span></span><span class="cp">&lt;?php</span>
-<span class="k">function</span> <span class="nf">Curl</span><span class="p">(</span><span class="nv">$url</span><span class="p">,</span> <span class="nv">$ip</span><span class="p">){</span>
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="k">function</span> <span class="n">Curl</span><span class="p">(</span><span class="nv">$url</span><span class="p">,</span> <span class="nv">$ip</span><span class="p">){</span>
     <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
     <span class="nb">curl_setopt_array</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="p">[</span>
-        <span class="nx">CURLOPT_URL</span> <span class="o">=&gt;</span> <span class="nv">$url</span><span class="p">,</span>
-        <span class="nx">CURLOPT_TIMEOUT</span> <span class="o">=&gt;</span> <span class="mi">10</span><span class="p">,</span>
-        <span class="nx">CURLOPT_HEADER</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-        <span class="nx">CURLOPT_HTTPHEADER</span> <span class="o">=&gt;</span> <span class="p">[</span> <span class="s1">&#39;X-FORWARDED-FOR: &#39;</span><span class="o">.</span><span class="nv">$ip</span><span class="p">,</span> <span class="s1">&#39;CLIENT-IP: &#39;</span><span class="o">.</span><span class="nv">$ip</span> <span class="p">],</span>
-        <span class="nx">CURLOPT_RETURNTRANSFER</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-        <span class="nx">CURLOPT_FOLLOWLOCATION</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-        <span class="nx">CURLOPT_NOBODY</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
-        <span class="nx">CURLOPT_REFERER</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://test.jerryzou.com&#39;</span><span class="p">,</span>
-        <span class="nx">CURLOPT_USERAGENT</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.66 Safari/537.36&#39;</span><span class="p">,</span>
+        <span class="no">CURLOPT_URL</span> <span class="o">=&gt;</span> <span class="nv">$url</span><span class="p">,</span>
+        <span class="no">CURLOPT_TIMEOUT</span> <span class="o">=&gt;</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="no">CURLOPT_HEADER</span> <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="no">CURLOPT_HTTPHEADER</span> <span class="o">=&gt;</span> <span class="p">[</span> <span class="s1">'X-FORWARDED-FOR: '</span><span class="mf">.</span><span class="nv">$ip</span><span class="p">,</span> <span class="s1">'CLIENT-IP: '</span><span class="mf">.</span><span class="nv">$ip</span> <span class="p">],</span>
+        <span class="no">CURLOPT_RETURNTRANSFER</span> <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="no">CURLOPT_FOLLOWLOCATION</span> <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="no">CURLOPT_NOBODY</span> <span class="o">=&gt;</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="no">CURLOPT_REFERER</span> <span class="o">=&gt;</span> <span class="s1">'http://test.jerryzou.com'</span><span class="p">,</span>
+        <span class="no">CURLOPT_USERAGENT</span> <span class="o">=&gt;</span> <span class="s1">'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.66 Safari/537.36'</span><span class="p">,</span>
     <span class="p">]);</span>
     <span class="nv">$response</span> <span class="o">=</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
     <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
@@ -237,22 +237,22 @@ Alex</p>
 <span class="p">}</span>
 
 <span class="nv">$ipList</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;203.125.234.1&#39;</span><span class="p">,</span>   <span class="s1">&#39;220.181.7.1&#39;</span><span class="p">,</span>     <span class="s1">&#39;123.125.66.1&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;123.125.71.1&#39;</span><span class="p">,</span>    <span class="s1">&#39;119.63.192.1&#39;</span><span class="p">,</span>    <span class="s1">&#39;119.63.193.1&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;119.63.194.1&#39;</span><span class="p">,</span>    <span class="s1">&#39;119.63.195.1&#39;</span><span class="p">,</span>    <span class="s1">&#39;119.63.196.1&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;119.63.197.1&#39;</span><span class="p">,</span>    <span class="s1">&#39;119.63.198.1&#39;</span><span class="p">,</span>    <span class="s1">&#39;119.63.199.1&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;180.76.5.1&#39;</span><span class="p">,</span>      <span class="s1">&#39;202.108.249.185&#39;</span><span class="p">,</span> <span class="s1">&#39;202.108.249.177&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;202.108.249.182&#39;</span><span class="p">,</span> <span class="s1">&#39;202.108.249.184&#39;</span><span class="p">,</span> <span class="s1">&#39;202.108.249.189&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;61.135.146.200&#39;</span><span class="p">,</span>  <span class="s1">&#39;61.135.145.221&#39;</span><span class="p">,</span>  <span class="s1">&#39;61.135.145.207&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;202.108.250.196&#39;</span><span class="p">,</span> <span class="s1">&#39;68.170.119.76&#39;</span><span class="p">,</span>   <span class="s1">&#39;207.46.199.52&#39;</span><span class="p">,</span>
+    <span class="s1">'203.125.234.1'</span><span class="p">,</span>   <span class="s1">'220.181.7.1'</span><span class="p">,</span>     <span class="s1">'123.125.66.1'</span><span class="p">,</span>
+    <span class="s1">'123.125.71.1'</span><span class="p">,</span>    <span class="s1">'119.63.192.1'</span><span class="p">,</span>    <span class="s1">'119.63.193.1'</span><span class="p">,</span>
+    <span class="s1">'119.63.194.1'</span><span class="p">,</span>    <span class="s1">'119.63.195.1'</span><span class="p">,</span>    <span class="s1">'119.63.196.1'</span><span class="p">,</span>
+    <span class="s1">'119.63.197.1'</span><span class="p">,</span>    <span class="s1">'119.63.198.1'</span><span class="p">,</span>    <span class="s1">'119.63.199.1'</span><span class="p">,</span>
+    <span class="s1">'180.76.5.1'</span><span class="p">,</span>      <span class="s1">'202.108.249.185'</span><span class="p">,</span> <span class="s1">'202.108.249.177'</span><span class="p">,</span>
+    <span class="s1">'202.108.249.182'</span><span class="p">,</span> <span class="s1">'202.108.249.184'</span><span class="p">,</span> <span class="s1">'202.108.249.189'</span><span class="p">,</span>
+    <span class="s1">'61.135.146.200'</span><span class="p">,</span>  <span class="s1">'61.135.145.221'</span><span class="p">,</span>  <span class="s1">'61.135.145.207'</span><span class="p">,</span>
+    <span class="s1">'202.108.250.196'</span><span class="p">,</span> <span class="s1">'68.170.119.76'</span><span class="p">,</span>   <span class="s1">'207.46.199.52'</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$ipList</span> <span class="k">as</span> <span class="nv">$ip</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">Curl</span><span class="p">(</span><span class="s1">&#39;http://jerryzou.com&#39;</span><span class="p">,</span> <span class="nv">$ip</span><span class="p">);</span>
-    <span class="k">echo</span> <span class="s2">&quot;</span><span class="si">$ip\n</span><span class="s2">&quot;</span><span class="p">;</span>
+    <span class="nf">Curl</span><span class="p">(</span><span class="s1">'http://jerryzou.com'</span><span class="p">,</span> <span class="nv">$ip</span><span class="p">);</span>
+    <span class="k">echo</span> <span class="s2">"</span><span class="nv">$ip</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="k">echo</span> <span class="s2">&quot;Done</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span></code></pre></figure>
+<span class="k">echo</span> <span class="s2">"Done</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span></code></pre></figure>
 
 <p><br />
 然而并没有卵用……</p>

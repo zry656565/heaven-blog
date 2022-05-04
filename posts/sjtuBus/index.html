@@ -138,55 +138,55 @@
   <p>百度地图JavaScript API免费对外开放。自v1.5版本起，您需先申请密钥（ak）才可使用，接口（除发送短信功能外）无使用次数限制。</p>
 </blockquote>
 
-<p>因此我们需要先<a href="https://lbsyun.baidu.com/apiconsole/key?application=key">申请密钥</a>，过程非常简单，几步就完成，在此就不多赘述了。申请完毕你就得到了属于自己的ak，接下来就可以建立如下的hello world网页了哦！别忘了把<code>ak=您的密钥</code>这部分改称你申请好的密钥。</p>
+<p>因此我们需要先<a href="https://lbsyun.baidu.com/apiconsole/key?application=key">申请密钥</a>，过程非常简单，几步就完成，在此就不多赘述了。申请完毕你就得到了属于自己的ak，接下来就可以建立如下的hello world网页了哦！别忘了把<code class="language-plaintext highlighter-rouge">ak=您的密钥</code>这部分改称你申请好的密钥。</p>
 
-<figure class="highlight"><pre><code class="language-html" data-lang="html"><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
-<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">http-equiv</span><span class="o">=</span><span class="s">&quot;Content-Type&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;text/html; charset=utf-8&quot;</span> <span class="p">/&gt;</span>
-    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;initial-scale=1.0, user-scalable=no&quot;</span> <span class="p">/&gt;</span>
-    <span class="p">&lt;</span><span class="nt">style</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/css&quot;</span><span class="p">&gt;</span>
-    <span class="nt">body</span><span class="o">,</span> <span class="nt">html</span><span class="o">,</span><span class="p">#</span><span class="nn">allmap</span> <span class="p">{</span><span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span><span class="k">height</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span><span class="k">overflow</span><span class="p">:</span> <span class="kc">hidden</span><span class="p">;</span><span class="k">margin</span><span class="p">:</span><span class="mi">0</span><span class="p">;</span><span class="k">font-family</span><span class="p">:</span><span class="s2">&quot;微软雅黑&quot;</span><span class="p">;}</span>
-    <span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;http://api.map.baidu.com/api?v=2.0&amp;ak=您的密钥&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>地图展示<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;allmap&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=utf-8"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"initial-scale=1.0, user-scalable=no"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;style </span><span class="na">type=</span><span class="s">"text/css"</span><span class="nt">&gt;</span>
+    <span class="nt">body</span><span class="o">,</span> <span class="nt">html</span><span class="o">,</span><span class="nf">#allmap</span> <span class="p">{</span><span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span><span class="nl">height</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span><span class="nl">overflow</span><span class="p">:</span> <span class="nb">hidden</span><span class="p">;</span><span class="nl">margin</span><span class="p">:</span><span class="m">0</span><span class="p">;</span><span class="nl">font-family</span><span class="p">:</span><span class="s1">"微软雅黑"</span><span class="p">;}</span>
+    <span class="nt">&lt;/style&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"http://api.map.baidu.com/api?v=2.0&amp;ak=您的密钥"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;title&gt;</span>地图展示<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"allmap"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
     <span class="c1">// 百度地图API功能</span>
-    <span class="kd">var</span> <span class="nx">map</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BMap</span><span class="p">.</span><span class="nx">Map</span><span class="p">(</span><span class="s2">&quot;allmap&quot;</span><span class="p">);</span>    <span class="c1">// 创建Map实例</span>
+    <span class="kd">var</span> <span class="nx">map</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BMap</span><span class="p">.</span><span class="nb">Map</span><span class="p">(</span><span class="dl">"</span><span class="s2">allmap</span><span class="dl">"</span><span class="p">);</span>    <span class="c1">// 创建Map实例</span>
     <span class="nx">map</span><span class="p">.</span><span class="nx">centerAndZoom</span><span class="p">(</span><span class="k">new</span> <span class="nx">BMap</span><span class="p">.</span><span class="nx">Point</span><span class="p">(</span><span class="mf">116.404</span><span class="p">,</span> <span class="mf">39.915</span><span class="p">),</span> <span class="mi">11</span><span class="p">);</span>  <span class="c1">// 初始化地图,设置中心点坐标和地图级别</span>
     <span class="nx">map</span><span class="p">.</span><span class="nx">addControl</span><span class="p">(</span><span class="k">new</span> <span class="nx">BMap</span><span class="p">.</span><span class="nx">MapTypeControl</span><span class="p">());</span>   <span class="c1">//添加地图类型控件</span>
-    <span class="nx">map</span><span class="p">.</span><span class="nx">setCurrentCity</span><span class="p">(</span><span class="s2">&quot;北京&quot;</span><span class="p">);</span>          <span class="c1">// 设置地图显示的城市 此项是必须设置的</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code></pre></figure>
+    <span class="nx">map</span><span class="p">.</span><span class="nx">setCurrentCity</span><span class="p">(</span><span class="dl">"</span><span class="s2">北京</span><span class="dl">"</span><span class="p">);</span>          <span class="c1">// 设置地图显示的城市 此项是必须设置的</span>
+<span class="nt">&lt;/script&gt;</span></code></pre></figure>
 
 <h2 id="2添加校园巴士车站">2.添加校园巴士车站</h2>
 
-<p>首先本应用所有的数据都存储在一个<code>data.json</code>文件中，其中校园巴士车站存储的数据结构如下。数组中每一个子数组代表一个车站，子数组的三个元素分别代表站点名和经纬度。</p>
+<p>首先本应用所有的数据都存储在一个<code class="language-plaintext highlighter-rouge">data.json</code>文件中，其中校园巴士车站存储的数据结构如下。数组中每一个子数组代表一个车站，子数组的三个元素分别代表站点名和经纬度。</p>
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span></span><span class="p">{</span>
-    <span class="nt">&quot;stopList&quot;</span><span class="p">:[</span>
-        <span class="p">[</span><span class="s2">&quot;东川路地铁站&quot;</span><span class="p">,</span> <span class="mf">121.426814</span><span class="p">,</span> <span class="mf">31.023853</span><span class="p">],</span>
-        <span class="p">[</span><span class="s2">&quot;菁菁堂&quot;</span><span class="p">,</span> <span class="mf">121.436534</span><span class="p">,</span> <span class="mf">31.02475</span><span class="p">],</span>
-        <span class="p">[</span><span class="s2">&quot;校医院&quot;</span><span class="p">,</span> <span class="mf">121.439911</span><span class="p">,</span> <span class="mf">31.025764</span><span class="p">],</span>
-        <span class="p">[</span><span class="s2">&quot;东上院&quot;</span><span class="p">,</span> <span class="mf">121.445463</span><span class="p">,</span> <span class="mf">31.028007</span><span class="p">],</span>
-        <span class="p">[</span><span class="s2">&quot;东中院&quot;</span><span class="p">,</span> <span class="mf">121.444457</span><span class="p">,</span> <span class="mf">31.030127</span><span class="p">],</span>
-        <span class="p">[</span><span class="s2">&quot;新图书馆&quot;</span><span class="p">,</span> <span class="mf">121.443954</span><span class="p">,</span> <span class="mf">31.03155</span><span class="p">],</span>
-        <span class="p">[</span><span class="s2">&quot;行政B楼&quot;</span><span class="p">,</span> <span class="mf">121.447601</span><span class="p">,</span> <span class="mf">31.032742</span><span class="p">],</span>
-        <span class="p">[</span><span class="s2">&quot;电信学院&quot;</span><span class="p">,</span> <span class="mf">121.448751</span><span class="p">,</span> <span class="mf">31.03155</span><span class="p">],</span>
-        <span class="p">[</span><span class="s2">&quot;凯旋门&quot;</span><span class="p">,</span> <span class="mf">121.452308</span><span class="p">,</span> <span class="mf">31.029431</span><span class="p">]</span>
-    <span class="p">]</span>
-<span class="p">}</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+    </span><span class="nl">"stopList"</span><span class="p">:[</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"东川路地铁站"</span><span class="p">,</span><span class="w"> </span><span class="mf">121.426814</span><span class="p">,</span><span class="w"> </span><span class="mf">31.023853</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"菁菁堂"</span><span class="p">,</span><span class="w"> </span><span class="mf">121.436534</span><span class="p">,</span><span class="w"> </span><span class="mf">31.02475</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"校医院"</span><span class="p">,</span><span class="w"> </span><span class="mf">121.439911</span><span class="p">,</span><span class="w"> </span><span class="mf">31.025764</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"东上院"</span><span class="p">,</span><span class="w"> </span><span class="mf">121.445463</span><span class="p">,</span><span class="w"> </span><span class="mf">31.028007</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"东中院"</span><span class="p">,</span><span class="w"> </span><span class="mf">121.444457</span><span class="p">,</span><span class="w"> </span><span class="mf">31.030127</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"新图书馆"</span><span class="p">,</span><span class="w"> </span><span class="mf">121.443954</span><span class="p">,</span><span class="w"> </span><span class="mf">31.03155</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"行政B楼"</span><span class="p">,</span><span class="w"> </span><span class="mf">121.447601</span><span class="p">,</span><span class="w"> </span><span class="mf">31.032742</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"电信学院"</span><span class="p">,</span><span class="w"> </span><span class="mf">121.448751</span><span class="p">,</span><span class="w"> </span><span class="mf">31.03155</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"凯旋门"</span><span class="p">,</span><span class="w"> </span><span class="mf">121.452308</span><span class="p">,</span><span class="w"> </span><span class="mf">31.029431</span><span class="p">]</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
 
 <p>在设计好了上面的数据结构后，添加车站就非常容易了：</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">stopList</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">stopList</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">point</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BMap</span><span class="p">.</span><span class="nx">Point</span><span class="p">(</span><span class="nx">stopList</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="nx">stopList</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]);</span>
     <span class="kd">var</span> <span class="nx">marker</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BMap</span><span class="p">.</span><span class="nx">Marker</span><span class="p">(</span><span class="nx">point</span><span class="p">);</span>
-    <span class="kd">var</span> <span class="nx">label</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BMap</span><span class="p">.</span><span class="nx">Label</span><span class="p">(</span><span class="nx">stopList</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],{</span><span class="nx">offset</span><span class="o">:</span><span class="k">new</span> <span class="nx">BMap</span><span class="p">.</span><span class="nx">Size</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="o">-</span><span class="mi">10</span><span class="p">)});</span>
+    <span class="kd">var</span> <span class="nx">label</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BMap</span><span class="p">.</span><span class="nx">Label</span><span class="p">(</span><span class="nx">stopList</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],{</span><span class="na">offset</span><span class="p">:</span><span class="k">new</span> <span class="nx">BMap</span><span class="p">.</span><span class="nx">Size</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="o">-</span><span class="mi">10</span><span class="p">)});</span>
     <span class="nx">marker</span><span class="p">.</span><span class="nx">setLabel</span><span class="p">(</span><span class="nx">label</span><span class="p">);</span>
     <span class="nx">map</span><span class="p">.</span><span class="nx">addOverlay</span><span class="p">(</span><span class="nx">marker</span><span class="p">);</span>
 <span class="p">}</span></code></pre></figure>
@@ -194,52 +194,52 @@
 <h2 id="3绘制校园巴士路径">3.绘制校园巴士路径</h2>
 <p>校园巴士行车路径存储的数据结构如下，就是由一堆点的经纬度构成的。</p>
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span></span><span class="p">{</span>
-    <span class="nt">&quot;lineList&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">[</span><span class="mf">121.436534</span><span class="p">,</span> <span class="mf">31.02475</span><span class="p">],</span>
-        <span class="p">[</span><span class="mf">121.439911</span><span class="p">,</span> <span class="mf">31.025764</span><span class="p">],</span>
-        <span class="p">[</span><span class="mf">121.445535</span><span class="p">,</span> <span class="mf">31.027412</span><span class="p">],</span>
-        <span class="p">[</span><span class="mf">121.445301</span><span class="p">,</span> <span class="mf">31.027984</span><span class="p">],</span>
-        <span class="p">[</span><span class="mf">121.444331</span><span class="p">,</span> <span class="mf">31.030104</span><span class="p">],</span>
-        <span class="p">[</span><span class="mf">121.443774</span><span class="p">,</span> <span class="mf">31.031605</span><span class="p">],</span>
-        <span class="p">[</span><span class="mf">121.448373</span><span class="p">,</span> <span class="mf">31.033121</span><span class="p">],</span>
-        <span class="p">[</span><span class="mf">121.448319</span><span class="p">,</span> <span class="mf">31.032285</span><span class="p">]</span>
-    <span class="p">]</span>
-<span class="p">}</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+    </span><span class="nl">"lineList"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="mf">121.436534</span><span class="p">,</span><span class="w"> </span><span class="mf">31.02475</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="mf">121.439911</span><span class="p">,</span><span class="w"> </span><span class="mf">31.025764</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="mf">121.445535</span><span class="p">,</span><span class="w"> </span><span class="mf">31.027412</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="mf">121.445301</span><span class="p">,</span><span class="w"> </span><span class="mf">31.027984</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="mf">121.444331</span><span class="p">,</span><span class="w"> </span><span class="mf">31.030104</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="mf">121.443774</span><span class="p">,</span><span class="w"> </span><span class="mf">31.031605</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="mf">121.448373</span><span class="p">,</span><span class="w"> </span><span class="mf">31.033121</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="mf">121.448319</span><span class="p">,</span><span class="w"> </span><span class="mf">31.032285</span><span class="p">]</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
 
 <p>在设计好了上面的数据结构后，依样画葫芦，我们就能得到想要的路径了：</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="c1">//绘制路线</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//绘制路线</span>
 <span class="kd">var</span> <span class="nx">pointArr</span> <span class="o">=</span> <span class="p">[];</span>
 <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">lineList</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">pointArr</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="k">new</span> <span class="nx">BMap</span><span class="p">.</span><span class="nx">Point</span><span class="p">(</span><span class="nx">lineList</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="nx">lineList</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]));</span>
 <span class="p">}</span>
-<span class="kd">var</span> <span class="nx">polyline</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BMap</span><span class="p">.</span><span class="nx">Polyline</span><span class="p">(</span><span class="nx">pointArr</span><span class="p">,</span> <span class="p">{</span><span class="nx">strokeColor</span><span class="o">:</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="nx">strokeWeight</span><span class="o">:</span><span class="mi">5</span><span class="p">,</span> <span class="nx">strokeOpacity</span><span class="o">:</span><span class="mf">0.5</span><span class="p">});</span>
+<span class="kd">var</span> <span class="nx">polyline</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BMap</span><span class="p">.</span><span class="nx">Polyline</span><span class="p">(</span><span class="nx">pointArr</span><span class="p">,</span> <span class="p">{</span><span class="na">strokeColor</span><span class="p">:</span><span class="dl">"</span><span class="s2">blue</span><span class="dl">"</span><span class="p">,</span> <span class="na">strokeWeight</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="na">strokeOpacity</span><span class="p">:</span><span class="mf">0.5</span><span class="p">});</span>
 <span class="nx">map</span><span class="p">.</span><span class="nx">addOverlay</span><span class="p">(</span><span class="nx">polyline</span><span class="p">);</span></code></pre></figure>
 
 <h2 id="4弹出校园巴士时刻表">4.弹出校园巴士时刻表</h2>
 <p>校园巴士行车时刻表存储的数据结构如下，就是由一堆点的经纬度构成的。</p>
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span></span><span class="p">{</span>
-    <span class="nt">&quot;stopTime&quot;</span><span class="p">:{</span>
-        <span class="nt">&quot;东川路地铁站&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">&quot;direct1&quot;</span><span class="p">:</span> <span class="s2">&quot;07:24 07:39 07:54 08:09 17:03 17:28 17:58 18:43 19:28 20:28&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;festival_direct1&quot;</span><span class="p">:</span> <span class="s2">&quot;8:24 16:58 17:43 18:28&quot;</span><span class="p">,</span>
-        <span class="p">},</span>
-        <span class="nt">&quot;菁菁堂&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">&quot;direct1&quot;</span><span class="p">:</span> <span class="s2">&quot;07:30 07:45 08:00 08:15 08:25 08:40 09:00 09:20 09:40 10:00&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;direct2&quot;</span><span class="p">:</span> <span class="s2">&quot;08:30 08:50 09:10 09:30 10:00 10:30 11:00 11:30 12:30 13:30&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;festival_direct1&quot;</span><span class="p">:</span> <span class="s2">&quot;08:30 09:30 10:30 11:30&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;festival_direct2&quot;</span><span class="p">:</span> <span class="s2">&quot;09:00 10:00 11:00 12:00&quot;</span>
-        <span class="p">},</span>
-        <span class="nt">&quot;校医院&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">&quot;direct1&quot;</span><span class="p">:</span> <span class="s2">&quot;07:30 07:45 08:00 08:15 08:25 08:40 09:00 09:20 09:40 10:00&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;direct2&quot;</span><span class="p">:</span> <span class="s2">&quot;08:50 09:10 09:30 09:50 10:20 10:50 11:20 11:50 12:50 13:50&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;festival_direct1&quot;</span><span class="p">:</span> <span class="s2">&quot;08:30 09:30 10:30 11:30&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;festival_direct2&quot;</span><span class="p">:</span> <span class="s2">&quot;09:20 10:20 11:20 12:20&quot;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+    </span><span class="nl">"stopTime"</span><span class="p">:{</span><span class="w">
+        </span><span class="nl">"东川路地铁站"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"direct1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"07:24 07:39 07:54 08:09 17:03 17:28 17:58 18:43 19:28 20:28"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"festival_direct1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8:24 16:58 17:43 18:28"</span><span class="p">,</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"菁菁堂"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"direct1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"07:30 07:45 08:00 08:15 08:25 08:40 09:00 09:20 09:40 10:00"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"direct2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"08:30 08:50 09:10 09:30 10:00 10:30 11:00 11:30 12:30 13:30"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"festival_direct1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"08:30 09:30 10:30 11:30"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"festival_direct2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"09:00 10:00 11:00 12:00"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"校医院"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"direct1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"07:30 07:45 08:00 08:15 08:25 08:40 09:00 09:20 09:40 10:00"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"direct2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"08:50 09:10 09:30 09:50 10:20 10:50 11:20 11:50 12:50 13:50"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"festival_direct1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"08:30 09:30 10:30 11:30"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"festival_direct2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"09:20 10:20 11:20 12:20"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
 
 <p>在设计好了上面的数据结构后，对之前添加巴士站点的代码稍加修改以下就搞定了，具体要添加的内容还比较多，可以移步<a href="https://github.com/zry656565/SJTU-Bus/blob/master/res/main.js">源码</a>查看。</p>
 

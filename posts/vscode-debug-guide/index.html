@@ -131,27 +131,27 @@
 
 <h2 id="1-launch--attach">1. launch / attach</h2>
 
-<p>要使用 vscode 的调试功能，首先就得配置 <code>.vscode/launch.json</code> 文件。以最简单的 Node 调试配置为例：</p>
+<p>要使用 vscode 的调试功能，首先就得配置 <code class="language-plaintext highlighter-rouge">.vscode/launch.json</code> 文件。以最简单的 Node 调试配置为例：</p>
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span></span><span class="p">{</span>
-    <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.2.0&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;configurations&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;request&quot;</span><span class="p">:</span> <span class="s2">&quot;launch&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Launch&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;program&quot;</span><span class="p">:</span> <span class="s2">&quot;${workspaceRoot}/index.js&quot;</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;request&quot;</span><span class="p">:</span> <span class="s2">&quot;attach&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Attach&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="mi">5858</span>
-        <span class="p">}</span>
-    <span class="p">]</span>
-<span class="p">}</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+    </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.2.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"configurations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"node"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"request"</span><span class="p">:</span><span class="w"> </span><span class="s2">"launch"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Launch"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"program"</span><span class="p">:</span><span class="w"> </span><span class="s2">"${workspaceRoot}/index.js"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"node"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"request"</span><span class="p">:</span><span class="w"> </span><span class="s2">"attach"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Attach"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">5858</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
 
-<p>其中最重要的参数是 <code>request</code> ，它的取值有两种 <code>launch</code> 和 <code>attach</code>。</p>
+<p>其中最重要的参数是 <code class="language-plaintext highlighter-rouge">request</code> ，它的取值有两种 <code class="language-plaintext highlighter-rouge">launch</code> 和 <code class="language-plaintext highlighter-rouge">attach</code>。</p>
 
 <ul>
   <li><strong>launch</strong>模式：<strong>由 vscode 来启动</strong>一个独立的具有 debug 模式的程序</li>
@@ -162,55 +162,55 @@
 
 <h2 id="2-调试前端代码">2. 调试前端代码</h2>
 
-<p>通过 vscode 调试前端代码主要依赖于一个插件：<a href="https://github.com/Microsoft/vscode-chrome-debug">Debugger for Chrome</a>，该插件主要利用 <a href="https://chromedevtools.github.io/devtools-protocol/">Chrome 所开放出来的接口</a> 来实现对其渲染的页面进行调试。可以通过 <code>Shift + Cmd + X</code> 打开插件中心，搜索对应插件后直接安装。安装完成并重新加载 vscode 后，可以直接点击调试按钮并创建新的启动配置。如果你之前已经创建过启动配置了，就可以直接打开 <code>.vscode/launch.json</code> 进行修改。</p>
+<p>通过 vscode 调试前端代码主要依赖于一个插件：<a href="https://github.com/Microsoft/vscode-chrome-debug">Debugger for Chrome</a>，该插件主要利用 <a href="https://chromedevtools.github.io/devtools-protocol/">Chrome 所开放出来的接口</a> 来实现对其渲染的页面进行调试。可以通过 <code class="language-plaintext highlighter-rouge">Shift + Cmd + X</code> 打开插件中心，搜索对应插件后直接安装。安装完成并重新加载 vscode 后，可以直接点击调试按钮并创建新的启动配置。如果你之前已经创建过启动配置了，就可以直接打开 <code class="language-plaintext highlighter-rouge">.vscode/launch.json</code> 进行修改。</p>
 
 <p><img src="https://sinacloud.net/heaven-blog-files/images/posts/vscode-debug-chrome.png" alt="vscode-debug-chrome" /></p>
 
 <p>其中调试 Chrome 页面的配置如下所示：</p>
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span></span><span class="p">{</span>
-    <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.2.0&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;configurations&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;chrome&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;request&quot;</span><span class="p">:</span> <span class="s2">&quot;launch&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;启动一个独立的 Chrome 以调试 frontend&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://localhost:8091/frontend&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;webRoot&quot;</span><span class="p">:</span> <span class="s2">&quot;${workspaceRoot}/frontend&quot;</span>
-        <span class="p">}</span>
-    <span class="p">]</span>
-<span class="p">}</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+    </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.2.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"configurations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"chrome"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"request"</span><span class="p">:</span><span class="w"> </span><span class="s2">"launch"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"启动一个独立的 Chrome 以调试 frontend"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:8091/frontend"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"webRoot"</span><span class="p">:</span><span class="w"> </span><span class="s2">"${workspaceRoot}/frontend"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
 
 <p>如之前所述，通过第一个 launch 配置就能启动一个通过 vscode 调试的 Chrome。大家可以直接使用我组织好的项目 <a href="https://github.com/zry656565/vscode-debug-sample">zry656565/vscode-debug-sample</a> 进行测试，测试方法在该项目的 README 里面写得很清楚了。简要步骤概括为：</p>
 
 <ol>
-  <li><code>npm run frontend</code></li>
+  <li><code class="language-plaintext highlighter-rouge">npm run frontend</code></li>
   <li>启动调试配置：“启动一个独立的 Chrome 以调试 frontend”</li>
-  <li>在 <code>frontend/index.js</code> 中加断点</li>
-  <li>访问 <code>http://localhost:8091/frontend/</code></li>
+  <li>在 <code class="language-plaintext highlighter-rouge">frontend/index.js</code> 中加断点</li>
+  <li>访问 <code class="language-plaintext highlighter-rouge">http://localhost:8091/frontend/</code></li>
 </ol>
 
 <h3 id="延伸问题">延伸问题</h3>
 
-<p>使用 <code>launch</code> 模式调试前端代码存在一个问题，就是 vscode 会以新访客的身份打开一个新的 Chrome 进程，也就是说你<strong>之前在 Chrome 上装的插件都没法在这个页面上生效</strong>（如下图所示）。</p>
+<p>使用 <code class="language-plaintext highlighter-rouge">launch</code> 模式调试前端代码存在一个问题，就是 vscode 会以新访客的身份打开一个新的 Chrome 进程，也就是说你<strong>之前在 Chrome 上装的插件都没法在这个页面上生效</strong>（如下图所示）。</p>
 
 <p><img src="https://sinacloud.net/heaven-blog-files/images/posts/vscode-debug-launch.png" alt="vscode-debug-launch" /></p>
 
-<p>在这种情况下 <code>attach</code> 模式就有它存在的意义了：对一个已经启动的 Chrome 进行监听调试。</p>
+<p>在这种情况下 <code class="language-plaintext highlighter-rouge">attach</code> 模式就有它存在的意义了：对一个已经启动的 Chrome 进行监听调试。</p>
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span></span><span class="p">{</span>
-    <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.2.0&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;configurations&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;chrome&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;request&quot;</span><span class="p">:</span> <span class="s2">&quot;attach&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;监听一个已经启动调试模式的 Chrome&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="mi">9222</span><span class="p">,</span>
-            <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://localhost:8091/frontend&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;webRoot&quot;</span><span class="p">:</span> <span class="s2">&quot;${workspaceRoot}/frontend&quot;</span>
-        <span class="p">}</span>
-    <span class="p">]</span>
-<span class="p">}</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+    </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.2.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"configurations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"chrome"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"request"</span><span class="p">:</span><span class="w"> </span><span class="s2">"attach"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"监听一个已经启动调试模式的 Chrome"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">9222</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:8091/frontend"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"webRoot"</span><span class="p">:</span><span class="w"> </span><span class="s2">"${workspaceRoot}/frontend"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
 
 <p>其中 9222 是 Chrome 的调试模式推荐的端口，可以根据需要进行修改。不过目前我并没有成功实施这个设想，对此有兴趣的同学可以从下面这两个链接入手去研究一下：</p>
 <ul>
@@ -224,27 +224,27 @@
 
 <p>如今，使用 Node 服务器开发一些中间层的服务也慢慢纳入了所谓“大前端”的范畴。而在开发 Node 服务时，我们通常要借助类似于 <a href="https://github.com/remy/nodemon">nodemon</a> 这样的工具来避免频繁手动重启服务器。在这种情况下，我们又如何利用 vscode 来进行断点调试呢？先来看看示例配置文件：</p>
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span></span><span class="p">{</span>
-    <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.2.0&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;configurations&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;request&quot;</span><span class="p">:</span> <span class="s2">&quot;attach&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;附加于已启动的 Node 服务器（debug模式）&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="mi">5858</span><span class="p">,</span>
-            <span class="nt">&quot;restart&quot;</span><span class="p">:</span> <span class="kc">true</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;request&quot;</span><span class="p">:</span> <span class="s2">&quot;attach&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;附加于已启动的 Node 服务器（inspect模式）&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="mi">9229</span><span class="p">,</span>
-            <span class="nt">&quot;restart&quot;</span><span class="p">:</span> <span class="kc">true</span>
-        <span class="p">}</span>
-    <span class="p">]</span>
-<span class="p">}</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+    </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.2.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"configurations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"node"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"request"</span><span class="p">:</span><span class="w"> </span><span class="s2">"attach"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"附加于已启动的 Node 服务器（debug模式）"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">5858</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"restart"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"node"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"request"</span><span class="p">:</span><span class="w"> </span><span class="s2">"attach"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"附加于已启动的 Node 服务器（inspect模式）"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">9229</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"restart"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
 
-<p>首先，为了配合 nodemon 在监听到文件修改时重启服务器，此处需要添加一个 <code>restart</code> 参数。同时大家可能注意到了，这里给出了两种模式，大家可能根据以下区别来选择合适自己的协议：</p>
+<p>首先，为了配合 nodemon 在监听到文件修改时重启服务器，此处需要添加一个 <code class="language-plaintext highlighter-rouge">restart</code> 参数。同时大家可能注意到了，这里给出了两种模式，大家可能根据以下区别来选择合适自己的协议：</p>
 
 <table>
   <thead>
@@ -278,12 +278,12 @@
   </tbody>
 </table>
 
-<p>通俗来说，旧版 Node (&lt; 6.3) 推荐使用 Legacy Protocol (<code>--debug</code>模式，默认 5858 端口)，而新版的 Node (&gt;= 6.3) 推荐使用 Inspector Protocol (<code>--inspect</code>模式，默认 9229 端口)。</p>
+<p>通俗来说，旧版 Node (&lt; 6.3) 推荐使用 Legacy Protocol (<code class="language-plaintext highlighter-rouge">--debug</code>模式，默认 5858 端口)，而新版的 Node (&gt;= 6.3) 推荐使用 Inspector Protocol (<code class="language-plaintext highlighter-rouge">--inspect</code>模式，默认 9229 端口)。</p>
 
 <p>需要注意的是，在启动 nodemon 程序时，也要添加对应的参数，比如：</p>
 
-<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span></span><span class="go">nodemon --debug server/app.js</span>
-<span class="go">nodemon --inspect server/app.js</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">nodemon --debug server/app.js
+nodemon --inspect server/app.js</span></code></pre></figure>
 
 <p>详细的例子同样可以在 <a href="https://github.com/zry656565/vscode-debug-sample">zry656565/vscode-debug-sample</a> 中找到。</p>
 

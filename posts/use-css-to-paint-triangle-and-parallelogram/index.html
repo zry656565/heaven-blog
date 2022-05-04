@@ -123,111 +123,111 @@
 
 <p>你在首页的底部也可以看到这样一个分页栏；是不是看上去还不错？下面就来看看这是如何实现的吧~</p>
 
-<h2 id="第一种方法利用border">第一种方法：利用<code>border</code></h2>
+<h2 id="第一种方法利用border">第一种方法：利用<code class="language-plaintext highlighter-rouge">border</code></h2>
 
-<p>第一种方法是借助<code>border</code>属性 hack 出三角形，然后通过一个矩形拼接两个三角形最终制造出一个平行四边形。为什么使用<code>border</code>可以产生三角形呢？先来看看一张图片：</p>
+<p>第一种方法是借助<code class="language-plaintext highlighter-rouge">border</code>属性 hack 出三角形，然后通过一个矩形拼接两个三角形最终制造出一个平行四边形。为什么使用<code class="language-plaintext highlighter-rouge">border</code>可以产生三角形呢？先来看看一张图片：</p>
 
 <p><img src="https://sinacloud.net/heaven-blog-files/images/posts/triangle.png!0.5" alt="CSS triangle" /></p>
 
 <p>看了图中的三个小图形的变化过程，你应该已经清楚了一半。其实 hack 出三角形只需要两个条件，第一，元素本身的长宽为0；其次，将不需要的部分通过 border-color 来设置隐藏。通过类似的方法，你还可以创造出梯形，上图中的三个图形的代码如下。（另附 <a href="https://codepen.io/jerryzou/pen/mJYJym">CodePen 示例</a>）</p>
 
-<figure class="highlight"><pre><code class="language-css" data-lang="css"><span></span><span class="p">#</span><span class="nn">first</span> <span class="p">{</span>
-  <span class="k">width</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
-  <span class="k">height</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
-  <span class="k">border-width</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
-  <span class="k">border-style</span><span class="p">:</span> <span class="kc">solid</span><span class="p">;</span>
-  <span class="k">border-color</span><span class="p">:</span> <span class="kc">red</span> <span class="kc">green</span> <span class="kc">blue</span> <span class="kc">brown</span><span class="p">;</span>
+<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nf">#first</span> <span class="p">{</span>
+  <span class="nl">width</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+  <span class="nl">height</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+  <span class="nl">border-width</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+  <span class="nl">border-style</span><span class="p">:</span> <span class="nb">solid</span><span class="p">;</span>
+  <span class="nl">border-color</span><span class="p">:</span> <span class="no">red</span> <span class="no">green</span> <span class="no">blue</span> <span class="no">brown</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="p">#</span><span class="nn">second</span> <span class="p">{</span>
-  <span class="k">width</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="k">height</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="k">border-width</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
-  <span class="k">border-style</span><span class="p">:</span> <span class="kc">solid</span><span class="p">;</span>
-  <span class="k">border-color</span><span class="p">:</span> <span class="kc">red</span> <span class="kc">green</span> <span class="kc">blue</span> <span class="kc">brown</span><span class="p">;</span>
+<span class="nf">#second</span> <span class="p">{</span>
+  <span class="nl">width</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">height</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">border-width</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+  <span class="nl">border-style</span><span class="p">:</span> <span class="nb">solid</span><span class="p">;</span>
+  <span class="nl">border-color</span><span class="p">:</span> <span class="no">red</span> <span class="no">green</span> <span class="no">blue</span> <span class="no">brown</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="p">#</span><span class="nn">third</span> <span class="p">{</span>
-  <span class="k">width</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="k">height</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="k">border-width</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
-  <span class="k">border-style</span><span class="p">:</span> <span class="kc">solid</span><span class="p">;</span>
-  <span class="k">border-color</span><span class="p">:</span> <span class="kc">red</span> <span class="kc">transparent</span> <span class="kc">transparent</span> <span class="kc">transparent</span><span class="p">;</span>
+<span class="nf">#third</span> <span class="p">{</span>
+  <span class="nl">width</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">height</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">border-width</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+  <span class="nl">border-style</span><span class="p">:</span> <span class="nb">solid</span><span class="p">;</span>
+  <span class="nl">border-color</span><span class="p">:</span> <span class="no">red</span> <span class="nb">transparent</span> <span class="nb">transparent</span> <span class="nb">transparent</span><span class="p">;</span>
 <span class="p">}</span></code></pre></figure>
 
-<p>接下来就要考虑如何拼接出一个平行四边形了。在<code>border</code>法中，它由三部分组成，分别是左三角形、矩形、右三角形。如果每次绘制平行四边形都要创建三个元素显然过于麻烦了，所以在这里<code>:before</code>和<code>:after</code>伪元素是个不错的选择。下面我们实现一下这样的效果：</p>
+<p>接下来就要考虑如何拼接出一个平行四边形了。在<code class="language-plaintext highlighter-rouge">border</code>法中，它由三部分组成，分别是左三角形、矩形、右三角形。如果每次绘制平行四边形都要创建三个元素显然过于麻烦了，所以在这里<code class="language-plaintext highlighter-rouge">:before</code>和<code class="language-plaintext highlighter-rouge">:after</code>伪元素是个不错的选择。下面我们实现一下这样的效果：</p>
 
 <p><img src="https://sinacloud.net/heaven-blog-files/images/posts/parallelogram.png!0.5" alt="three parallelogram" /></p>
 
 <p>为了将三角形与矩形无缝拼接到一起，多处属性要保持一致，所以使用类似 Less, Sass, Stylus 等 CSS 预处理器来写这段代码会更容易维护，下面给出 Scss 版本的代码。（另附 <a href="https://codepen.io/jerryzou/pen/ZGNGWZ?editors=110">CodePen 链接</a>）</p>
 
-<figure class="highlight"><pre><code class="language-scss" data-lang="scss"><span></span><span class="c1">//三角形的宽高</span>
-<span class="nv">$height</span><span class="o">:</span> <span class="mi">24</span><span class="kt">px</span><span class="p">;</span>
-<span class="nv">$width</span><span class="o">:</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+<figure class="highlight"><pre><code class="language-scss" data-lang="scss"><span class="c1">//三角形的宽高</span>
+<span class="nv">$height</span><span class="p">:</span> <span class="m">24px</span><span class="p">;</span>
+<span class="nv">$width</span><span class="p">:</span> <span class="m">12px</span><span class="p">;</span>
 
 <span class="c1">//对平行四边形三部分的颜色进行赋值</span>
-<span class="k">@mixin</span><span class="nf"> parallelogram-color</span><span class="p">(</span><span class="nv">$color</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nt">background</span><span class="nd">:</span> <span class="err">$</span><span class="nt">color</span><span class="o">;</span>
-  <span class="k">&amp;</span><span class="nd">:before</span> <span class="p">{</span> <span class="nt">border-color</span><span class="nd">:</span> <span class="nt">transparent</span> <span class="err">$</span><span class="nt">color</span> <span class="err">$</span><span class="nt">color</span> <span class="nt">transparent</span><span class="o">;</span> <span class="p">}</span>
-  <span class="k">&amp;</span><span class="nd">:after</span> <span class="p">{</span> <span class="nt">border-color</span><span class="nd">:</span> <span class="err">$</span><span class="nt">color</span> <span class="nt">transparent</span> <span class="nt">transparent</span> <span class="err">$</span><span class="nt">color</span><span class="o">;</span> <span class="p">}</span>
+<span class="k">@mixin</span> <span class="nf">parallelogram-color</span><span class="p">(</span><span class="nv">$color</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nl">background</span><span class="p">:</span> <span class="nv">$color</span><span class="p">;</span>
+  <span class="k">&amp;</span><span class="nd">:before</span> <span class="p">{</span> <span class="nl">border-color</span><span class="p">:</span> <span class="nb">transparent</span> <span class="nv">$color</span> <span class="nv">$color</span> <span class="nb">transparent</span><span class="p">;</span> <span class="p">}</span>
+  <span class="k">&amp;</span><span class="nd">:after</span> <span class="p">{</span> <span class="nl">border-color</span><span class="p">:</span> <span class="nv">$color</span> <span class="nb">transparent</span> <span class="nb">transparent</span> <span class="nv">$color</span><span class="p">;</span> <span class="p">}</span>
 <span class="p">}</span>
 
 <span class="c1">//单个三角形的样式</span>
-<span class="k">@mixin</span><span class="nf"> triangle</span><span class="p">()</span> <span class="p">{</span>
-  <span class="nt">content</span><span class="nd">:</span> <span class="s1">&#39;</span><span class="s2">&#39;</span><span class="o">;</span>
-  <span class="nt">display</span><span class="nd">:</span> <span class="nt">block</span><span class="o">;</span>
-  <span class="nt">width</span><span class="nd">:</span> <span class="nt">0</span><span class="o">;</span>
-  <span class="nt">height</span><span class="nd">:</span> <span class="nt">0</span><span class="o">;</span>
-  <span class="nt">position</span><span class="nd">:</span> <span class="nt">absolute</span><span class="o">;</span>
-  <span class="nt">border-style</span><span class="nd">:</span> <span class="nt">solid</span><span class="o">;</span>
-  <span class="nt">border-width</span><span class="nd">:</span> <span class="err">$</span><span class="nt">height</span><span class="o">/</span><span class="nt">2</span> <span class="err">$</span><span class="nt">width</span><span class="o">/</span><span class="nt">2</span><span class="o">;</span>
-  <span class="nt">top</span><span class="nd">:</span> <span class="nt">0</span><span class="o">;</span>
+<span class="k">@mixin</span> <span class="nf">triangle</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nl">content</span><span class="p">:</span> <span class="s1">''</span><span class="p">;</span>
+  <span class="nl">display</span><span class="p">:</span> <span class="nb">block</span><span class="p">;</span>
+  <span class="nl">width</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">height</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+  <span class="nl">border-style</span><span class="p">:</span> <span class="nb">solid</span><span class="p">;</span>
+  <span class="nl">border-width</span><span class="p">:</span> <span class="nv">$height</span><span class="o">/</span><span class="m">2</span> <span class="nv">$width</span><span class="o">/</span><span class="m">2</span><span class="p">;</span>
+  <span class="nl">top</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="c1">//平行四边形的样式</span>
 <span class="nc">.para</span> <span class="p">{</span>
-  <span class="nt">display</span><span class="nd">:</span> <span class="nt">inline-block</span><span class="o">;</span>
-  <span class="nt">position</span><span class="nd">:</span> <span class="nt">relative</span><span class="o">;</span>
-  <span class="nt">padding</span><span class="nd">:</span> <span class="nt">0</span> <span class="nt">10px</span><span class="o">;</span>
-  <span class="nt">height</span><span class="nd">:</span> <span class="err">$</span><span class="nt">height</span><span class="o">;</span>
-  <span class="nt">line-height</span><span class="nd">:</span> <span class="err">$</span><span class="nt">height</span><span class="o">;</span>
-  <span class="nt">margin-left</span><span class="nd">:</span> <span class="err">$</span><span class="nt">width</span><span class="o">;</span>
-  <span class="nt">color</span><span class="nd">:</span> <span class="nn">#fff</span><span class="o">;</span>
+  <span class="nl">display</span><span class="p">:</span> <span class="n">inline-block</span><span class="p">;</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">relative</span><span class="p">;</span>
+  <span class="nl">padding</span><span class="p">:</span> <span class="m">0</span> <span class="m">10px</span><span class="p">;</span>
+  <span class="nl">height</span><span class="p">:</span> <span class="nv">$height</span><span class="p">;</span>
+  <span class="nl">line-height</span><span class="p">:</span> <span class="nv">$height</span><span class="p">;</span>
+  <span class="nl">margin-left</span><span class="p">:</span> <span class="nv">$width</span><span class="p">;</span>
+  <span class="nl">color</span><span class="p">:</span> <span class="mh">#fff</span><span class="p">;</span>
 
   <span class="k">&amp;</span><span class="nd">:after</span> <span class="p">{</span>
-    <span class="k">@include</span><span class="nd"> triangle</span><span class="p">();</span>
-    <span class="nt">right</span><span class="nd">:</span> <span class="nt">-</span><span class="err">$</span><span class="nt">width</span><span class="o">;</span>
+    <span class="k">@include</span> <span class="nd">triangle</span><span class="p">();</span>
+    <span class="nl">right</span><span class="p">:</span> <span class="o">-</span><span class="nv">$width</span><span class="p">;</span>
   <span class="p">}</span>
 
   <span class="k">&amp;</span><span class="nd">:before</span> <span class="p">{</span>
-    <span class="k">@include</span><span class="nd"> triangle</span><span class="p">();</span>
-    <span class="nt">left</span><span class="nd">:</span> <span class="nt">-</span><span class="err">$</span><span class="nt">width</span><span class="o">;</span>
+    <span class="k">@include</span> <span class="nd">triangle</span><span class="p">();</span>
+    <span class="nl">left</span><span class="p">:</span> <span class="o">-</span><span class="nv">$width</span><span class="p">;</span>
   <span class="p">}</span>
 
-  <span class="k">@include</span><span class="nd"> parallelogram-color</span><span class="p">(</span><span class="ni">red</span><span class="p">);</span>
+  <span class="k">@include</span> <span class="nd">parallelogram-color</span><span class="p">(</span><span class="no">red</span><span class="p">);</span>
 <span class="p">}</span></code></pre></figure>
 
-<p>需要注意的是，如果通过 <code>$height</code>、<code>$width</code> 设置的三角形斜率太小或太大都有可能造成渲染出锯齿，所以使用起来要多多测试一下不同的宽高所得到的视觉效果如何。</p>
+<p>需要注意的是，如果通过 <code class="language-plaintext highlighter-rouge">$height</code>、<code class="language-plaintext highlighter-rouge">$width</code> 设置的三角形斜率太小或太大都有可能造成渲染出锯齿，所以使用起来要多多测试一下不同的宽高所得到的视觉效果如何。</p>
 
-<h2 id="第二种方法利用transform">第二种方法：利用<code>transform</code></h2>
+<h2 id="第二种方法利用transform">第二种方法：利用<code class="language-plaintext highlighter-rouge">transform</code></h2>
 
-<p>使用<code>transform</code>来实现平行四边形的方法是我在逛<a href="https://www.alitrip.com/">去啊</a>的时候看到的，效果大概是这个样子：</p>
+<p>使用<code class="language-plaintext highlighter-rouge">transform</code>来实现平行四边形的方法是我在逛<a href="https://www.alitrip.com/">去啊</a>的时候看到的，效果大概是这个样子：</p>
 
 <p><img src="https://sinacloud.net/heaven-blog-files/images/posts/qua_parallelogram.png!0.5" alt="去啊中的平行四边形" /></p>
 
-<p>看到之后觉得好神奇啊，原来还可以只有平行四边形的外轮廓。（因为方法一只能创造填充效果的平行四边形）实现起来非常简单，主要是借助了<code>transform: skew(...)</code>，下面就来看看源码吧。</p>
+<p>看到之后觉得好神奇啊，原来还可以只有平行四边形的外轮廓。（因为方法一只能创造填充效果的平行四边形）实现起来非常简单，主要是借助了<code class="language-plaintext highlighter-rouge">transform: skew(...)</code>，下面就来看看源码吧。</p>
 
-<figure class="highlight"><pre><code class="language-html" data-lang="html"><span></span><span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="p">.</span><span class="nc">city</span> <span class="p">{</span>
-  <span class="k">display</span><span class="p">:</span> <span class="kc">inline-block</span><span class="p">;</span>
-  <span class="k">padding</span><span class="p">:</span> <span class="mi">5</span><span class="kt">px</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
-  <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="mh">#44a5fc</span><span class="p">;</span>
-  <span class="k">color</span><span class="p">:</span> <span class="mh">#333</span><span class="p">;</span>
-  <span class="k">transform</span><span class="p">:</span> <span class="nf">skew</span><span class="p">(</span><span class="mi">-20</span><span class="kt">deg</span><span class="p">);</span>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;style&gt;</span>
+<span class="nc">.city</span> <span class="p">{</span>
+  <span class="nl">display</span><span class="p">:</span> <span class="n">inline-block</span><span class="p">;</span>
+  <span class="nl">padding</span><span class="p">:</span> <span class="m">5px</span> <span class="m">20px</span><span class="p">;</span>
+  <span class="nl">border</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">solid</span> <span class="m">#44a5fc</span><span class="p">;</span>
+  <span class="nl">color</span><span class="p">:</span> <span class="m">#333</span><span class="p">;</span>
+  <span class="nl">transform</span><span class="p">:</span> <span class="n">skew</span><span class="p">(</span><span class="m">-20deg</span><span class="p">);</span>
 <span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="nt">&lt;/style&gt;</span>
 
-<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;city&quot;</span><span class="p">&gt;</span>上海<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span></code></pre></figure>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"city"</span><span class="nt">&gt;</span>上海<span class="nt">&lt;/div&gt;</span></code></pre></figure>
 
 <p>于是我们得到了这样的效果：</p>
 
@@ -243,27 +243,27 @@
 
 <p>实现代码如下，另附 <a href="https://codepen.io/jerryzou/pen/BNeNwV?editors=110">CodePen 示例</a></p>
 
-<figure class="highlight"><pre><code class="language-html" data-lang="html"><span></span><span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="p">.</span><span class="nc">city</span> <span class="p">{</span>
-  <span class="k">display</span><span class="p">:</span> <span class="kc">inline-block</span><span class="p">;</span>
-  <span class="k">padding</span><span class="p">:</span> <span class="mi">5</span><span class="kt">px</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
-  <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="mh">#44a5fc</span><span class="p">;</span>
-  <span class="k">color</span><span class="p">:</span> <span class="mh">#333</span><span class="p">;</span>
-  <span class="k">transform</span><span class="p">:</span> <span class="nf">skew</span><span class="p">(</span><span class="mi">-20</span><span class="kt">deg</span><span class="p">);</span>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;style&gt;</span>
+<span class="nc">.city</span> <span class="p">{</span>
+  <span class="nl">display</span><span class="p">:</span> <span class="n">inline-block</span><span class="p">;</span>
+  <span class="nl">padding</span><span class="p">:</span> <span class="m">5px</span> <span class="m">20px</span><span class="p">;</span>
+  <span class="nl">border</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">solid</span> <span class="m">#44a5fc</span><span class="p">;</span>
+  <span class="nl">color</span><span class="p">:</span> <span class="m">#333</span><span class="p">;</span>
+  <span class="nl">transform</span><span class="p">:</span> <span class="n">skew</span><span class="p">(</span><span class="m">-20deg</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="p">.</span><span class="nc">city</span> <span class="nt">div</span> <span class="p">{</span>
-  <span class="k">transform</span><span class="p">:</span> <span class="nf">skew</span><span class="p">(</span><span class="mi">20</span><span class="kt">deg</span><span class="p">);</span>
+<span class="nc">.city</span> <span class="nt">div</span> <span class="p">{</span>
+  <span class="nl">transform</span><span class="p">:</span> <span class="n">skew</span><span class="p">(</span><span class="m">20deg</span><span class="p">);</span>
 <span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="nt">&lt;/style&gt;</span>
 
-<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;city&quot;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>上海<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span></code></pre></figure>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"city"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;div&gt;</span>上海<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span></code></pre></figure>
 
 <h2 id="总结">总结</h2>
 
-<p>第一种方法使用 <code>border</code> 属性 hack 出三角形，并通过对三个元素进行拼接最终实现了平行四边形；而第二种方法则通过 <code>transform: skew</code> 来得到平行四边形。总体来说，第二种方法相对于第一种代码量小得多，而且也很好理解。唯一的不足是无法构造像本站的分页中所使用的梯形。希望本文对各位有所帮助。</p>
+<p>第一种方法使用 <code class="language-plaintext highlighter-rouge">border</code> 属性 hack 出三角形，并通过对三个元素进行拼接最终实现了平行四边形；而第二种方法则通过 <code class="language-plaintext highlighter-rouge">transform: skew</code> 来得到平行四边形。总体来说，第二种方法相对于第一种代码量小得多，而且也很好理解。唯一的不足是无法构造像本站的分页中所使用的梯形。希望本文对各位有所帮助。</p>
 
 <h3 id="update">UPDATE</h3>
 

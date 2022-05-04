@@ -131,7 +131,7 @@
 (-1)<sup>sign</sup> × mantissa × 2<sup>exponent</sup>
 </pre>
 
-<p>而为了将尾数规格化，并做到尽量提高精确度，就需要把尾数精确在 <code>[1,2)</code> 的区间内，这样便可省去前导的1。比如：</p>
+<p>而为了将尾数规格化，并做到尽量提高精确度，就需要把尾数精确在 <code class="language-plaintext highlighter-rouge">[1,2)</code> 的区间内，这样便可省去前导的1。比如：</p>
 
 <pre class="formula">
 11.101 × 2<sup>3</sup> = 1.1101 × 2<sup>4</sup>
@@ -146,16 +146,16 @@
 
 <p>举一些例子，应该能帮助你理解这个公式：</p>
 
-<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span></span><span class="go">3ff0 0000 0000 0000  =  1</span>
-<span class="go">c000 0000 0000 0000  =  -2</span>
-<span class="go">3fd5 5555 5555 5555  ~  1/3</span>
-<span class="go">0000 0000 0000 0000  =  0</span>
-<span class="go">8000 0000 0000 0000  =  -0</span>
-<span class="go">7ff0 0000 0000 0000  =  无穷大 ( 1/0 )</span>
-<span class="go">fff0 0000 0000 0000  =  负无穷大 ( 1/-0 )</span>
-<span class="go">7fef ffff ffff ffff  ~  1.7976931348623157 x 10^308 (= Number.MAX_VALUE)</span>
-<span class="go">433f ffff ffff ffff  =  2^53 - 1 (= Number.MAX_SAFE_INTEGER)</span>
-<span class="go">c33f ffff ffff ffff  =  -2^53 + 1 (= Number.MIN_SAFE_INTEGER)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">3ff0 0000 0000 0000  =  1
+c000 0000 0000 0000  =  -2
+3fd5 5555 5555 5555  ~  1/3
+0000 0000 0000 0000  =  0
+8000 0000 0000 0000  =  -0
+7ff0 0000 0000 0000  =  无穷大 ( 1/0 )
+fff0 0000 0000 0000  =  负无穷大 ( 1/-0 )
+7fef ffff ffff ffff  ~  1.7976931348623157 x 10^308 (= Number.MAX_VALUE)
+433f ffff ffff ffff  =  2^53 - 1 (= Number.MAX_SAFE_INTEGER)
+c33f ffff ffff ffff  =  -2^53 + 1 (= Number.MIN_SAFE_INTEGER)</span></code></pre></figure>
 
 <p>得益于尾数省略的一位“1”，使用双精度浮点数来表示的最大安全整数为 -2<sup>53</sup>+1 到 2<sup>53</sup>-1 之间，所以如果你仅仅使用 JavaScript 中的数字类型进行一些整数运算，那么你也可以近似地将这一数字类型理解为 <strong>53</strong> 位整型。</p>
 
@@ -163,11 +163,11 @@
 
 <p>熟悉 C 或者 C++ 的同学一定对位操作符不陌生。位操作符最主要的应用大概就是作为标志位与掩码。这是一种节省存储空间的高明手段，在曾经内存的大小以 KB 为单位计算时，每多一个变量就是一份额外的开销。而使用位操作符的掩码则在很大程度上缓解了这个问题：</p>
 
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span></span><span class="cp">#define LOG_ERRORS            1  </span><span class="c1">// 0001</span>
-<span class="cp">#define LOG_WARNINGS          2  </span><span class="c1">// 0010</span>
-<span class="cp">#define LOG_NOTICES           4  </span><span class="c1">// 0100</span>
-<span class="cp">#define LOG_INCOMING          8  </span><span class="c1">// 1000</span>
-
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#define LOG_ERRORS            1  // 0001
+#define LOG_WARNINGS          2  // 0010
+#define LOG_NOTICES           4  // 0100
+#define LOG_INCOMING          8  // 1000
+</span>
 <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">flags</span><span class="p">;</span>
 
 <span class="n">flags</span> <span class="o">=</span> <span class="n">LOG_ERRORS</span><span class="p">;</span>                                 <span class="c1">// 0001</span>
@@ -177,15 +177,15 @@
 
 <p>可惜位操作符在 JavaScript 中的表现就比较诡异了，因为 JavaScript 没有真正意义上的整型。看看如下代码的运行结果吧：</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kd">var</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">;</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">;</span>
 
 <span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span><span class="nx">e9</span><span class="p">;</span>   <span class="c1">// 2000000000</span>
 <span class="nx">a</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">;</span>    <span class="c1">// -294967296</span>
 
 <span class="c1">// fxck！我只想装了个逼用左移1位给 a * 2，但是结果是什么鬼！！！</span>
 
-<span class="nx">a</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="s1">&#39;100000000&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">);</span> <span class="c1">// 4294967296</span>
-<span class="nx">b</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="s1">&#39;1111&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>       <span class="c1">// 15</span>
+<span class="nx">a</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="dl">'</span><span class="s1">100000000</span><span class="dl">'</span><span class="p">,</span> <span class="mi">16</span><span class="p">);</span> <span class="c1">// 4294967296</span>
+<span class="nx">b</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="dl">'</span><span class="s1">1111</span><span class="dl">'</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>       <span class="c1">// 15</span>
 <span class="nx">a</span> <span class="o">|</span> <span class="nx">b</span><span class="p">;</span>                         <span class="c1">// 15</span>
 
 <span class="c1">// 啊啊啊，为毛我的 a 丝毫不起作用，JavaScript真是门吊诡的语言！！！</span></code></pre></figure>

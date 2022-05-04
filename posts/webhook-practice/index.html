@@ -149,47 +149,47 @@
 
 <p>为了响应 Webhook 所发出的请求，从而做一些我们想做的事情，我们得先实现一个响应服务器。本文采用 Node 来实现一个原型，你当然也可以用 PHP，python 等，全凭个人喜好啦。代码很短，就直接陈列在下方了：</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">)</span>
-  <span class="p">,</span> <span class="nx">exec</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;exec&#39;</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">http</span><span class="dl">'</span><span class="p">)</span>
+  <span class="p">,</span> <span class="nx">exec</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">exec</span><span class="dl">'</span><span class="p">)</span>
 
-<span class="kr">const</span> <span class="nx">PORT</span> <span class="o">=</span> <span class="mi">9988</span>
-  <span class="p">,</span> <span class="nx">PATH</span> <span class="o">=</span> <span class="s1">&#39;../html&#39;</span>
+<span class="kd">const</span> <span class="nx">PORT</span> <span class="o">=</span> <span class="mi">9988</span>
+  <span class="p">,</span> <span class="nx">PATH</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">../html</span><span class="dl">'</span>
 
 <span class="kd">var</span> <span class="nx">deployServer</span> <span class="o">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="sr">/deploy\/?$/i</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="sr">/deploy</span><span class="se">\/?</span><span class="sr">$/i</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
 
     <span class="kd">var</span> <span class="nx">commands</span> <span class="o">=</span> <span class="p">[</span>
-      <span class="s1">&#39;cd &#39;</span> <span class="o">+</span> <span class="nx">PATH</span><span class="p">,</span>
-      <span class="s1">&#39;git pull&#39;</span>
-    <span class="p">].</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39; &amp;&amp; &#39;</span><span class="p">)</span>
+      <span class="dl">'</span><span class="s1">cd </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">PATH</span><span class="p">,</span>
+      <span class="dl">'</span><span class="s1">git pull</span><span class="dl">'</span>
+    <span class="p">].</span><span class="nx">join</span><span class="p">(</span><span class="dl">'</span><span class="s1"> &amp;&amp; </span><span class="dl">'</span><span class="p">)</span>
 
     <span class="nx">exec</span><span class="p">(</span><span class="nx">commands</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">out</span><span class="p">,</span> <span class="nx">code</span><span class="p">)</span> <span class="p">{</span>
       <span class="k">if</span> <span class="p">(</span><span class="nx">err</span> <span class="k">instanceof</span> <span class="nb">Error</span><span class="p">)</span> <span class="p">{</span>
         <span class="nx">response</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
-        <span class="nx">response</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">&#39;Server Internal Error.&#39;</span><span class="p">)</span>
+        <span class="nx">response</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="dl">'</span><span class="s1">Server Internal Error.</span><span class="dl">'</span><span class="p">)</span>
         <span class="k">throw</span> <span class="nx">err</span>
       <span class="p">}</span>
       <span class="nx">process</span><span class="p">.</span><span class="nx">stderr</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
       <span class="nx">process</span><span class="p">.</span><span class="nx">stdout</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">out</span><span class="p">)</span>
       <span class="nx">response</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
-      <span class="nx">response</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">&#39;Deploy Done.&#39;</span><span class="p">)</span>
+      <span class="nx">response</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="dl">'</span><span class="s1">Deploy Done.</span><span class="dl">'</span><span class="p">)</span>
 
     <span class="p">})</span>
 
   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
 
     <span class="nx">response</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
-    <span class="nx">response</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">&#39;Not Found.&#39;</span><span class="p">)</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="dl">'</span><span class="s1">Not Found.</span><span class="dl">'</span><span class="p">)</span>
 
   <span class="p">}</span>
 <span class="p">})</span>
 
 <span class="nx">deployServer</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">PORT</span><span class="p">)</span></code></pre></figure>
 
-<p>如果还需要实现更多，更复杂的功能，直接在 <code>commands</code> 数组中添加便是。此处我的博客根目录 <code>html</code> 与部署服务器根目录同属一个目录，所以配置常量 <code>PATH = '../html'</code>。只要启动了服务器，那么 Webhook 就可以通过类似于 <strong>http://104.236.xxx.xxx:9988/deploy/</strong> 的路径来部署我的博客备份啦。</p>
+<p>如果还需要实现更多，更复杂的功能，直接在 <code class="language-plaintext highlighter-rouge">commands</code> 数组中添加便是。此处我的博客根目录 <code class="language-plaintext highlighter-rouge">html</code> 与部署服务器根目录同属一个目录，所以配置常量 <code class="language-plaintext highlighter-rouge">PATH = '../html'</code>。只要启动了服务器，那么 Webhook 就可以通过类似于 <strong>http://104.236.xxx.xxx:9988/deploy/</strong> 的路径来部署我的博客备份啦。</p>
 
-<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span></span><span class="gp">#</span> 在后台启动部署服务器
-<span class="gp">$</span> node server.js <span class="p">&amp;</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="gp">#</span><span class="w"> </span>在后台启动部署服务器
+<span class="gp">$</span><span class="w"> </span>node server.js &amp;</code></pre></figure>
 
 <p>我以为服务器部署到这儿就完了，其实并没有，我遇到了一些麻烦。</p>
 
@@ -199,22 +199,22 @@
 
 <p>安装 forever：</p>
 
-<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span></span><span class="gp">$</span> <span class="o">[</span>sudo<span class="o">]</span> npm install -g forever</code></pre></figure>
+<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="gp">$</span><span class="w"> </span><span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> npm <span class="nb">install</span> <span class="nt">-g</span> forever</code></pre></figure>
 
 <p>运行：</p>
 
-<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span></span><span class="gp">$</span> <span class="nb">cd</span> <span class="o">{</span> 部署服务器的根目录 <span class="o">}</span>
-<span class="gp">$</span> forever start server.js</code></pre></figure>
+<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="gp">$</span><span class="w"> </span><span class="nb">cd</span> <span class="o">{</span> 部署服务器的根目录 <span class="o">}</span>
+<span class="gp">$</span><span class="w"> </span>forever start server.js</code></pre></figure>
 
 <p>我在 DigitalOcean 上的服务器安装的是 <strong>Ubuntu</strong> 系统，而 Ubuntu 中原本就有一个叫 node 的包。为了避免冲突，在 Ubuntu 上安装或使用 Node 得用 nodejs 这个名字。而 forever 默认是使用 node 作为执行脚本的程序名。所以为了处理 Ubuntu 存在的这种特殊情况，在启动 forever 时得另外添加一个参数：</p>
 
-<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span></span><span class="gp">$</span> forever start server.js -c nodejs</code></pre></figure>
+<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="gp">$</span><span class="w"> </span>forever start server.js <span class="nt">-c</span> nodejs</code></pre></figure>
 
 <h2 id="3-配置-webhook">3. 配置 Webhook</h2>
 
 <p>如果像是本文这种最简易的应用，Webhook 的配置是十分简单的。首先进入你的 repo 主页，通过点击页面上的按钮 <strong>[settings]</strong> -&gt; <strong>[Webhooks &amp; service]</strong> 进入 Webhooks 配置主页面。也可以通过下面这个链接直接进入配置页面：</p>
 
-<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span></span><span class="go">https://github.com/[ 用户名 ]/[ 仓库名称 ]/settings/hooks</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-shell-session" data-lang="shell-session"><span class="go">https://github.com/[ 用户名 ]/[ 仓库名称 ]/settings/hooks</span></code></pre></figure>
 
 <p>此处只需要配置 Webhook 所发出的 POST 请求发往何处即可，于是我们就配置我们所需要的路径： <strong>http://104.236.xxx.xxx:9988/deploy/</strong>。这个地址指向的就是那个能够响应 Webhook 所发出请求的服务器。</p>
 

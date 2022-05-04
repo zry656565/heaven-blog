@@ -143,7 +143,7 @@
 
 <p>最近在开发基于 Draft 的富文本编辑器时，需要完成一个表格编辑的功能。由于 Draft 本身的扁平化结构，要在它上面构建一套表格编辑的交互是是一件非常麻烦的事。</p>
 
-<p>在初期我并不知道如何去实现这个表格功能，所以写了好些预研性质的代码进行测试。其中，便使用了 <code>shouldComponentUpdate()</code> 来避免<strong>不必要的渲染</strong>。在不断补全各种功能的同时，表格渲染总会出现这样那样的问题。后来经过仔细检查，我发现原来我在表格组件生命周期中所实现的 <code>shouldComponentUpdate()</code>，在某些情况下把需要重新渲染的状态也给跳过了。相信很多 React 开发者也会遇到此类问题，比如来自石墨的这位兄弟便在<a href="https://zhuanlan.zhihu.com/p/29103532">文章</a>中把自己批判了一番。</p>
+<p>在初期我并不知道如何去实现这个表格功能，所以写了好些预研性质的代码进行测试。其中，便使用了 <code class="language-plaintext highlighter-rouge">shouldComponentUpdate()</code> 来避免<strong>不必要的渲染</strong>。在不断补全各种功能的同时，表格渲染总会出现这样那样的问题。后来经过仔细检查，我发现原来我在表格组件生命周期中所实现的 <code class="language-plaintext highlighter-rouge">shouldComponentUpdate()</code>，在某些情况下把需要重新渲染的状态也给跳过了。相信很多 React 开发者也会遇到此类问题，比如来自石墨的这位兄弟便在<a href="https://zhuanlan.zhihu.com/p/29103532">文章</a>中把自己批判了一番。</p>
 
 <blockquote>
   <p>我们在迁移到 React 的初期，由于团队只有少数几个人接触过这个框架，所以经历了一段时间的「阵痛」，例如对于 shouldComponentUpdate 的错误使用使得一些错误变得不易追踪调试。……</p>

@@ -121,7 +121,7 @@
   <p>本文译自Normalize.css官网: <a href="http://nicolasgallagher.com/about-normalize-css/">http://nicolasgallagher.com/about-normalize-css/</a></p>
 </blockquote>
 
-<p><a href="http://necolas.github.io/normalize.css/">Normalize.css</a> 只是一个很小的CSS文件，但它在默认的HTML元素样式上提供了跨浏览器的高度一致性。相比于传统的<code>CSS reset</code>，<code>Normalize.css</code>是一种现代的、为HTML5准备的优质替代方案。<code>Normalize.css</code>现在已经被用于<a href="http://getbootstrap.com/">Twitter Bootstrap</a>、<a href="http://html5boilerplate.com/">HTML5 Boilerplate</a>、<a href="http://www.gov.uk/">GOV.UK</a>、<a href="http://www.rdio.com/">Rdio</a>、<a href="http://css-tricks.com/">CSS Tricks</a> 以及许许多多其他框架、工具和网站上。</p>
+<p><a href="http://necolas.github.io/normalize.css/">Normalize.css</a> 只是一个很小的CSS文件，但它在默认的HTML元素样式上提供了跨浏览器的高度一致性。相比于传统的<code class="language-plaintext highlighter-rouge">CSS reset</code>，<code class="language-plaintext highlighter-rouge">Normalize.css</code>是一种现代的、为HTML5准备的优质替代方案。<code class="language-plaintext highlighter-rouge">Normalize.css</code>现在已经被用于<a href="http://getbootstrap.com/">Twitter Bootstrap</a>、<a href="http://html5boilerplate.com/">HTML5 Boilerplate</a>、<a href="http://www.gov.uk/">GOV.UK</a>、<a href="http://www.rdio.com/">Rdio</a>、<a href="http://css-tricks.com/">CSS Tricks</a> 以及许许多多其他框架、工具和网站上。</p>
 
 <ul>
   <li><a href="http://necolas.github.io/normalize.css/">Normalize.css 项目地址</a></li>
@@ -130,9 +130,9 @@
 
 <h2 id="综述">综述</h2>
 
-<p><code>Normalize.css</code>是一种<code>CSS reset</code>的替代方案。经过<a href="https://twitter.com/necolas">@necolas</a>和<a href="https://twitter.com/jon_neal">@jon_neal</a>花了几百个小时来努力研究不同浏览器的默认样式的差异，这个项目终于变成了现在这样。</p>
+<p><code class="language-plaintext highlighter-rouge">Normalize.css</code>是一种<code class="language-plaintext highlighter-rouge">CSS reset</code>的替代方案。经过<a href="https://twitter.com/necolas">@necolas</a>和<a href="https://twitter.com/jon_neal">@jon_neal</a>花了几百个小时来努力研究不同浏览器的默认样式的差异，这个项目终于变成了现在这样。</p>
 
-<p>我们创造<code>normalize.css</code>有下面这几个目的：</p>
+<p>我们创造<code class="language-plaintext highlighter-rouge">normalize.css</code>有下面这几个目的：</p>
 
 <ul>
   <li><strong>保护有用的浏览器默认样式</strong>而不是完全去掉它们</li>
@@ -142,46 +142,46 @@
   <li><strong>解释代码</strong>：用注释和详细的文档来</li>
 </ul>
 
-<p><code>Normalize.css</code>支持包括手机浏览器在内的超多浏览器，同时对HTML5元素、排版、列表、嵌入的内容、表单和表格都进行了一般化。尽管这个项目基于一般化的原则，但我们还是在合适的地方使用了更实用的默认值。</p>
+<p><code class="language-plaintext highlighter-rouge">Normalize.css</code>支持包括手机浏览器在内的超多浏览器，同时对HTML5元素、排版、列表、嵌入的内容、表单和表格都进行了一般化。尽管这个项目基于一般化的原则，但我们还是在合适的地方使用了更实用的默认值。</p>
 
 <h2 id="normalize-vs-reset">Normalize vs Reset</h2>
 
-<p>知道<code>Normalize.css</code>和传统<code>Reset</code>的区别是非常有价值的。</p>
+<p>知道<code class="language-plaintext highlighter-rouge">Normalize.css</code>和传统<code class="language-plaintext highlighter-rouge">Reset</code>的区别是非常有价值的。</p>
 
 <h5 id="1-normalizecss-保护了有价值的默认值">1. Normalize.css 保护了有价值的默认值</h5>
 
-<p><code>Reset</code>通过为几乎所有的元素施加默认样式，强行使得元素有相同的视觉效果。相比之下，<code>Normalize.css</code>保持了许多默认的浏览器样式。这就意味着你不用再为所有公共的排版元素重新设置样式。当一个元素在不同的浏览器中有不同的默认值时，<code>Normalize.css</code>会力求让这些样式保持一致并尽可能与现代标准相符合。</p>
+<p><code class="language-plaintext highlighter-rouge">Reset</code>通过为几乎所有的元素施加默认样式，强行使得元素有相同的视觉效果。相比之下，<code class="language-plaintext highlighter-rouge">Normalize.css</code>保持了许多默认的浏览器样式。这就意味着你不用再为所有公共的排版元素重新设置样式。当一个元素在不同的浏览器中有不同的默认值时，<code class="language-plaintext highlighter-rouge">Normalize.css</code>会力求让这些样式保持一致并尽可能与现代标准相符合。</p>
 
 <h5 id="2-normalizecss-修复了浏览器的bug">2. Normalize.css 修复了浏览器的bug</h5>
 
-<p>它修复了常见的桌面端和移动端浏览器的bug。这往往超出了<code>Reset</code>所能做到的范畴。关于这一点，<code>Normalize.css</code>修复的问题包含了HTML5元素的显示设置、预格式化文字的<code>font-size</code>问题、在IE9中SVG的溢出、许多出现在各浏览器和操作系统中的与表单相关的bug。</p>
+<p>它修复了常见的桌面端和移动端浏览器的bug。这往往超出了<code class="language-plaintext highlighter-rouge">Reset</code>所能做到的范畴。关于这一点，<code class="language-plaintext highlighter-rouge">Normalize.css</code>修复的问题包含了HTML5元素的显示设置、预格式化文字的<code class="language-plaintext highlighter-rouge">font-size</code>问题、在IE9中SVG的溢出、许多出现在各浏览器和操作系统中的与表单相关的bug。</p>
 
-<p>可以看以下这个例子，看看对于HTML5中新出现的<code>input</code>类型<code>search</code>，<code>Normalize.css</code>是如何保证跨浏览器的一致性的。</p>
+<p>可以看以下这个例子，看看对于HTML5中新出现的<code class="language-plaintext highlighter-rouge">input</code>类型<code class="language-plaintext highlighter-rouge">search</code>，<code class="language-plaintext highlighter-rouge">Normalize.css</code>是如何保证跨浏览器的一致性的。</p>
 
-<figure class="highlight"><pre><code class="language-css" data-lang="css"><span></span><span class="c">/**</span>
-<span class="c"> * 1. Addresses appearance set to searchfield in S5, Chrome</span>
-<span class="c"> * 2. Addresses box-sizing set to border-box in S5, Chrome (include -moz to future-proof)</span>
-<span class="c"> */</span>
+<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="c">/**
+ * 1. Addresses appearance set to searchfield in S5, Chrome
+ * 2. Addresses box-sizing set to border-box in S5, Chrome (include -moz to future-proof)
+ */</span>
 
-<span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="s2">&quot;search&quot;</span><span class="o">]</span> <span class="p">{</span>
-  <span class="kp">-webkit-</span><span class="k">appearance</span><span class="p">:</span> <span class="n">textfield</span><span class="p">;</span> <span class="c">/* 1 */</span>
-  <span class="kp">-moz-</span><span class="k">box-sizing</span><span class="p">:</span> <span class="kc">content-box</span><span class="p">;</span>
-  <span class="kp">-webkit-</span><span class="k">box-sizing</span><span class="p">:</span> <span class="kc">content-box</span><span class="p">;</span> <span class="c">/* 2 */</span>
-  <span class="k">box-sizing</span><span class="p">:</span> <span class="kc">content-box</span><span class="p">;</span>
+<span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="s1">"search"</span><span class="o">]</span> <span class="p">{</span>
+  <span class="nl">-webkit-appearance</span><span class="p">:</span> <span class="n">textfield</span><span class="p">;</span> <span class="c">/* 1 */</span>
+  <span class="nl">-moz-box-sizing</span><span class="p">:</span> <span class="n">content-box</span><span class="p">;</span>
+  <span class="nl">-webkit-box-sizing</span><span class="p">:</span> <span class="n">content-box</span><span class="p">;</span> <span class="c">/* 2 */</span>
+  <span class="nl">box-sizing</span><span class="p">:</span> <span class="n">content-box</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="c">/**</span>
-<span class="c"> * Removes inner padding and search cancel button in S5, Chrome on OS X</span>
-<span class="c"> */</span>
+<span class="c">/**
+ * Removes inner padding and search cancel button in S5, Chrome on OS X
+ */</span>
 
-<span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="s2">&quot;search&quot;</span><span class="o">]</span><span class="p">::</span><span class="nd">-webkit-search-decoration</span><span class="o">,</span>
-<span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="s2">&quot;search&quot;</span><span class="o">]</span><span class="p">::</span><span class="nd">-webkit-search-cancel-button</span> <span class="p">{</span>
-  <span class="kp">-webkit-</span><span class="k">appearance</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+<span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="s1">"search"</span><span class="o">]</span><span class="nd">::-webkit-search-decoration</span><span class="o">,</span>
+<span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="s1">"search"</span><span class="o">]</span><span class="nd">::-webkit-search-cancel-button</span> <span class="p">{</span>
+  <span class="nl">-webkit-appearance</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
 <span class="p">}</span></code></pre></figure>
 
 <h5 id="3-normalizecss-不会让你的调试工具变的杂乱">3. Normalize.css 不会让你的调试工具变的杂乱</h5>
 
-<p>使用Reset最让人困扰的地方莫过于在浏览器调试工具中大段大段的继承链，如下图所示。在<code>Normalize.css</code>中就不会有这样的问题，因为在我们的准则中对多选择器的使用时非常谨慎的，我们仅会有目的地对目标元素设置样式。</p>
+<p>使用Reset最让人困扰的地方莫过于在浏览器调试工具中大段大段的继承链，如下图所示。在<code class="language-plaintext highlighter-rouge">Normalize.css</code>中就不会有这样的问题，因为在我们的准则中对多选择器的使用时非常谨慎的，我们仅会有目的地对目标元素设置样式。</p>
 
 <p><img src="https://sinacloud.net/heaven-blog-files/images/css-reset-debugging.png" alt="A common sight in browser debugging tools when using a CSS reset" /></p>
 
@@ -200,13 +200,13 @@
 <p>首先，安装或从Github<a href="http://necolas.github.com/normalize.css/">下载Normalize.css</a>，接下来有两种主要途径去使用它。</p>
 
 <ul>
-  <li>策略一：将<code>normalize.css</code>作为你自己项目的基础CSS，自定义样式值以满足设计师的需求。</li>
-  <li>策略二：引入<code>normalize.css</code>源码并在此基础上构建，在必要的时候用你自己写的CSS覆盖默认值。</li>
+  <li>策略一：将<code class="language-plaintext highlighter-rouge">normalize.css</code>作为你自己项目的基础CSS，自定义样式值以满足设计师的需求。</li>
+  <li>策略二：引入<code class="language-plaintext highlighter-rouge">normalize.css</code>源码并在此基础上构建，在必要的时候用你自己写的CSS覆盖默认值。</li>
 </ul>
 
 <h2 id="结语">结语</h2>
 
-<p>无论从适用范畴还是实施上，<code>Normalize.css</code>与<code>Reset</code>都有极大的不同。尝试一下这两种方法并看看到底哪种更适合你的开发偏好是非常值得的。这个项目在Github上以开源的形式开发。任何人都能够提交问题报告或者提交补丁。整个项目发展的过程对所有人都是可见的，而每一次改动的原因也都写在commit信息中，这些都是有迹可循的。</p>
+<p>无论从适用范畴还是实施上，<code class="language-plaintext highlighter-rouge">Normalize.css</code>与<code class="language-plaintext highlighter-rouge">Reset</code>都有极大的不同。尝试一下这两种方法并看看到底哪种更适合你的开发偏好是非常值得的。这个项目在Github上以开源的形式开发。任何人都能够提交问题报告或者提交补丁。整个项目发展的过程对所有人都是可见的，而每一次改动的原因也都写在commit信息中，这些都是有迹可循的。</p>
 
 <h2 id="相关阅读">相关阅读</h2>
 

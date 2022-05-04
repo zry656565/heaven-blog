@@ -121,14 +121,14 @@
 
 <p>首先看看下面这行代码：</p>
 
-<figure class="highlight"><pre><code class="language-html" data-lang="html"><span></span><span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;width=device-width, user-scalabel=no&quot;</span><span class="p">&gt;</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width, user-scalabel=no"</span><span class="nt">&gt;</span></code></pre></figure>
 
-<p>有过移动端开发经验的同学是不是对上面这句代码非常熟悉？它可能最常见的响应式设计的 <code>viewport</code> 设置之一，而我今天介绍的这种方法也是利用了 meta 标签设置 <code>viewport</code> 来支持大部分的移动端屏幕分辨率。</p>
+<p>有过移动端开发经验的同学是不是对上面这句代码非常熟悉？它可能最常见的响应式设计的 <code class="language-plaintext highlighter-rouge">viewport</code> 设置之一，而我今天介绍的这种方法也是利用了 meta 标签设置 <code class="language-plaintext highlighter-rouge">viewport</code> 来支持大部分的移动端屏幕分辨率。</p>
 
 <h2 id="目标">目标</h2>
 
 <ul>
-  <li>仅仅通过配置 <code>&lt;meta name="viewport"&gt;</code> 使得移动端网站只需要按照固定的宽度设计并实现，就能在任何主流的移动设备上都能看到符合设计稿的页面，包括 Android 4+、iPhone 4+。</li>
+  <li>仅仅通过配置 <code class="language-plaintext highlighter-rouge">&lt;meta name="viewport"&gt;</code> 使得移动端网站只需要按照固定的宽度设计并实现，就能在任何主流的移动设备上都能看到符合设计稿的页面，包括 Android 4+、iPhone 4+。</li>
 </ul>
 
 <h2 id="测试设备">测试设备</h2>
@@ -141,10 +141,10 @@
 
 <h2 id="iphone">iPhone</h2>
 
-<p>iPhone 的适配比较简单，只需要设置 <code>width</code> 即可。比如：</p>
+<p>iPhone 的适配比较简单，只需要设置 <code class="language-plaintext highlighter-rouge">width</code> 即可。比如：</p>
 
-<figure class="highlight"><pre><code class="language-html" data-lang="html"><span></span><span class="c">&lt;!-- for iPhone --&gt;</span>
-<span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;width=320, user-scalable=no&quot;</span> <span class="p">/&gt;</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!-- for iPhone --&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=320, user-scalable=no"</span> <span class="nt">/&gt;</span></code></pre></figure>
 
 <p>这样你的页面在所有的 iPhone 上，无论是 宽 375 像素的 iPhone 6 还是宽 414 像素的 iPhone 6 plus，都能显示出定宽 320 像素的页面。</p>
 
@@ -154,23 +154,23 @@
 
 <h3 id="android-44">Android 4.4+</h3>
 
-<p>为了兼容性考虑，Android 4.4 以上抛弃了 <code>target-densitydpi</code> 属性，它只会在 Android 设备上生效。如果对这个被废弃的属性感兴趣，可以看看下面这两个链接：</p>
+<p>为了兼容性考虑，Android 4.4 以上抛弃了 <code class="language-plaintext highlighter-rouge">target-densitydpi</code> 属性，它只会在 Android 设备上生效。如果对这个被废弃的属性感兴趣，可以看看下面这两个链接：</p>
 
 <ul>
   <li><a href="http://stackoverflow.com/questions/11592015/support-for-target-densitydpi-is-removed-from-webkit">Support for target-densitydpi is removed from WebKit</a></li>
   <li><a href="https://bugs.webkit.org/show_bug.cgi?id=88047">Bug 88047 - Remove support for target-densitydpi in the viewport meta tag</a></li>
 </ul>
 
-<p>我们可以像在 iPhone 上那样设置 <code>width=320</code> 以达到我们想要的 320px 定宽的页面设计。</p>
+<p>我们可以像在 iPhone 上那样设置 <code class="language-plaintext highlighter-rouge">width=320</code> 以达到我们想要的 320px 定宽的页面设计。</p>
 
-<figure class="highlight"><pre><code class="language-html" data-lang="html"><span></span><span class="c">&lt;!-- for Android 4.4+ --&gt;</span>
-<span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;width=320, user-scalable=no&quot;</span> <span class="p">/&gt;</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!-- for Android 4.4+ --&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=320, user-scalable=no"</span> <span class="nt">/&gt;</span></code></pre></figure>
 
 <h3 id="android-40--43">Android 4.0 ~ 4.3</h3>
 
-<p>作为 Android 相对较老的版本，它对 meta 中的 width 属性支持得比较糟糕。以三星 Note II 为例，它的 device-width 是 360px。如果设置 viewport 中的 width (以下简称 <code>vWidth</code> ) 为小于等于 360 的值，则不会有任何作用；而设置 <code>vWidth</code> 为大于 360 的值，也不会使画面产生缩放，而是出现了横向滚动条。</p>
+<p>作为 Android 相对较老的版本，它对 meta 中的 width 属性支持得比较糟糕。以三星 Note II 为例，它的 device-width 是 360px。如果设置 viewport 中的 width (以下简称 <code class="language-plaintext highlighter-rouge">vWidth</code> ) 为小于等于 360 的值，则不会有任何作用；而设置 <code class="language-plaintext highlighter-rouge">vWidth</code> 为大于 360 的值，也不会使画面产生缩放，而是出现了横向滚动条。</p>
 
-<p>想要对 Android 4.0 ~ 4.3 进行支持，还是不得不借助于<strong>页面缩放</strong>，以及那个被废除的属性：<code>target-densitydpi</code>。</p>
+<p>想要对 Android 4.0 ~ 4.3 进行支持，还是不得不借助于<strong>页面缩放</strong>，以及那个被废除的属性：<code class="language-plaintext highlighter-rouge">target-densitydpi</code>。</p>
 
 <h3 id="target-densitydpi">target-densitydpi</h3>
 
@@ -254,56 +254,56 @@
   <li><strong>device-dpi (2.0</strong>)**：在 Android 4.0+ 的设备中，device-dpi 一般都是 2.0。</li>
 </ul>
 
-<p>首先可以看到 <strong>320px</strong> 是个特别诡异的临界值，低于这个临界值后就会发生超出我们预期的事情。综合考虑下来，还是采用 <code>target-densitydpi = device-dpi</code> 这一取值。如果你想要以 320px 作为页面的宽度的话，我建议你针对安卓 4.4 以下的版本设置 <code>width=321</code>。</p>
+<p>首先可以看到 <strong>320px</strong> 是个特别诡异的临界值，低于这个临界值后就会发生超出我们预期的事情。综合考虑下来，还是采用 <code class="language-plaintext highlighter-rouge">target-densitydpi = device-dpi</code> 这一取值。如果你想要以 320px 作为页面的宽度的话，我建议你针对安卓 4.4 以下的版本设置 <code class="language-plaintext highlighter-rouge">width=321</code>。</p>
 
-<p>如果 body 的宽度超过屏幕可视范围的宽度，就会出现水平的滚动条。这并不是我们期望的结果，所以我们还要用到缩放属性 <code>initial-scale</code>。计算公式如下：</p>
+<p>如果 body 的宽度超过屏幕可视范围的宽度，就会出现水平的滚动条。这并不是我们期望的结果，所以我们还要用到缩放属性 <code class="language-plaintext highlighter-rouge">initial-scale</code>。计算公式如下：</p>
 
 <p><strong>Scale = deviceWidth / vWidth</strong></p>
 
 <p>这样的计算式不得不使用 JS 来实现，最终我们就能得到适配 <strong>Android 4.0 ~ 4.3</strong> 定宽的代码：</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kd">var</span> <span class="nx">match</span><span class="p">,</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">match</span><span class="p">,</span>
     <span class="nx">scale</span><span class="p">,</span>
     <span class="nx">TARGET_WIDTH</span> <span class="o">=</span> <span class="mi">320</span><span class="p">;</span>
 
-<span class="k">if</span> <span class="p">(</span><span class="nx">match</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">userAgent</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/Android (\d+\.\d+)/</span><span class="p">))</span> <span class="p">{</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">match</span> <span class="o">=</span> <span class="nb">navigator</span><span class="p">.</span><span class="nx">userAgent</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/Android </span><span class="se">(\d</span><span class="sr">+</span><span class="se">\.\d</span><span class="sr">+</span><span class="se">)</span><span class="sr">/</span><span class="p">))</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="nb">parseFloat</span><span class="p">(</span><span class="nx">match</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mf">4.4</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="nx">TARGET_WIDTH</span> <span class="o">==</span> <span class="mi">320</span><span class="p">)</span> <span class="nx">TARGET_WIDTH</span><span class="o">++</span><span class="p">;</span>
         <span class="kd">var</span> <span class="nx">scale</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">screen</span><span class="p">.</span><span class="nx">width</span> <span class="o">/</span> <span class="nx">TARGET_WIDTH</span><span class="p">;</span>
-        <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;meta[name=&quot;viewport&quot;]&#39;</span><span class="p">).</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">,</span> <span class="s1">&#39;width=&#39;</span> <span class="o">+</span> <span class="nx">TARGET_WIDTH</span> <span class="o">+</span> <span class="s1">&#39;, initial-scale = &#39;</span> <span class="o">+</span> <span class="nx">scale</span> <span class="o">+</span> <span class="s1">&#39;, target-densitydpi=device-dpi&#39;</span><span class="p">);</span>
+        <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">'</span><span class="s1">meta[name="viewport"]</span><span class="dl">'</span><span class="p">).</span><span class="nx">setAttribute</span><span class="p">(</span><span class="dl">'</span><span class="s1">content</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">width=</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">TARGET_WIDTH</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">, initial-scale = </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">scale</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">, target-densitydpi=device-dpi</span><span class="dl">'</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span></code></pre></figure>
 
-<p>其中，<code>TARGET_WIDTH</code> 就是你所期望的宽度，注意这段代码仅在 <strong>320-720px</strong> 之间有效哦。</p>
+<p>其中，<code class="language-plaintext highlighter-rouge">TARGET_WIDTH</code> 就是你所期望的宽度，注意这段代码仅在 <strong>320-720px</strong> 之间有效哦。</p>
 
 <h2 id="缩放中的坑">缩放中的坑</h2>
 
-<p>如果是 iPhone 或者 Android 4.4+ 的机器，在使用 scale 相关的属性时要非常谨慎，包括 <code>initial-scale</code>, <code>maximum-scale</code> 和 <code>minimum-scale</code>。
+<p>如果是 iPhone 或者 Android 4.4+ 的机器，在使用 scale 相关的属性时要非常谨慎，包括 <code class="language-plaintext highlighter-rouge">initial-scale</code>, <code class="language-plaintext highlighter-rouge">maximum-scale</code> 和 <code class="language-plaintext highlighter-rouge">minimum-scale</code>。
 要么保证 <strong>Scale = deviceWidth / vWidth</strong>，要么就尽量不用。来看一个例子：</p>
 
 <p><img src="https://sinacloud.net/heaven-blog-files/images/posts/viewport.png" alt="Android 4.4+ 和 iPhone 在缩放时的行为不一致" /></p>
 
-<p>在缩放比不能保证的情况下，即使设置同样的 <code>width</code> 和 <code>initial-scale</code> 后，两者的表现也是不一致。具体两种机型采用的策略如何我还没有探索出来，有兴趣的同学可以研究看看。最省事的办法就是在 iPhone 和 Android 4.4+ 上不设置 scale 相关的属性。</p>
+<p>在缩放比不能保证的情况下，即使设置同样的 <code class="language-plaintext highlighter-rouge">width</code> 和 <code class="language-plaintext highlighter-rouge">initial-scale</code> 后，两者的表现也是不一致。具体两种机型采用的策略如何我还没有探索出来，有兴趣的同学可以研究看看。最省事的办法就是在 iPhone 和 Android 4.4+ 上不设置 scale 相关的属性。</p>
 
 <h2 id="总结">总结</h2>
 
 <p>结合上面所有的分析，你可以通过下面这段 JS 代码来对所有 iPhone 和 Android 4+ 的手机屏幕进行适配：</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kd">var</span> <span class="nx">match</span><span class="p">,</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">match</span><span class="p">,</span>
     <span class="nx">scale</span><span class="p">,</span>
     <span class="nx">TARGET_WIDTH</span> <span class="o">=</span> <span class="mi">320</span><span class="p">;</span>
 
-<span class="k">if</span> <span class="p">(</span><span class="nx">match</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">userAgent</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/Android (\d+\.\d+)/</span><span class="p">))</span> <span class="p">{</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">match</span> <span class="o">=</span> <span class="nb">navigator</span><span class="p">.</span><span class="nx">userAgent</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/Android </span><span class="se">(\d</span><span class="sr">+</span><span class="se">\.\d</span><span class="sr">+</span><span class="se">)</span><span class="sr">/</span><span class="p">))</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="nb">parseFloat</span><span class="p">(</span><span class="nx">match</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mf">4.4</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="nx">TARGET_WIDTH</span> <span class="o">==</span> <span class="mi">320</span><span class="p">)</span> <span class="nx">TARGET_WIDTH</span><span class="o">++</span><span class="p">;</span>
         <span class="kd">var</span> <span class="nx">scale</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">screen</span><span class="p">.</span><span class="nx">width</span> <span class="o">/</span> <span class="nx">TARGET_WIDTH</span><span class="p">;</span>
-        <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;meta[name=&quot;viewport&quot;]&#39;</span><span class="p">).</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">,</span> <span class="s1">&#39;width=&#39;</span> <span class="o">+</span> <span class="nx">TARGET_WIDTH</span> <span class="o">+</span> <span class="s1">&#39;, initial-scale = &#39;</span> <span class="o">+</span> <span class="nx">scale</span> <span class="o">+</span> <span class="s1">&#39;, target-densitydpi=device-dpi&#39;</span><span class="p">);</span>
+        <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">'</span><span class="s1">meta[name="viewport"]</span><span class="dl">'</span><span class="p">).</span><span class="nx">setAttribute</span><span class="p">(</span><span class="dl">'</span><span class="s1">content</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">width=</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">TARGET_WIDTH</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">, initial-scale = </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">scale</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">, target-densitydpi=device-dpi</span><span class="dl">'</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;meta[name=&quot;viewport&quot;]&#39;</span><span class="p">).</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">,</span> <span class="s1">&#39;width=&#39;</span> <span class="o">+</span> <span class="nx">TARGET_WIDTH</span><span class="p">);</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">'</span><span class="s1">meta[name="viewport"]</span><span class="dl">'</span><span class="p">).</span><span class="nx">setAttribute</span><span class="p">(</span><span class="dl">'</span><span class="s1">content</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">width=</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">TARGET_WIDTH</span><span class="p">);</span>
 <span class="p">}</span></code></pre></figure>
 
-<p>如果你不希望你的页面被用户手动缩放，你还可以加上 <code>user-scalable=no</code>。不过需要注意的是，这个属性在部分安卓机型上是无效的哦。</p>
+<p>如果你不希望你的页面被用户手动缩放，你还可以加上 <code class="language-plaintext highlighter-rouge">user-scalable=no</code>。不过需要注意的是，这个属性在部分安卓机型上是无效的哦。</p>
 
 <h2 id="其他参考资料">其他参考资料</h2>
 
@@ -314,57 +314,57 @@
 
 <h2 id="附录---测试页面">附录 - 测试页面</h2>
 
-<p>有兴趣的同学可以拿这个测试页面来测测自己的手机，别忘了改 <code>viewport</code> 哦。</p>
+<p>有兴趣的同学可以拿这个测试页面来测测自己的手机，别忘了改 <code class="language-plaintext highlighter-rouge">viewport</code> 哦。</p>
 
-<figure class="highlight"><pre><code class="language-html" data-lang="html"><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
-<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;width=250, initial-scale=1.5, user-scalable=no&quot;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Document<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=250, initial-scale=1.5, user-scalable=no"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Document<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;style&gt;</span>
         <span class="nt">body</span> <span class="p">{</span>
-            <span class="k">margin</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="nl">margin</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
         <span class="p">}</span>
 
         <span class="nt">div</span> <span class="p">{</span>
-            <span class="k">background</span><span class="p">:</span> <span class="mh">#000</span><span class="p">;</span>
-            <span class="k">color</span><span class="p">:</span> <span class="mh">#fff</span><span class="p">;</span>
-            <span class="k">font-size</span><span class="p">:</span> <span class="mi">30</span><span class="kt">px</span><span class="p">;</span>
-            <span class="k">text-align</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+            <span class="nl">background</span><span class="p">:</span> <span class="m">#000</span><span class="p">;</span>
+            <span class="nl">color</span><span class="p">:</span> <span class="m">#fff</span><span class="p">;</span>
+            <span class="nl">font-size</span><span class="p">:</span> <span class="m">30px</span><span class="p">;</span>
+            <span class="nl">text-align</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
         <span class="p">}</span>
 
-        <span class="p">.</span><span class="nc">block</span> <span class="p">{</span>
-            <span class="k">height</span><span class="p">:</span> <span class="mi">50</span><span class="kt">px</span><span class="p">;</span>
-            <span class="k">border-bottom</span><span class="p">:</span> <span class="mi">4</span><span class="kt">px</span> <span class="kc">solid</span> <span class="mh">#ccc</span><span class="p">;</span>
+        <span class="nc">.block</span> <span class="p">{</span>
+            <span class="nl">height</span><span class="p">:</span> <span class="m">50px</span><span class="p">;</span>
+            <span class="nl">border-bottom</span><span class="p">:</span> <span class="m">4px</span> <span class="nb">solid</span> <span class="m">#ccc</span><span class="p">;</span>
         <span class="p">}</span>
 
-        <span class="p">#</span><span class="nn">first</span>  <span class="p">{</span> <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">px</span><span class="p">;</span> <span class="p">}</span>
-        <span class="p">#</span><span class="nn">second</span> <span class="p">{</span> <span class="k">width</span><span class="p">:</span> <span class="mi">200</span><span class="kt">px</span><span class="p">;</span> <span class="p">}</span>
-        <span class="p">#</span><span class="nn">third</span>  <span class="p">{</span> <span class="k">width</span><span class="p">:</span> <span class="mi">300</span><span class="kt">px</span><span class="p">;</span> <span class="p">}</span>
-        <span class="p">#</span><span class="nn">fourth</span> <span class="p">{</span> <span class="k">width</span><span class="p">:</span> <span class="mi">320</span><span class="kt">px</span><span class="p">;</span> <span class="p">}</span>
-        <span class="p">#</span><span class="nn">log</span> <span class="p">{</span> <span class="k">font-size</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span> <span class="p">}</span>
-    <span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;first&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;block&quot;</span><span class="p">&gt;</span>100px<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;second&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;block&quot;</span><span class="p">&gt;</span>200px<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;third&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;block&quot;</span><span class="p">&gt;</span>300px<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;fourth&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;block&quot;</span><span class="p">&gt;</span>320px<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;log&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+        <span class="nf">#first</span>  <span class="p">{</span> <span class="nl">width</span><span class="p">:</span> <span class="m">100px</span><span class="p">;</span> <span class="p">}</span>
+        <span class="nf">#second</span> <span class="p">{</span> <span class="nl">width</span><span class="p">:</span> <span class="m">200px</span><span class="p">;</span> <span class="p">}</span>
+        <span class="nf">#third</span>  <span class="p">{</span> <span class="nl">width</span><span class="p">:</span> <span class="m">300px</span><span class="p">;</span> <span class="p">}</span>
+        <span class="nf">#fourth</span> <span class="p">{</span> <span class="nl">width</span><span class="p">:</span> <span class="m">320px</span><span class="p">;</span> <span class="p">}</span>
+        <span class="nf">#log</span> <span class="p">{</span> <span class="nl">font-size</span><span class="p">:</span> <span class="m">16px</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"first"</span> <span class="na">class=</span><span class="s">"block"</span><span class="nt">&gt;</span>100px<span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"second"</span> <span class="na">class=</span><span class="s">"block"</span><span class="nt">&gt;</span>200px<span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"third"</span> <span class="na">class=</span><span class="s">"block"</span><span class="nt">&gt;</span>300px<span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"fourth"</span> <span class="na">class=</span><span class="s">"block"</span><span class="nt">&gt;</span>320px<span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"log"</span><span class="nt">&gt;&lt;/div&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
         <span class="kd">function</span> <span class="nx">log</span><span class="p">(</span><span class="nx">content</span><span class="p">)</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">logContainer</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">);</span>
-            <span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">);</span>
+            <span class="kd">var</span> <span class="nx">logContainer</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">log</span><span class="dl">'</span><span class="p">);</span>
+            <span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">'</span><span class="s1">p</span><span class="dl">'</span><span class="p">);</span>
             <span class="nx">p</span><span class="p">.</span><span class="nx">textContent</span> <span class="o">=</span> <span class="nx">content</span><span class="p">;</span>
             <span class="nx">logContainer</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
         <span class="p">}</span>
 
-        <span class="nx">log</span><span class="p">(</span><span class="s1">&#39;body width:&#39;</span> <span class="o">+</span> <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">clientWidth</span><span class="p">)</span>
-        <span class="nx">log</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;[name=&quot;viewport&quot;]&#39;</span><span class="p">).</span><span class="nx">content</span><span class="p">)</span>
-    <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span></code></pre></figure>
+        <span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">body width:</span><span class="dl">'</span> <span class="o">+</span> <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">clientWidth</span><span class="p">)</span>
+        <span class="nx">log</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">'</span><span class="s1">[name="viewport"]</span><span class="dl">'</span><span class="p">).</span><span class="nx">content</span><span class="p">)</span>
+    <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span></code></pre></figure>
 
 
   </article>
