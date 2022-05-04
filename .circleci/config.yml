@@ -1,7 +1,7 @@
 common: &common
   working_directory: ~/heaven-blog
   docker:
-    - image: circleci/ruby:2.3.7-node-browsers
+    - image: cimg/ruby:3.1.2-node
 
 version: 2
 jobs:
