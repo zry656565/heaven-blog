@@ -24,9 +24,7 @@ gem install jekyll bundler
 bundle install
 
 # 安装依赖的 npm 包
-npm install
-# or
-yarn
+yarn install
 ```
 
 ## FAQ
@@ -36,9 +34,9 @@ yarn
 ## 编译与部署
 
 ```bash
-npx grunt build      # 本地编译
-npx grunt debug      # 本地编译并启动测试服务器
-npx grunt release    # 本地编译出线上版本（应用各种优化）
-npx grunt serve      # 本地编译并启动测试服务器（应用各种优化）
-npx grunt deploy     # 将站点发布到 gh-pages 分支下
+yarn grunt build      # 本地编译
+yarn grunt debug      # 本地编译并启动测试服务器
+yarn grunt release    # 本地编译出线上版本（应用各种优化）
+yarn grunt serve      # 本地编译并启动测试服务器（应用各种优化）
+yarn grunt deploy     # 将站点发布到 gh-pages 分支下
 ```
