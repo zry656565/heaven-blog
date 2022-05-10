@@ -36,5 +36,5 @@ defaults:
     values:
       layout: post
       copyright: true
-      disqus_comment: true
+      disqus_comment: false
       release: true

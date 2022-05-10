@@ -3,7 +3,7 @@ title: 关于我
 permalink: /about/
 nav: true
 key: 10016
-disqus_comment: true
+disqus_comment: false
 sitemap:
     priority: 1.0
     changefreq: 'monthly'
