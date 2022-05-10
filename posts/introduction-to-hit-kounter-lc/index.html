@@ -42,9 +42,8 @@
     </script>
 
     <!-- Hit Kounter LC -->
-    <script src="https://cdn1.lncld.net/static/js/av-min-1.5.0.js"></script>
-    <script src="https://sinacloud.net/egg-lib/hit-kounter/hit-kounter-lc-0.3.0.js"></script>
-    
+    <script src="https://sinacloud.net/egg-lib/hit-kounter/hit-kounter-lc-0.4.1.js"></script>
+
     <!-- handle external js files -->
     <script src="/assets/js/lib/jquery/jquery-1.11.1.min.js"></script>
 </head>
@@ -123,23 +122,22 @@
 
 <p>由于此次改版改动比较大，我是 fork 了一份代码出来进行修改的；<strong>改版后的 Hit Kounter</strong> 在 Github 上仓库地址是 <a href="https://github.com/zry656565/Hit-Kounter-LC">zry656565/Hit-Kounter-LC</a>，区别于原来的 Hit Kounter PHP 版：<a href="https://github.com/zry656565/Hit-Kounter">zry656565/Hit-Kounter</a></p>
 
-<p>使用方式上，目前 <strong>v0.3</strong> 版本相比于 <strong>v0.1</strong> 并没有什么改变，接下来会从以下几个方面介绍一下：</p>
+<p>使用方式上，目前 <strong>v0.4.1</strong> 版本相比于 <strong>v0.1</strong> 并没有什么改变，接下来会从以下几个方面介绍一下：</p>
 
 <ul>
   <li>如何为你的博客添加访问统计</li>
   <li>Hit Kounter 的 JS 接口</li>
-  <li>如何从 v0.1.1 版本迁移到 v0.3.0</li>
+  <li>如何从 v0.1.1 版本迁移到 v0.4.1</li>
   <li>小结：Hit Kounter 的未来</li>
 </ul>
 
-<p>如果你是 Hit Kounter v0.1 的用户，可以直接阅读 <strong>如何从 v0.1.1 版本迁移到 v0.3.0</strong>。</p>
+<p>如果你是 Hit Kounter v0.1 的用户，可以直接阅读 <strong>如何从 v0.1.1 版本迁移到 v0.4.1</strong>。</p>
 
 <h2 id="如何为你的博客添加访问量统计">如何为你的博客添加访问量统计</h2>
 
 <h4 id="1-引入脚本">1. 引入脚本</h4>
 
-<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://cdn1.lncld.net/static/js/av-min-1.5.0.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
-<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.3.0.js"</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://sinacloud.net/egg-lib/hit-kounter/hit-kounter-lc-0.4.1.js"</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></figure>
 
 <p>首先，在你的页面中引入这两个脚本，第一个脚本是 LeanCloud 的库脚本，引入了它我们才能使用 LeanCloud 的服务；由于你可能在每个页面都需要显示访问量，把它加入根模板也许是个不错的选择。</p>
 
@@ -198,7 +196,7 @@
 
 <p>至于如何使用就由你们自由发挥啦。</p>
 
-<h2 id="如何从-v011-版本迁移到-v030">如何从 v0.1.1 版本迁移到 v0.3.0</h2>
+<h2 id="如何从-v011-版本迁移到-v041">如何从 v0.1.1 版本迁移到 v0.4.1</h2>
 
 <p>我已经把迁移的成本降到最低，只要替换引入的文件即可：</p>
 
@@ -206,8 +204,7 @@
 <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-0.1.1.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
 
 <span class="c">&lt;!-- 新版本需要引入的文件 --&gt;</span>
-<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://cdn1.lncld.net/static/js/av-min-1.5.0.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
-<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.3.0.js"</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></figure>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://sinacloud.net/egg-lib/hit-kounter/hit-kounter-lc-0.4.1.js"</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></figure>
 
 <p>因为 v0.3 版本基于 LeanCloud 的服务，所以需要额外引入 LeanCloud 的一个库文件。另外需要注意的是，第二个文件除了版本号做了更新，还多了 <code class="language-plaintext highlighter-rouge">-lc</code> 几个字符哦。</p>
 
@@ -261,6 +258,10 @@
 <h3 id="update-20180602">Update 2018.06.02</h3>
 
 <p>我偷偷地把原文介绍的 v0.2 改成的 v0.3，仅仅多加了全站总访问数显示的功能。由于个人精力比较有限，所以后续很有可能不会再添加新的功能了。<strong>全站总访问数显示的功能</strong> 也是在一年半以前就完成的，只是这次正式地在文中介绍一下而已。</p>
+
+<h3 id="update-20220510">Update 2022.05.10</h3>
+
+<p>已偷偷替换 CDN 地址，修复不可用问题，升级到 v0.4.1。</p>
 
   </article>
 

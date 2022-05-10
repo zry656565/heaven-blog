@@ -146,7 +146,7 @@
 
 &lt;p&gt;由于本站一直使用的是 Github Pages 服务，尚未备案。因此由于最近又拍云服务政策的更变，已无法再享受到又拍云的服务。曾经公布的 CDN 地址不得不作废了，将在 2019 年 6 月 5 日失效。现在大家可以通过以下链接进行访问：&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://sinacloud.net/egg-lib/hit-kounter/hit-kounter-lc-0.3.0.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://sinacloud.net/egg-lib/hit-kounter/hit-kounter-lc-0.4.1.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;感谢大家一如既往的支持！&lt;/p&gt;
 </description>
@@ -1122,23 +1122,22 @@ nodemon --inspect server/app.js&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure
 
 &lt;p&gt;由于此次改版改动比较大，我是 fork 了一份代码出来进行修改的；&lt;strong&gt;改版后的 Hit Kounter&lt;/strong&gt; 在 Github 上仓库地址是 &lt;a href=&quot;https://github.com/zry656565/Hit-Kounter-LC&quot;&gt;zry656565/Hit-Kounter-LC&lt;/a&gt;，区别于原来的 Hit Kounter PHP 版：&lt;a href=&quot;https://github.com/zry656565/Hit-Kounter&quot;&gt;zry656565/Hit-Kounter&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;使用方式上，目前 &lt;strong&gt;v0.3&lt;/strong&gt; 版本相比于 &lt;strong&gt;v0.1&lt;/strong&gt; 并没有什么改变，接下来会从以下几个方面介绍一下：&lt;/p&gt;
+&lt;p&gt;使用方式上，目前 &lt;strong&gt;v0.4.1&lt;/strong&gt; 版本相比于 &lt;strong&gt;v0.1&lt;/strong&gt; 并没有什么改变，接下来会从以下几个方面介绍一下：&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;如何为你的博客添加访问统计&lt;/li&gt;
   &lt;li&gt;Hit Kounter 的 JS 接口&lt;/li&gt;
-  &lt;li&gt;如何从 v0.1.1 版本迁移到 v0.3.0&lt;/li&gt;
+  &lt;li&gt;如何从 v0.1.1 版本迁移到 v0.4.1&lt;/li&gt;
   &lt;li&gt;小结：Hit Kounter 的未来&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;如果你是 Hit Kounter v0.1 的用户，可以直接阅读 &lt;strong&gt;如何从 v0.1.1 版本迁移到 v0.3.0&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;如果你是 Hit Kounter v0.1 的用户，可以直接阅读 &lt;strong&gt;如何从 v0.1.1 版本迁移到 v0.4.1&lt;/strong&gt;。&lt;/p&gt;
 
 &lt;h2 id=&quot;如何为你的博客添加访问量统计&quot;&gt;如何为你的博客添加访问量统计&lt;/h2&gt;
 
 &lt;h4 id=&quot;1-引入脚本&quot;&gt;1. 引入脚本&lt;/h4&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://cdn1.lncld.net/static/js/av-min-1.5.0.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.3.0.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://sinacloud.net/egg-lib/hit-kounter/hit-kounter-lc-0.4.1.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;首先，在你的页面中引入这两个脚本，第一个脚本是 LeanCloud 的库脚本，引入了它我们才能使用 LeanCloud 的服务；由于你可能在每个页面都需要显示访问量，把它加入根模板也许是个不错的选择。&lt;/p&gt;
 
@@ -1197,7 +1196,7 @@ nodemon --inspect server/app.js&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure
 
 &lt;p&gt;至于如何使用就由你们自由发挥啦。&lt;/p&gt;
 
-&lt;h2 id=&quot;如何从-v011-版本迁移到-v030&quot;&gt;如何从 v0.1.1 版本迁移到 v0.3.0&lt;/h2&gt;
+&lt;h2 id=&quot;如何从-v011-版本迁移到-v041&quot;&gt;如何从 v0.1.1 版本迁移到 v0.4.1&lt;/h2&gt;
 
 &lt;p&gt;我已经把迁移的成本降到最低，只要替换引入的文件即可：&lt;/p&gt;
 
@@ -1205,8 +1204,7 @@ nodemon --inspect server/app.js&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-0.1.1.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 新版本需要引入的文件 --&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://cdn1.lncld.net/static/js/av-min-1.5.0.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.3.0.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://sinacloud.net/egg-lib/hit-kounter/hit-kounter-lc-0.4.1.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;因为 v0.3 版本基于 LeanCloud 的服务，所以需要额外引入 LeanCloud 的一个库文件。另外需要注意的是，第二个文件除了版本号做了更新，还多了 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-lc&lt;/code&gt; 几个字符哦。&lt;/p&gt;
 
@@ -1260,6 +1258,10 @@ nodemon --inspect server/app.js&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure
 &lt;h3 id=&quot;update-20180602&quot;&gt;Update 2018.06.02&lt;/h3&gt;
 
 &lt;p&gt;我偷偷地把原文介绍的 v0.2 改成的 v0.3，仅仅多加了全站总访问数显示的功能。由于个人精力比较有限，所以后续很有可能不会再添加新的功能了。&lt;strong&gt;全站总访问数显示的功能&lt;/strong&gt; 也是在一年半以前就完成的，只是这次正式地在文中介绍一下而已。&lt;/p&gt;
+
+&lt;h3 id=&quot;update-20220510&quot;&gt;Update 2022.05.10&lt;/h3&gt;
+
+&lt;p&gt;已偷偷替换 CDN 地址，修复不可用问题，升级到 v0.4.1。&lt;/p&gt;
 </description>
         <pubDate>Sat, 23 Apr 2016 16:20:00 +0000</pubDate>
         <link>https://jerryzou.com/posts/introduction-to-hit-kounter-lc/</link>
