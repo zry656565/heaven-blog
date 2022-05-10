@@ -14,7 +14,7 @@ labels: [博客, HitKounter]
 由于本站一直使用的是 Github Pages 服务，尚未备案。因此由于最近又拍云服务政策的更变，已无法再享受到又拍云的服务。曾经公布的 CDN 地址不得不作废了，将在 2019 年 6 月 5 日失效。现在大家可以通过以下链接进行访问：
 
 {% highlight html %}
-<script src="https://sinacloud.net/egg-lib/hit-kounter/hit-kounter-lc-0.3.0.js"></script>
+<script src="https://sinacloud.net/egg-lib/hit-kounter/hit-kounter-lc-0.4.1.js"></script>
 {% endhighlight %}
 
 感谢大家一如既往的支持！

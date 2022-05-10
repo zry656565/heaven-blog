@@ -13,22 +13,21 @@ Hit Kounter 原本部署于 SAE 上，而近期 SAE 针对使用 MySQL 的应用
 
 由于此次改版改动比较大，我是 fork 了一份代码出来进行修改的；**改版后的 Hit Kounter** 在 Github 上仓库地址是 [zry656565/Hit-Kounter-LC](https://github.com/zry656565/Hit-Kounter-LC)，区别于原来的 Hit Kounter PHP 版：[zry656565/Hit-Kounter](https://github.com/zry656565/Hit-Kounter)
 
-使用方式上，目前 **v0.3** 版本相比于 **v0.1** 并没有什么改变，接下来会从以下几个方面介绍一下：
+使用方式上，目前 **v0.4.1** 版本相比于 **v0.1** 并没有什么改变，接下来会从以下几个方面介绍一下：
 
 - 如何为你的博客添加访问统计
 - Hit Kounter 的 JS 接口
-- 如何从 v0.1.1 版本迁移到 v0.3.0
+- 如何从 v0.1.1 版本迁移到 v0.4.1
 - 小结：Hit Kounter 的未来
 
-如果你是 Hit Kounter v0.1 的用户，可以直接阅读 **如何从 v0.1.1 版本迁移到 v0.3.0**。
+如果你是 Hit Kounter v0.1 的用户，可以直接阅读 **如何从 v0.1.1 版本迁移到 v0.4.1**。
 
 ## 如何为你的博客添加访问量统计
 
 #### 1. 引入脚本
 
 {% highlight html %}
-<script src="https://cdn1.lncld.net/static/js/av-min-1.5.0.js"></script>
-<script src="https://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.3.0.js"></script>
+<script src="https://sinacloud.net/egg-lib/hit-kounter/hit-kounter-lc-0.4.1.js"></script>
 {% endhighlight %}
 
 首先，在你的页面中引入这两个脚本，第一个脚本是 LeanCloud 的库脚本，引入了它我们才能使用 LeanCloud 的服务；由于你可能在每个页面都需要显示访问量，把它加入根模板也许是个不错的选择。
@@ -94,7 +93,7 @@ Icarus.request({
 
 至于如何使用就由你们自由发挥啦。
 
-## 如何从 v0.1.1 版本迁移到 v0.3.0
+## 如何从 v0.1.1 版本迁移到 v0.4.1
 
 我已经把迁移的成本降到最低，只要替换引入的文件即可：
 
@@ -103,8 +102,7 @@ Icarus.request({
 <script src="http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-0.1.1.js"></script>
 
 <!-- 新版本需要引入的文件 -->
-<script src="https://cdn1.lncld.net/static/js/av-min-1.5.0.js"></script>
-<script src="http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.3.0.js"></script>
+<script src="https://sinacloud.net/egg-lib/hit-kounter/hit-kounter-lc-0.4.1.js"></script>
 {% endhighlight %}
 
 因为 v0.3 版本基于 LeanCloud 的服务，所以需要额外引入 LeanCloud 的一个库文件。另外需要注意的是，第二个文件除了版本号做了更新，还多了 `-lc` 几个字符哦。
@@ -159,3 +157,7 @@ TODO List 可以在 [这个 issue](https://github.com/zry656565/Hit-Kounter-LC/i
 ### Update 2018.06.02
 
 我偷偷地把原文介绍的 v0.2 改成的 v0.3，仅仅多加了全站总访问数显示的功能。由于个人精力比较有限，所以后续很有可能不会再添加新的功能了。**全站总访问数显示的功能** 也是在一年半以前就完成的，只是这次正式地在文中介绍一下而已。
+
+### Update 2022.05.10
+
+已偷偷替换 CDN 地址，修复不可用问题，升级到 v0.4.1。
