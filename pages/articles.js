@@ -41,49 +41,6 @@
     /* define Components...
      =====================================*/
 
-    var LabelList = React.createClass({
-        getInitialState: function() {
-            return {
-                labels: simpleClone($J.labels)
-            };
-        },
-        handleClick: function(i, app, e) {
-            e.preventDefault();
-            var nextSelected = this.state.labels[i].name;
-            app.setState({
-                selected: nextSelected
-            });
-            window.history.replaceState({}, '', $J.baseUrl + nextSelected);
-        },
-        render: function() {
-            var list = this,
-                selected = this.props.selected,
-                createLabel = function(label, i) {
-                    var classStr = 'post-label',
-                        count = label.value;
-                    if (label.name === selected) {
-                        classStr += ' select';
-                    }
-                    if (count > 50000 || count === 1) {
-                        count = '';
-                    }
-                    return (
-                        <span onClick={list.handleClick.bind(list, i, list.props.app)} className={classStr} key={i}>
-                            {label.name} <sup>{count}</sup>
-                        </span>
-                    );
-                };
-
-            return (
-                <section className="label-section">
-                    <h2>标签列表</h2>
-                    <hr/>
-                    <div>{this.state.labels.map(createLabel)}</div>
-                </section>
-            );
-        }
-    });
-
     var Post = React.createClass({
         render: function() {
             var post = this.props.post;
@@ -112,13 +69,6 @@
                 searchContent: ''
             };
         },
-        searchHandler: function(e) {
-            var searchContent = e.target.value;
-            this.setState({
-                posts: this.state.posts,
-                searchContent: searchContent
-            });
-        },
         render: function() {
             var previousDate = '9999-99-99',
                 selected = this.props.selected,
@@ -138,12 +88,6 @@
 
             return (
                 <section className="articles-section">
-                    <h2>文章列表</h2>
-                    <input onChange={this.searchHandler} className="search-box" type="text" placeholder="搜索包含在标题中的关键词" />
-                    <div className="search-icon">
-                        <img src={$J.staticUrl + "/search_icon.png"}/>
-                    </div>
-                    <hr/>
                     <ul className="articles">{this.state.posts.map(createPost)}</ul>
                 </section>
             );
@@ -159,7 +103,6 @@
         render: function() {
             return (
                 <div>
-                    <LabelList app={this} selected={this.state.selected}/>
                     <PostList selected={this.state.selected}/>
                 </div>
             );
