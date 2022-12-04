@@ -41,49 +41,6 @@
     /* define Components...
      =====================================*/
 
-    var LabelList = React.createClass({displayName: "LabelList",
-        getInitialState: function() {
-            return {
-                labels: simpleClone($J.labels)
-            };
-        },
-        handleClick: function(i, app, e) {
-            e.preventDefault();
-            var nextSelected = this.state.labels[i].name;
-            app.setState({
-                selected: nextSelected
-            });
-            window.history.replaceState({}, '', $J.baseUrl + nextSelected);
-        },
-        render: function() {
-            var list = this,
-                selected = this.props.selected,
-                createLabel = function(label, i) {
-                    var classStr = 'post-label',
-                        count = label.value;
-                    if (label.name === selected) {
-                        classStr += ' select';
-                    }
-                    if (count > 50000 || count === 1) {
-                        count = '';
-                    }
-                    return (
-                        React.createElement("span", {onClick: list.handleClick.bind(list, i, list.props.app), className: classStr, key: i}, 
-                            label.name, " ", React.createElement("sup", null, count)
-                        )
-                    );
-                };
-
-            return (
-                React.createElement("section", {className: "label-section"}, 
-                    React.createElement("h2", null, "标签列表"), 
-                    React.createElement("hr", null), 
-                    React.createElement("div", null, this.state.labels.map(createLabel))
-                )
-            );
-        }
-    });
-
     var Post = React.createClass({displayName: "Post",
         render: function() {
             var post = this.props.post;
@@ -112,13 +69,6 @@
                 searchContent: ''
             };
         },
-        searchHandler: function(e) {
-            var searchContent = e.target.value;
-            this.setState({
-                posts: this.state.posts,
-                searchContent: searchContent
-            });
-        },
         render: function() {
             var previousDate = '9999-99-99',
                 selected = this.props.selected,
@@ -138,12 +88,6 @@
 
             return (
                 React.createElement("section", {className: "articles-section"}, 
-                    React.createElement("h2", null, "文章列表"), 
-                    React.createElement("input", {onChange: this.searchHandler, className: "search-box", type: "text", placeholder: "搜索包含在标题中的关键词"}), 
-                    React.createElement("div", {className: "search-icon"}, 
-                        React.createElement("img", {src: $J.staticUrl + "/search_icon.png"})
-                    ), 
-                    React.createElement("hr", null), 
                     React.createElement("ul", {className: "articles"}, this.state.posts.map(createPost))
                 )
             );
@@ -159,7 +103,6 @@
         render: function() {
             return (
                 React.createElement("div", null, 
-                    React.createElement(LabelList, {app: this, selected: this.state.selected}), 
                     React.createElement(PostList, {selected: this.state.selected})
                 )
             );
