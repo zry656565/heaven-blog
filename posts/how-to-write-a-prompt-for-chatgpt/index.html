@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+        
+            Prompt 咒语编写指南 | 咀嚼之味
+        </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="目前大众接触最多的 ChatGPT 使用的底层模型还是 GPT-3.5，它在推理和逻辑计算方面还显得非常稚嫩。但 ChatGPT 所表现出的对人类自然语言的理解能力以及对语言中情绪的理解能力是非常惊人的。许多人已经从这款工具上获得了工作效率的成倍提升。其中最重要的部分就是“如何写好 prompt”。在我这篇文章中，我将从中整理出一些能快速理解的简单技术，帮助你们理解如何优化、迭代自己的“咒语”。 ">
+    <link rel="alternate" type="application/rss+xml" title="咀嚼之味 RSS" href="/feed.xml">
+    <link rel="canonical" href="https://jerryzou.com/posts/how-to-write-a-prompt-for-chatgpt/">
+    <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/release/style.1098d343.css">
+
+    <!-- Baidu Analysis -->
+    <script>
+        if (window.location.href.substr(7, 9) !== 'localhost') {
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?2744fd74aa568e064f9986394a60ead1";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+            })();
+        }
+    </script>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-47842677-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+    <!-- handle external js files -->
+    <script src="/assets/js/lib/jquery/jquery-1.11.1.min.js"></script>
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+  <div class="wrap">
+    <a class="site-title" href="/">咀嚼之味</a>
+    <nav class="site-nav">
+      <div class="menu-icon">
+        <img class="icon" src="https://sinacloud.net/heaven-blog-files/images/menu.svg" title="More"/>
+      </div>
+      <div class="trigger">
+        <a class="page-link" href="/">首页</a>
+        
+          
+          <a class="page-link" href="/all-articles/">所有文章</a>
+          
+        
+          
+          <a class="page-link" href="/about/">关于我</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          <a class="page-link" href="/feed.xml">RSS订阅</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+        
+        <div class="post">
+
+  <header class="post-header">
+    <h1>Prompt 咒语编写指南</h1>
+    <p class="meta">Mar 25, 2023
+        
+            
+              <span class="label">ChatGPT</span>
+            
+        
+    </p>
+  </header>
+
+  <article class="post-content">
+  <blockquote>
+  <p>本文共 3,200 字，预计阅读时间 10 分钟。</p>
+</blockquote>
+
+<h3 id="写在最前面">写在最前面</h3>
+
+<p>如果你对 ChatGPT 有基本的了解，有过一些和 ChatGPT 的对话，但不太清楚如何更好地使用这个工具，那么这篇文章值得一读。如果你还不知道 ChatGPT 是什么，或者还没有尝试过和 ChatGPT 对话，建议先去尝试一下再回头看这篇文章。</p>
+
+<hr />
+
+<p><br /><br /></p>
+
+<p>在自然语言处理这个领域，大众消费市场的语音助手们在很长的一段时间里都给人们一种“人工智障”的感觉。无论是 Siri 还是小爱同学，都只能针对特定的场景给出较好的响应，但只要超出那些场景，他们大多只会答非所问。</p>
+
+<p>随着 ChatGPT 等大语言模型的普及，Google 深度学习科学家弗朗索瓦·肖莱对此的评论是：“<strong>人工智能的第三次夏天到来了。</strong>” ChatGPT 是有史以来用户数以最快速度过亿的一款应用。最近，我在各种社交媒体上总是能够被各种 AI 相关的新闻和消息轰炸。有人对 AI 的快速发展感到忧惧，有人对 ChatGPT 当前的推理和逻辑运算能力嗤之以鼻，有人在散播大量人类岗位即将被 AI 取代的恐慌，有人则嘲笑另一批人在对深度学习缺乏了解的情况下盲目焦虑。</p>
+
+<p>其中有一种观点我特别认同：AI 就是大脑的“外骨骼”，能够极大地强化、扩展你的大脑能力。目前还很难预知某个岗位是否会真正被 AI 彻底取代，但可以预知的是，懂得如何运用 AI 技术将是未来一段时间内最重要的能力。</p>
+
+<p>目前大众接触最多的 ChatGPT 使用的底层模型还是 GPT-3.5，它在推理和逻辑计算方面还显得非常稚嫩。但 ChatGPT 所表现出的对人类自然语言的理解能力是非常惊人的，他可以很好地理解语言中的情绪。许多人已经从这款工具上获得了工作效率的成倍提升。掌握这款工具最重要的部分就在于“如何写好 prompt”。</p>
+
+<p>Prompt 直译成中文是“提示”的意思。有人戏称写 Prompt 就像魔法师念咒语一样，不同 prompt 所引导出的回答效果差异非常巨大。目前互联网上能找到很多 Prompt 现成案例（比如 <a href="https://github.com/f/awesome-chatgpt-prompts">Awesome ChatGPT prompts</a> 和 <a href="https://newzone.top/chatgpt/">ChatGPT Shortcut</a>）。你可以直接拿别人写好的“咒语”来使用，很多效果确实不错。但从“如何写好 prompt”角度出发的内容就少得多了。</p>
+
+<p>目前我找到最好的学习资料是：<a href="https://github.com/dair-ai/Prompt-Engineering-Guide">https://github.com/dair-ai/Prompt-Engineering-Guide</a>，非常推荐大家阅读！在本文中，我将从中整理出一些能快速理解的简单技术，帮助你们理解如何优化、迭代自己的“咒语”。</p>
+
+<h2 id="一第一原则明确的意图">一、第一原则：明确的意图</h2>
+
+<p>你需要<strong>明确地表达</strong>你的意图和要求，尽可能具体、描述性、详细地描述所需的上下文、你期望的结果等。你的要求越明确，越有希望获得你想要的答案。</p>
+
+<p>糟糕的案例 ❌</p>
+
+<blockquote>
+  <p>写一首关于OpenAI的诗。</p>
+
+</blockquote>
+
+<p>更好的案例 ✅</p>
+
+<blockquote>
+  <p>以莎士比亚的风格写一首短小的、鼓舞人心的诗，重点关注最近DALL-E产品推出（DALL-E是一种文本到图像的ML模型）的事情。</p>
+
+</blockquote>
+
+<p>上面的例子明确提出了几点要求：</p>
+
+<ol>
+  <li>以莎士比亚的风格</li>
+  <li>短小的、鼓舞人心的</li>
+  <li>跟 DALL-E 产品相关的</li>
+</ol>
+
+<p>由于 ChatGPT 只掌握了 2021 年的知识，可能不知道 DALL-E 是什么，我们还在 prompt 里简单解释了 DALL-E，帮他理解模棱两可的概念。</p>
+
+<h2 id="二理解-prompt-的主要构成">二、理解 Prompt 的主要构成</h2>
+
+<p>Prompt 的主要构成有：</p>
+
+<ul>
+  <li><strong>Instruction 指令</strong>：您想让模型执行的特定任务或指令</li>
+  <li><strong>Context 上下文</strong>：可以涉及外部信息或附加上下文，可以引导模型产生更好的响应</li>
+  <li><strong>Input Data 输入数据</strong>：我们感兴趣的输入或问题（以期望 ChatGPT 给出解答）</li>
+  <li><strong>Output Indicator 输出提示</strong>：表示希望 ChatGPT 以什么形式来输出结果</li>
+</ul>
+
+<p>接下来用几个 Prompts 来加深理解：</p>
+
+<p>案例一</p>
+
+<blockquote>
+  <p>我希望你能担任私人教练的角色。我会提供你一个想通过体育锻炼变得更健康的人的信息，而你的角色是根据他们现有的健康水平、目标和生活习惯，为这个人设计最佳的计划。你应该利用你对运动科学、营养建议的知识，来为他们创建一个适合他们的计划。我第一个要求是：“我需要帮助为想减肥的人设计一个锻炼计划。”</p>
+</blockquote>
+
+<p>其中，</p>
+
+<ol>
+  <li><strong>上下文</strong>：我希望你能担任私人教练的角色。我会…，来为他们创建一个适合他们的计划。</li>
+  <li><strong>指令</strong>：我第一个要求是：“我需要帮助为想减肥的人设计一个锻炼计划。</li>
+</ol>
+
+<p>案例二</p>
+
+<blockquote>
+  <p>翻译成英文：如今 ChatGPT 给人带来的最大的震撼在于，他看起来真的理解了我们的提问，无论怎样的问题，他总能围绕问题作出解答。</p>
+</blockquote>
+
+<ol>
+  <li><strong>指令</strong>：翻译成英文：</li>
+  <li><strong>上下文</strong>：如今 ChatGPT 给人带来的最大的震撼在于，… 他总能围绕问题作出解答。</li>
+</ol>
+
+<p>案例三</p>
+
+<blockquote>
+  <p>为特定的亚马逊产品特征撰写亚马逊的标题、五点和搜索关键词。输出内容为英文。五点的每一点都要超过 20 个单词。</p>
+
+  <p>输出格式为：</p>
+
+  <p>标题：</p>
+
+  <p>搜索关键词：</p>
+
+  <p>五点：1. <content>; 2. <content>; 3. <content>; ...</content></content></content></p>
+
+  <p>该产品的特征是：”””</p>
+
+  <p>[品牌] 防切割手套，Level A6 防切割级别，透气，舒适性强，黑色，适用于仓库、货运、钓鱼、园艺、木工，从 XS 到 XXL 码齐全，适用于各种人群需求。</p>
+
+  <p>”””</p>
+
+</blockquote>
+
+<ol>
+  <li><strong>指令</strong>：为特定的亚马逊产品特征撰写亚马逊的标题、五点和搜索关键词。</li>
+  <li><strong>上下文</strong>：输出内容为英文。五点的每一点都要超过 20 个单词。</li>
+  <li><strong>输出提示</strong>：输出格式为：…</li>
+  <li><strong>输入数据</strong>： 该产品的特征是：””” [品牌] 防切割手套，… 适用于各种人群需求。”””</li>
+</ol>
+
+<h2 id="三一些-prompt-的优化迭代技术">三、一些 Prompt 的优化迭代技术</h2>
+
+<p>使用以下的方法，不断地优化你的 prompt。</p>
+
+<h3 id="1-框选你想表达的重点信息">1). 框选你想表达的重点信息</h3>
+
+<p>使用 <code class="language-plaintext highlighter-rouge">###</code> 或 <code class="language-plaintext highlighter-rouge">"""</code> 等符号框选重点信息。使用符号来断开不同类型的内容会显著提升 ChatGPT 对内容的理解能力。</p>
+
+<p>糟糕的案例 ❌</p>
+
+<blockquote>
+  <p>将下面的文本总结为最重要的要点的项目符号列表。</p>
+
+  <p>如今 ChatGPT 给人带来的最大的震撼在于，他看起来真的理解了我们的提问，无论怎样的问题，他总能围绕问题作出解答…………………</p>
+
+</blockquote>
+
+<p>更好的案例 ✅</p>
+
+<blockquote>
+  <p>将下面的文本总结为最重要的要点的项目符号列表。</p>
+
+  <p>文本：”””</p>
+
+  <p>如今 ChatGPT 给人带来的最大的震撼在于，他看起来真的理解了我们的提问，无论怎样的问题，他总能围绕问题作出解答…………………</p>
+
+  <p>”””</p>
+
+</blockquote>
+
+<h3 id="2-指定结果的输出格式">2). 指定结果的输出格式</h3>
+
+<p>当你期望 ChatGPT 的输出内容具有一定结构时，把你的期望表达出来。</p>
+
+<p>糟糕的案例 ❌</p>
+
+<blockquote>
+  <p>从下面的文本中提取所有的人名和他们的职业。</p>
+
+  <p>文本：”””</p>
+
+  <p>设计师小牛陪小王去小李家做客，小李的老婆厨师小丁做了一道红烧带鱼。小王说“非常好吃！”</p>
+
+  <p>”””</p>
+
+</blockquote>
+
+<p>更好的案例 ✅</p>
+
+<blockquote>
+  <p>从下面的文本中提取所有的人名和他们的职业。</p>
+
+  <p>输出的格式：<人名>(<职业>)，<人名>(<职业>)，...</职业></人名></职业></人名></p>
+
+  <p>文本：”””</p>
+
+  <p>设计师小牛陪小王去小李家做客，小李的老婆厨师小丁做了一道红烧带鱼。小王说“非常好吃！”</p>
+
+  <p>”””</p>
+
+</blockquote>
+
+<h3 id="3-act-as-trick-确定-chatgpt-的立场">3). “Act as” trick 确定 ChatGPT 的立场</h3>
+
+<p>针对一些问题，尤其是开放性问题。整个互联网可能存在上百甚至上千万中答案，为 ChatGPT 设定立场有助于它找到最符合自己人设（也最符合你需要的）一种答案。</p>
+
+<p>糟糕的案例 ❌</p>
+
+<blockquote>
+  <p>你如何看待婚姻？</p>
+
+</blockquote>
+
+<p>更好的 ✅</p>
+
+<blockquote>
+  <p>请作为女权主义者，回答以下问题：”你如何看待婚姻？”</p>
+
+  <p>or</p>
+
+  <p>请作为大男子主义者，回答以下问题：”你如何看待婚姻？”</p>
+
+</blockquote>
+
+<h3 id="4-few-shot-教教他给-chatgpt-一些案例">4). Few-shot 教教他，给 ChatGPT 一些案例</h3>
+
+<p>对于 ChatGPT 熟悉的任务，你可能不需要给他任何例子（Zero-shot）比如，你给他 10 条评价某一个商品的 Review，让 ChatGPT 判断多少条是积极的，多少条是消极的。他通常可以直接给你正确的结果。因为它本身对情绪的理解能力已经很强了。但如果您正在尝试让 ChatGPT 做一件他不熟悉的事情，那可能需要提供更多案例。</p>
+
+<p>ChatGPT 已经熟悉的任务，不需要案例。即 zero-shot ✅</p>
+
+<blockquote>
+  <p>请识别下列评论的态度是怎么样的？给他们的态度打个分，1-10分，1分最消极，10分最积极</p>
+
+  <p>评论：</p>
+
+  <p>太难吃了，再也不回来了。</p>
+
+  <p>环境很糟糕。</p>
+
+  <p>亚米亚米，会再来！</p>
+
+  <p>什么鬼玩意儿。</p>
+
+  <p>再见！</p>
+
+  <p>💥💥💥💥💥</p>
+
+</blockquote>
+
+<p>糟糕的案例 ❌</p>
+
+<blockquote>
+  <p>请将以下文本归类到三个字母：X/Y/Z</p>
+
+  <p>文本：</p>
+
+  <p>太难吃了，再也不回来了。</p>
+
+  <p>环境很糟糕。</p>
+
+  <p>亚米亚米，会再来！</p>
+
+  <p>什么鬼玩意儿。</p>
+
+  <p>再见！</p>
+
+  <p>💥💥💥💥💥</p>
+
+</blockquote>
+
+<p>在糟糕的案例中，我们并没有定义 X, Y, Z 这三类分别代表什么意思。ChatGPT 虽然会按它的逻辑做好一定的分类，但我们并不一定会满意它的分类结果。我们没有明确定义需求，甚至我们连我们自己需要的东西是什么都还没弄清楚。这时候你就得回到我们的“第一原则”：搞清楚你自己的明确意图是什么。</p>
+
+<p>更好的案例 ✅</p>
+
+<blockquote>
+  <p>案例：</p>
+
+  <p>这家饭店里有虫子，靠。// X</p>
+
+  <p>我好喜欢鱼香肉丝。// Y</p>
+
+  <p>这家店的餐具挺好看的，但是吃的东西一般。// Z</p>
+
+  <p>🤡🤡🤡🤡 // Z</p>
+
+  <p>好吧。// Z</p>
+
+  <p>请将以下文本归类到三个字母：X/Y/Z</p>
+
+  <p>文本：</p>
+
+  <p>太难吃了，再也不回来了。</p>
+
+  <p>环境很糟糕。</p>
+
+  <p>亚米亚米，会再来！</p>
+
+  <p>什么鬼玩意儿。</p>
+
+  <p>再见！</p>
+
+  <p>💥💥💥💥💥</p>
+
+</blockquote>
+
+<p>在上面的例子中，我们虽然没有明说 X, Y, Z 是什么意思。但通过案例表达了，X 偏负面评价，Y 偏正面评价，Z 的情绪未明确显露。这个时候 ChatGPT 为我们做好的分类就很接近我们想要的结果了。</p>
+
+<h3 id="5-减少模糊的表达明确提出你的需求">5). 减少模糊的表达，明确提出你的需求</h3>
+
+<p>糟糕的案例 ❌</p>
+
+<blockquote>
+  <p>你总结的产品描述应该非常简练、只包含一些语句、别太多。</p>
+
+</blockquote>
+
+<p>更好的 ✅</p>
+
+<blockquote>
+  <p>用 2-3 句话总结该产品，不超过 30 个字。</p>
+
+</blockquote>
+
+<h3 id="6-告诉他要做什么而不是不要做什么">6). 告诉他要做什么，而不是不要做什么</h3>
+
+<p>糟糕的案例 ❌</p>
+
+<blockquote>
+  <p>以下是一名客服和一名客户之间的对话。请勿询问用户名或密码。请勿重复。</p>
+
+  <p>客户：我无法登录我的账户。</p>
+
+  <p>客服：</p>
+
+</blockquote>
+
+<p>更好的 ✅</p>
+
+<blockquote>
+  <p>以下是客服与顾客之间的对话。客服将尝试诊断问题并提出解决方案，同时避免问任何与用户名、密码相关的问题。请引导用户查看帮助文章 www.samplewebsite.com/help/faq。</p>
+
+  <p>顾客：我无法登录我的账户。</p>
+
+  <p>客服：</p>
+
+</blockquote>
+
+<h3 id="7-step-by-step-trick帮助-chatgpt-做推理">7). “Step by Step” trick，帮助 ChatGPT 做推理</h3>
+
+<p>也叫做：Chain-of-Thought Prompting。</p>
+
+<p>实验证明，在应对 zero-shot 问题时，你在问题最后加上“Let’s think step by step”，ChatGPT “显性的推理能力”会得到明显提升。这个就不多展开了，感兴趣的朋友可以看看这篇参考文章：<a href="https://zhuanlan.zhihu.com/p/527423190">Prompt learning 系列之 Let’s think step by step</a></p>
+
+<h2 id="最后">最后，</h2>
+
+<p>这篇文章的内容还是比较浅显。如果你因此对 Prompt 工程产生了一些兴趣，可以继续阅读 <a href="https://github.com/dair-ai/Prompt-Engineering-Guide">Prompt Engineering Guide</a>，里面包含很多这篇内容没有囊括的有趣话题。比如对抗性提示、怎么解决对话机器人的前后一致性问题、如何改善 AI 输出错误信息或者有偏见信息的问题。其中对抗性提示（Adversarial Prompting）话题包含了如何做到对话机器人的越狱，如何让它说一些 AI 设计者不想让它说的话。</p>
+
+<p>我是一个普普通通的深度学习初学者，本文如有任何谬误，欢迎拍砖。</p>
+
+  </article>
+
+  
+  <p class="copyright">
+    本文的版权归作者 <a href="mailto:jerry.zry@outlook.com">邹润阳</a> 所有，采用 <a href="https://creativecommons.org/licenses/by-nc/3.0/">Attribution-NonCommercial 3.0 License</a>。任何人可以进行转载、分享，但不可在未经允许的情况下用于商业用途；转载请注明出处。感谢配合！
+  </p>
+  
+
+  
+</div>
+
+        
+      </div>
+    </div>
+
+    <footer class="site-footer">
+    <div class="wrap">
+        <p class="footer-text">
+            本站使用 <a href="https://github.com/zry656565/heaven-blog">Github Pages & Jekyll</a>
+        </p>
+    </div>
+</footer>
+
+
+    </body>
+</html>

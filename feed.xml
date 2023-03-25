@@ -7,6 +7,349 @@
     <atom:link href="https://jerryzou.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Prompt 咒语编写指南</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;本文共 3,200 字，预计阅读时间 10 分钟。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;写在最前面&quot;&gt;写在最前面&lt;/h3&gt;
+
+&lt;p&gt;如果你对 ChatGPT 有基本的了解，有过一些和 ChatGPT 的对话，但不太清楚如何更好地使用这个工具，那么这篇文章值得一读。如果你还不知道 ChatGPT 是什么，或者还没有尝试过和 ChatGPT 对话，建议先去尝试一下再回头看这篇文章。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;在自然语言处理这个领域，大众消费市场的语音助手们在很长的一段时间里都给人们一种“人工智障”的感觉。无论是 Siri 还是小爱同学，都只能针对特定的场景给出较好的响应，但只要超出那些场景，他们大多只会答非所问。&lt;/p&gt;
+
+&lt;p&gt;随着 ChatGPT 等大语言模型的普及，Google 深度学习科学家弗朗索瓦·肖莱对此的评论是：“&lt;strong&gt;人工智能的第三次夏天到来了。&lt;/strong&gt;” ChatGPT 是有史以来用户数以最快速度过亿的一款应用。最近，我在各种社交媒体上总是能够被各种 AI 相关的新闻和消息轰炸。有人对 AI 的快速发展感到忧惧，有人对 ChatGPT 当前的推理和逻辑运算能力嗤之以鼻，有人在散播大量人类岗位即将被 AI 取代的恐慌，有人则嘲笑另一批人在对深度学习缺乏了解的情况下盲目焦虑。&lt;/p&gt;
+
+&lt;p&gt;其中有一种观点我特别认同：AI 就是大脑的“外骨骼”，能够极大地强化、扩展你的大脑能力。目前还很难预知某个岗位是否会真正被 AI 彻底取代，但可以预知的是，懂得如何运用 AI 技术将是未来一段时间内最重要的能力。&lt;/p&gt;
+
+&lt;p&gt;目前大众接触最多的 ChatGPT 使用的底层模型还是 GPT-3.5，它在推理和逻辑计算方面还显得非常稚嫩。但 ChatGPT 所表现出的对人类自然语言的理解能力是非常惊人的，他可以很好地理解语言中的情绪。许多人已经从这款工具上获得了工作效率的成倍提升。掌握这款工具最重要的部分就在于“如何写好 prompt”。&lt;/p&gt;
+
+&lt;p&gt;Prompt 直译成中文是“提示”的意思。有人戏称写 Prompt 就像魔法师念咒语一样，不同 prompt 所引导出的回答效果差异非常巨大。目前互联网上能找到很多 Prompt 现成案例（比如 &lt;a href=&quot;https://github.com/f/awesome-chatgpt-prompts&quot;&gt;Awesome ChatGPT prompts&lt;/a&gt; 和 &lt;a href=&quot;https://newzone.top/chatgpt/&quot;&gt;ChatGPT Shortcut&lt;/a&gt;）。你可以直接拿别人写好的“咒语”来使用，很多效果确实不错。但从“如何写好 prompt”角度出发的内容就少得多了。&lt;/p&gt;
+
+&lt;p&gt;目前我找到最好的学习资料是：&lt;a href=&quot;https://github.com/dair-ai/Prompt-Engineering-Guide&quot;&gt;https://github.com/dair-ai/Prompt-Engineering-Guide&lt;/a&gt;，非常推荐大家阅读！在本文中，我将从中整理出一些能快速理解的简单技术，帮助你们理解如何优化、迭代自己的“咒语”。&lt;/p&gt;
+
+&lt;h2 id=&quot;一第一原则明确的意图&quot;&gt;一、第一原则：明确的意图&lt;/h2&gt;
+
+&lt;p&gt;你需要&lt;strong&gt;明确地表达&lt;/strong&gt;你的意图和要求，尽可能具体、描述性、详细地描述所需的上下文、你期望的结果等。你的要求越明确，越有希望获得你想要的答案。&lt;/p&gt;
+
+&lt;p&gt;糟糕的案例 ❌&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;写一首关于OpenAI的诗。&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;更好的案例 ✅&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;以莎士比亚的风格写一首短小的、鼓舞人心的诗，重点关注最近DALL-E产品推出（DALL-E是一种文本到图像的ML模型）的事情。&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;上面的例子明确提出了几点要求：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;以莎士比亚的风格&lt;/li&gt;
+  &lt;li&gt;短小的、鼓舞人心的&lt;/li&gt;
+  &lt;li&gt;跟 DALL-E 产品相关的&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;由于 ChatGPT 只掌握了 2021 年的知识，可能不知道 DALL-E 是什么，我们还在 prompt 里简单解释了 DALL-E，帮他理解模棱两可的概念。&lt;/p&gt;
+
+&lt;h2 id=&quot;二理解-prompt-的主要构成&quot;&gt;二、理解 Prompt 的主要构成&lt;/h2&gt;
+
+&lt;p&gt;Prompt 的主要构成有：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Instruction 指令&lt;/strong&gt;：您想让模型执行的特定任务或指令&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Context 上下文&lt;/strong&gt;：可以涉及外部信息或附加上下文，可以引导模型产生更好的响应&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Input Data 输入数据&lt;/strong&gt;：我们感兴趣的输入或问题（以期望 ChatGPT 给出解答）&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Output Indicator 输出提示&lt;/strong&gt;：表示希望 ChatGPT 以什么形式来输出结果&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;接下来用几个 Prompts 来加深理解：&lt;/p&gt;
+
+&lt;p&gt;案例一&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;我希望你能担任私人教练的角色。我会提供你一个想通过体育锻炼变得更健康的人的信息，而你的角色是根据他们现有的健康水平、目标和生活习惯，为这个人设计最佳的计划。你应该利用你对运动科学、营养建议的知识，来为他们创建一个适合他们的计划。我第一个要求是：“我需要帮助为想减肥的人设计一个锻炼计划。”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;其中，&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;上下文&lt;/strong&gt;：我希望你能担任私人教练的角色。我会…，来为他们创建一个适合他们的计划。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;指令&lt;/strong&gt;：我第一个要求是：“我需要帮助为想减肥的人设计一个锻炼计划。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;案例二&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;翻译成英文：如今 ChatGPT 给人带来的最大的震撼在于，他看起来真的理解了我们的提问，无论怎样的问题，他总能围绕问题作出解答。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;指令&lt;/strong&gt;：翻译成英文：&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;上下文&lt;/strong&gt;：如今 ChatGPT 给人带来的最大的震撼在于，… 他总能围绕问题作出解答。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;案例三&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;为特定的亚马逊产品特征撰写亚马逊的标题、五点和搜索关键词。输出内容为英文。五点的每一点都要超过 20 个单词。&lt;/p&gt;
+
+  &lt;p&gt;输出格式为：&lt;/p&gt;
+
+  &lt;p&gt;标题：&lt;/p&gt;
+
+  &lt;p&gt;搜索关键词：&lt;/p&gt;
+
+  &lt;p&gt;五点：1. &lt;content&gt;; 2. &lt;content&gt;; 3. &lt;content&gt;; ...&lt;/content&gt;&lt;/content&gt;&lt;/content&gt;&lt;/p&gt;
+
+  &lt;p&gt;该产品的特征是：”””&lt;/p&gt;
+
+  &lt;p&gt;[品牌] 防切割手套，Level A6 防切割级别，透气，舒适性强，黑色，适用于仓库、货运、钓鱼、园艺、木工，从 XS 到 XXL 码齐全，适用于各种人群需求。&lt;/p&gt;
+
+  &lt;p&gt;”””&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;指令&lt;/strong&gt;：为特定的亚马逊产品特征撰写亚马逊的标题、五点和搜索关键词。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;上下文&lt;/strong&gt;：输出内容为英文。五点的每一点都要超过 20 个单词。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;输出提示&lt;/strong&gt;：输出格式为：…&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;输入数据&lt;/strong&gt;： 该产品的特征是：””” [品牌] 防切割手套，… 适用于各种人群需求。”””&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;三一些-prompt-的优化迭代技术&quot;&gt;三、一些 Prompt 的优化迭代技术&lt;/h2&gt;
+
+&lt;p&gt;使用以下的方法，不断地优化你的 prompt。&lt;/p&gt;
+
+&lt;h3 id=&quot;1-框选你想表达的重点信息&quot;&gt;1). 框选你想表达的重点信息&lt;/h3&gt;
+
+&lt;p&gt;使用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;###&lt;/code&gt; 或 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;&quot;&quot;&lt;/code&gt; 等符号框选重点信息。使用符号来断开不同类型的内容会显著提升 ChatGPT 对内容的理解能力。&lt;/p&gt;
+
+&lt;p&gt;糟糕的案例 ❌&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;将下面的文本总结为最重要的要点的项目符号列表。&lt;/p&gt;
+
+  &lt;p&gt;如今 ChatGPT 给人带来的最大的震撼在于，他看起来真的理解了我们的提问，无论怎样的问题，他总能围绕问题作出解答…………………&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;更好的案例 ✅&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;将下面的文本总结为最重要的要点的项目符号列表。&lt;/p&gt;
+
+  &lt;p&gt;文本：”””&lt;/p&gt;
+
+  &lt;p&gt;如今 ChatGPT 给人带来的最大的震撼在于，他看起来真的理解了我们的提问，无论怎样的问题，他总能围绕问题作出解答…………………&lt;/p&gt;
+
+  &lt;p&gt;”””&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;2-指定结果的输出格式&quot;&gt;2). 指定结果的输出格式&lt;/h3&gt;
+
+&lt;p&gt;当你期望 ChatGPT 的输出内容具有一定结构时，把你的期望表达出来。&lt;/p&gt;
+
+&lt;p&gt;糟糕的案例 ❌&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;从下面的文本中提取所有的人名和他们的职业。&lt;/p&gt;
+
+  &lt;p&gt;文本：”””&lt;/p&gt;
+
+  &lt;p&gt;设计师小牛陪小王去小李家做客，小李的老婆厨师小丁做了一道红烧带鱼。小王说“非常好吃！”&lt;/p&gt;
+
+  &lt;p&gt;”””&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;更好的案例 ✅&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;从下面的文本中提取所有的人名和他们的职业。&lt;/p&gt;
+
+  &lt;p&gt;输出的格式：&lt;人名&gt;(&lt;职业&gt;)，&lt;人名&gt;(&lt;职业&gt;)，...&lt;/职业&gt;&lt;/人名&gt;&lt;/职业&gt;&lt;/人名&gt;&lt;/p&gt;
+
+  &lt;p&gt;文本：”””&lt;/p&gt;
+
+  &lt;p&gt;设计师小牛陪小王去小李家做客，小李的老婆厨师小丁做了一道红烧带鱼。小王说“非常好吃！”&lt;/p&gt;
+
+  &lt;p&gt;”””&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;3-act-as-trick-确定-chatgpt-的立场&quot;&gt;3). “Act as” trick 确定 ChatGPT 的立场&lt;/h3&gt;
+
+&lt;p&gt;针对一些问题，尤其是开放性问题。整个互联网可能存在上百甚至上千万中答案，为 ChatGPT 设定立场有助于它找到最符合自己人设（也最符合你需要的）一种答案。&lt;/p&gt;
+
+&lt;p&gt;糟糕的案例 ❌&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;你如何看待婚姻？&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;更好的 ✅&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;请作为女权主义者，回答以下问题：”你如何看待婚姻？”&lt;/p&gt;
+
+  &lt;p&gt;or&lt;/p&gt;
+
+  &lt;p&gt;请作为大男子主义者，回答以下问题：”你如何看待婚姻？”&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;4-few-shot-教教他给-chatgpt-一些案例&quot;&gt;4). Few-shot 教教他，给 ChatGPT 一些案例&lt;/h3&gt;
+
+&lt;p&gt;对于 ChatGPT 熟悉的任务，你可能不需要给他任何例子（Zero-shot）比如，你给他 10 条评价某一个商品的 Review，让 ChatGPT 判断多少条是积极的，多少条是消极的。他通常可以直接给你正确的结果。因为它本身对情绪的理解能力已经很强了。但如果您正在尝试让 ChatGPT 做一件他不熟悉的事情，那可能需要提供更多案例。&lt;/p&gt;
+
+&lt;p&gt;ChatGPT 已经熟悉的任务，不需要案例。即 zero-shot ✅&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;请识别下列评论的态度是怎么样的？给他们的态度打个分，1-10分，1分最消极，10分最积极&lt;/p&gt;
+
+  &lt;p&gt;评论：&lt;/p&gt;
+
+  &lt;p&gt;太难吃了，再也不回来了。&lt;/p&gt;
+
+  &lt;p&gt;环境很糟糕。&lt;/p&gt;
+
+  &lt;p&gt;亚米亚米，会再来！&lt;/p&gt;
+
+  &lt;p&gt;什么鬼玩意儿。&lt;/p&gt;
+
+  &lt;p&gt;再见！&lt;/p&gt;
+
+  &lt;p&gt;💥💥💥💥💥&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;糟糕的案例 ❌&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;请将以下文本归类到三个字母：X/Y/Z&lt;/p&gt;
+
+  &lt;p&gt;文本：&lt;/p&gt;
+
+  &lt;p&gt;太难吃了，再也不回来了。&lt;/p&gt;
+
+  &lt;p&gt;环境很糟糕。&lt;/p&gt;
+
+  &lt;p&gt;亚米亚米，会再来！&lt;/p&gt;
+
+  &lt;p&gt;什么鬼玩意儿。&lt;/p&gt;
+
+  &lt;p&gt;再见！&lt;/p&gt;
+
+  &lt;p&gt;💥💥💥💥💥&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;在糟糕的案例中，我们并没有定义 X, Y, Z 这三类分别代表什么意思。ChatGPT 虽然会按它的逻辑做好一定的分类，但我们并不一定会满意它的分类结果。我们没有明确定义需求，甚至我们连我们自己需要的东西是什么都还没弄清楚。这时候你就得回到我们的“第一原则”：搞清楚你自己的明确意图是什么。&lt;/p&gt;
+
+&lt;p&gt;更好的案例 ✅&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;案例：&lt;/p&gt;
+
+  &lt;p&gt;这家饭店里有虫子，靠。// X&lt;/p&gt;
+
+  &lt;p&gt;我好喜欢鱼香肉丝。// Y&lt;/p&gt;
+
+  &lt;p&gt;这家店的餐具挺好看的，但是吃的东西一般。// Z&lt;/p&gt;
+
+  &lt;p&gt;🤡🤡🤡🤡 // Z&lt;/p&gt;
+
+  &lt;p&gt;好吧。// Z&lt;/p&gt;
+
+  &lt;p&gt;请将以下文本归类到三个字母：X/Y/Z&lt;/p&gt;
+
+  &lt;p&gt;文本：&lt;/p&gt;
+
+  &lt;p&gt;太难吃了，再也不回来了。&lt;/p&gt;
+
+  &lt;p&gt;环境很糟糕。&lt;/p&gt;
+
+  &lt;p&gt;亚米亚米，会再来！&lt;/p&gt;
+
+  &lt;p&gt;什么鬼玩意儿。&lt;/p&gt;
+
+  &lt;p&gt;再见！&lt;/p&gt;
+
+  &lt;p&gt;💥💥💥💥💥&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;在上面的例子中，我们虽然没有明说 X, Y, Z 是什么意思。但通过案例表达了，X 偏负面评价，Y 偏正面评价，Z 的情绪未明确显露。这个时候 ChatGPT 为我们做好的分类就很接近我们想要的结果了。&lt;/p&gt;
+
+&lt;h3 id=&quot;5-减少模糊的表达明确提出你的需求&quot;&gt;5). 减少模糊的表达，明确提出你的需求&lt;/h3&gt;
+
+&lt;p&gt;糟糕的案例 ❌&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;你总结的产品描述应该非常简练、只包含一些语句、别太多。&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;更好的 ✅&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;用 2-3 句话总结该产品，不超过 30 个字。&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;6-告诉他要做什么而不是不要做什么&quot;&gt;6). 告诉他要做什么，而不是不要做什么&lt;/h3&gt;
+
+&lt;p&gt;糟糕的案例 ❌&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;以下是一名客服和一名客户之间的对话。请勿询问用户名或密码。请勿重复。&lt;/p&gt;
+
+  &lt;p&gt;客户：我无法登录我的账户。&lt;/p&gt;
+
+  &lt;p&gt;客服：&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;更好的 ✅&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;以下是客服与顾客之间的对话。客服将尝试诊断问题并提出解决方案，同时避免问任何与用户名、密码相关的问题。请引导用户查看帮助文章 www.samplewebsite.com/help/faq。&lt;/p&gt;
+
+  &lt;p&gt;顾客：我无法登录我的账户。&lt;/p&gt;
+
+  &lt;p&gt;客服：&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;7-step-by-step-trick帮助-chatgpt-做推理&quot;&gt;7). “Step by Step” trick，帮助 ChatGPT 做推理&lt;/h3&gt;
+
+&lt;p&gt;也叫做：Chain-of-Thought Prompting。&lt;/p&gt;
+
+&lt;p&gt;实验证明，在应对 zero-shot 问题时，你在问题最后加上“Let’s think step by step”，ChatGPT “显性的推理能力”会得到明显提升。这个就不多展开了，感兴趣的朋友可以看看这篇参考文章：&lt;a href=&quot;https://zhuanlan.zhihu.com/p/527423190&quot;&gt;Prompt learning 系列之 Let’s think step by step&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;最后&quot;&gt;最后，&lt;/h2&gt;
+
+&lt;p&gt;这篇文章的内容还是比较浅显。如果你因此对 Prompt 工程产生了一些兴趣，可以继续阅读 &lt;a href=&quot;https://github.com/dair-ai/Prompt-Engineering-Guide&quot;&gt;Prompt Engineering Guide&lt;/a&gt;，里面包含很多这篇内容没有囊括的有趣话题。比如对抗性提示、怎么解决对话机器人的前后一致性问题、如何改善 AI 输出错误信息或者有偏见信息的问题。其中对抗性提示（Adversarial Prompting）话题包含了如何做到对话机器人的越狱，如何让它说一些 AI 设计者不想让它说的话。&lt;/p&gt;
+
+&lt;p&gt;我是一个普普通通的深度学习初学者，本文如有任何谬误，欢迎拍砖。&lt;/p&gt;
+</description>
+        <pubDate>Sat, 25 Mar 2023 07:15:00 +0000</pubDate>
+        <link>https://jerryzou.com/posts/how-to-write-a-prompt-for-chatgpt/</link>
+        <guid isPermaLink="true">https://jerryzou.com/posts/how-to-write-a-prompt-for-chatgpt/</guid>
+      </item>
+    
+      <item>
         <title>完成不可能的任务——推荐《如何阅读一本书》</title>
         <description>&lt;blockquote&gt;
   &lt;p&gt;本文共 2,400 字，预计阅读时间 6 分钟。&lt;/p&gt;
@@ -1184,160 +1527,6 @@ nodemon --inspect server/app.js&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure
         <pubDate>Sat, 20 May 2017 11:50:00 +0000</pubDate>
         <link>https://jerryzou.com/posts/vscode-debug-guide/</link>
         <guid isPermaLink="true">https://jerryzou.com/posts/vscode-debug-guide/</guid>
-      </item>
-    
-      <item>
-        <title>访问量统计工具 Hit Kounter v0.3</title>
-        <description>&lt;p&gt;&lt;strong&gt;Hit Kounter&lt;/strong&gt; 是一个简单的访问量统计工具。据我从数据库里的数据目测，现在已经拥有了 &lt;strong&gt;9 位用户&lt;/strong&gt;！不过我要对这九位用户说声抱歉啦。&lt;/p&gt;
-
-&lt;p&gt;Hit Kounter 原本部署于 SAE 上，而近期 SAE 针对使用 MySQL 的应用开始收费。本项目只是一个本人使用业余时间开发的小工具；它本身包含的功能也很精简，并不适合使用付费服务。所以我已经将 Hit Kounter 服务迁移至 &lt;strong&gt;LeanCloud&lt;/strong&gt; 上。原本部署在 SAE 上的服务预计在 &lt;strong&gt;五一假期&lt;/strong&gt; 后下线，对已经使用 Hit Kounter 的一些用户，我再次表达我的歉意！&lt;/p&gt;
-
-&lt;p&gt;由于此次改版改动比较大，我是 fork 了一份代码出来进行修改的；&lt;strong&gt;改版后的 Hit Kounter&lt;/strong&gt; 在 Github 上仓库地址是 &lt;a href=&quot;https://github.com/zry656565/Hit-Kounter-LC&quot;&gt;zry656565/Hit-Kounter-LC&lt;/a&gt;，区别于原来的 Hit Kounter PHP 版：&lt;a href=&quot;https://github.com/zry656565/Hit-Kounter&quot;&gt;zry656565/Hit-Kounter&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;使用方式上，目前 &lt;strong&gt;v0.4.1&lt;/strong&gt; 版本相比于 &lt;strong&gt;v0.1&lt;/strong&gt; 并没有什么改变，接下来会从以下几个方面介绍一下：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;如何为你的博客添加访问统计&lt;/li&gt;
-  &lt;li&gt;Hit Kounter 的 JS 接口&lt;/li&gt;
-  &lt;li&gt;如何从 v0.1.1 版本迁移到 v0.4.1&lt;/li&gt;
-  &lt;li&gt;小结：Hit Kounter 的未来&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;如果你是 Hit Kounter v0.1 的用户，可以直接阅读 &lt;strong&gt;如何从 v0.1.1 版本迁移到 v0.4.1&lt;/strong&gt;。&lt;/p&gt;
-
-&lt;h2 id=&quot;如何为你的博客添加访问量统计&quot;&gt;如何为你的博客添加访问量统计&lt;/h2&gt;
-
-&lt;h4 id=&quot;1-引入脚本&quot;&gt;1. 引入脚本&lt;/h4&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://sinacloud.net/egg-lib/hit-kounter/hit-kounter-lc-0.4.1.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;首先，在你的页面中引入这两个脚本，第一个脚本是 LeanCloud 的库脚本，引入了它我们才能使用 LeanCloud 的服务；由于你可能在每个页面都需要显示访问量，把它加入根模板也许是个不错的选择。&lt;/p&gt;
-
-&lt;h4 id=&quot;2-显示当前页面的访问量&quot;&gt;2. 显示当前页面的访问量&lt;/h4&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-hk-page=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;current&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; - &lt;span class=&quot;nt&quot;&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;你可以在页面的任何地方插入这句 HTML 片段，你之前引入的脚本会自动检查当前页面上带有 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;data-hk-*&lt;/code&gt; 属性的元素，并针对你给出的属性值向服务器请求数据，最后把得到的结果替换到上面的标签内。可以参考 &lt;a href=&quot;https://github.com/zry656565/heaven-blog/blob/5f19693ac0fb5723ef18d69b57106d2f95021400/_layouts/post.html#L9&quot;&gt;我博客中的例子&lt;/a&gt;。&lt;/p&gt;
-
-&lt;h4 id=&quot;3-显示指定页面的访问量&quot;&gt;3. 显示指定页面的访问量&lt;/h4&gt;
-
-&lt;p&gt;如果你希望在文章列表页中显示各个页面的访问量分别是多少，那么你就要使用一个 url 来填充 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;data-hk-page&lt;/code&gt; 的属性值，就像这样：&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-hk-page=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://jerryzou.com/posts/design-for-all-mobile-resolution/&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; - &lt;span class=&quot;nt&quot;&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;那么 Hit Kounter 检测到这个标签以后，就会向服务器请求该地址的具体访问量，并将默认值 ` - ` 替换为实际值。可以参考 &lt;a href=&quot;https://github.com/zry656565/heaven-blog/blob/5f19693ac0fb5723ef18d69b57106d2f95021400/index.html#L13&quot;&gt;我博客中的例子&lt;/a&gt;。&lt;/p&gt;
-
-&lt;h4 id=&quot;4-显示全站的访问量&quot;&gt;4. 显示全站的访问量&lt;/h4&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-hk-site&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; - &lt;span class=&quot;nt&quot;&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;可以参考 &lt;a href=&quot;https://github.com/zry656565/heaven-blog/blob/5846c8b98db003e88b0e2aed6bcf6a810c168d78/_includes/sidebar.html#L7&quot;&gt;我博客中的例子&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;hit-kounter-的-js-接口&quot;&gt;Hit Kounter 的 JS 接口&lt;/h2&gt;
-
-&lt;p&gt;Hit Kounter 会在全局注入 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Icarus&lt;/code&gt; 对象，它是与服务器交互的数据接口。通过它，我们就可以直接向服务器发送请求。先看看下面这个例子：&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;Icarus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;api&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;hk.page.get&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;1.0&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;pages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;http://test.com/1&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;http://test.com/2&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;http://test.com/3&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;success&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;domain&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;failure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;code&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;code&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;上面这个例子中，我们主要是获取了三个页面的具体访问量；目前 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Icarus&lt;/code&gt; 支持的接口有四个（具体可以参考 &lt;a href=&quot;https://github.com/zry656565/Hit-Kounter-LC/wiki/Icarus:-APIs&quot;&gt;Hit-Kounter-LC Wiki&lt;/a&gt;）：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;hk.page.increment&lt;/li&gt;
-  &lt;li&gt;hk.page.get&lt;/li&gt;
-  &lt;li&gt;hk.page.getTop&lt;/li&gt;
-  &lt;li&gt;hk.page.getByDomain&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;至于如何使用就由你们自由发挥啦。&lt;/p&gt;
-
-&lt;h2 id=&quot;如何从-v011-版本迁移到-v041&quot;&gt;如何从 v0.1.1 版本迁移到 v0.4.1&lt;/h2&gt;
-
-&lt;p&gt;我已经把迁移的成本降到最低，只要替换引入的文件即可：&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 老版本需要引入的文件 --&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-0.1.1.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 新版本需要引入的文件 --&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://sinacloud.net/egg-lib/hit-kounter/hit-kounter-lc-0.4.1.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;因为 v0.3 版本基于 LeanCloud 的服务，所以需要额外引入 LeanCloud 的一个库文件。另外需要注意的是，第二个文件除了版本号做了更新，还多了 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-lc&lt;/code&gt; 几个字符哦。&lt;/p&gt;
-
-&lt;p&gt;本次更新在将后端服务从 SAE 替换为 LeanCloud 的同时并没有做太多的功能改进。最主要的一点功能改进是引入缓存机制，在数据超过默认的五分钟之前，&lt;strong&gt;Icarus&lt;/strong&gt; 不会向服务器发送新的 get 请求。（increment 请求当然还是照发不误的啦）&lt;/p&gt;
-
-&lt;h4 id=&quot;以下内容请使用了-icarus-接口的用户注意&quot;&gt;以下内容请使用了 Icarus 接口的用户注意&lt;/h4&gt;
-
-&lt;p&gt;&lt;strong&gt;Icarus&lt;/strong&gt; 接口所接受的多余的参数现在需要放在 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;data&lt;/code&gt; 对象中，注意对你之前的代码做一定修改。直接看例子可能比较直观：&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/*================
- * 老版本调用方式
- *================*/&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;Icarus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;api&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;hk.page.get&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;1.0&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;pages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;                          &lt;span class=&quot;c1&quot;&gt;// &amp;lt;---&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;http://test.com/1&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// &amp;lt;---&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;                                &lt;span class=&quot;c1&quot;&gt;// &amp;lt;---&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;success&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{},&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;failure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;code&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-
-&lt;span class=&quot;cm&quot;&gt;/*================
- * 新版本调用方式
- *================*/&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;Icarus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;api&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;hk.page.get&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;1.0&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;                           &lt;span class=&quot;c1&quot;&gt;// &amp;lt;---&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;pages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;                        &lt;span class=&quot;c1&quot;&gt;// &amp;lt;---&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;http://test.com/1&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// &amp;lt;---&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;                               &lt;span class=&quot;c1&quot;&gt;// &amp;lt;---&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;                                &lt;span class=&quot;c1&quot;&gt;// &amp;lt;---&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;success&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{},&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;failure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;code&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h2 id=&quot;小结hit-kounter-的未来&quot;&gt;小结：Hit Kounter 的未来&lt;/h2&gt;
-
-&lt;p&gt;当然，Hit Kounter 未来会加入越来越多的功能，包括但不限于：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;添加一个能够获得全站的访问总量的 API&lt;/li&gt;
-  &lt;li&gt;通过添加 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;div data-hk-top-pages=&quot;5&quot;&amp;gt;&lt;/code&gt; 这样一个元素，便能够将全站访问量最高的五个页面罗列在 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;div&lt;/code&gt; 框内。&lt;/li&gt;
-  &lt;li&gt;为用户提供一个很方便的方式来导入初始的访问量数据&lt;/li&gt;
-  &lt;li&gt;完善各种可能的错误信息（包括服务端和浏览器端的错误）&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;TODO List 可以在 &lt;a href=&quot;https://github.com/zry656565/Hit-Kounter-LC/issues/1&quot;&gt;这个 issue&lt;/a&gt; 中看到，而且因为 &lt;a href=&quot;https://github.com/zry656565/Hit-Kounter-LC&quot;&gt;zry656565/Hit-Kounter-LC&lt;/a&gt; 是开源项目，也很期待大家能够多吐槽，如果能给 &lt;strong&gt;Hit-Kounter-LC&lt;/strong&gt; 贡献代码那就再好不过啦~。&lt;/p&gt;
-
-&lt;h3 id=&quot;update-20180602&quot;&gt;Update 2018.06.02&lt;/h3&gt;
-
-&lt;p&gt;我偷偷地把原文介绍的 v0.2 改成的 v0.3，仅仅多加了全站总访问数显示的功能。由于个人精力比较有限，所以后续很有可能不会再添加新的功能了。&lt;strong&gt;全站总访问数显示的功能&lt;/strong&gt; 也是在一年半以前就完成的，只是这次正式地在文中介绍一下而已。&lt;/p&gt;
-
-&lt;h3 id=&quot;update-20220510&quot;&gt;Update 2022.05.10&lt;/h3&gt;
-
-&lt;p&gt;已偷偷替换 CDN 地址，修复不可用问题，升级到 v0.4.1。&lt;/p&gt;
-</description>
-        <pubDate>Sat, 23 Apr 2016 16:20:00 +0000</pubDate>
-        <link>https://jerryzou.com/posts/introduction-to-hit-kounter-lc/</link>
-        <guid isPermaLink="true">https://jerryzou.com/posts/introduction-to-hit-kounter-lc/</guid>
       </item>
     
   </channel>
