@@ -1,6 +1,6 @@
 ---
 date: 2023-03-25 15:15:00 +0800
-title: Prompt 咒语编写指南
+title: ChatGPT Prompt 编写指南
 description: 目前大众接触最多的 ChatGPT 使用的底层模型还是 GPT-3.5，它在推理和逻辑计算方面还显得非常稚嫩。但 ChatGPT 所表现出的对人类自然语言的理解能力以及对语言中情绪的理解能力是非常惊人的。许多人已经从这款工具上获得了工作效率的成倍提升。其中最重要的部分就是“如何写好 prompt”。在我这篇文章中，我将从中整理出一些能快速理解的简单技术，帮助你们理解如何优化、迭代自己的“咒语”。
 permalink: /posts/how-to-write-a-prompt-for-chatgpt/
 key: 10048
