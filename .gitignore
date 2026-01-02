@@ -26,3 +26,4 @@ build/articles.js
 vendor
 
 .circleci
+.DS_Store

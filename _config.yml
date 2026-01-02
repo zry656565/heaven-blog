@@ -9,9 +9,9 @@ url: "https://jerryzou.com"
 #static images
 local_url: "/assets/images"
 #github source
-#static_url: "/assets/images"
+static_url: "/assets/images"
 #digitalocean cdn
-static_url: "https://sinacloud.net/heaven-blog-files/images"
+#static_url: "https://sinacloud.net/heaven-blog-files/images"
 
 # Build settings
 markdown: kramdown
