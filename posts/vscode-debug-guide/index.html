@@ -53,7 +53,7 @@
     <a class="site-title" href="/">咀嚼之味</a>
     <nav class="site-nav">
       <div class="menu-icon">
-        <img class="icon" src="https://sinacloud.net/heaven-blog-files/images/menu.svg" title="More"/>
+        <img class="icon" src="/assets/images/menu.svg" title="More"/>
       </div>
       <div class="trigger">
         <a class="page-link" href="/">首页</a>
@@ -159,7 +159,7 @@
 
 <p>通过 vscode 调试前端代码主要依赖于一个插件：<a href="https://github.com/Microsoft/vscode-chrome-debug">Debugger for Chrome</a>，该插件主要利用 <a href="https://chromedevtools.github.io/devtools-protocol/">Chrome 所开放出来的接口</a> 来实现对其渲染的页面进行调试。可以通过 <code class="language-plaintext highlighter-rouge">Shift + Cmd + X</code> 打开插件中心，搜索对应插件后直接安装。安装完成并重新加载 vscode 后，可以直接点击调试按钮并创建新的启动配置。如果你之前已经创建过启动配置了，就可以直接打开 <code class="language-plaintext highlighter-rouge">.vscode/launch.json</code> 进行修改。</p>
 
-<p><img src="https://sinacloud.net/heaven-blog-files/images/posts/vscode-debug-chrome.png" alt="vscode-debug-chrome" /></p>
+<p><img src="/assets/images/posts/vscode-debug-chrome.png" alt="vscode-debug-chrome" /></p>
 
 <p>其中调试 Chrome 页面的配置如下所示：</p>
 
@@ -189,7 +189,7 @@
 
 <p>使用 <code class="language-plaintext highlighter-rouge">launch</code> 模式调试前端代码存在一个问题，就是 vscode 会以新访客的身份打开一个新的 Chrome 进程，也就是说你<strong>之前在 Chrome 上装的插件都没法在这个页面上生效</strong>（如下图所示）。</p>
 
-<p><img src="https://sinacloud.net/heaven-blog-files/images/posts/vscode-debug-launch.png" alt="vscode-debug-launch" /></p>
+<p><img src="/assets/images/posts/vscode-debug-launch.png" alt="vscode-debug-launch" /></p>
 
 <p>在这种情况下 <code class="language-plaintext highlighter-rouge">attach</code> 模式就有它存在的意义了：对一个已经启动的 Chrome 进行监听调试。</p>
 

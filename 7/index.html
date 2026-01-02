@@ -53,7 +53,7 @@
     <a class="site-title" href="/">咀嚼之味</a>
     <nav class="site-nav">
       <div class="menu-icon">
-        <img class="icon" src="https://sinacloud.net/heaven-blog-files/images/menu.svg" title="More"/>
+        <img class="icon" src="/assets/images/menu.svg" title="More"/>
       </div>
       <div class="trigger">
         <a class="page-link" href="/">首页</a>
@@ -98,6 +98,20 @@
         
         <div class="home">
   <ul class="posts">
+    
+      
+      <li>
+        <a class="post-link" href="/posts/deepcopy/">Javascript中的一种深复制实现</a>
+        <p class="post-date">Posted on May 11, 2014 ;
+        	
+        	<span class="post-label">JavaScript</span>
+        	
+        	<span class="post-label">深复制</span>
+        	
+        </p>
+        <p class="post-description">要实现深复制有很多办法，比如最简单的办法有：var cloneObj = JSON.parse(JSON.stringify(obj));上面这种方法好处是非常简单易用，但是坏处也显而易见，这会抛弃对象的constructor，也就是深复制之后，无论这个对象原本的构造函数是什么，在深复制之后都会变成Object。另外诸如`RegExp`对象是无法通过这种方式深复制的。所以这里我将介绍一种，我自认为很优美的深复制方法，当然可能也存在问题。如果你发现了我的实现方法有什么问题，请及时让我知道~ <a class="post-link2" href="/posts/deepcopy/">[继续阅读...]</a></p>
+      </li>
+      
     
       
       <li>
