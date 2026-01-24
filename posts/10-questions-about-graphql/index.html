@@ -252,7 +252,7 @@
 
 <p>这是一段简单的 python 代码，使用了 Django 的 QuerySet 来从数据库抓取数据。假设我们的数据库中有两张表 User 和 UserScore 这两张表的关系如下所示：</p>
 
-<p><img src="/assets/images/posts/graphql-uml.jpg" alt="UML" /></p>
+<p><img src="/assets/images/posts/graphql-uml.png" alt="UML" /></p>
 
 <p>由于用户的分数并没有保存在 User 表中，又因为 QuerySet 有 lazy load 的特性，所以在 for 循环中，每一次获取 <code class="language-plaintext highlighter-rouge">user.score</code> 都会查一次表，最终原本 1 次数据库查询能搞定的问题，却在不恰当的实现中产生了 N+1 次对数据库的访问。</p>
 
@@ -273,7 +273,7 @@
 
 <p>使用 GraphiQL 可以很容易地让人感受到“代码即文档”的快乐。</p>
 
-<p><img src="/assets/images/posts/graphiql-screenshot.png" alt="GraphiQL screenshot" /></p>
+<p><img src="/assets/images/posts/graphiql-screenshot.jpg" alt="GraphiQL screenshot" /></p>
 
 <h2 id="8-如何选择-graphql-的客户端实现">8. 如何选择 GraphQL 的客户端实现？</h2>
 
