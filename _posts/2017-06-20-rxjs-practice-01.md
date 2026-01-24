@@ -270,5 +270,5 @@ mouseDown$.map((e) => {
 
 最后大家可以思考一下：在第三个例子中，如果把 `mergeMap` 改为 `switchMap` 或者 `concatMap` 会发生什么？这是课后作业。哈哈！
 
-[1]: {{ site.static_url }}/posts/iPhone-drag.gif
-[2]: {{ site.static_url }}/posts/drag-list.gif
+[1]: {{ site.static_url }}/posts/iPhone-drag.webp
+[2]: {{ site.static_url }}/posts/drag-list.webp

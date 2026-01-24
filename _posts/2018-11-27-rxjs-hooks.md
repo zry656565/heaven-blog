@@ -216,8 +216,8 @@ function App() {
 
 至此 [rxjs-hooks](https://github.com/LeetCode-OpenSource/rxjs-hooks) 就先介绍到这儿。我们的实现不一定是对 hooks 最好的理解，权当抛砖引玉。很期待社区有更多人能参与到这项变革中来，我们也很乐意和大家分享所遇到的各种踩坑之旅。同时，随时欢迎大家给这个项目提 issue 或者 PR。
 
-[1]: {{ site.static_url }}/posts/rxjs-hooks/真香.gif
-[2]: {{ site.static_url }}/posts/rxjs-hooks/ben-lesh.png
-[3]: {{ site.static_url }}/posts/rxjs-hooks/drag.gif
-[4]: {{ site.static_url }}/posts/rxjs-hooks/resizer.gif
-[5]: {{ site.static_url }}/posts/rxjs-hooks/drag-list.gif
+[1]: {{ site.static_url }}/posts/rxjs-hooks/真香.webp
+[2]: {{ site.static_url }}/posts/rxjs-hooks/ben-lesh.jpg
+[3]: {{ site.static_url }}/posts/rxjs-hooks/drag.webp
+[4]: {{ site.static_url }}/posts/rxjs-hooks/resizer.webp
+[5]: {{ site.static_url }}/posts/rxjs-hooks/drag-list.webp

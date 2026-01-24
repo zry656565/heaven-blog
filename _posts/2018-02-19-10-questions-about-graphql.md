@@ -255,5 +255,5 @@ query {
 - [Relay Cursor Connections Specification](https://facebook.github.io/relay/graphql/connections.htm)
 
 [1]: {{ site.static_url }}/posts/backend-arch.png
-[2]: {{ site.static_url }}/posts/graphql-uml.jpg
-[3]: {{ site.static_url }}/posts/graphiql-screenshot.png
+[2]: {{ site.static_url }}/posts/graphql-uml.png
+[3]: {{ site.static_url }}/posts/graphiql-screenshot.jpg
