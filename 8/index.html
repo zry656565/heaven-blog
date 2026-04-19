@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>
         
-            搞清大数端小数端 | 咀嚼之味
+            咀嚼之味
         </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="description" content="我们日常生活中常见的IA-32位体系架构一般都是小数端存储方法。而IA-64则同时采用大数端和小数端的存储方法。究竟什么是大数端，什么是小数端呢？就让我们从这篇文章中了解一下吧。 ">
+    <meta name="description" content=" 咀嚼之味是我分享我对编程与生活的见解之地。我喜欢做一些安静的事，比如看书、看电影、听音乐、散步以及旅行。 ">
     <link rel="alternate" type="application/rss+xml" title="咀嚼之味 RSS" href="/feed.xml">
-    <link rel="canonical" href="https://jerryzou.com/posts/storageMethod/">
+    <link rel="canonical" href="https://jerryzou.com/8/">
     <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     <!-- Custom CSS -->
@@ -98,68 +98,85 @@
     <div class="page-content">
       <div class="wrap">
         
-        <div class="post">
-
-  <header class="post-header">
-    <h1>搞清大数端小数端</h1>
-    <p class="meta">Nov 4, 2013
-        
-            
-              <span class="label">系统底层</span>
-            
-        
-    </p>
-  </header>
-
-  <article class="post-content">
-  <p>对于同样一个数0x123456。</p>
-
-<ul>
-  <li>大数端的存储方法是：
-    <table>
-      <tr><td width="60px">地址</td><td>值</td></tr>
-      <tr><td>0x00</td><td>0x12</td></tr>
-      <tr><td>0x01</td><td>0x34</td></tr>
-      <tr><td>0x02</td><td>0x56</td></tr>
-  </table>
-    <p><br />
-  <strong>大数端记忆方法：低地址存高（大）位</strong></p>
-  </li>
-  <li>而小数端的存储方法是：
-    <table>
-      <tr><td width="60px">地址</td><td>值</td></tr>
-      <tr><td>0x00</td><td>0x56</td></tr>
-      <tr><td>0x01</td><td>0x34</td></tr>
-      <tr><td>0x02</td><td>0x12</td></tr>
-  </table>
-    <p><br />
-  <strong>小数端记忆方法：低地址存低（小）</strong></p>
-  </li>
-</ul>
-
-<p>另外，</p>
-
-<ul>
-  <li>我们日常生活中常见的IA-32位体系架构一般都是小数端存储方法。</li>
-  <li>而IA-64则同时采用大数端和小数端的存储方法。</li>
-</ul>
-
-<p>但需要注意的是，现在很常见的家装64位的windows系统可不算真正的64位系统。真正的64位体系结构与32位体系结构完全不同，32位体系结构的程序在64位体系结构上的机器上根本运行不了。因为两者根本就使用了完全不同的指令集。<br />
-其实啊，家装的64位windows系统还是属于32位体系结构EM64T。而EM64T前面的E就是Extended的简称啦（即32位的扩展，实际上是48位系统）。</p>
-
-<p><strong>说明</strong>: 本文原发布于我的CSDN博客<a href="https://blog.csdn.net/zry656565">天上之海原</a>。</p>
-
-  </article>
+        <div class="home">
+  <ul class="posts">
+    
+      
+      <li>
+        <a class="post-link" href="/posts/storageMethod/">搞清大数端小数端</a>
+        <p class="post-date">Posted on Nov 4, 2013 ;
+        	
+        	<span class="post-label">系统底层</span>
+        	
+        </p>
+        <p class="post-description">我们日常生活中常见的IA-32位体系架构一般都是小数端存储方法。而IA-64则同时采用大数端和小数端的存储方法。究竟什么是大数端，什么是小数端呢？就让我们从这篇文章中了解一下吧。 <a class="post-link2" href="/posts/storageMethod/">[继续阅读...]</a></p>
+      </li>
+      
+    
+  </ul>
 
   
-  <p class="copyright">
-    本文的版权归作者 <a href="mailto:jerry.zry@outlook.com">邹润阳</a> 所有，采用 <a href="https://creativecommons.org/licenses/by-nc/3.0/">Attribution-NonCommercial 3.0 License</a>。任何人可以进行转载、分享，但不可在未经允许的情况下用于商业用途；转载请注明出处。感谢配合！
-  </p>
-  
+  <div class="pagination">
+    
+    <a class="parallelogram" href="/7/">
+      <div>&laquo; Prev</div>
+    </a>
+    
 
+    
+      
+      <a class="parallelogram" href="/">
+        <div>1</div>
+      </a>
+      
+    
+      
+      <a class="parallelogram" href="/2/">
+        <div>2</div>
+      </a>
+      
+    
+      
+      <a class="parallelogram" href="/3/">
+        <div>3</div>
+      </a>
+      
+    
+      
+      <a class="parallelogram" href="/4/">
+        <div>4</div>
+      </a>
+      
+    
+      
+      <a class="parallelogram" href="/5/">
+        <div>5</div>
+      </a>
+      
+    
+      
+      <a class="parallelogram" href="/6/">
+        <div>6</div>
+      </a>
+      
+    
+      
+      <a class="parallelogram" href="/7/">
+        <div>7</div>
+      </a>
+      
+    
+      
+      <div class="parallelogram current"><div>8</div></div>
+      
+    
+
+    
+    <div class="parallelogram"><div>Next &raquo;</div></div>
+    
+  </div>
   
 </div>
-
         
       </div>
     </div>
