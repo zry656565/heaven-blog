@@ -5,6 +5,16 @@
 
 本博客遵循MIT开源协议。
 
+## 改版验证
+
+Astro 改版期间，提交前统一运行：
+
+```bash
+npm run verify
+```
+
+涉及历史 URL、页面元数据或现网链接时，再运行 `npm run verify:live`。迁移基线见 [`docs/migration-baseline.md`](docs/migration-baseline.md)。
+
 ## 如何组建出我的博客
 - Jekyll: 静态网站模版引擎
 - Github Pages: 挂载博客的服务器
