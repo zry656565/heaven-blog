@@ -1,0 +1,1127 @@
+{
+  "version": 1,
+  "capturedAt": "2026-08-17",
+  "origin": "https://jerryzou.com",
+  "posts": [
+    {
+      "source": "_posts/2013-11-04-StorageMethod.md",
+      "title": "搞清大数端小数端",
+      "url": "/posts/storageMethod/",
+      "bodySha256": "a517bc0f3ce7f4330d2554fa9cef20c7bbfab1b034e7e770508cdd66f32f1820",
+      "images": [],
+      "risks": [
+        "raw-html"
+      ]
+    },
+    {
+      "source": "_posts/2013-11-18-TipsForC.md",
+      "title": "C语言中可能被你忽视的小细节",
+      "url": "/posts/tipsforC/",
+      "bodySha256": "37644cd9b424acdab24df328f0778e08dfb19c1934859c5b2b475d3eebc1dcce",
+      "images": [],
+      "risks": []
+    },
+    {
+      "source": "_posts/2013-12-16-blogisopen.md",
+      "title": "博客建立",
+      "url": "/posts/opentopublic/",
+      "bodySha256": "9922aa14e70277e2b212b1b53c23cf90ad86646bb630f595489e7f3911820834",
+      "images": [],
+      "risks": [
+        "liquid-highlight"
+      ]
+    },
+    {
+      "source": "_posts/2013-12-21-HowToLearnJS.md",
+      "title": "如何循序渐进地学习JavaScript",
+      "url": "/posts/learnjs/",
+      "bodySha256": "283bc0a3f2aaa8d627220c8fdddf3fbd01fda5967d557fe726229b42fb6a46c0",
+      "images": [],
+      "risks": []
+    },
+    {
+      "source": "_posts/2014-05-06-JREParser.md",
+      "title": "一款在线JavaScript正则表达式测试器",
+      "url": "/posts/jreparser/",
+      "bodySha256": "4e7bb8490555ac9f5f6aa7dd6ad427017a692bdb909b6826d105363f69814b55",
+      "images": [
+        "/assets/images/jre-parser.png"
+      ],
+      "risks": [
+        "liquid-highlight",
+        "liquid-variable"
+      ]
+    },
+    {
+      "source": "_posts/2014-05-11-DeepCopyInJS.md",
+      "title": "Javascript中的一种深复制实现",
+      "url": "/posts/deepcopy/",
+      "bodySha256": "7bfcb3b88c5ad311b65fd1dc84adab068fa4832c0c7013a4d6af816dcb1f7320",
+      "images": [],
+      "risks": [
+        "liquid-highlight"
+      ]
+    },
+    {
+      "source": "_posts/2014-06-01-modularInJS.md",
+      "title": "深入了解JavaScript模块化编程",
+      "url": "/posts/jsmodular/",
+      "bodySha256": "38a299c33964b36d14cd9514d274cfb76ee0ed8d9882d02fff194cabf1c770ff",
+      "images": [],
+      "risks": [
+        "liquid-highlight"
+      ]
+    },
+    {
+      "source": "_posts/2014-06-02-IEEEpaperformat.md",
+      "title": "IEEE论文PDF格式检测中的问题与解决",
+      "url": "/posts/paperFormat/",
+      "bodySha256": "32300bf2e6823f3cd7b88f94bb2810379bce5d0474d911c296e42d823f2aae49",
+      "images": [
+        "/assets/images/ieee_1.png",
+        "/assets/images/ieee_2.png",
+        "/assets/images/ieee_3.png"
+      ],
+      "risks": [
+        "liquid-variable"
+      ]
+    },
+    {
+      "source": "_posts/2014-08-02-networkConfig.md",
+      "title": "小型局域网的多路由配置",
+      "url": "/posts/networkConfig/",
+      "bodySha256": "124376335facc7786b470548370f105ed359f89f2d2707be63ed46247f2b2c42",
+      "images": [
+        "/assets/images/posts/network_config.png"
+      ],
+      "risks": [
+        "liquid-variable"
+      ]
+    },
+    {
+      "source": "_posts/2014-09-07-usePygments.md",
+      "title": "使用Pygments来实现代码高亮",
+      "url": "/posts/usePygments/",
+      "bodySha256": "4d3c1f4dd51a5862d957e0bae6c753f3ab75bd939966a0cb057ced10887e2a55",
+      "images": [
+        "/assets/images/pygments1.png"
+      ],
+      "risks": [
+        "liquid-highlight",
+        "liquid-variable"
+      ]
+    },
+    {
+      "source": "_posts/2014-09-24-sjtuBus.md",
+      "title": "使用百度地图API来完成交大校园巴士时刻表",
+      "url": "/posts/sjtuBus/",
+      "bodySha256": "5886d673525ab23e360bccabd827b2ab89e5e2c0d4153c1c03a5488f89be0802",
+      "images": [
+        "/assets/images/sjtubus.png"
+      ],
+      "risks": [
+        "liquid-highlight",
+        "liquid-variable",
+        "inline-script"
+      ]
+    },
+    {
+      "source": "_posts/2014-10-03-sjtuBusFeedback.md",
+      "title": "交大校车 Web App 用户反馈",
+      "url": "/posts/sjtuBusFeedback/",
+      "bodySha256": "f17f44cd91c70f64bd36385e4fd69bc5f6c23dd5215ee12630399c7764cbd8b7",
+      "images": [],
+      "risks": []
+    },
+    {
+      "source": "_posts/2014-11-13-gitForSAE.md",
+      "title": "极速地将git项目部署到SAE的svn服务器上",
+      "url": "/posts/gitForSAE/",
+      "bodySha256": "58c66027160347cadebfdda40c64b8e18ad4839ce7f70941ec59c573fb5f11d5",
+      "images": [],
+      "risks": [
+        "liquid-highlight"
+      ]
+    },
+    {
+      "source": "_posts/2014-11-14-getDevEnvironmentBack.md",
+      "title": "发生在升级OS X Yosemite后：修复各种开发环境",
+      "url": "/posts/getDevEnvironmentBack/",
+      "bodySha256": "3716bb77623f055c7700df201c56ccfd1e93b9e3ade74d73a61f064cf72872c9",
+      "images": [],
+      "risks": [
+        "liquid-highlight"
+      ]
+    },
+    {
+      "source": "_posts/2014-11-18-aboutNormalizeCss.md",
+      "title": "来，让我们谈一谈 Normalize.css",
+      "url": "/posts/aboutNormalizeCss/",
+      "bodySha256": "05f917cfc19edff11dfbe61b896df69619898ec749b585914e18f211ec9f92d7",
+      "images": [
+        "/assets/images/css-reset-debugging.png"
+      ],
+      "risks": [
+        "liquid-highlight",
+        "liquid-variable"
+      ]
+    },
+    {
+      "source": "_posts/2014-11-29-bulkUploadToUPYUN.md",
+      "title": "使用plupload绕过服务器，批量上传图片到又拍云",
+      "url": "/posts/bulkUploadToUPYUN/",
+      "bodySha256": "9a94849fd7e0a14e75b5cd9f11ce6f1e36acbece76e67d221ba8d0015c318b11",
+      "images": [],
+      "risks": [
+        "liquid-highlight",
+        "inline-script"
+      ]
+    },
+    {
+      "source": "_posts/2015-01-01-dontBeEvil.md",
+      "title": "Don't be evil ?",
+      "url": "/posts/dontBeEvil/",
+      "bodySha256": "c2a002d502bd4291911a6143922dcf0682813940e4c64279e55e1bbb2de55776",
+      "images": [],
+      "risks": []
+    },
+    {
+      "source": "_posts/2015-01-16-caocao01.md",
+      "title": "阿瞒究竟有没有杀伯奢？",
+      "url": "/posts/caocao01/",
+      "bodySha256": "ac9a5d490d8aa1df241324963090e8e18947f833c48dab9eef839632c9d07be4",
+      "images": [],
+      "risks": []
+    },
+    {
+      "source": "_posts/2015-01-24-shadowsocks-with-digitalocean.md",
+      "title": "使用 DigitalOcean 和 shadowsocks 来科学上网",
+      "url": "/posts/shadowsocks-and-digitalocean/",
+      "bodySha256": "def79d7e07fc92bf724795d1b8b2680f3245a19d3081db779e747d66a1eaea0d",
+      "images": [
+        "/assets/images/posts/DigitalOcean_sshkey.png"
+      ],
+      "risks": [
+        "liquid-highlight",
+        "liquid-variable"
+      ]
+    },
+    {
+      "source": "_posts/2015-04-11-chew.md",
+      "title": "咀嚼之味",
+      "url": "/posts/chew/",
+      "bodySha256": "347a16d83a998ca1e12a9f92a6fd9950f058dce0170a884b4edaa98e90b89809",
+      "images": [],
+      "risks": []
+    },
+    {
+      "source": "_posts/2015-05-02-cookie-and-web-storage.md",
+      "title": "详说 Cookie, LocalStorage 与 SessionStorage",
+      "url": "/posts/cookie-and-web-storage/",
+      "bodySha256": "9d184dc6f2ff0f6d89b5cd9fbea8194c5ff89c2155ad1b2a7313dbc2246cbb20",
+      "images": [],
+      "risks": [
+        "raw-html"
+      ]
+    },
+    {
+      "source": "_posts/2015-05-15-do-you-really-want-use-bit-operators-in-JavaScript.md",
+      "title": "为什么不要在 JavaScript 中使用位操作符？",
+      "url": "/posts/do-you-really-want-use-bit-operators-in-JavaScript/",
+      "bodySha256": "a97a7f504059a9bd3d239116a67fbe6e0be136e1ee05aa26af9d3cd24632b0af",
+      "images": [
+        "/assets/images/posts/double_float.png"
+      ],
+      "risks": [
+        "liquid-highlight",
+        "liquid-variable"
+      ]
+    },
+    {
+      "source": "_posts/2015-05-21-cyclomatic-complexity-logic-in-css.md",
+      "title": "论 CSS 中的逻辑",
+      "url": "/posts/cyclomatic-complexity-logic-in-css/",
+      "bodySha256": "8bc9c7cef313c47d094c478dd9502471b0fd918befa110f013869e10101ec407",
+      "images": [],
+      "risks": [
+        "liquid-highlight"
+      ]
+    },
+    {
+      "source": "_posts/2015-05-27-dive-into-Deep-Clone-In-JavaScript.md",
+      "title": "深入剖析 JavaScript 的深复制",
+      "url": "/posts/dive-into-deep-clone-in-javascript/",
+      "bodySha256": "69f450c37ff31fa7413210626153cf1b9c92af873638c0f62721a8b9f9018785",
+      "images": [],
+      "risks": [
+        "liquid-highlight"
+      ]
+    },
+    {
+      "source": "_posts/2015-06-08-feasibility-of-allowing-baiduSpider-for-Github-Pages.md",
+      "title": "解决 Github Pages 禁止百度爬虫的方法与可行性分析",
+      "url": "/posts/feasibility-of-allowing-baiduSpider-for-Github-Pages/",
+      "bodySha256": "26306d7090ccd5cf508c6aa7c6fd6902111e0e9e462d791d89f5222d90a84249",
+      "images": [
+        "/assets/images/posts/cdn2.png",
+        "/assets/images/posts/cdn3.png",
+        "/assets/images/posts/crawl_test.png",
+        "/assets/images/posts/dnspod.png"
+      ],
+      "risks": [
+        "liquid-highlight",
+        "liquid-variable",
+        "legacy-image-modifier"
+      ]
+    },
+    {
+      "source": "_posts/2015-07-16-method-of-self-learning.md",
+      "title": "给迷茫的自学者指一条路",
+      "url": "/posts/method-of-self-learning/",
+      "bodySha256": "95e39bb6882ee45ec0bb8c12ee4b8345a337e2adb3985c8844014e248db472e1",
+      "images": [
+        "/assets/images/posts/evernote.png",
+        "/assets/images/posts/pocket.png",
+        "/assets/images/posts/trello-boards.png",
+        "/assets/images/posts/trello-lists.png",
+        "/assets/images/posts/xmind.png"
+      ],
+      "risks": [
+        "liquid-variable",
+        "legacy-image-modifier"
+      ]
+    },
+    {
+      "source": "_posts/2015-08-16-use-css-to-paint-triangle-and-parallelogram.md",
+      "title": "用 CSS 实现三角形与平行四边形",
+      "url": "/posts/use-css-to-paint-triangle-and-parallelogram/",
+      "bodySha256": "f79635a5c7a4340b9f1ed5222e5455b7854f50bd0fb794ce09485a19e1b841b2",
+      "images": [
+        "/assets/images/posts/damn.gif",
+        "/assets/images/posts/pagination.png",
+        "/assets/images/posts/pagination_chrome_scale.png",
+        "/assets/images/posts/pagination_safari_scale.png",
+        "/assets/images/posts/parallelogram.png",
+        "/assets/images/posts/qua_parallelogram.png",
+        "/assets/images/posts/shanghai_normal.png",
+        "/assets/images/posts/shanghai_skew.png",
+        "/assets/images/posts/triangle.png"
+      ],
+      "risks": [
+        "liquid-highlight",
+        "liquid-variable",
+        "legacy-image-modifier"
+      ]
+    },
+    {
+      "source": "_posts/2015-10-25-webhook-practice.md",
+      "title": "Webhook 实践 —— 自动部署",
+      "url": "/posts/webhook-practice/",
+      "bodySha256": "60cec5f0a99e59404e5e68d8bfb4bab43bfa4fbe715cd92d1dc1a0c507000d55",
+      "images": [
+        "/assets/images/posts/webhooks-config.png"
+      ],
+      "risks": [
+        "liquid-highlight",
+        "liquid-variable"
+      ]
+    },
+    {
+      "source": "_posts/2015-11-25-leetcode-benchmark.md",
+      "title": "记一次作死 —— 被 Leetcode 封禁",
+      "url": "/posts/leetcode-benchmark/",
+      "bodySha256": "58deda4ffb2fed36b4af781de8a1fede79719528cb2042a86554b8a64f18115f",
+      "images": [
+        "/assets/images/posts/curl.jpg",
+        "/assets/images/posts/leetcode-benchmark.png"
+      ],
+      "risks": [
+        "liquid-highlight",
+        "liquid-variable",
+        "legacy-image-modifier"
+      ]
+    },
+    {
+      "source": "_posts/2015-12-08-desgin-for-all-mobile-resolution.md",
+      "title": "懒人必备的移动端定宽网页适配方案",
+      "url": "/posts/design-for-all-mobile-resolution/",
+      "bodySha256": "b53c3429ffdf1f538d24a50a09e47181a04d9e8cdcf1bf9ea9dcbdcc19238d81",
+      "images": [
+        "/assets/images/posts/viewport.png"
+      ],
+      "risks": [
+        "liquid-highlight",
+        "liquid-variable",
+        "inline-script"
+      ]
+    },
+    {
+      "source": "_posts/2016-02-27-hit-kounter.md",
+      "title": "为你的博客添加访问量统计",
+      "url": "/posts/introduction-to-hit-kounter/",
+      "bodySha256": "bed3949a15505002faf26dbb0b8e9a30a53a92cbcd7ac0a37bf60e438a0f7b17",
+      "images": [],
+      "risks": [
+        "liquid-highlight",
+        "inline-script"
+      ]
+    },
+    {
+      "source": "_posts/2016-03-21-record-and-playback-for-kinect.md",
+      "title": "Kinect 数据录制与回放",
+      "url": "/posts/record-and-playback-for-kinect/",
+      "bodySha256": "c7db085b4d25bb69d25284b2c026ade1403f9b6191b023c402af6f531b92ea6f",
+      "images": [
+        "/assets/images/posts/kinect-result.jpg",
+        "/assets/images/posts/kinect-studio.png",
+        "/assets/images/posts/vs-reference.png"
+      ],
+      "risks": [
+        "liquid-highlight",
+        "liquid-variable",
+        "legacy-image-modifier"
+      ]
+    },
+    {
+      "source": "_posts/2016-04-24-hit-kounter-LeanCloud.md",
+      "title": "访问量统计工具 Hit Kounter v0.3",
+      "url": "/posts/introduction-to-hit-kounter-lc/",
+      "bodySha256": "974cae00b938267a5d573debb564255de658e1a672dba1a45df4ce0dc1c67d9c",
+      "images": [],
+      "risks": [
+        "liquid-highlight",
+        "inline-script"
+      ]
+    },
+    {
+      "source": "_posts/2017-05-20-vscode-debug-guide.md",
+      "title": "Visual Studio Code 前端调试不完全指南",
+      "url": "/posts/vscode-debug-guide/",
+      "bodySha256": "101c45f7a36e6d7d89450af3c3c8dc47c9b02f69022230205af09456e862969b",
+      "images": [
+        "/assets/images/posts/vscode-debug-chrome.png",
+        "/assets/images/posts/vscode-debug-launch.png"
+      ],
+      "risks": [
+        "liquid-highlight",
+        "liquid-variable"
+      ]
+    },
+    {
+      "source": "_posts/2017-06-20-rxjs-practice-01.md",
+      "title": "RxJS 实战篇（一）拖拽",
+      "url": "/posts/rxjs-practice-01/",
+      "bodySha256": "2bf9881fb534a844e313442e0ac4f3bc595342dfdd59ad5ebd7f733bc6f71ff7",
+      "images": [
+        "/assets/images/posts/drag-list.webp",
+        "/assets/images/posts/iPhone-drag.webp"
+      ],
+      "risks": [
+        "liquid-highlight",
+        "liquid-variable",
+        "inline-script"
+      ]
+    },
+    {
+      "source": "_posts/2017-09-25-talk-about-premature-optimization.md",
+      "title": "浅谈前端中的过早优化问题",
+      "url": "/posts/talk-about-premature-optimization/",
+      "bodySha256": "40e80006e64648368afc1c379f2f19507cc450adc8fb31105c0d601c3535913b",
+      "images": [],
+      "risks": []
+    },
+    {
+      "source": "_posts/2018-02-19-10-questions-about-graphql.md",
+      "title": "阻碍你使用 GraphQL 的十个问题",
+      "url": "/posts/10-questions-about-graphql/",
+      "bodySha256": "606fc22aa4f5ddd1267340f7f1504c14e4db3f973421319599093608f390ad7c",
+      "images": [
+        "/assets/images/posts/backend-arch.png",
+        "/assets/images/posts/graphiql-screenshot.jpg",
+        "/assets/images/posts/graphql-uml.png"
+      ],
+      "risks": [
+        "liquid-highlight",
+        "liquid-variable"
+      ]
+    },
+    {
+      "source": "_posts/2018-11-27-rxjs-hooks.md",
+      "title": "像呼吸一样自然：React hooks + RxJS",
+      "url": "/posts/rxjs-hooks/",
+      "bodySha256": "68282c8bc041e753cb1ba19893ddcf3553f994d3036a46dad4131a294f867930",
+      "images": [
+        "/assets/images/posts/rxjs-hooks/ben-lesh.jpg",
+        "/assets/images/posts/rxjs-hooks/drag-list.webp",
+        "/assets/images/posts/rxjs-hooks/drag.webp",
+        "/assets/images/posts/rxjs-hooks/resizer.webp",
+        "/assets/images/posts/rxjs-hooks/真香.webp"
+      ],
+      "risks": [
+        "liquid-highlight",
+        "liquid-variable"
+      ]
+    },
+    {
+      "source": "_posts/2019-05-31-hit-kounter-notification.md",
+      "title": "HitKounter 替换 CDN 服务地址的公告",
+      "url": "/posts/hit-kounter-notification/",
+      "bodySha256": "fa9a9a34bedc95854ca13194ac6607785029ae3672751fbf313890843ad1fd3d",
+      "images": [],
+      "risks": [
+        "liquid-highlight",
+        "inline-script"
+      ]
+    },
+    {
+      "source": "_posts/2021-02-13-2021-recommended-book-list.md",
+      "title": "推荐我 2020 年读过的十本书",
+      "url": "/posts/2021-recommended-book-list/",
+      "bodySha256": "b171b58aec8f59266da2d235b8460b1a5c7baeabc6684795a28af4fcea7f0f1d",
+      "images": [],
+      "risks": []
+    },
+    {
+      "source": "_posts/2022-05-02-finite-and-infinite-games.md",
+      "title": "从《有限与无限的游戏》谈起",
+      "url": "/posts/mind-shield/",
+      "bodySha256": "abc284287907082aec033ee6cc88440c095eb51511f2be3d47dedb914fc5cf56",
+      "images": [],
+      "risks": []
+    },
+    {
+      "source": "_posts/2023-01-02-how-to-read-a-book-recommendation.md",
+      "title": "完成不可能的任务——推荐《如何阅读一本书》",
+      "url": "/posts/how-to-read-a-book-recommendation/",
+      "bodySha256": "36c5d3294b21dd2247723edd4de6681b4b7c568a87705bde869b5515ebc31f67",
+      "images": [],
+      "risks": []
+    },
+    {
+      "source": "_posts/2023-03-25-how-to-write-a-prompt-for-chatgpt.md",
+      "title": "ChatGPT Prompt 编写指南",
+      "url": "/posts/how-to-write-a-prompt-for-chatgpt/",
+      "bodySha256": "a856a0511d2eb81814db95a5a545c62bc22eb32bba2cfc1ab573c0bf986c2e7d",
+      "images": [],
+      "risks": []
+    },
+    {
+      "source": "_posts/2024-08-31-stop-creating-syndrome.md",
+      "title": "停止创作综合症",
+      "url": "/posts/stop-creating-syndrome/",
+      "bodySha256": "4718107a37479b3caac1ef3d8386db56ec9c1ee5574b21a04a2d495d9c17cf3d",
+      "images": [],
+      "risks": []
+    },
+    {
+      "source": "_posts/2024-10-08-divination-and-god.md",
+      "title": "命数与劫难，占卜与鬼神",
+      "url": "/posts/divination-and-god/",
+      "bodySha256": "cd5e03dfec0f76849df82b9fb00afe8bbd71c96c8f68d10f0a22d1e304e8810c",
+      "images": [],
+      "risks": []
+    },
+    {
+      "source": "_posts/2025-01-01-reading-is-good-but-dont-overdo-it.md",
+      "title": "脑袋装不下就会吐，读书虽好，不可贪杯",
+      "url": "/posts/reading-is-good-but-dont-overdo-it/",
+      "bodySha256": "63659e9cfb08d8b3b942746c29826b98301c846f8da8ebc2f3697919833efdb6",
+      "images": [],
+      "risks": []
+    },
+    {
+      "source": "_posts/2025-03-07-when-ai-can-do-everything-where-is-human-value.md",
+      "title": "当 AI 能做一切，人类价值在哪里？",
+      "url": "/posts/when-ai-can-do-everything-where-is-human-value/",
+      "bodySha256": "35135b693b287c46a0e6c7bbceeb4770e28612c4b0dd7c1d6dd52710221e84bc",
+      "images": [],
+      "risks": []
+    },
+    {
+      "source": "_posts/2026-01-02-the-integral-of-now-a-guide-to-time-travel.md",
+      "title": "2026 时间旅行指南：未来是当下的积分",
+      "url": "/posts/the-integral-of-now-a-guide-to-time-travel/",
+      "bodySha256": "d4ceac48e7a9b42720ae590ea21a165970b8c216f6ee53fbebfaf353a590cefc",
+      "images": [
+        "/assets/images/posts/凶真和助手的擦肩而过.jpg",
+        "/assets/images/posts/时空恋旅人-剧照.png",
+        "/assets/images/posts/源代码-剧照.jpg",
+        "/assets/images/posts/霍金的未来人聚会.png"
+      ],
+      "risks": [
+        "liquid-variable"
+      ]
+    },
+    {
+      "source": "_posts/2026-02-09-programmer-to-hr-unexpected-advantages.md",
+      "title": "程序员转型 HR：我发现的意外优势",
+      "url": "/posts/programmer-to-hr-unexpected-advantages/",
+      "bodySha256": "4a38534207ab00eece285905a2f80d2544ac558f8d7e4e77d7dd756a9df96726",
+      "images": [
+        "/assets/images/posts/Larry_Page_and_Sergey_Brin.webp",
+        "/assets/images/posts/功夫熊猫-剧照.jpg",
+        "/assets/images/posts/心灵捕手-剧照.jpg",
+        "/assets/images/posts/盲人摸象.jpeg",
+        "/assets/images/posts/硅谷-剧照.jpg"
+      ],
+      "risks": [
+        "liquid-variable"
+      ]
+    },
+    {
+      "source": "_posts/2026-04-19-when-the-lobster-decided-to-learn-smoking.md",
+      "title": "当这只龙虾决定去学抽烟",
+      "url": "/posts/when-the-lobster-decided-to-learn-smoking/",
+      "bodySha256": "4e4ebd448fb351691e4282e40fc3643e974a00f4857945f5a3c40659de29249a",
+      "images": [
+        "/assets/images/posts/Her剧照.jpg",
+        "/assets/images/posts/IMG_1538.jpg",
+        "/assets/images/posts/当一个龙虾人决定去.webp",
+        "/assets/images/posts/男子正在抽电子烟.webp"
+      ],
+      "risks": [
+        "liquid-variable"
+      ]
+    },
+    {
+      "source": "_posts/2026-05-07-floating-on-the-grey-sea.md",
+      "title": "浮在灰蒙蒙的海上",
+      "url": "/posts/floating-on-the-grey-sea/",
+      "bodySha256": "886847dd80f6c6d4137157c7b0ce22bf5abb954c078c391228bfd6874e013fb9",
+      "images": [
+        "/assets/images/posts/浮在灰蒙蒙的海上.png"
+      ],
+      "risks": [
+        "liquid-variable"
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "path": "/",
+      "type": "page",
+      "status": 200,
+      "title": "咀嚼之味",
+      "description": "咀嚼之味是我分享我对编程与生活的见解之地。我喜欢做一些安静的事，比如看书、看电影、听音乐、散步以及旅行。",
+      "canonical": "https://jerryzou.com/"
+    },
+    {
+      "path": "/2/",
+      "type": "pagination",
+      "status": 200,
+      "title": "咀嚼之味",
+      "description": "咀嚼之味是我分享我对编程与生活的见解之地。我喜欢做一些安静的事，比如看书、看电影、听音乐、散步以及旅行。",
+      "canonical": "https://jerryzou.com/2/"
+    },
+    {
+      "path": "/3/",
+      "type": "pagination",
+      "status": 200,
+      "title": "咀嚼之味",
+      "description": "咀嚼之味是我分享我对编程与生活的见解之地。我喜欢做一些安静的事，比如看书、看电影、听音乐、散步以及旅行。",
+      "canonical": "https://jerryzou.com/3/"
+    },
+    {
+      "path": "/4/",
+      "type": "pagination",
+      "status": 200,
+      "title": "咀嚼之味",
+      "description": "咀嚼之味是我分享我对编程与生活的见解之地。我喜欢做一些安静的事，比如看书、看电影、听音乐、散步以及旅行。",
+      "canonical": "https://jerryzou.com/4/"
+    },
+    {
+      "path": "/5/",
+      "type": "pagination",
+      "status": 200,
+      "title": "咀嚼之味",
+      "description": "咀嚼之味是我分享我对编程与生活的见解之地。我喜欢做一些安静的事，比如看书、看电影、听音乐、散步以及旅行。",
+      "canonical": "https://jerryzou.com/5/"
+    },
+    {
+      "path": "/6/",
+      "type": "pagination",
+      "status": 200,
+      "title": "咀嚼之味",
+      "description": "咀嚼之味是我分享我对编程与生活的见解之地。我喜欢做一些安静的事，比如看书、看电影、听音乐、散步以及旅行。",
+      "canonical": "https://jerryzou.com/6/"
+    },
+    {
+      "path": "/7/",
+      "type": "pagination",
+      "status": 200,
+      "title": "咀嚼之味",
+      "description": "咀嚼之味是我分享我对编程与生活的见解之地。我喜欢做一些安静的事，比如看书、看电影、听音乐、散步以及旅行。",
+      "canonical": "https://jerryzou.com/7/"
+    },
+    {
+      "path": "/8/",
+      "type": "pagination",
+      "status": 200,
+      "title": "咀嚼之味",
+      "description": "咀嚼之味是我分享我对编程与生活的见解之地。我喜欢做一些安静的事，比如看书、看电影、听音乐、散步以及旅行。",
+      "canonical": "https://jerryzou.com/8/"
+    },
+    {
+      "path": "/about/",
+      "type": "page",
+      "status": 200,
+      "title": "关于我 | 咀嚼之味",
+      "description": "咀嚼之味是我分享我对编程与生活的见解之地。我喜欢做一些安静的事，比如看书、看电影、听音乐、散步以及旅行。",
+      "canonical": "https://jerryzou.com/about/"
+    },
+    {
+      "path": "/all-articles/",
+      "type": "page",
+      "status": 200,
+      "title": "所有文章 | 咀嚼之味",
+      "description": "咀嚼之味是我分享我对编程与生活的见解之地。我喜欢做一些安静的事，比如看书、看电影、听音乐、散步以及旅行。",
+      "canonical": "https://jerryzou.com/all-articles/"
+    },
+    {
+      "path": "/feed.xml",
+      "type": "feed",
+      "status": 200,
+      "title": null,
+      "description": null,
+      "canonical": null
+    },
+    {
+      "path": "/posts/10-questions-about-graphql/",
+      "type": "post",
+      "status": 200,
+      "title": "阻碍你使用 GraphQL 的十个问题 | 咀嚼之味",
+      "description": "我在使用 GraphQL 的过程中经历了理解、误解、再理解的过程。作为吃了 GraphQL 这个螃蟹的人，希望能够通过这篇文章更好地帮助各位读者理解 GraphQL 是什么，GraphQL 会给你带来什么，以及将 GraphQL 应用于你的系统中需要注意哪些问题。这不是一篇系统的科普文，如果你有什么其他疑问可以评论中留言询问。",
+      "canonical": "https://jerryzou.com/posts/10-questions-about-graphql/"
+    },
+    {
+      "path": "/posts/2021-recommended-book-list/",
+      "type": "post",
+      "status": 200,
+      "title": "推荐我 2020 年读过的十本书 | 咀嚼之味",
+      "description": "不知道其他人怎么样，我在读书的过程中有时会迸发出一些小火花，将过去埋藏在深处的记忆激发出来。在书中一边寻找答案，一边激活记忆的碎片，这种感觉是非常有意思的。去年算是我读书相对以往较多的一年，这既说明了我在过去的一年有非常强烈的成长渴望，也说明了我遭遇了一些困难与瓶颈。非常感谢这些书在这过去的一年里带给我的力量，简单跟大家推荐一下我认可的好书！",
+      "canonical": "https://jerryzou.com/posts/2021-recommended-book-list/"
+    },
+    {
+      "path": "/posts/aboutNormalizeCss/",
+      "type": "post",
+      "status": 200,
+      "title": "来，让我们谈一谈 Normalize.css | 咀嚼之味",
+      "description": "Normalize.css 只是一个很小的CSS文件，但它在默认的HTML元素样式上提供了跨浏览器的高度一致性。相比于传统的CSS reset，Normalize.css 是一种现代的、为HTML5准备的优质替代方案。Normalize.css 现在已经被用于Twitter Bootstrap、HTML5 Boilerplate、GOV.UK、Rdio、CSS Tricks以及许许多多其他框架、工具和网站上。",
+      "canonical": "https://jerryzou.com/posts/aboutNormalizeCss/"
+    },
+    {
+      "path": "/posts/bulkUploadToUPYUN/",
+      "type": "post",
+      "status": 200,
+      "title": "使用plupload绕过服务器，批量上传图片到又拍云 | 咀嚼之味",
+      "description": "论坛或者贴吧经常会需要分享很多图片，上传图片比较差的做法是上传到中央服务器上，中央服务器再转发给静态图片服务器。而这篇文章讲介绍如何使用plupload对上传过程进行优化，并绕过服务器直接批量上传图片到又拍云上的方法。",
+      "canonical": "https://jerryzou.com/posts/bulkUploadToUPYUN/"
+    },
+    {
+      "path": "/posts/caocao01/",
+      "type": "post",
+      "status": 200,
+      "title": "阿瞒究竟有没有杀伯奢？ | 咀嚼之味",
+      "description": "阿瞒是曹操的小名，叫起来很亲切。我自幼喜欢孟德的雄才大略，小时候读《三国演义》一直把孟德当作主角，可惜他自古大多被演绎成奸恶之徒。在演义中，孟德刺杀董卓失败，逃亡途径谯郡。时任县令的陈宫捉住了孟德后，了解到他心中的大志向，于是决定罢官，与孟德同走",
+      "canonical": "https://jerryzou.com/posts/caocao01/"
+    },
+    {
+      "path": "/posts/chew/",
+      "type": "post",
+      "status": 200,
+      "title": "咀嚼之味 | 咀嚼之味",
+      "description": "今天起，本博客更名为《咀嚼之味》。最近实在忙得不行，都好久没有发博文了，看了看上一次po文已经是三个月之前的事了。我不太喜欢生活的一切被各种事情占满，因为我有更多自己想做的事情，自己想研究的东西。我喜欢去思考一些感兴趣的东西，而繁忙却把这一切都夺走了。所以我讨厌繁忙！说回到“咀嚼”…",
+      "canonical": "https://jerryzou.com/posts/chew/"
+    },
+    {
+      "path": "/posts/cookie-and-web-storage/",
+      "type": "post",
+      "status": 200,
+      "title": "详说 Cookie, LocalStorage 与 SessionStorage | 咀嚼之味",
+      "description": "最近在找暑期实习，其中百度、网易游戏、阿里的面试都问到一些关于HTML5的东西，问题大多是这样开头的：“你用过什么HTML5的技术呀？” 而后，每次都能扯到 Cookie 和 localStorage 有啥差别。这篇文章就旨在详细地阐述这部分内容。",
+      "canonical": "https://jerryzou.com/posts/cookie-and-web-storage/"
+    },
+    {
+      "path": "/posts/cyclomatic-complexity-logic-in-css/",
+      "type": "post",
+      "status": 200,
+      "title": "论 CSS 中的逻辑 | 咀嚼之味",
+      "description": "在过去的很长一段时间中，我们都说 CSS 是不带有任何逻辑的，意思是在 CSS 中没有控制流，也没有某种类似于其他编程语言的方式来组织 CSS。CSS 天生缺乏逻辑性的问题导致了预处理器的出现。然而业界却对 CSS 预处理器褒贬不一，支持预处理器的人认为这弥补了 CSS 缺失的特性；而反对预处理器的人则认为 CSS 的设计初衷就不应该带有逻辑性，他们认为根本不应该引入预处理器这个概念...",
+      "canonical": "https://jerryzou.com/posts/cyclomatic-complexity-logic-in-css/"
+    },
+    {
+      "path": "/posts/deepcopy/",
+      "type": "post",
+      "status": 200,
+      "title": "Javascript中的一种深复制实现 | 咀嚼之味",
+      "description": "要实现深复制有很多办法，比如最简单的办法有：var cloneObj = JSON.parse(JSON.stringify(obj));上面这种方法好处是非常简单易用，但是坏处也显而易见，这会抛弃对象的constructor，也就是深复制之后，无论这个对象原本的构造函数是什么，在深复制之后都会变成Object。另外诸如`RegExp`对象是无法通过这种方式深复制的。所以这里我将介绍一种，我自认为很优美的深复制方法，当然可能也存在问题。如果你发现了我的实现方法有什么问题，请及时让我知道~",
+      "canonical": "https://jerryzou.com/posts/deepcopy/"
+    },
+    {
+      "path": "/posts/design-for-all-mobile-resolution/",
+      "type": "post",
+      "status": 200,
+      "title": "懒人必备的移动端定宽网页适配方案 | 咀嚼之味",
+      "description": "如今移动设备的分辨率纷繁复杂。以前仅仅是安卓机拥有各种各样的适配问题，如今 iPhone 也拥有了三种主流的分辨率，而未来的 iPhone 7 可能又会玩出什么新花样。如何以不变应万变，用简简单单的几行代码就能支持种类繁多的屏幕分辨率呢？今天就给大家介绍一种懒人必备的移动端定宽网页适配方法。",
+      "canonical": "https://jerryzou.com/posts/design-for-all-mobile-resolution/"
+    },
+    {
+      "path": "/posts/dive-into-deep-clone-in-javascript/",
+      "type": "post",
+      "status": 200,
+      "title": "深入剖析 JavaScript 的深复制 | 咀嚼之味",
+      "description": "一年前我曾写过一篇 Javascript 中的一种深复制实现，当时写这篇文章的时候还比较稚嫩，有很多地方没有考虑仔细。为了不误人子弟，我决定结合 Underscore、lodash 和 jQuery 这些主流的第三方库来重新谈一谈在 JavaScript 中的深复制。",
+      "canonical": "https://jerryzou.com/posts/dive-into-deep-clone-in-javascript/"
+    },
+    {
+      "path": "/posts/divination-and-god/",
+      "type": "post",
+      "status": 200,
+      "title": "命数与劫难，占卜与鬼神 | 咀嚼之味",
+      "description": "你相信命中注定吗？还是觉得人定胜天？你信奉宗教吗？还是坚定的无神论者？你喜欢占卜、星象、风水、算命吗？咱们中国是无神论国家，信马列不信鬼神。但新中国才成立 75 年，鬼神信仰一直存在于中华大地上。老一辈人，尤其是福建广东一带，对风水尤其看重。无论是阴宅还是阳宅，都要让风水大师看上一看。他们相信，祖宗在阴宅里躺的安稳，子子孙孙都能得到荫蔽，大富大贵，步步高升。...",
+      "canonical": "https://jerryzou.com/posts/divination-and-god/"
+    },
+    {
+      "path": "/posts/do-you-really-want-use-bit-operators-in-JavaScript/",
+      "type": "post",
+      "status": 200,
+      "title": "为什么不要在 JavaScript 中使用位操作符？ | 咀嚼之味",
+      "description": "如果你的第一门编程语言不是 JavaScript，而是 C++ 或 Java，那么一开始你大概会看不惯 JavaScript 的数字类型。在 JavaScript 中的数字类型是不区分什么 Int，Float，Double，Decimal 的。咳咳，我说的当然是在 ES6 之前的 JS，在 ES6 的新标准中提出了像 Int8Array 这样新的数据类型。不过这不是本文叙述的重点，暂且就不谈啦。本文将更着重地谈 JS 的数字类型以及作用于它的位操作符...",
+      "canonical": "https://jerryzou.com/posts/do-you-really-want-use-bit-operators-in-JavaScript/"
+    },
+    {
+      "path": "/posts/dontBeEvil/",
+      "type": "post",
+      "status": 200,
+      "title": "Don't be evil ? | 咀嚼之味",
+      "description": "今天是2014年的最后一天，原本和欢欢说好一起吃晚饭。可是中行偏偏又要开什么新员工大会，从六点多一直开到九点多！结果只是不断地给新员工压力而已，于是就跟欢欢说起中行的各种恶性竞争与病态的价值观！然后～就扯到了谷歌的“不作恶”。",
+      "canonical": "https://jerryzou.com/posts/dontBeEvil/"
+    },
+    {
+      "path": "/posts/feasibility-of-allowing-baiduSpider-for-Github-Pages/",
+      "type": "post",
+      "status": 200,
+      "title": "解决 Github Pages 禁止百度爬虫的方法与可行性分析 | 咀嚼之味",
+      "description": "我写技术博客有两个原因：一是总结自己近日的研究成果，二是将这些成果分享给大家。所以就我个人来说，还是比较希望写出来的文章有更多的人能够看到的。我最近注意到我的博客的流量大多来自于谷歌，而几乎没有来源于百度的。而本文就旨在提出这个问题，并尝试着去解决这个问题。",
+      "canonical": "https://jerryzou.com/posts/feasibility-of-allowing-baiduSpider-for-Github-Pages/"
+    },
+    {
+      "path": "/posts/floating-on-the-grey-sea/",
+      "type": "post",
+      "status": 200,
+      "title": "浮在灰蒙蒙的海上 | 咀嚼之味",
+      "description": "两年前的一个深夜，我写下这段文字。那时有些事情超出了我的掌控，令我焦躁难眠。如今那种感觉偶尔还会涌上来，好在这些文字总能带给我一些安宁。...",
+      "canonical": "https://jerryzou.com/posts/floating-on-the-grey-sea/"
+    },
+    {
+      "path": "/posts/getDevEnvironmentBack/",
+      "type": "post",
+      "status": 200,
+      "title": "发生在升级OS X Yosemite后：修复各种开发环境 | 咀嚼之味",
+      "description": "终于还是忍不住升级了，促使我升级的原动力居然是Alfred的Yosemite theme居然比初始theme好看很多！在升级前就预想到我的开发环境是一定会被破坏的，所以升级好系统以后还是赶快看下发生了什么吧！",
+      "canonical": "https://jerryzou.com/posts/getDevEnvironmentBack/"
+    },
+    {
+      "path": "/posts/gitForSAE/",
+      "type": "post",
+      "status": 200,
+      "title": "极速地将git项目部署到SAE的svn服务器上 | 咀嚼之味",
+      "description": "我花了一些时间自己写了一个能够极速地将一个git项目部署到SAE的svn服务器上的脚本。代码不是复杂，也没有很深的技术。但确实是个好用的小工具，至少对我来说，不用把我的git项目打包成zip再上传了，确实提高了超多效率！我将首先介绍一下脚本如何使用，再介绍我是如何实现这个shell脚本的。",
+      "canonical": "https://jerryzou.com/posts/gitForSAE/"
+    },
+    {
+      "path": "/posts/hit-kounter-notification/",
+      "type": "post",
+      "status": 200,
+      "title": "HitKounter 替换 CDN 服务地址的公告 | 咀嚼之味",
+      "description": "三年前，我发布了一个用于统计博客访问量的小工具，HitKounter。这些年来不少用户正在使用这个小玩意儿，这让我感到很开心！但是最近出了一些小问题。之前我将 HitKounter JavaScript 脚本直接上传到了又拍云的对象存储中。那时我直接将又拍云提供的测试访问链接开放出来，以供大家使用。",
+      "canonical": "https://jerryzou.com/posts/hit-kounter-notification/"
+    },
+    {
+      "path": "/posts/how-to-read-a-book-recommendation/",
+      "type": "post",
+      "status": 200,
+      "title": "完成不可能的任务——推荐《如何阅读一本书》 | 咀嚼之味",
+      "description": "2022 年过去了，一年读了二十本书，但在豆瓣上“想读的书”不减反增。很多时候我发现阅读的动力不足就在于，我在阅读了一段时间之后仍然无法获知这本书与我有什么关系。最初的热情这时候就很容易消解掉了。我时常会带着一些明确的目的、想要解答的疑问去阅读。我自己称之为“功利的阅读”，然而读完一本书的结果反而是我萌生出了更多的问题，发现了更多可能很精彩的好书。",
+      "canonical": "https://jerryzou.com/posts/how-to-read-a-book-recommendation/"
+    },
+    {
+      "path": "/posts/how-to-write-a-prompt-for-chatgpt/",
+      "type": "post",
+      "status": 200,
+      "title": "ChatGPT Prompt 编写指南 | 咀嚼之味",
+      "description": "目前大众接触最多的 ChatGPT 使用的底层模型还是 GPT-3.5，它在推理和逻辑计算方面还显得非常稚嫩。但 ChatGPT 所表现出的对人类自然语言的理解能力以及对语言中情绪的理解能力是非常惊人的。许多人已经从这款工具上获得了工作效率的成倍提升。其中最重要的部分就是“如何写好 prompt”。在我这篇文章中，我将从中整理出一些能快速理解的简单技术，帮助你们理解如何优化、迭代自己的“咒语”。",
+      "canonical": "https://jerryzou.com/posts/how-to-write-a-prompt-for-chatgpt/"
+    },
+    {
+      "path": "/posts/introduction-to-hit-kounter-lc/",
+      "type": "post",
+      "status": 200,
+      "title": "访问量统计工具 Hit Kounter v0.3 | 咀嚼之味",
+      "description": "Hit Kounter 是一个简单的访问量统计工具。据我从数据库里的数据目测，现在已经拥有了 9 位用户！不过我要对这九位用户说声抱歉啦。Hit Kounter 原本部署于 SAE 上，而近期 SAE 针对使用 MySQL 的应用开始收费。本项目只是一个本人使用业余时间开发的小工具；它本身包含的功能也很精简，并不适合使用付费服务。所以我已经将 Hit Kounter 服务迁移至 LeanCloud 上。原本部署在 SAE 上的服务预计在五一假期后下线，对已经使用 Hit Kounter 的一些用户，我再次表达我的歉意！使用方式上，目前 v0.3 版本相比于 v0.1 并没有什么改变…",
+      "canonical": "https://jerryzou.com/posts/introduction-to-hit-kounter-lc/"
+    },
+    {
+      "path": "/posts/introduction-to-hit-kounter/",
+      "type": "post",
+      "status": 200,
+      "title": "为你的博客添加访问量统计 | 咀嚼之味",
+      "description": "相信很多程序员朋友们都拥有了自己的技术博客。像 Hexo, Jekyll 这样的静态网站生成器甚是好用，而对于相对动态的内容，比如评论框，也有诸如多说和 Disqus 的工具可以使用。但是针对博客的访问量统计，却没有什么可用的工具。很多同学在我的博客中留言问我，我的博文中显示的访问量是怎么做到的？我曾经尝试依靠百度统计是不是能解决这个问题，然而我失败了。于是我自己用 PHP 写了一个很简单的服务来完成这件事，经过一次重构，我把它命名为 Hit Kounter。",
+      "canonical": "https://jerryzou.com/posts/introduction-to-hit-kounter/"
+    },
+    {
+      "path": "/posts/jreparser/",
+      "type": "post",
+      "status": 200,
+      "title": "一款在线JavaScript正则表达式测试器 | 咀嚼之味",
+      "description": "昨天在看《正则表达式30分钟入门教程》的时候，看到博主自己实现了一个C#写的正则测试器，看上去挺方便的样子。但是我自己又不太喜欢乱装东西，所以寻思着能不能自己实现一个javascript正则表达式测试器。于是几十行代码实现了这样一个正则测试器。",
+      "canonical": "https://jerryzou.com/posts/jreparser/"
+    },
+    {
+      "path": "/posts/jsmodular/",
+      "type": "post",
+      "status": 200,
+      "title": "深入了解JavaScript模块化编程 | 咀嚼之味",
+      "description": "本文译自Ben Cherry的《JavaScript Module Pattern In-Depth》。虽然个人不太认同js中私有变量存在的必要性，但是本文非常全面地介绍了JavaScript中模块化模式地方方面面。我读完之后还是受益匪浅，所以翻译出来希望对各位也有些帮助。",
+      "canonical": "https://jerryzou.com/posts/jsmodular/"
+    },
+    {
+      "path": "/posts/learnjs/",
+      "type": "post",
+      "status": 200,
+      "title": "如何循序渐进地学习JavaScript | 咀嚼之味",
+      "description": "JavaScript入门太容易了，导致几乎人人随便看看就能上手，零基础的人学个三五天都能对外宣称自己掌握了js。可是真正掌握js是一件很难的事情。如果在初学一门语言的时候第一想到的是问别人，是很难取得进步的。因为得到答案太容易，而不会去想为什么。而且说实话，js并不适合作为第一门编程语言，它兼容并包，容错性高，但这也意味着一但出错你就很难找到错误的原因。另一方面js有一些优秀的特性对于没有编程经历的人来说也很难发现。在这篇文章中，我将结合我自己的经历来给js初学者提一些学习的建议。",
+      "canonical": "https://jerryzou.com/posts/learnjs/"
+    },
+    {
+      "path": "/posts/leetcode-benchmark/",
+      "type": "post",
+      "status": 200,
+      "title": "记一次作死 —— 被 Leetcode 封禁 | 咀嚼之味",
+      "description": "从昨天凌晨四点起，我的 Leetcode 账号就无法提交任何代码了，于是我意识到我的账号大概是被封了……",
+      "canonical": "https://jerryzou.com/posts/leetcode-benchmark/"
+    },
+    {
+      "path": "/posts/method-of-self-learning/",
+      "type": "post",
+      "status": 200,
+      "title": "给迷茫的自学者指一条路 | 咀嚼之味",
+      "description": "不管是从零开始接触编程，还是从大学踏入社会，一个人踏入一个全新的领域时总是会产生迷茫的感觉。这篇文章的目的不在于教授自学者们学习的方法，仅仅把我自己的一些学习和总结的方法分享出来，以供各位参考，希望对你们有所帮助。",
+      "canonical": "https://jerryzou.com/posts/method-of-self-learning/"
+    },
+    {
+      "path": "/posts/mind-shield/",
+      "type": "post",
+      "status": 200,
+      "title": "从《有限与无限的游戏》谈起 | 咀嚼之味",
+      "description": "人生总是伴随着各种不确定性，诸如互联网公司的裁员潮、上海面临疫情和社会治理的双重灾难。人，生来更偏好于秩序感，而排斥不确定性。在面对不确定性时，人就很容易进入一种焦虑的情绪。如何让自己的内心面对狂风骤雨时，依旧保持澄澈，如何在面对苦痛与磨难之时，仍旧维持心灵的防线呢？我尝试在书籍这座避难所中寻找答案。",
+      "canonical": "https://jerryzou.com/posts/mind-shield/"
+    },
+    {
+      "path": "/posts/networkConfig/",
+      "type": "post",
+      "status": 200,
+      "title": "小型局域网的多路由配置 | 咀嚼之味",
+      "description": "本文将讨论我在实际生活中遇到的问题——小型局域网多路由的配置。今天刚回到家，我妈就找到我说公司里的几台无线路由用不了，在同一时刻只能用一个路由，其他的都得拔掉。我第一反应就是ip冲突了，但是感觉很麻烦的样子，因为要合理管理公司里的网络，肯定需要一个网管来分配网段嘛。可是老妈说急用啊，这次一定要搞好！没办法，硬着头皮上吧！",
+      "canonical": "https://jerryzou.com/posts/networkConfig/"
+    },
+    {
+      "path": "/posts/opentopublic/",
+      "type": "post",
+      "status": 200,
+      "title": "博客建立 | 咀嚼之味",
+      "description": "今天我的博客终于搞定了，首先要谢谢Rasmus Andersson开源了他的博客代码，我才能把博客做成现在这样。",
+      "canonical": "https://jerryzou.com/posts/opentopublic/"
+    },
+    {
+      "path": "/posts/paperFormat/",
+      "type": "post",
+      "status": 200,
+      "title": "IEEE论文PDF格式检测中的问题与解决 | 咀嚼之味",
+      "description": "这两天要发一篇很酱油的论文了，根据格式的模板改了半天终于大功告成。结果发现在IEEE PDF Express网站上说我检验不通过，并给出了以下的错误信息。我瞬间摸不着头脑了，Font Times New Roman is not embedded (583x)到底是什么错啊，还没有行号，这叫我如何定位这个错误！根据官方给出的提示一路顺藤摸瓜，最终发现这一段：...",
+      "canonical": "https://jerryzou.com/posts/paperFormat/"
+    },
+    {
+      "path": "/posts/programmer-to-hr-unexpected-advantages/",
+      "type": "post",
+      "status": 200,
+      "title": "程序员转型 HR：我发现的意外优势 | 咀嚼之味",
+      "description": "最近我在为我们 HR 团队招募新伙伴。期间不少候选人看了公司官网上我的介绍信息以后，会冒出这样一个疑问：“你们公司的 HR 老大为什么会是个技术背景的人？” 背后包含一个非常直白的质疑：你来管 HR 团队，到底靠不靠谱？...",
+      "canonical": "https://jerryzou.com/posts/programmer-to-hr-unexpected-advantages/"
+    },
+    {
+      "path": "/posts/reading-is-good-but-dont-overdo-it/",
+      "type": "post",
+      "status": 200,
+      "title": "脑袋装不下就会吐，读书虽好，不可贪杯 | 咀嚼之味",
+      "description": "在 2024 年的最后一天，我打开微信读书，最后的统计数字定格在 365 小时。“日均阅读 1 小时，比去年上升 151%”，屏幕上这么显示着，我悄悄松了一口气。似乎就是为了这么一个凑数的目标，挑起了我的强迫症和胜负心，一如我小时候走瓷砖必须避免踩到边线一样。我自己也说不清楚为什么觉得这个数字很重要。...",
+      "canonical": "https://jerryzou.com/posts/reading-is-good-but-dont-overdo-it/"
+    },
+    {
+      "path": "/posts/record-and-playback-for-kinect/",
+      "type": "post",
+      "status": 200,
+      "title": "Kinect 数据录制与回放 | 咀嚼之味",
+      "description": "最近在实验室用深度相机做一些三维重建的研究，主要的实验场景在宝山区的仓库。学校到仓库的来回车程大概有三四个小时，如果每次都要到实际场景中来测试算法，这真是着实令人头疼。所以我想着，如果能用 Kinect 把仓库中的场景录制下来，回来直接用录好的数据来测试算法，那不就不用来回跑了吗？",
+      "canonical": "https://jerryzou.com/posts/record-and-playback-for-kinect/"
+    },
+    {
+      "path": "/posts/rxjs-hooks/",
+      "type": "post",
+      "status": 200,
+      "title": "像呼吸一样自然：React hooks + RxJS | 咀嚼之味",
+      "description": "上个月的 React Conf 上，React 核心团队首次将 hooks 带到的公众们的眼前。起初我看到这样奇怪的东西，对它是很抗拒的。Dan 说 JavaScript 里的 this 太黑了，从其他语言转来写 React 的人会很不适应。然而 hooks 本质上也是一种黑魔法，需要理解它的本质依旧需要对 JS 的各种闭包和作用域的问题搞得很透彻才行。然而后来，跟 hooks 打了几天交道以后，我感觉这个想法还是挺有意思的。",
+      "canonical": "https://jerryzou.com/posts/rxjs-hooks/"
+    },
+    {
+      "path": "/posts/rxjs-practice-01/",
+      "type": "post",
+      "status": 200,
+      "title": "RxJS 实战篇（一）拖拽 | 咀嚼之味",
+      "description": "很多人在接触到 RxJS 后会有一个共同的感觉：这个库虽然很强大，但奈何各种各样的 operators 太多了，在实际场景中根本不知道怎么运用！所以本文并不旨在阐释响应式编程的优越性，而是通过循序渐进的实例来展示 RxJS 常用 operators 的使用场景。",
+      "canonical": "https://jerryzou.com/posts/rxjs-practice-01/"
+    },
+    {
+      "path": "/posts/shadowsocks-and-digitalocean/",
+      "type": "post",
+      "status": 200,
+      "title": "使用 DigitalOcean 和 shadowsocks 来科学上网 | 咀嚼之味",
+      "description": "使用了各种不稳定的VPN服务以后，我还是觉得自己搭VPS比较靠谱。DigitalOcean 提供了可伸缩的 VPS，最便宜的服务器是每个月$5，虽然对于学生来说不算便宜，但好在一开始充$5送$10，而且成功申请到 Github Student pack 的话，还可以得到$100。ShadowSocks 是科学上网的利器，在 Github 上已经得到了五千多个 Star，使用的人极多、影响极深。而且它对各个平台的支持也非常好，目前我在 Windows/Mac/iOS 三个平台上都拥有了科学上网的环境。",
+      "canonical": "https://jerryzou.com/posts/shadowsocks-and-digitalocean/"
+    },
+    {
+      "path": "/posts/shadowsocks-with-digitalocean/",
+      "type": "legacy-compat",
+      "status": 200,
+      "title": "Redirecting...",
+      "description": null,
+      "canonical": null
+    },
+    {
+      "path": "/posts/sjtuBus/",
+      "type": "post",
+      "status": 200,
+      "title": "使用百度地图API来完成交大校园巴士时刻表 | 咀嚼之味",
+      "description": "交大的校园巴士时刻表都只能在车站的站牌上查看。这对于需要出行的学生来说非常不方便，无法合理做好出行的安排。为了解决这个问题，我和统一套间的两位同学一起完成了这个简单的app。这篇博客将简要介绍这个web应用是如何实现的。",
+      "canonical": "https://jerryzou.com/posts/sjtuBus/"
+    },
+    {
+      "path": "/posts/sjtuBusFeedback/",
+      "type": "post",
+      "status": 200,
+      "title": "交大校车 Web App 用户反馈 | 咀嚼之味",
+      "description": "上周交大校车 Web App 上线。为了更好地服务于同学，有任何建议和反馈都可以在本帖下留言。",
+      "canonical": "https://jerryzou.com/posts/sjtuBusFeedback/"
+    },
+    {
+      "path": "/posts/stop-creating-syndrome/",
+      "type": "post",
+      "status": 200,
+      "title": "停止创作综合症 | 咀嚼之味",
+      "description": "最近有一段时间很低落，我决定对自己进行诊断一番。自从我读了几本跟人体健康、心理健康相关的书籍之后，我掌握了一种新的技能——给自己看病。是的，我会分裂出两个人格，病人人格和医生人格。病人人格讲述最近发生的事情，而医生人格通过提问来引导病人人格说更多的话，从中抓出一些蛛丝马迹来做出医疗诊断。",
+      "canonical": "https://jerryzou.com/posts/stop-creating-syndrome/"
+    },
+    {
+      "path": "/posts/storageMethod/",
+      "type": "post",
+      "status": 200,
+      "title": "搞清大数端小数端 | 咀嚼之味",
+      "description": "我们日常生活中常见的IA-32位体系架构一般都是小数端存储方法。而IA-64则同时采用大数端和小数端的存储方法。究竟什么是大数端，什么是小数端呢？就让我们从这篇文章中了解一下吧。",
+      "canonical": "https://jerryzou.com/posts/storageMethod/"
+    },
+    {
+      "path": "/posts/talk-about-premature-optimization/",
+      "type": "post",
+      "status": 200,
+      "title": "浅谈前端中的过早优化问题 | 咀嚼之味",
+      "description": "过早优化是万恶之源。 —— Donald Knuth 还记得大四的软件优化课上，课的主题虽然是关于各种优化手段的，但老师讲的第一门课的 PPT 里依旧给这句话留了独立的一页。在近期的工作中，我就碰到了不少因为“过早优化”带来的麻烦。稍微整理了一下思绪，便有了这篇短文。",
+      "canonical": "https://jerryzou.com/posts/talk-about-premature-optimization/"
+    },
+    {
+      "path": "/posts/the-integral-of-now-a-guide-to-time-travel/",
+      "type": "post",
+      "status": 200,
+      "title": "2026 时间旅行指南：未来是当下的积分 | 咀嚼之味",
+      "description": "在所有我看过的影片里，有一类主题总是令我着迷——**时间旅行**。它们往往有着最硬核的逻辑外壳，却包裹着最柔软的内核。“El Psy Kongroo.”懂这句话的人，大概都感受过那种“众人皆醉我独醒”的孤独感。我看过的动漫不算多，但《命运石之门》始终占据着一个特殊的位置。那个自称“狂气科学家”的中二少年凶真，为了拯救青梅竹马，一遍遍地在时间线中跳跃、循环。在这个过程中，他邂逅了灵魂伴侣牧濑红莉栖，但命运对他开了一个最残酷的玩笑：只有回到他不再认识她的那一刻，才能真正拯救所有人。...",
+      "canonical": "https://jerryzou.com/posts/the-integral-of-now-a-guide-to-time-travel/"
+    },
+    {
+      "path": "/posts/tipsforC/",
+      "type": "post",
+      "status": 200,
+      "title": "C语言中可能被你忽视的小细节 | 咀嚼之味",
+      "description": "在阅读C语言创造者Dennis M.Ritchie写的《C程序设计语言》时，我整理了一些简单的tips，希望对你们有些帮助。",
+      "canonical": "https://jerryzou.com/posts/tipsforC/"
+    },
+    {
+      "path": "/posts/use-css-to-paint-triangle-and-parallelogram/",
+      "type": "post",
+      "status": 200,
+      "title": "用 CSS 实现三角形与平行四边形 | 咀嚼之味",
+      "description": "本文将介绍使用纯 CSS 来构造三角形与平行四边形的两种方法。",
+      "canonical": "https://jerryzou.com/posts/use-css-to-paint-triangle-and-parallelogram/"
+    },
+    {
+      "path": "/posts/usePygments/",
+      "type": "post",
+      "status": 200,
+      "title": "使用Pygments来实现代码高亮 | 咀嚼之味",
+      "description": "今天我尝试更换了我个人博客jerryzou.com中的代码高亮样式，主要使用的就是Pygments。Pygments有许多各式各样的样式可供选择，而在这篇文章中，我将为大家讲解如何安装Pygments、以及如何生成代码高亮所需要的文件。",
+      "canonical": "https://jerryzou.com/posts/usePygments/"
+    },
+    {
+      "path": "/posts/vscode-debug-guide/",
+      "type": "post",
+      "status": 200,
+      "title": "Visual Studio Code 前端调试不完全指南 | 咀嚼之味",
+      "description": "Visual Studio Code (以下简称 vscode) 如今已经代替 Sublime，成为前端工程师们最喜爱的代码编辑器。它作为一个大型的开源项目，不断推陈出新；社区中涌现出大量优质的插件，以支持我们更加舒服地进行开发工作。在近期的工作中，我尝试通过 vscode 来提升调试代码的幸福度，积累了一点点小心得在此与大家分享一下",
+      "canonical": "https://jerryzou.com/posts/vscode-debug-guide/"
+    },
+    {
+      "path": "/posts/webhook-practice/",
+      "type": "post",
+      "status": 200,
+      "title": "Webhook 实践 —— 自动部署 | 咀嚼之味",
+      "description": "我目前正好面临了这样一个问题 —— 麻烦的人肉部署。也许有人看过我之前的一篇博文《解决 Github Pages 禁止百度爬虫的方法与可行性分析》。为了解决文章中的这个问题，我最后建立了一个只服务于百度爬虫的一个备份服务器。但是随之而来的问题是，每次我的博客有些更新，都不得不 ssh 到那台服务器上把代码 pull 下来。如此做了两三次以后，我觉得我不能再这么堕落下去，于是还是决定尝试一下 Webhook。",
+      "canonical": "https://jerryzou.com/posts/webhook-practice/"
+    },
+    {
+      "path": "/posts/when-ai-can-do-everything-where-is-human-value/",
+      "type": "post",
+      "status": 200,
+      "title": "当 AI 能做一切，人类价值在哪里？ | 咀嚼之味",
+      "description": "看了一眼手表，显示心率 90 次/分。感觉不能再这样下去了，我在床上从躺姿转而坐了起来。按理来说这个心跳速度并不算快，但现在已经 1 点了，按往常的经验来说，我躺着快睡着的时候心率该降低到 50-60 才对。我摸黑走到了客厅，然后是厨房，给我的马克杯灌上了满满一杯水，然后一饮而尽。吸气…吐气…吸…吐…心跳似乎平缓一些了。一时半会儿说不清是什么让我如此心绪不宁……",
+      "canonical": "https://jerryzou.com/posts/when-ai-can-do-everything-where-is-human-value/"
+    },
+    {
+      "path": "/posts/when-the-lobster-decided-to-learn-smoking/",
+      "type": "post",
+      "status": 200,
+      "title": "当这只龙虾决定去学抽烟 | 咀嚼之味",
+      "description": "“抽烟到底是什么感觉？” 我问。在江西小炒饱餐一顿后，我们走在回办公室的路上。“尼古丁是个神奇的东西。” 他深吸了一口电子烟，脸颊凹陷进去，然后缓缓地向身侧吐出了这口烟。...",
+      "canonical": "https://jerryzou.com/posts/when-the-lobster-decided-to-learn-smoking/"
+    },
+    {
+      "path": "/robots.txt",
+      "type": "robots",
+      "status": 200,
+      "title": null,
+      "description": null,
+      "canonical": null
+    },
+    {
+      "path": "/sitemap.xml",
+      "type": "sitemap",
+      "status": 200,
+      "title": null,
+      "description": null,
+      "canonical": null
+    }
+  ],
+  "knownBrokenInternalLinks": [
+    {
+      "from": "/posts/paperFormat/",
+      "to": "/www.pdf-express.org"
+    }
+  ]
+}
