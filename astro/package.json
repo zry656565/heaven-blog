@@ -1,0 +1,40 @@
+{
+  "name": "heaven-blog-astro",
+  "private": true,
+  "type": "module",
+  "packageManager": "npm@11.6.2",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "format:check": "prettier --check package.json astro.config.mjs tsconfig.json 'src/**/*.{astro,css}' 'scripts/**/*.mjs'",
+    "check": "astro check",
+    "test": "node scripts/check-built-site.mjs",
+    "verify": "npm run format:check && npm run check && npm run build && npm run test"
+  },
+  "dependencies": {
+    "astro": "^7.2.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "prettier": "^3.9.6",
+    "prettier-plugin-astro": "^0.14.1",
+    "typescript": "^6.0.3"
+  },
+  "prettier": {
+    "plugins": [
+      "prettier-plugin-astro"
+    ],
+    "overrides": [
+      {
+        "files": "*.astro",
+        "options": {
+          "parser": "astro"
+        }
+      }
+    ]
+  }
+}

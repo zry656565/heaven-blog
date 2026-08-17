@@ -1,4 +1,4 @@
-name: Verify migration contract
+name: Verify migration
 
 on:
   pull_request:
@@ -16,4 +16,8 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: astro/package-lock.json
+      - run: corepack enable npm
+      - run: npm ci --prefix astro
       - run: npm run verify
