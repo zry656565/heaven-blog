@@ -95,6 +95,28 @@ function currentPosts() {
     .map((name) => readPost(join(root, "_posts", name)));
 }
 
+function jpegDimensions(jpeg) {
+  if (jpeg.length < 4 || jpeg[0] !== 0xff || jpeg[1] !== 0xd8) return null;
+  let offset = 2;
+  while (offset + 8 < jpeg.length) {
+    while (jpeg[offset] === 0xff) offset += 1;
+    const marker = jpeg[offset];
+    offset += 1;
+    if (marker === 0xd9 || marker === 0xda) break;
+    if (marker === 0x01 || (marker >= 0xd0 && marker <= 0xd7)) continue;
+    const length = jpeg.readUInt16BE(offset);
+    const isStartOfFrame = marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(marker);
+    if (isStartOfFrame) {
+      return {
+        height: jpeg.readUInt16BE(offset + 3),
+        width: jpeg.readUInt16BE(offset + 5),
+      };
+    }
+    offset += length;
+  }
+  return null;
+}
+
 async function captureContract() {
   const response = await fetchWithRetry("https://jerryzou.com/sitemap.xml");
   if (!response.ok) throw new Error(`读取现网 sitemap 失败：HTTP ${response.status}`);
@@ -131,6 +153,14 @@ function validateContract(contract) {
   const errors = [];
   const posts = currentPosts();
   const expectedBySource = new Map(contract.posts.map((post) => [post.source, post]));
+  const screenshots = [
+    ["home-desktop.jpg", "desktop"],
+    ["post-desktop.jpg", "desktop"],
+    ["archive-desktop.jpg", "desktop"],
+    ["home-mobile.jpg", "mobile"],
+    ["post-mobile.jpg", "mobile"],
+    ["archive-mobile.jpg", "mobile"],
+  ];
 
   if (posts.length !== contract.posts.length) {
     errors.push(`文章数变化：契约 ${contract.posts.length}，当前 ${posts.length}`);
@@ -170,6 +200,26 @@ function validateContract(contract) {
 
   for (const required of ["/", "/about/", "/all-articles/", "/feed.xml", "/robots.txt", "/sitemap.xml"]) {
     if (!contract.routes.some((route) => route.path === required)) errors.push(`路由契约缺少：${required}`);
+  }
+
+  for (const [name, mode] of screenshots) {
+    const path = join(root, "docs", "baseline", "screenshots", name);
+    if (!existsSync(path)) {
+      errors.push(`缺少视觉基线：${name}`);
+      continue;
+    }
+    const dimensions = jpegDimensions(readFileSync(path));
+    if (!dimensions) {
+      errors.push(`视觉基线不是有效 JPEG：${name}`);
+      continue;
+    }
+    const { width, height } = dimensions;
+    if (mode === "desktop" && (width < 1200 || height < 700)) {
+      errors.push(`桌面视觉基线尺寸异常：${name} ${width}x${height}`);
+    }
+    if (mode === "mobile" && (width < 360 || width > 430 || height < 780)) {
+      errors.push(`移动视觉基线尺寸异常：${name} ${width}x${height}`);
+    }
   }
 
   return errors;

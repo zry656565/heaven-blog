@@ -35,7 +35,25 @@
 - 仓库图片约 12.5 MB；最大两张图片分别约 2.6 MB 和 2.3 MB，是移动端优化的明确对象。
 - 本次网络样本：首页 HTML 约 10.4 KB，归档页约 22.5 KB，代表文章 HTML 约 6.3 KB；单次请求约 0.4–0.7 秒。该数据只作为粗略样本，不作为性能门槛。
 
-浏览器已完成首页、归档页和代表文章的 DOM 与计算样式核对，但截图接口连续超时，且移动 viewport 没有按指定尺寸生效。因此桌面/移动截图和真实移动性能仍是本阶段未完成项，不能据此关闭 Issue #2。
+视觉截图使用 Chrome 分别在 1280×720 和 390×844 viewport 下采集；保存前已验证实际 `innerWidth` 和 600px 媒体查询状态。移动文章正文宽度为 351px，没有横向溢出。
+
+| 页面 | 桌面 | 移动 |
+| --- | --- | --- |
+| 首页 | [截图](baseline/screenshots/home-desktop.jpg) | [截图](baseline/screenshots/home-mobile.jpg) |
+| 代表文章 | [截图](baseline/screenshots/post-desktop.jpg) | [截图](baseline/screenshots/post-mobile.jpg) |
+| 归档页 | [截图](baseline/screenshots/archive-desktop.jpg) | [截图](baseline/screenshots/archive-mobile.jpg) |
+
+### 移动性能样本
+
+2026-08-17 使用 Lighthouse 13.4.1 的默认移动模拟采集：412×823、150ms RTT、约 1.6Mbps、4 倍 CPU slowdown。以下是单次实验室数据，只用于迁移前后同口径比较，不作为稳定性能承诺。
+
+| 页面 | Performance | FCP | LCP | Speed Index | TBT | CLS | 总传输量 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 首页 | 90 | 2.2s | 2.9s | 4.7s | 10ms | 0 | 257 KiB |
+| 代表文章 | 97 | 2.2s | 2.2s | 2.2s | 30ms | 0 | 2,513 KiB |
+| 归档页 | 92 | 2.2s | 2.9s | 3.2s | 30ms | 0 | 295 KiB |
+
+代表文章约 2.3 MB 的原图占页面传输量绝大部分；三个页面均加载约 190 KB 第三方分析脚本。首页和归档页的主要可优化对象是 Google/Baidu 分析脚本、旧 jQuery，以及归档页使用的旧 React；这些结论需在 Astro 版本中用同口径 Lighthouse 复测。
 
 ## 工程决策
 
