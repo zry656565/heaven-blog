@@ -2,7 +2,7 @@
   "name": "heaven-blog-astro",
   "private": true,
   "type": "module",
-  "packageManager": "npm@11.6.2",
+  "packageManager": "npm@10.9.0",
   "engines": {
     "node": ">=22.12.0"
   },
