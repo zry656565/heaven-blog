@@ -18,6 +18,7 @@ assets/css/pages.css
 #npm
 node_modules
 astro/dist
+astro/.astro
 
 #react cache
 build/.module-cache
