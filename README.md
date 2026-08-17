@@ -7,7 +7,14 @@
 
 ## 改版验证
 
-Astro 改版期间，提交前统一运行：
+Astro 改版与旧 Jekyll 暂时并存。新站工程位于 [`astro/`](astro/)，使用 Node.js 22.12.0：
+
+```bash
+npm ci --prefix astro
+npm --prefix astro run dev
+```
+
+提交前统一运行：
 
 ```bash
 npm run verify

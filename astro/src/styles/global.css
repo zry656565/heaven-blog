@@ -1,0 +1,50 @@
+:root {
+  color: #333;
+  background: #fdfdfd;
+  font-family: ui-serif, "Songti SC", "Noto Serif CJK SC", Georgia, serif;
+  font-synthesis: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  border-top: 5px solid #333;
+}
+
+main {
+  width: min(100% - 2rem, 44rem);
+  margin: 0 auto;
+  padding: clamp(5rem, 18vh, 10rem) 0;
+}
+
+.eyebrow {
+  color: #1abc9c;
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+h1 {
+  margin: 0.5rem 0 1rem;
+  font-size: clamp(2.5rem, 10vw, 5rem);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+p {
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  line-height: 1.8;
+}
+
+.note {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e8e8e8;
+  color: #727272;
+  font-size: 0.9rem;
+}

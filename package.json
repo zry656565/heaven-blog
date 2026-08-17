@@ -2,11 +2,14 @@
   "name": "heaven-blog",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "npm@11.6.2",
   "engines": {
     "node": ">=22.12.0"
   },
   "scripts": {
-    "verify": "node scripts/verify-migration.mjs",
+    "verify": "npm run verify:migration && npm run verify:secrets && npm --prefix astro run verify",
+    "verify:migration": "node scripts/verify-migration.mjs",
+    "verify:secrets": "node scripts/verify-secrets.mjs",
     "verify:live": "node scripts/verify-migration.mjs --live"
   },
   "srcRoot": "assets",
