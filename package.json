@@ -2,7 +2,7 @@
   "name": "heaven-blog",
   "version": "0.1.0",
   "private": true,
-  "packageManager": "npm@11.6.2",
+  "packageManager": "npm@10.9.0",
   "engines": {
     "node": ">=22.12.0"
   },
