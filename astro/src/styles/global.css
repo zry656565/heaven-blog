@@ -89,6 +89,10 @@ a:hover {
   font-weight: 600;
 }
 
+.site-title:hover {
+  color: var(--accent);
+}
+
 .site-nav {
   display: flex;
   align-items: center;
@@ -106,6 +110,10 @@ a:hover {
 
 .nav-links a[aria-current="page"] {
   color: var(--fg);
+}
+
+.nav-links a:hover {
+  color: var(--accent);
 }
 
 .menu-toggle {
@@ -175,6 +183,10 @@ main {
   color: var(--fg);
   font-size: 1.15rem;
   font-weight: 600;
+}
+
+.post-list a:hover {
+  color: var(--accent);
 }
 
 .post-list time,
