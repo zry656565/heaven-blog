@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "astro": "^7.2.2",
+    "highlight.js": "^11.12.0",
     "marked": "^18.0.10"
   },
   "devDependencies": {

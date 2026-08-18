@@ -38,6 +38,7 @@ assert.doesNotMatch(html, /jerryzou\.com/, "预览首页不得绑定正式域名
 assert.match(essay, /2026 年的文章/, "随笔样本应回到年表而不是上一篇下一篇");
 assert.doesNotMatch(essay, /上一篇|下一篇/, "文末不应出现上一篇下一篇");
 assert.match(codePost, /<pre>/, "代码样本应保留代码块");
+assert.match(codePost, /hljs/, "代码样本应有构建期语法高亮");
 assert.match(tablePost, /table-wrap/, "含表格的文章应可横向滚动而不是撑破版心");
 
 console.log("Astro build smoke test passed.");
