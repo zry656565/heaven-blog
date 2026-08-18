@@ -211,8 +211,7 @@ main {
   color: var(--accent);
 }
 
-.post-list time,
-.year-list time {
+.post-list time {
   display: block;
   color: var(--muted);
   font-size: 0.88rem;
@@ -230,13 +229,17 @@ main {
 }
 
 .year-list li {
-  display: flex;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: 3.25rem minmax(0, 1fr);
+  gap: 0 0.9rem;
+  align-items: baseline;
   padding: 0.35rem 0;
 }
 
 .year-list time {
-  flex: 0 0 3.5rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-variant-numeric: tabular-nums;
 }
 
 .year-group {
@@ -375,10 +378,35 @@ main {
   background: var(--code-bg);
 }
 
+.about p {
+  margin: 0 0 1rem;
+}
+
+.about h2 {
+  margin: 2rem 0 0.6rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.about-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+}
+
+.about-inline a {
+  color: var(--fg);
+}
+
+.about-inline a:hover {
+  color: var(--accent);
+}
+
 .monkey-avatar {
   display: block;
-  max-width: 12rem;
-  margin: 1.5rem 0;
+  width: 6.5rem;
+  height: auto;
+  margin: 1.25rem 0 0;
 }
 
 .site-footer {
@@ -430,8 +458,12 @@ main {
   }
 
   .year-list li {
-    flex-direction: column;
-    gap: 0.15rem;
+    grid-template-columns: 2.75rem minmax(0, 1fr);
+    gap: 0 0.7rem;
+  }
+
+  .year-group + .year-group {
+    margin-top: 1.5rem;
   }
 }
 
