@@ -1,45 +1,47 @@
 ---
 import Base from "../layouts/Base.astro";
 
-const work = [
+type TimelineItem = {
+  when: string;
+  name: string;
+  title: string;
+  href?: string;
+};
+
+const work: TimelineItem[] = [
   {
     when: "2021 – 至今",
     name: "航木科技",
-    title: "HR Head · 曾经的 IT Head",
+    title: "HR Head，曾任 IT Head",
     href: "https://www.sailingwood.com.cn",
   },
   {
     when: "2018 – 2020",
     name: "力扣科技",
     title: "技术负责人",
-    href: "https://leetcode.cn",
   },
   {
     when: "2017",
     name: "Teambition",
     title: "前端工程师",
-    href: "https://www.teambition.com",
   },
   {
     when: "2015",
     name: "淘票票",
     title: "实习工程师",
-    href: "https://dianying.taobao.com",
   },
   {
     when: "2014",
     name: "Microsoft",
     title: "实习工程师",
-    href: "https://www.microsoft.com",
   },
 ];
 
-const school = [
+const school: TimelineItem[] = [
   {
     when: "2010 – 2017",
     name: "上海交通大学",
     title: "软件工程",
-    href: "https://www.sjtu.edu.cn",
   },
 ];
 ---
@@ -67,7 +69,7 @@ const school = [
           <li>
             <span class="timeline-when">{item.when}</span>
             <span>
-              <a href={item.href}>{item.name}</a>
+              {item.href ? <a href={item.href}>{item.name}</a> : item.name}
               <span class="timeline-title"> · {item.title}</span>
             </span>
           </li>
@@ -81,7 +83,7 @@ const school = [
           <li>
             <span class="timeline-when">{item.when}</span>
             <span>
-              <a href={item.href}>{item.name}</a>
+              {item.href ? <a href={item.href}>{item.name}</a> : item.name}
               <span class="timeline-title"> · {item.title}</span>
             </span>
           </li>
