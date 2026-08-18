@@ -12,6 +12,7 @@ const post = getPost(Astro.params.slug as string);
 if (!post) {
   throw new Error(`未找到文章：${Astro.params.slug}`);
 }
+const year = post.date.slice(0, 4);
 ---
 
 <Base title={post.title} description={post.description}>
@@ -29,5 +30,8 @@ if (!post) {
       }
     </p>
     <div class="prose" set:html={post.html} />
+    <p class="article-exit">
+      <a href={`/all-articles/#y${year}`}>{year} 年的文章</a>
+    </p>
   </article>
 </Base>

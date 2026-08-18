@@ -205,6 +205,26 @@ main {
   flex: 0 0 3.5rem;
 }
 
+.year-group {
+  scroll-margin-top: 1.5rem;
+}
+
+.article-exit {
+  margin: 3rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.article-exit a {
+  color: var(--muted);
+}
+
+.article-exit a:hover {
+  color: var(--accent);
+}
+
 .prose :first-child {
   margin-top: 0;
 }

@@ -9,7 +9,7 @@ const groups = groupPostsByYear(listPosts());
   <h1 class="page-title">所有文章</h1>
   {
     groups.map(([year, posts]) => (
-      <section class="year-group">
+      <section class="year-group" id={`y${year}`}>
         <h2>{year}</h2>
         <ol class="year-list">
           {posts.map((post) => (
