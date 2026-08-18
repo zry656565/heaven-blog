@@ -50,6 +50,8 @@ assert.match(html, /application\/rss\+xml/, "首页应声明 RSS alternate");
 assert.match(feed, /<rss version="2.0"/, "应输出 RSS 2.0");
 assert.match(feed, /<title>咀嚼之味<\/title>/, "Feed 标题应保持原博客名称");
 assert.match(feed, /<item>/, "Feed 应包含最近文章");
+assert.match(feed, /00:00:00 \+0800/, "Feed 日期应保留文章当天的 +0800");
+assert.doesNotMatch(feed, /\*\*/, "Feed 摘要不应残留 Markdown 强调记号");
 assert.doesNotMatch(feed, /jerryzou\.com/, "预览 Feed 不得绑定正式域名");
 assert.match(
   essay,
