@@ -97,9 +97,9 @@ function prepareMarkdown(body: string): string {
     .replace(/\{\{\s*site\.static_url\s*\}\}/g, "/assets/images")
     .replace(
       /\{%\s*highlight\s+([a-zA-Z0-9_+-]+)(?:\s+[^%]*)?\s*%\}/g,
-      "\n```$1\n",
+      "\n```$1",
     )
-    .replace(/\{%\s*endhighlight\s*%\}/g, "\n```\n");
+    .replace(/\{%\s*endhighlight\s*%\}/g, "```\n");
 }
 
 function escapeHtml(value: string): string {
@@ -124,7 +124,7 @@ renderer.image = (token) => {
 
 renderer.code = ({ text, lang }) => {
   const language = normalizeLang(lang);
-  const highlighted = highlightCode(text, language);
+  const highlighted = highlightCode(text.replace(/^\n+|\n+$/g, ""), language);
   const className = language ? `hljs language-${language}` : "hljs";
   return `<pre><code class="${className}">${highlighted}</code></pre>\n`;
 };
