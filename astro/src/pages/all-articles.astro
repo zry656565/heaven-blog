@@ -1,0 +1,25 @@
+---
+import Base from "../layouts/Base.astro";
+import { groupPostsByYear, listPosts } from "../lib/posts";
+
+const groups = groupPostsByYear(listPosts());
+---
+
+<Base title="所有文章" current="archive">
+  <h1 class="page-title">所有文章</h1>
+  {
+    groups.map(([year, posts]) => (
+      <section class="year-group">
+        <h2>{year}</h2>
+        <ol class="year-list">
+          {posts.map((post) => (
+            <li>
+              <time datetime={post.date}>{post.date.slice(5)}</time>
+              <a href={post.permalink}>{post.title}</a>
+            </li>
+          ))}
+        </ol>
+      </section>
+    ))
+  }
+</Base>

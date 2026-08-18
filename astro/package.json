@@ -16,10 +16,12 @@
     "verify": "npm run format:check && npm run check && npm run build && npm run test"
   },
   "dependencies": {
-    "astro": "^7.2.2"
+    "astro": "^7.2.2",
+    "marked": "^18.0.10"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@types/node": "^26.2.0",
     "prettier": "^3.9.6",
     "prettier-plugin-astro": "^0.14.1",
     "typescript": "^6.0.3"
