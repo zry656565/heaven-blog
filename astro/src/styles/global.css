@@ -134,6 +134,7 @@ a:hover {
   display: none;
   width: 1.15rem;
   height: 1.15rem;
+  transform: translateY(-2px);
 }
 
 html[data-theme-choice="system"] .theme-icon[data-theme-icon="system"],
