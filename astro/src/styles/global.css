@@ -1,3 +1,4 @@
+/* Stage 2 tokens: paper light is canonical; dark is a derived pairing. */
 :root,
 html[data-theme="light"] {
   --bg: #fdfdfd;
@@ -8,7 +9,11 @@ html[data-theme="light"] {
   --link: #205caa;
   --rule: #333;
   --code-bg: #f3f3f3;
+  --code-fg: #2a2a2a;
   --header-bg: #fff;
+  --measure: 42rem;
+  --space: 1rem;
+  --radius: 2px;
 }
 
 html[data-theme="dark"] {
@@ -20,6 +25,7 @@ html[data-theme="dark"] {
   --link: #7eb0e0;
   --rule: #e8e8e8;
   --code-bg: #1f1f1f;
+  --code-fg: #e4e4e4;
   --header-bg: #111;
 }
 
@@ -39,6 +45,7 @@ html[data-theme="dark"] {
 body {
   min-height: 100vh;
   margin: 0;
+  overflow-x: clip;
   color: var(--fg);
   background: var(--bg);
   font:
@@ -64,8 +71,23 @@ a:hover {
   outline-offset: 2px;
 }
 
+.skip-link {
+  position: absolute;
+  left: 0.75rem;
+  top: 0.75rem;
+  z-index: 20;
+  padding: 0.35rem 0.6rem;
+  background: var(--header-bg);
+  color: var(--fg);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
 .wrap {
-  width: min(100% - 1.5rem, 42rem);
+  width: min(100% - 1.5rem, var(--measure));
   margin: 0 auto;
 }
 
@@ -247,10 +269,72 @@ main {
 }
 
 .prose h2,
-.prose h3 {
+.prose h3,
+.prose h4 {
   margin: 2rem 0 0.75rem;
   font-size: 1.2rem;
   font-weight: 600;
+}
+
+.prose h4 {
+  font-size: 1.05rem;
+}
+
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 2rem 0;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.3rem;
+}
+
+.prose figure {
+  margin: 2rem 0;
+}
+
+.prose figcaption {
+  margin-top: 0.5rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.table-wrap {
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.prose th,
+.prose td {
+  padding: 0.45rem 0.65rem;
+  border: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose th {
+  font-weight: 600;
+  background: var(--code-bg);
+}
+
+.prose .footnotes {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.prose sup {
+  font-size: 0.75em;
 }
 
 .prose blockquote {
@@ -275,7 +359,9 @@ main {
   margin: 1.5rem 0;
   padding: 1rem 1.15rem;
   overflow-x: auto;
+  border-radius: var(--radius);
   background: var(--code-bg);
+  color: var(--code-fg);
   font-size: 0.88rem;
 }
 
