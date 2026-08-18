@@ -1,0 +1,33 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getPost, listPosts } from "../../lib/posts";
+
+export function getStaticPaths() {
+  return listPosts().map((post) => ({
+    params: { slug: post.slug },
+  }));
+}
+
+const post = getPost(Astro.params.slug as string);
+if (!post) {
+  throw new Error(`未找到文章：${Astro.params.slug}`);
+}
+---
+
+<Base title={post.title} description={post.description}>
+  <article>
+    <h1 class="page-title">{post.title}</h1>
+    <p class="meta">
+      <time datetime={post.date}>{post.date}</time>
+      {
+        post.labels.length > 0 && (
+          <>
+            {" · "}
+            {post.labels.join(" · ")}
+          </>
+        )
+      }
+    </p>
+    <div class="prose" set:html={post.html} />
+  </article>
+</Base>

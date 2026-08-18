@@ -1,24 +1,19 @@
 ---
-import "../styles/global.css";
+import Base from "../layouts/Base.astro";
+import { listPosts } from "../lib/posts";
 
-const title = "咀嚼之味";
-const description = "一个关于技术、生活与思考的个人博客";
+const posts = listPosts();
 ---
 
-<!doctype html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="description" content={description} />
-    <title>{title}</title>
-  </head>
-  <body>
-    <main>
-      <p class="eyebrow">HEAVEN BLOG · ASTRO PREVIEW</p>
-      <h1>{title}</h1>
-      <p>{description}</p>
-      <p class="note">新站工程底座已经就绪，内容和历史链接将在后续阶段迁移。</p>
-    </main>
-  </body>
-</html>
+<Base title="咀嚼之味" current="home">
+  <ol class="post-list">
+    {
+      posts.map((post) => (
+        <li>
+          <a href={post.permalink}>{post.title}</a>
+          <time datetime={post.date}>{post.date}</time>
+        </li>
+      ))
+    }
+  </ol>
+</Base>

@@ -1,0 +1,132 @@
+---
+import "../styles/global.css";
+
+type Props = {
+  title: string;
+  description?: string | null;
+  current?: "home" | "archive" | "about";
+};
+
+const siteTitle = "咀嚼之味";
+const fallbackDescription =
+  "咀嚼之味是我分享我对编程与生活的见解之地。我喜欢做一些安静的事，比如看书、看电影、听音乐、散步以及旅行。";
+const { title, description = fallbackDescription, current } = Astro.props;
+const pageTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {description && <meta name="description" content={description} />}
+    <title>{pageTitle}</title>
+    <script is:inline>
+      (function () {
+        var key = "theme";
+        var stored = localStorage.getItem(key);
+        var choice =
+          stored === "light" || stored === "dark" || stored === "system"
+            ? stored
+            : "system";
+        var resolved =
+          choice === "system"
+            ? matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light"
+            : choice;
+        document.documentElement.dataset.theme = resolved;
+        document.documentElement.dataset.themeChoice = choice;
+      })();
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="site-title" href="/">{siteTitle}</a>
+        <nav class="site-nav" data-nav>
+          <button
+            class="menu-toggle"
+            type="button"
+            data-menu-toggle
+            aria-expanded="false"
+            aria-controls="site-menu">菜单</button
+          >
+          <div class="nav-links" id="site-menu">
+            <a href="/" aria-current={current === "home" ? "page" : undefined}
+              >首页</a
+            >
+            <a
+              href="/all-articles/"
+              aria-current={current === "archive" ? "page" : undefined}
+              >所有文章</a
+            >
+            <a
+              href="/about/"
+              aria-current={current === "about" ? "page" : undefined}>关于</a
+            >
+          </div>
+          <button
+            class="theme-toggle"
+            type="button"
+            data-theme-toggle
+            aria-label="切换颜色主题"></button>
+        </nav>
+      </div>
+    </header>
+    <main class="wrap">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">纸原型 · 浅色主设计 · 主题跟随系统</div>
+    </footer>
+    <script is:inline>
+      (function () {
+        var labels = { system: "跟随系统", light: "浅色", dark: "深色" };
+        var order = ["system", "light", "dark"];
+        var root = document.documentElement;
+        var button = document.querySelector("[data-theme-toggle]");
+        var nav = document.querySelector("[data-nav]");
+        var menu = document.querySelector("[data-menu-toggle]");
+
+        function resolve(choice) {
+          return choice === "system"
+            ? matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light"
+            : choice;
+        }
+
+        function apply(choice) {
+          root.dataset.themeChoice = choice;
+          root.dataset.theme = resolve(choice);
+          localStorage.setItem("theme", choice);
+          if (button) button.textContent = labels[choice];
+        }
+
+        apply(root.dataset.themeChoice || "system");
+
+        button &&
+          button.addEventListener("click", function () {
+            var current = root.dataset.themeChoice || "system";
+            apply(order[(order.indexOf(current) + 1) % order.length]);
+          });
+
+        menu &&
+          menu.addEventListener("click", function () {
+            var open = nav.classList.toggle("is-open");
+            menu.setAttribute("aria-expanded", open ? "true" : "false");
+          });
+
+        matchMedia("(prefers-color-scheme: dark)").addEventListener(
+          "change",
+          function () {
+            if ((root.dataset.themeChoice || "system") === "system") {
+              apply("system");
+            }
+          },
+        );
+      })();
+    </script>
+  </body>
+</html>
