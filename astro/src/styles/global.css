@@ -274,8 +274,7 @@ main {
   margin-top: 0;
 }
 
-.prose p,
-.prose li {
+.prose p {
   margin: 0 0 1rem;
 }
 
@@ -299,7 +298,17 @@ main {
 
 .prose ul,
 .prose ol {
+  margin: 0 0 1rem;
   padding-left: 1.3rem;
+}
+
+.prose li {
+  margin: 0.15em 0;
+}
+
+.prose li > ul,
+.prose li > ol {
+  margin: 0.2em 0 0.35em;
 }
 
 .prose figure {

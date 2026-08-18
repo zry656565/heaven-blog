@@ -79,5 +79,16 @@ assert.doesNotMatch(
   /<img[^>]+xmind\.png/,
   "缺失原图不应再输出失效 img",
 );
+assert.match(
+  missingImagePost,
+  /Trello 的同类软件<ul>/,
+  "自学一文应保留双层列表结构",
+);
+{
+  const cssHref = html.match(/href="(\/_astro\/[^"]+\.css)"/)?.[1];
+  assert.ok(cssHref, "首页应引用构建后的样式表");
+  const css = await readFile(join(distDir, cssHref.slice(1)), "utf8");
+  assert.match(css, /li>ul/, "嵌套列表应有比普通段落更紧的间距");
+}
 
 console.log("Astro build smoke test passed.");
