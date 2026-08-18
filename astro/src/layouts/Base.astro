@@ -41,6 +41,7 @@ const pageTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
     </script>
   </head>
   <body>
+    <a class="skip-link" href="#content">跳到正文</a>
     <header class="site-header">
       <div class="wrap">
         <a class="site-title" href="/">{siteTitle}</a>
@@ -124,7 +125,7 @@ const pageTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
         </nav>
       </div>
     </header>
-    <main class="wrap">
+    <main class="wrap" id="content">
       <slot />
     </main>
     <footer class="site-footer">
@@ -169,11 +170,20 @@ const pageTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
             apply(order[(order.indexOf(current) + 1) % order.length]);
           });
 
+        function setMenu(open) {
+          if (!nav || !menu) return;
+          nav.classList.toggle("is-open", open);
+          menu.setAttribute("aria-expanded", open ? "true" : "false");
+        }
+
         menu &&
           menu.addEventListener("click", function () {
-            var open = nav.classList.toggle("is-open");
-            menu.setAttribute("aria-expanded", open ? "true" : "false");
+            setMenu(!nav.classList.contains("is-open"));
           });
+
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape") setMenu(false);
+        });
 
         matchMedia("(prefers-color-scheme: dark)").addEventListener(
           "change",

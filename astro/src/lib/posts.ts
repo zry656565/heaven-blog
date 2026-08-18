@@ -1,6 +1,6 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { marked } from "marked";
+import { marked, Renderer } from "marked";
 
 export type Post = {
   title: string;
@@ -62,6 +62,34 @@ function prepareMarkdown(body: string): string {
     .replace(/\{%\s*endhighlight\s*%\}/g, "\n```\n");
 }
 
+function escapeHtml(value: string): string {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
+}
+
+const renderer = new Renderer();
+const renderImage = renderer.image.bind(renderer);
+
+renderer.image = (token) => {
+  const image = renderImage(token);
+  const alt = token.text.trim();
+  if (!alt || /\.(png|jpe?g|gif|webp|svg)$/i.test(alt)) {
+    return image;
+  }
+  return `<figure>${image}<figcaption>${escapeHtml(alt)}</figcaption></figure>`;
+};
+
+function wrapTables(html: string): string {
+  return html.replace(/<table\b[\s\S]*?<\/table>/gi, (table) =>
+    table.includes("table-wrap")
+      ? table
+      : `<div class="table-wrap">${table}</div>`,
+  );
+}
+
 function parsePost(filename: string): Post {
   const sourcePath = join(postsDir, filename);
   const source = readFileSync(sourcePath, "utf8");
@@ -87,7 +115,7 @@ function parsePost(filename: string): Post {
     slug: slugFromPermalink(permalink),
     labels: parseLabels(scalar(frontMatter, "labels")),
     source: `_posts/${filename}`,
-    html: marked.parse(body, { async: false }) as string,
+    html: wrapTables(marked.parse(body, { async: false, renderer }) as string),
   };
 }
 
