@@ -37,6 +37,20 @@ html[data-theme="dark"] {
   --header-bg: #111;
 }
 
+html {
+  --shiki-foreground: var(--code-fg);
+  --shiki-background: var(--code-bg);
+  --shiki-token-comment: var(--code-comment);
+  --shiki-token-keyword: var(--code-keyword);
+  --shiki-token-string: var(--code-string);
+  --shiki-token-string-expression: var(--code-string);
+  --shiki-token-constant: var(--code-number);
+  --shiki-token-function: var(--code-keyword);
+  --shiki-token-parameter: var(--code-number);
+  --shiki-token-punctuation: var(--code-fg);
+  --shiki-token-link: var(--link);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -421,30 +435,8 @@ html[data-theme="dark"] .lost-image-frame {
   background: var(--code-bg);
 }
 
-.prose .hljs-comment,
-.prose .hljs-quote {
-  color: var(--code-comment);
-  font-style: italic;
-}
-
-.prose .hljs-keyword,
-.prose .hljs-selector-tag,
-.prose .hljs-built_in,
-.prose .hljs-type,
-.prose .hljs-literal {
-  color: var(--code-keyword);
-}
-
-.prose .hljs-string,
-.prose .hljs-template-string,
-.prose .hljs-addition {
-  color: var(--code-string);
-}
-
-.prose .hljs-number,
-.prose .hljs-attr,
-.prose .hljs-attribute {
-  color: var(--code-number);
+.prose .shiki {
+  background: var(--code-bg);
 }
 
 .about p {
