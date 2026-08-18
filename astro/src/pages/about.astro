@@ -1,35 +1,44 @@
 ---
 import Base from "../layouts/Base.astro";
 
-const timeline = [
+const work = [
   {
     when: "2021 – 至今",
     name: "航木科技",
+    title: "HR Head · 曾经的 IT Head",
     href: "https://www.sailingwood.com.cn",
   },
   {
     when: "2018 – 2020",
     name: "力扣科技",
+    title: "技术负责人",
     href: "https://leetcode.cn",
   },
   {
     when: "2017",
     name: "Teambition",
+    title: "前端工程师",
     href: "https://www.teambition.com",
   },
   {
     when: "2015",
     name: "淘票票",
+    title: "实习工程师",
     href: "https://dianying.taobao.com",
   },
   {
     when: "2014",
     name: "Microsoft",
+    title: "实习工程师",
     href: "https://www.microsoft.com",
   },
+];
+
+const school = [
   {
     when: "2010 – 2017",
     name: "上海交通大学",
+    title: "软件工程",
     href: "https://www.sjtu.edu.cn",
   },
 ];
@@ -51,13 +60,30 @@ const timeline = [
       <a href="https://x.com/JerryDDG">X</a>
     </p>
     <img class="monkey-avatar" src="/assets/images/monkey.jpg" alt="" />
-    <h2>经历</h2>
+    <h2>工作</h2>
     <ol class="timeline">
       {
-        timeline.map((item) => (
+        work.map((item) => (
           <li>
             <span class="timeline-when">{item.when}</span>
-            <a href={item.href}>{item.name}</a>
+            <span>
+              <a href={item.href}>{item.name}</a>
+              <span class="timeline-title"> · {item.title}</span>
+            </span>
+          </li>
+        ))
+      }
+    </ol>
+    <h2>求学</h2>
+    <ol class="timeline">
+      {
+        school.map((item) => (
+          <li>
+            <span class="timeline-when">{item.when}</span>
+            <span>
+              <a href={item.href}>{item.name}</a>
+              <span class="timeline-title"> · {item.title}</span>
+            </span>
           </li>
         ))
       }
