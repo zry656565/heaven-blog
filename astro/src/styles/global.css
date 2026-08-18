@@ -113,17 +113,33 @@ a:hover {
 }
 
 .theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
   margin: 0;
   padding: 0;
   border: 0;
   background: none;
   color: var(--muted);
-  font: inherit;
   cursor: pointer;
 }
 
 .theme-toggle:hover {
   color: var(--accent);
+}
+
+.theme-icon {
+  display: none;
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+html[data-theme-choice="system"] .theme-icon[data-theme-icon="system"],
+html[data-theme-choice="light"] .theme-icon[data-theme-icon="light"],
+html[data-theme-choice="dark"] .theme-icon[data-theme-icon="dark"] {
+  display: block;
 }
 
 main {
