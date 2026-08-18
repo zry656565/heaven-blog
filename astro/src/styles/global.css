@@ -134,7 +134,7 @@ a:hover {
   display: none;
   width: 1.15rem;
   height: 1.15rem;
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 
 html[data-theme-choice="system"] .theme-icon[data-theme-icon="system"],
@@ -268,6 +268,10 @@ main {
   border-top: 1px solid var(--line);
   color: var(--muted);
   font-size: 0.88rem;
+}
+
+.footer-text {
+  margin: 0;
 }
 
 @media (max-width: 600px) {
