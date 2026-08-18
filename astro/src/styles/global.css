@@ -442,8 +442,12 @@ main {
   padding: 0.4rem 0;
 }
 
-.timeline-when {
+.timeline-when,
+.timeline-title {
   color: var(--muted);
+}
+
+.timeline-when {
   font-variant-numeric: tabular-nums;
 }
 
