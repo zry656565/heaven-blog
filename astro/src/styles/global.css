@@ -428,12 +428,23 @@ main {
   gap: 0.35rem 1rem;
 }
 
-.about-inline a {
-  color: var(--fg);
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.about-inline a:hover {
-  color: var(--accent);
+.timeline li {
+  display: grid;
+  grid-template-columns: 7.25rem minmax(0, 1fr);
+  gap: 0 1rem;
+  align-items: baseline;
+  padding: 0.4rem 0;
+}
+
+.timeline-when {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
 }
 
 .monkey-avatar {
@@ -498,6 +509,11 @@ main {
 
   .year-group + .year-group {
     margin-top: 1.5rem;
+  }
+
+  .timeline li {
+    grid-template-columns: 6.25rem minmax(0, 1fr);
+    gap: 0 0.75rem;
   }
 }
 

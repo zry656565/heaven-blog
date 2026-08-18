@@ -1,5 +1,38 @@
 ---
 import Base from "../layouts/Base.astro";
+
+const timeline = [
+  {
+    when: "2021 – 至今",
+    name: "航木科技",
+    href: "https://www.sailingwood.com.cn",
+  },
+  {
+    when: "2018 – 2020",
+    name: "力扣科技",
+    href: "https://leetcode.cn",
+  },
+  {
+    when: "2017",
+    name: "Teambition",
+    href: "https://www.teambition.com",
+  },
+  {
+    when: "2015",
+    name: "淘票票",
+    href: "https://dianying.taobao.com",
+  },
+  {
+    when: "2014",
+    name: "Microsoft",
+    href: "https://www.microsoft.com",
+  },
+  {
+    when: "2010 – 2017",
+    name: "上海交通大学",
+    href: "https://www.sjtu.edu.cn",
+  },
+];
 ---
 
 <Base title="关于我" current="about">
@@ -18,20 +51,23 @@ import Base from "../layouts/Base.astro";
       <a href="https://x.com/JerryDDG">X</a>
     </p>
     <img class="monkey-avatar" src="/assets/images/monkey.jpg" alt="" />
+    <h2>经历</h2>
+    <ol class="timeline">
+      {
+        timeline.map((item) => (
+          <li>
+            <span class="timeline-when">{item.when}</span>
+            <a href={item.href}>{item.name}</a>
+          </li>
+        ))
+      }
+    </ol>
     <h2>友情链接</h2>
     <p class="about-inline">
       <a href="https://xidui.github.io/links/">xidui</a>
-      <a href="https://zhangwenli.com/blog/">Ovilia</a>
       <a href="https://szhshp.org/friends">szhshp</a>
       <a href="https://www.dozer.cc/about.html">Dozer</a>
       <a href="https://h1z3y3.me/links/">h1z3y3</a>
-    </p>
-    <h2>经历</h2>
-    <p class="about-inline">
-      <a href="https://www.microsoft.com">Microsoft</a>
-      <a href="https://dianying.taobao.com">淘票票</a>
-      <a href="https://leetcode.cn">力扣</a>
-      <a href="https://www.sailingwood.com.cn">航木科技</a>
     </p>
   </div>
 </Base>
