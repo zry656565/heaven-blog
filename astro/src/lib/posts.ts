@@ -53,6 +53,8 @@ export type Post = {
   html: string;
 };
 
+export const LOST_IMAGE_TEXT = "图片已失联在历史的海洋中...";
+
 function findPostsDir(): string {
   const candidates = [
     resolve(process.cwd(), "..", "_posts"),
@@ -65,7 +67,17 @@ function findPostsDir(): string {
   return found;
 }
 
+function findImagesDir(): string {
+  const candidates = [
+    resolve(process.cwd(), "..", "assets", "images"),
+    resolve(process.cwd(), "assets", "images"),
+    resolve(process.cwd(), "public", "assets", "images"),
+  ];
+  return candidates.find((dir) => existsSync(dir)) ?? candidates[0];
+}
+
 const postsDir = findPostsDir();
+const imagesDir = findImagesDir();
 
 function scalar(frontMatter: string, key: string): string | null {
   const value = frontMatter
@@ -79,7 +91,7 @@ function parseLabels(value: string | null): string[] {
   return value
     .replace(/^\[|\]$/g, "")
     .split(",")
-    .map((label) => label.trim())
+    .map((label) => label.trim().replace(/^["']|["']$/g, ""))
     .filter(Boolean);
 }
 
@@ -95,11 +107,42 @@ function slugFromPermalink(permalink: string): string {
 function prepareMarkdown(body: string): string {
   return body
     .replace(/\{\{\s*site\.static_url\s*\}\}/g, "/assets/images")
+    .replace(/(\.(?:png|jpe?g|gif|webp|svg|bmp))![^)\s]*/gi, "$1")
     .replace(
       /\{%\s*highlight\s+([a-zA-Z0-9_+-]+)(?:\s+[^%]*)?\s*%\}/g,
       "\n```$1",
     )
     .replace(/\{%\s*endhighlight\s*%\}/g, "```\n");
+}
+
+function stripImageModifier(src: string): string {
+  return src.replace(/(\.(?:png|jpe?g|gif|webp|svg|bmp))![^/\s?#]*/i, "$1");
+}
+
+function localImagePath(src: string): string | null {
+  let href = src.trim();
+  try {
+    href = decodeURI(href);
+  } catch {
+    // keep the raw path when it is not a valid escape sequence
+  }
+  href = stripImageModifier(href.split(/[?#]/, 1)[0] ?? href);
+  if (!href.startsWith("/assets/images/")) return null;
+  return join(imagesDir, href.slice("/assets/images/".length));
+}
+
+function localImageMissing(src: string): boolean {
+  const filePath = localImagePath(src);
+  return Boolean(filePath && !existsSync(filePath));
+}
+
+function lostImagePlaceholder(alt: string): string {
+  const safeAlt = alt.trim();
+  const caption =
+    safeAlt && !/\.(png|jpe?g|gif|webp|svg|bmp)$/i.test(safeAlt)
+      ? `<figcaption>${escapeHtml(safeAlt)}</figcaption>`
+      : "";
+  return `<figure class="lost-image"><div class="lost-image-frame" role="img" aria-label="${escapeHtml(LOST_IMAGE_TEXT)}"><span>${escapeHtml(LOST_IMAGE_TEXT)}</span></div>${caption}</figure>`;
 }
 
 function escapeHtml(value: string): string {
@@ -114,9 +157,13 @@ const renderer = new Renderer();
 const renderImage = renderer.image.bind(renderer);
 
 renderer.image = (token) => {
-  const image = renderImage(token);
+  const href = stripImageModifier(token.href);
   const alt = token.text.trim();
-  if (!alt || /\.(png|jpe?g|gif|webp|svg)$/i.test(alt)) {
+  if (localImageMissing(href)) {
+    return lostImagePlaceholder(alt);
+  }
+  const image = renderImage({ ...token, href });
+  if (!alt || /\.(png|jpe?g|gif|webp|svg|bmp)$/i.test(alt)) {
     return image;
   }
   return `<figure>${image}<figcaption>${escapeHtml(alt)}</figcaption></figure>`;
@@ -135,6 +182,19 @@ function wrapTables(html: string): string {
       ? table
       : `<div class="table-wrap">${table}</div>`,
   );
+}
+
+function rewriteRawImages(html: string): string {
+  return html.replace(/<img\b[^>]*>/gi, (tag) => {
+    const src = tag.match(/\bsrc=["']([^"']+)["']/i)?.[1];
+    if (!src) return tag;
+    const href = stripImageModifier(src);
+    if (localImageMissing(href)) {
+      const alt = tag.match(/\balt=["']([^"']*)["']/i)?.[1] ?? "";
+      return lostImagePlaceholder(alt);
+    }
+    return href === src ? tag : tag.replace(src, href);
+  });
 }
 
 function parsePost(filename: string): Post {
@@ -162,7 +222,9 @@ function parsePost(filename: string): Post {
     slug: slugFromPermalink(permalink),
     labels: parseLabels(scalar(frontMatter, "labels")),
     source: `_posts/${filename}`,
-    html: wrapTables(marked.parse(body, { async: false, renderer }) as string),
+    html: rewriteRawImages(
+      wrapTables(marked.parse(body, { async: false, renderer }) as string),
+    ),
   };
 }
 

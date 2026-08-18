@@ -366,6 +366,32 @@ main {
   margin: 2rem 0;
 }
 
+.lost-image {
+  margin: 2rem 0;
+}
+
+.lost-image-frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 11rem;
+  padding: 1.25rem 1rem;
+  background: #ececec;
+  color: #b4b4b4;
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+html[data-theme="dark"] .lost-image-frame {
+  background: #2a2a2a;
+  color: #6d6d6d;
+}
+
+.lost-image .lost-image-frame + figcaption,
+.prose .lost-image figcaption {
+  margin-top: 0.5rem;
+}
+
 .prose pre {
   margin: 1.5rem 0;
   padding: 1rem 1.15rem;

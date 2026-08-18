@@ -20,6 +20,12 @@ const pageTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     {description && <meta name="description" content={description} />}
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="咀嚼之味 RSS"
+      href="/feed.xml"
+    />
     <title>{pageTitle}</title>
     <script is:inline>
       (function () {
@@ -66,6 +72,7 @@ const pageTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
               href="/about/"
               aria-current={current === "about" ? "page" : undefined}>关于</a
             >
+            <a href="/feed.xml">RSS订阅</a>
           </div>
           <button
             class="theme-toggle"
