@@ -10,6 +10,10 @@ html[data-theme="light"] {
   --rule: #333;
   --code-bg: #f3f3f3;
   --code-fg: #2a2a2a;
+  --code-comment: #8a7350;
+  --code-keyword: #205caa;
+  --code-string: #3d7a1f;
+  --code-number: #3b4ea0;
   --header-bg: #fff;
   --measure: 42rem;
   --space: 1rem;
@@ -26,6 +30,10 @@ html[data-theme="dark"] {
   --rule: #e8e8e8;
   --code-bg: #1f1f1f;
   --code-fg: #e4e4e4;
+  --code-comment: #9a8d78;
+  --code-keyword: #7eb0e0;
+  --code-string: #8fbf60;
+  --code-number: #9db0e8;
   --header-bg: #111;
 }
 
@@ -376,6 +384,32 @@ main {
 .prose :not(pre) > code {
   padding: 0.1em 0.3em;
   background: var(--code-bg);
+}
+
+.prose .hljs-comment,
+.prose .hljs-quote {
+  color: var(--code-comment);
+  font-style: italic;
+}
+
+.prose .hljs-keyword,
+.prose .hljs-selector-tag,
+.prose .hljs-built_in,
+.prose .hljs-type,
+.prose .hljs-literal {
+  color: var(--code-keyword);
+}
+
+.prose .hljs-string,
+.prose .hljs-template-string,
+.prose .hljs-addition {
+  color: var(--code-string);
+}
+
+.prose .hljs-number,
+.prose .hljs-attr,
+.prose .hljs-attribute {
+  color: var(--code-number);
 }
 
 .about p {

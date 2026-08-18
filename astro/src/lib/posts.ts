@@ -1,6 +1,46 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
+import hljs from "highlight.js/lib/core";
+import bash from "highlight.js/lib/languages/bash";
+import c from "highlight.js/lib/languages/c";
+import css from "highlight.js/lib/languages/css";
+import javascript from "highlight.js/lib/languages/javascript";
+import json from "highlight.js/lib/languages/json";
+import php from "highlight.js/lib/languages/php";
+import python from "highlight.js/lib/languages/python";
+import typescript from "highlight.js/lib/languages/typescript";
+import xml from "highlight.js/lib/languages/xml";
 import { marked, Renderer } from "marked";
+
+hljs.registerLanguage("bash", bash);
+hljs.registerLanguage("c", c);
+hljs.registerLanguage("css", css);
+hljs.registerLanguage("html", xml);
+hljs.registerLanguage("javascript", javascript);
+hljs.registerLanguage("js", javascript);
+hljs.registerLanguage("json", json);
+hljs.registerLanguage("php", php);
+hljs.registerLanguage("python", python);
+hljs.registerLanguage("shell", bash);
+hljs.registerLanguage("shell-session", bash);
+hljs.registerLanguage("ts", typescript);
+hljs.registerLanguage("typescript", typescript);
+hljs.registerLanguage("xml", xml);
+
+function normalizeLang(lang?: string): string | undefined {
+  if (!lang) return undefined;
+  const name = lang.toLowerCase();
+  if (name === "shell-session" || name === "console") return "bash";
+  return name;
+}
+
+function highlightCode(code: string, lang?: string): string {
+  const language = normalizeLang(lang);
+  if (language && hljs.getLanguage(language)) {
+    return hljs.highlight(code, { language }).value;
+  }
+  return escapeHtml(code);
+}
 
 export type Post = {
   title: string;
@@ -80,6 +120,13 @@ renderer.image = (token) => {
     return image;
   }
   return `<figure>${image}<figcaption>${escapeHtml(alt)}</figcaption></figure>`;
+};
+
+renderer.code = ({ text, lang }) => {
+  const language = normalizeLang(lang);
+  const highlighted = highlightCode(text, language);
+  const className = language ? `hljs language-${language}` : "hljs";
+  return `<pre><code class="${className}">${highlighted}</code></pre>\n`;
 };
 
 function wrapTables(html: string): string {
