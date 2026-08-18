@@ -15,20 +15,41 @@ function escapeXml(value: string): string {
 }
 
 function excerpt(html: string, fallback: string | null): string {
-  if (fallback?.trim()) return fallback.trim();
-  const text = html
+  const source = fallback?.trim() || html;
+  const text = source
     .replace(/<script[\s\S]*?<\/script>/gi, "")
     .replace(/<style[\s\S]*?<\/style>/gi, "")
     .replace(/<[^>]+>/g, " ")
+    .replace(/[*_`]{1,3}/g, "")
     .replace(/\s+/g, " ")
     .trim();
   return text.slice(0, 280);
 }
 
 function rfc822(date: string): string {
-  return new Date(`${date}T00:00:00+08:00`)
-    .toUTCString()
-    .replace("GMT", "+0000");
+  const match = date.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match) return `${date} 00:00:00 +0800`;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  const weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][
+    new Date(Date.UTC(year, month - 1, day)).getUTCDay()
+  ];
+  const monthName = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ][month - 1];
+  return `${weekday}, ${String(day).padStart(2, "0")} ${monthName} ${year} 00:00:00 +0800`;
 }
 
 export const GET: APIRoute = ({ site }) => {
