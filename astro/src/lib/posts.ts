@@ -67,6 +67,7 @@ function highlightCode(code: string, lang?: string): string {
 export type Post = {
   title: string;
   date: string;
+  publishedAt: Date;
   description: string | null;
   permalink: string;
   slug: string;
@@ -120,6 +121,33 @@ function parseLabels(value: string | null): string[] {
 function displayDate(value: string): string {
   const match = value.match(/^(\d{4}-\d{2}-\d{2})/);
   return match?.[1] ?? value;
+}
+
+function parsePublishedAt(value: string): Date {
+  const match = value
+    .trim()
+    .match(
+      /^(\d{4}-\d{2}-\d{2})(?:[ T](\d{2}:\d{2}(?::\d{2})?))?(?:\s*(Z|[+-]\d{2}:?\d{2}))?/,
+    );
+  if (!match) {
+    throw new Error(`无法解析日期：${value}`);
+  }
+
+  const day = match[1];
+  const time = match[2] ?? "00:00:00";
+  const clock = time.length === 5 ? `${time}:00` : time;
+  let offset = match[3] ?? "+08:00";
+  if (offset === "Z") {
+    offset = "+00:00";
+  } else if (/^[+-]\d{4}$/.test(offset)) {
+    offset = `${offset.slice(0, 3)}:${offset.slice(3)}`;
+  }
+
+  const publishedAt = new Date(`${day}T${clock}${offset}`);
+  if (Number.isNaN(publishedAt.getTime())) {
+    throw new Error(`无法解析日期：${value}`);
+  }
+  return publishedAt;
 }
 
 function slugFromPermalink(permalink: string): string {
@@ -234,6 +262,7 @@ function parsePost(filename: string): Post {
   return {
     title,
     date: displayDate(date),
+    publishedAt: parsePublishedAt(date),
     description: scalar(frontMatter, "description"),
     permalink,
     slug: slugFromPermalink(permalink),
@@ -253,7 +282,9 @@ export function listPosts(): Post[] {
       .filter((filename) => filename.endsWith(".md"))
       .map(parsePost)
       .sort(
-        (a, b) => b.date.localeCompare(a.date) || b.slug.localeCompare(a.slug),
+        (a, b) =>
+          b.publishedAt.getTime() - a.publishedAt.getTime() ||
+          b.slug.localeCompare(a.slug),
       );
   }
   return cache;
