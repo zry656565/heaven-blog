@@ -30,7 +30,7 @@ export const GET: APIRoute = (context) =>
       .map((post) => ({
         title: post.title,
         description: excerpt(post.html, post.description),
-        pubDate: new Date(`${post.date}T00:00:00+08:00`),
+        pubDate: post.publishedAt,
         link: post.permalink,
         categories: post.labels,
       })),
