@@ -1,3 +1,5 @@
+// 只处理正文里的 CodePen 嵌入和 <script>，不是通用 HTML sanitizer。
+
 function escapeHtml(value: string): string {
   return value
     .replaceAll("&", "&amp;")
@@ -37,6 +39,6 @@ function neutralizeScripts(html: string): string {
   });
 }
 
-export function sanitizeArticleHtml(html: string): string {
+export function rewriteArticleScripts(html: string): string {
   return neutralizeScripts(rewriteCodePenEmbeds(html));
 }
