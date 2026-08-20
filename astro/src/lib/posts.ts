@@ -7,7 +7,7 @@ import {
   isSpecialLang,
 } from "shiki";
 import { displayDate, parsePublishedAt } from "./dates";
-import { sanitizeArticleHtml } from "./sanitize-html";
+import { rewriteArticleScripts } from "./rewrite-article-scripts";
 
 const paperTheme = createCssVariablesTheme({
   name: "paper",
@@ -238,7 +238,7 @@ function parsePost(filename: string): Post {
     slug: slugFromPermalink(permalink),
     labels: parseLabels(scalar(frontMatter, "labels")),
     source: `_posts/${filename}`,
-    html: sanitizeArticleHtml(
+    html: rewriteArticleScripts(
       rewriteRawImages(
         wrapTables(marked.parse(body, { async: false, renderer }) as string),
       ),
