@@ -33,6 +33,8 @@ assert.match(html, /data-theme-toggle/, "首页应提供主题切换");
 assert.match(html, /data-menu-toggle/, "移动导航应可点按，不依赖 hover");
 assert.match(html, /跳到正文/, "应提供跳到正文链接");
 assert.match(html, /浮在灰蒙蒙的海上/, "首页应列出真实文章标题");
+assert.match(html, /首页引言占位，待确认/, "首页引言应先使用占位文案");
+assert.match(html, /post-tags/, "首页近期文章应露出标签");
 assert.doesNotMatch(html, /HEAVEN BLOG/, "首页不应再使用占位 eyebrow");
 assert.equal(
   existsSync(join(distDir, "CNAME")),
@@ -40,7 +42,8 @@ assert.equal(
   "Astro 产物不得包含 CNAME，以免抢占正式域名",
 );
 assert.doesNotMatch(html, /jerryzou\.com/, "预览首页不得绑定正式域名");
-assert.match(essay, /2026 年的文章/, "随笔样本应回到年表而不是上一篇下一篇");
+assert.match(essay, /年的文章/, "随笔样本应回到年表而不是上一篇下一篇");
+assert.match(essay, /year-mark">2026/, "文末年份入口应指向对应年表");
 assert.doesNotMatch(essay, /上一篇|下一篇/, "文末不应出现上一篇下一篇");
 assert.match(codePost, /<pre class="shiki/, "代码样本应保留代码块");
 assert.match(codePost, /shiki/, "代码样本应使用 Shiki 构建期高亮");
@@ -94,6 +97,10 @@ assert.match(
   assert.ok(cssHref, "首页应引用构建后的样式表");
   const css = await readFile(join(distDir, cssHref.slice(1)), "utf8");
   assert.match(css, /li>ul/, "嵌套列表应有比普通段落更紧的间距");
+  assert.match(css, /Songti SC/, "阅读字体应包含中文衬线回退");
+  assert.match(css, /Microsoft YaHei/, "阅读字体在无衬线时回退到系统黑体");
+  assert.match(css, /--font-mono/, "日期与标签应使用等宽字体");
+  assert.match(css, /#f8f6f2/, "浅色背景应使用淡暖纸色而不是过黄的纸色");
 }
 
 function expectedPublishedAt(raw) {

@@ -1,40 +1,48 @@
 /* Stage 2 tokens: paper light is canonical; dark is a derived pairing. */
 :root,
 html[data-theme="light"] {
-  --bg: #fdfdfd;
-  --fg: #222;
-  --muted: #727272;
-  --line: #e8e8e8;
+  --bg: #f8f6f2;
+  --fg: #1c1814;
+  --muted: #6d675f;
+  --line: #e6e1d8;
   --accent: #1abc9c;
   --link: #205caa;
-  --rule: #333;
-  --code-bg: #f3f3f3;
-  --code-fg: #2a2a2a;
+  --rule: #1c1814;
+  --code-bg: #efece6;
+  --code-fg: #2a241e;
   --code-comment: #8a7350;
   --code-keyword: #205caa;
   --code-string: #3d7a1f;
   --code-number: #3b4ea0;
-  --header-bg: #fff;
+  --header-bg: #fbfaf7;
   --measure: 42rem;
   --space: 1rem;
   --radius: 2px;
+  --font-ui:
+    Avenir, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+    sans-serif;
+  --font-read:
+    "Iowan Old Style", Palatino, "Palatino Linotype", "Songti SC", "STSong",
+    "Noto Serif CJK SC", "Source Han Serif SC", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 }
 
 html[data-theme="dark"] {
-  --bg: #161616;
-  --fg: #e8e8e8;
-  --muted: #9a9a9a;
-  --line: #2c2c2c;
+  --bg: #161412;
+  --fg: #ece8e2;
+  --muted: #9a948c;
+  --line: #2c2924;
   --accent: #1abc9c;
   --link: #7eb0e0;
-  --rule: #e8e8e8;
-  --code-bg: #1f1f1f;
-  --code-fg: #e4e4e4;
+  --rule: #ece8e2;
+  --code-bg: #1f1d1a;
+  --code-fg: #e4e0da;
   --code-comment: #9a8d78;
   --code-keyword: #7eb0e0;
   --code-string: #8fbf60;
   --code-number: #9db0e8;
-  --header-bg: #111;
+  --header-bg: #12110f;
 }
 
 html {
@@ -70,13 +78,7 @@ body {
   overflow-x: clip;
   color: var(--fg);
   background: var(--bg);
-  font:
-    400 1em/1.8 Avenir,
-    "Segoe UI",
-    "PingFang SC",
-    "Hiragino Sans GB",
-    "Microsoft Yahei",
-    sans-serif;
+  font: 400 1em/1.8 var(--font-ui);
 }
 
 a {
@@ -149,11 +151,14 @@ a:hover {
 }
 
 .nav-links a {
+  padding-bottom: 0.12rem;
+  border-bottom: 2px solid transparent;
   color: var(--muted);
 }
 
 .nav-links a[aria-current="page"] {
   color: var(--fg);
+  border-bottom-color: var(--accent);
 }
 
 .nav-links a:hover {
@@ -197,19 +202,43 @@ html[data-theme-choice="dark"] .theme-icon[data-theme-icon="dark"] {
 
 main {
   padding: 2.5rem 0 4rem;
+  font-family: var(--font-read);
 }
 
 .page-title {
   margin: 0 0 0.35rem;
+  font-family: var(--font-read);
   font-size: 1.85rem;
   font-weight: 600;
   line-height: 1.35;
 }
 
+.lede {
+  margin: 0 0 1.75rem;
+  color: var(--muted);
+}
+
+.meta,
+.post-list time,
+.post-tags,
+.article-exit,
+.year-group h2,
+.year-list time {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+
 .meta {
   margin: 0 0 2rem;
   color: var(--muted);
-  font-size: 0.92rem;
+}
+
+.post-tags {
+  color: var(--accent);
+}
+
+.year-mark {
+  color: var(--accent);
 }
 
 .post-list,
@@ -219,13 +248,16 @@ main {
   padding: 0;
 }
 
-.post-list li + li {
-  margin-top: 1.25rem;
+.post-list li {
+  padding: 1.15rem 0;
+  border-top: 1px solid var(--line);
 }
 
 .post-list a {
+  display: inline-block;
+  margin: 0.15rem 0 0.35rem;
   color: var(--fg);
-  font-size: 1.15rem;
+  font-size: 1.28rem;
   font-weight: 600;
 }
 
@@ -236,7 +268,19 @@ main {
 .post-list time {
   display: block;
   color: var(--muted);
-  font-size: 0.88rem;
+}
+
+.post-list .excerpt {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  color: var(--fg);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.post-list .post-tags {
+  margin: 0.4rem 0 0;
 }
 
 .year-group + .year-group {

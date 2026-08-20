@@ -2,16 +2,30 @@
 import Base from "../layouts/Base.astro";
 import { listPosts } from "../lib/posts";
 
-const posts = listPosts();
+const posts = listPosts().slice(0, 8);
+
+function excerpt(text: string | null): string {
+  return (text ?? "")
+    .replace(/[*_`]+/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
 ---
 
 <Base title="咀嚼之味" current="home">
+  <p class="lede">（首页引言占位，待确认）</p>
   <ol class="post-list">
     {
       posts.map((post) => (
         <li>
+          <time datetime={post.publishedAt.toISOString()}>{post.date}</time>
           <a href={post.permalink}>{post.title}</a>
-          <time datetime={post.date}>{post.date}</time>
+          {excerpt(post.description) && (
+            <p class="excerpt">{excerpt(post.description)}</p>
+          )}
+          {post.labels.length > 0 && (
+            <p class="post-tags">{post.labels.join(" · ")}</p>
+          )}
         </li>
       ))
     }
