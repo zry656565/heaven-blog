@@ -14,7 +14,9 @@ const groups = groupPostsByYear(listPosts());
         <ol class="year-list">
           {posts.map((post) => (
             <li>
-              <time datetime={post.date}>{post.date.slice(5)}</time>
+              <time datetime={post.publishedAt.toISOString()}>
+                {post.date.slice(5)}
+              </time>
               <a href={post.permalink}>{post.title}</a>
             </li>
           ))}

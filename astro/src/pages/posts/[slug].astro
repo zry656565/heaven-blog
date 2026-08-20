@@ -22,16 +22,15 @@ const year = post.date.slice(0, 4);
       <time datetime={post.publishedAt.toISOString()}>{post.date}</time>
       {
         post.labels.length > 0 && (
-          <>
-            {" · "}
-            {post.labels.join(" · ")}
-          </>
+          <span class="post-tags"> · {post.labels.join(" · ")}</span>
         )
       }
     </p>
     <div class="prose" set:html={post.html} />
     <p class="article-exit">
-      <a href={`/all-articles/#y${year}`}>{year} 年的文章</a>
+      <a href={`/all-articles/#y${year}`}>
+        <span class="year-mark">{year}</span> 年的文章
+      </a>
     </p>
   </article>
 </Base>
