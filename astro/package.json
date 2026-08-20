@@ -12,7 +12,7 @@
     "preview": "astro preview",
     "format:check": "prettier --check package.json astro.config.mjs tsconfig.json 'src/**/*.{astro,css}' 'scripts/**/*.mjs'",
     "check": "astro check",
-    "test": "node scripts/check-built-site.mjs",
+    "test": "node --experimental-strip-types --no-warnings scripts/check-dates.ts && node scripts/check-built-site.mjs",
     "verify": "npm run format:check && npm run check && npm run build && npm run test"
   },
   "dependencies": {

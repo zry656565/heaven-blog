@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { existsSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -56,7 +56,6 @@ assert.match(
   /14:30:00 GMT/,
   "Feed 应保留《浮在灰蒙蒙的海上》原文 22:30 +0800",
 );
-assert.doesNotMatch(feed, /16:00:00 GMT/, "Feed 不应把所有文章拉齐到当天 0 点");
 assert.doesNotMatch(feed, /\*\*/, "Feed 摘要不应残留 Markdown 强调记号");
 assert.doesNotMatch(feed, /jerryzou\.com/, "预览 Feed 不得绑定正式域名");
 assert.match(
@@ -96,5 +95,73 @@ assert.match(
   const css = await readFile(join(distDir, cssHref.slice(1)), "utf8");
   assert.match(css, /li>ul/, "嵌套列表应有比普通段落更紧的间距");
 }
+
+function expectedPublishedAt(raw) {
+  const match = raw.match(
+    /^(\d{4})-(\d{2})-(\d{2}) (\d{1,2}):(\d{2}):(\d{2}) ([+-]\d{4})$/,
+  );
+  if (!match) {
+    throw new Error(`源日期格式超出测试约定：${raw}`);
+  }
+  const [, year, month, day, hour, minute, second, zone] = match;
+  const offset = `${zone.slice(0, 3)}:${zone.slice(3)}`;
+  return new Date(
+    `${year}-${month}-${day}T${hour.padStart(2, "0")}:${minute}:${second}${offset}`,
+  );
+}
+
+function proseHtml(page) {
+  return page.match(
+    /<div class="prose">([\s\S]*?)<\/div>\s*<p class="article-exit">/,
+  )?.[1];
+}
+
+const repoRoot = join(distDir, "..", "..");
+const postFiles = readdirSync(join(repoRoot, "_posts")).filter((name) =>
+  name.endsWith(".md"),
+);
+assert.equal(postFiles.length, 51, "构建检查应覆盖全部 51 篇文章");
+
+for (const filename of postFiles) {
+  const source = readFileSync(join(repoRoot, "_posts", filename), "utf8");
+  const permalink = source.match(/^permalink:\s*(.+)$/m)?.[1]?.trim();
+  const date = source.match(/^date:\s*(.+)$/m)?.[1]?.trim();
+  if (!permalink || !date) {
+    throw new Error(`${filename} 缺少 permalink 或 date`);
+  }
+  const slug = permalink.replace(/^\/posts\/|\/$/g, "");
+  const page = await readFile(
+    join(distDir, "posts", slug, "index.html"),
+    "utf8",
+  );
+  const datetime = page.match(/<time datetime="([^"]+)"/)?.[1];
+  assert.equal(
+    datetime,
+    expectedPublishedAt(date).toISOString(),
+    `${filename} 的 <time datetime> 应与 front matter 一致`,
+  );
+  const body = proseHtml(page);
+  assert.ok(body, `${filename} 应有正文容器`);
+  assert.doesNotMatch(
+    body,
+    /<script\b/i,
+    `${filename} 正文不应留下可执行 script`,
+  );
+}
+
+const rxjsPractice = await readFile(
+  join(distDir, "posts/rxjs-practice-01/index.html"),
+  "utf8",
+);
+assert.doesNotMatch(
+  rxjsPractice,
+  /codepen\.io\/assets\/embed/,
+  "CodePen 不应再加载第三方 embed 脚本",
+);
+assert.match(
+  rxjsPractice,
+  /codepen\.io\/jerryzou\/pen\/XgppaN/,
+  "CodePen 嵌入应转成指向原 pen 的静态链接",
+);
 
 console.log("Astro build smoke test passed.");
