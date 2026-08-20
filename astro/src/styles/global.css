@@ -439,6 +439,16 @@ html[data-theme="dark"] .lost-image-frame {
   background: var(--code-bg);
 }
 
+.embed-card {
+  margin: 1.5rem 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--line);
+}
+
+.blocked-script {
+  margin: 1.5rem 0;
+}
+
 .about p {
   margin: 0 0 1rem;
 }

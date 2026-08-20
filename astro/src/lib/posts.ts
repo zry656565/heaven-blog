@@ -6,6 +6,8 @@ import {
   createHighlighter,
   isSpecialLang,
 } from "shiki";
+import { displayDate, parsePublishedAt } from "./dates";
+import { sanitizeArticleHtml } from "./sanitize-html";
 
 const paperTheme = createCssVariablesTheme({
   name: "paper",
@@ -116,38 +118,6 @@ function parseLabels(value: string | null): string[] {
     .split(",")
     .map((label) => label.trim().replace(/^["']|["']$/g, ""))
     .filter(Boolean);
-}
-
-function displayDate(value: string): string {
-  const match = value.match(/^(\d{4}-\d{2}-\d{2})/);
-  return match?.[1] ?? value;
-}
-
-function parsePublishedAt(value: string): Date {
-  const match = value
-    .trim()
-    .match(
-      /^(\d{4}-\d{2}-\d{2})(?:[ T](\d{2}:\d{2}(?::\d{2})?))?(?:\s*(Z|[+-]\d{2}:?\d{2}))?/,
-    );
-  if (!match) {
-    throw new Error(`无法解析日期：${value}`);
-  }
-
-  const day = match[1];
-  const time = match[2] ?? "00:00:00";
-  const clock = time.length === 5 ? `${time}:00` : time;
-  let offset = match[3] ?? "+08:00";
-  if (offset === "Z") {
-    offset = "+00:00";
-  } else if (/^[+-]\d{4}$/.test(offset)) {
-    offset = `${offset.slice(0, 3)}:${offset.slice(3)}`;
-  }
-
-  const publishedAt = new Date(`${day}T${clock}${offset}`);
-  if (Number.isNaN(publishedAt.getTime())) {
-    throw new Error(`无法解析日期：${value}`);
-  }
-  return publishedAt;
 }
 
 function slugFromPermalink(permalink: string): string {
@@ -268,8 +238,10 @@ function parsePost(filename: string): Post {
     slug: slugFromPermalink(permalink),
     labels: parseLabels(scalar(frontMatter, "labels")),
     source: `_posts/${filename}`,
-    html: rewriteRawImages(
-      wrapTables(marked.parse(body, { async: false, renderer }) as string),
+    html: sanitizeArticleHtml(
+      rewriteRawImages(
+        wrapTables(marked.parse(body, { async: false, renderer }) as string),
+      ),
     ),
   };
 }
