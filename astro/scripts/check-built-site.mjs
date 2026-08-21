@@ -33,7 +33,7 @@ assert.match(html, /data-theme-toggle/, "首页应提供主题切换");
 assert.match(html, /data-menu-toggle/, "移动导航应可点按，不依赖 hover");
 assert.match(html, /跳到正文/, "应提供跳到正文链接");
 assert.match(html, /浮在灰蒙蒙的海上/, "首页应列出真实文章标题");
-assert.match(html, /首页引言占位，待确认/, "首页引言应先使用占位文案");
+assert.doesNotMatch(html, /首页引言占位，待确认/, "确认前首页不应渲染占位引言");
 assert.match(html, /post-tags/, "首页近期文章应露出标签");
 assert.doesNotMatch(html, /HEAVEN BLOG/, "首页不应再使用占位 eyebrow");
 assert.equal(
@@ -101,6 +101,7 @@ assert.match(
   assert.match(css, /Microsoft YaHei/, "阅读字体在无衬线时回退到系统黑体");
   assert.match(css, /--font-mono/, "日期与标签应使用等宽字体");
   assert.match(css, /#f8f6f2/, "浅色背景应使用淡暖纸色而不是过黄的纸色");
+  assert.match(css, /#117865/, "浅色主题文字强调色应达到可读对比度");
 }
 
 function expectedPublishedAt(raw) {
