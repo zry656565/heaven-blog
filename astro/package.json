@@ -22,7 +22,7 @@
     "marked": "^18.0.10",
     "sharp": "^0.34.4",
     "shiki": "^4.4.3",
-    "twikoo": "1.7.15"
+    "twikoo": "1.7.19"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",

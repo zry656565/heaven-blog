@@ -7,7 +7,7 @@ const repoRoot = dirname(dirname(fileURLToPath(import.meta.url)));
 
 function usage() {
   console.error(
-    "用法：node scripts/prepare-disqus-for-twikoo.mjs <Disqus XML 或 XML.GZ> <输出 XML>",
+    "用法：node scripts/prepare-disqus-for-twikoo.mjs <Disqus XML 或 XML.GZ> <输出 XML> [--public-existing-only] [--limit-one]",
   );
   process.exitCode = 1;
 }
@@ -55,8 +55,19 @@ function readXml(inputPath) {
   return (gzipped ? gunzipSync(source) : source).toString("utf8");
 }
 
-const [inputPath, outputPath] = process.argv.slice(2);
-if (!inputPath || !outputPath) {
+const [inputPath, outputPath, ...options] = process.argv.slice(2);
+const publicExistingOnly = options.includes("--public-existing-only");
+const limitOne = options.includes("--limit-one");
+const unknownOptions = options.filter(
+  (option) =>
+    option !== "--public-existing-only" && option !== "--limit-one",
+);
+if (
+  !inputPath ||
+  !outputPath ||
+  unknownOptions.length > 0 ||
+  (limitOne && !publicExistingOnly)
+) {
   usage();
 } else {
   const contract = JSON.parse(
@@ -67,9 +78,14 @@ if (!inputPath || !outputPath) {
     "/about/",
     "/posts/sailingwood-recruit/",
   ]);
+  const existingPaths = new Set([
+    ...contract.posts.map((post) => post.url),
+    "/about/",
+  ]);
   const redirects = readRedirects();
   const xml = readXml(inputPath);
   const paths = [];
+  const threadPaths = new Map();
   const unknownPaths = new Set();
   const firstPostIndex = xml.search(/\n<post\b/);
   if (firstPostIndex < 0) {
@@ -96,11 +112,79 @@ if (!inputPath || !outputPath) {
 
       const path = normalizePath(link, contract.origin, redirects);
       paths.push(path);
+      threadPaths.set(threadId, path);
       if (!retainedPaths.has(path)) unknownPaths.add(path);
       return thread.replace(idPattern, `<id>${escapeXmlText(path)}</id>`);
     },
   );
-  const prepared = preparedThreads + xml.slice(firstPostIndex);
+  let postSection = xml.slice(firstPostIndex);
+  let excludedSpam = 0;
+  let excludedDeleted = 0;
+  let excludedMissingArticle = 0;
+  let includedPosts = 0;
+  const includedPaths = new Set();
+  if (publicExistingOnly) {
+    const removedPostIds = new Set();
+    const postBlocks = [
+      ...postSection.matchAll(/<post\b[^>]*>[\s\S]*?<\/post>/g),
+    ];
+    for (const match of postBlocks) {
+      const post = match[0];
+      const postId = post.match(/^<post dsq:id="([^"]+)">/)?.[1];
+      const threadId = post.match(/<thread dsq:id="([^"]+)"\s*\/>/)?.[1];
+      const path = threadPaths.get(threadId);
+      const isSpam = /<isSpam>true<\/isSpam>/.test(post);
+      const isDeleted = /<isDeleted>true<\/isDeleted>/.test(post);
+      const isMissingArticle = !existingPaths.has(path);
+      if (isSpam || isDeleted || isMissingArticle) {
+        if (!postId || !threadId || !path) {
+          throw new Error("待排除的 Disqus post 缺少 id、thread 或路径");
+        }
+        removedPostIds.add(postId);
+        if (isSpam) excludedSpam += 1;
+        if (isDeleted) excludedDeleted += 1;
+        if (isMissingArticle) excludedMissingArticle += 1;
+      }
+    }
+    const brokenReplies = postBlocks.filter((match) => {
+      const post = match[0];
+      const postId = post.match(/^<post dsq:id="([^"]+)">/)?.[1];
+      const parentId = post.match(/<parent dsq:id="([^"]+)"\s*\/>/)?.[1];
+      return !removedPostIds.has(postId) && removedPostIds.has(parentId);
+    });
+    if (brokenReplies.length > 0) {
+      throw new Error(
+        `筛选后有 ${brokenReplies.length} 条回复指向已排除评论，已停止写入`,
+      );
+    }
+    let limitedPostId;
+    if (limitOne) {
+      limitedPostId = postBlocks
+        .map((match) => match[0])
+        .find((post) => {
+          const postId = post.match(/^<post dsq:id="([^"]+)">/)?.[1];
+          const parentId = post.match(/<parent dsq:id="([^"]+)"\s*\/>/)?.[1];
+          return postId && !removedPostIds.has(postId) && !parentId;
+        })
+        ?.match(/^<post dsq:id="([^"]+)">/)?.[1];
+      if (!limitedPostId) {
+        throw new Error("没有找到可用于单条导入测试的顶层评论");
+      }
+    }
+    postSection = postSection.replace(
+      /\n?<post\b[^>]*>[\s\S]*?<\/post>/g,
+      (post) => {
+        const postId = post.match(/<post dsq:id="([^"]+)">/)?.[1];
+        if (removedPostIds.has(postId)) return "";
+        if (limitedPostId && postId !== limitedPostId) return "";
+        const threadId = post.match(/<thread dsq:id="([^"]+)"\s*\/>/)?.[1];
+        includedPaths.add(threadPaths.get(threadId));
+        includedPosts += 1;
+        return post;
+      },
+    );
+  }
+  const prepared = preparedThreads + postSection;
 
   if (paths.length === 0) {
     throw new Error("没有在导出文件中找到 Disqus thread");
@@ -119,5 +203,13 @@ if (!inputPath || !outputPath) {
   console.log(
     `合并到已有路径的重复 threads：${paths.length - uniquePaths.size}`,
   );
-  console.log("保留但当前没有文章页的路径：/posts/sailingwood-recruit/");
+  if (publicExistingOnly) {
+    console.log(`实际导入评论：${includedPosts}`);
+    console.log(`实际导入路径：${includedPaths.size}`);
+    console.log(`排除 spam：${excludedSpam}`);
+    console.log(`排除 deleted：${excludedDeleted}`);
+    console.log(`排除已删除文章评论：${excludedMissingArticle}`);
+  } else {
+    console.log("保留但当前没有文章页的路径：/posts/sailingwood-recruit/");
+  }
 }
