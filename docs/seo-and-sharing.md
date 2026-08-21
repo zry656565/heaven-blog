@@ -15,23 +15,18 @@
 - 格式：JPEG，体积小于 300 KB。
 - 地址：HTTPS 绝对 URL，随 `Astro.site` 生成。
 - 安全区：标题与站点名离开边缘至少约 40px。
-- 站点默认图：`/assets/images/og-default.jpg`。
-- 文章若正文里有仍存在的本地图，用第一张作为 `og:image`；否则回退到默认图。
+- 站点默认图：`/assets/images/og-default.jpg`（1200×630）。
+- 所有页面统一使用这张默认图，不自动取正文首图。文章以后如需覆盖，再加显式字段。
 - 不为每篇文章再生成带中文标题的独立图：自托管 CJK 字体的授权和体积收益还不明确。
 
 ## 微信
 
-分两类能力，不能混为一谈：
+本阶段不做 JS-SDK。分享卡片完全依赖公开 HTML 的 title、description 和 og 标签，属于 best effort：微信会不会采用、用标题还是首图，由客户端和缓存决定，不是已保证的能力。
 
-1. **普通链接抓取**：依赖公开 HTML 里的 title、description、og 标签。本站已输出这些字段，微信会不会采用由客户端决定。
-2. **JS-SDK 自定义分享**：页面在微信 UA 下会请求 `/api/wechat-jssdk`，用签名调用 `updateAppMessageShareData` / `updateTimelineShareData`。签名密钥放在 Cloudflare Pages 的 `WECHAT_APP_ID`、`WECHAT_APP_SECRET`，不进仓库。密钥未配置时接口返回 501，页面静默回退到 og 标签。
-
-JS 接口安全域名必须 ICP 备案。`heaven-blog-next.pages.dev` 过不了这项校验，所以预览站上的 JS-SDK 在真机微信里不会生效。不必等切域名才能合代码；要在微信里验证自定义卡片，需要站点已经用 `jerryzou.com` 打开，并在公众号后台填入该域名。未认证订阅号通常没有自定义分享权限。
-
-无法控制的行为包括：微信缓存旧卡片、用正文首图覆盖 og 图、在聊天里截断标题。
+无法控制的行为包括：微信缓存旧卡片、用正文首图覆盖 og 图、在聊天里截断标题，或抓取失败后只显示素链接。
 
 ## 站点地图与 RSS
 
 - 历史地址 `/sitemap.xml`、`/robots.txt`、`/feed.xml` 继续保留。
 - sitemap 含首页、关于、所有文章、`/2/`–`/8/` 和全部正式文章 permalink。
-- `/posts/shadowsocks-with-digitalocean/` 是旧兼容页，不进入 sitemap 或 RSS。
+- `/posts/shadowsocks-with-digitalocean/` 不进入 sitemap 或 RSS。新站通过 Cloudflare `_redirects` 永久 301 到现行 permalink；迁移契约仍记录旧站当时是 HTTP 200。

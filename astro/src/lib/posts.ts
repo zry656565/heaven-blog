@@ -79,7 +79,6 @@ export type Post = {
   translationStatus: "original" | "translated";
   source: string;
   html: string;
-  shareImage: string | null;
 };
 
 export const LOST_IMAGE_TEXT = "图片已失联在历史的海洋中...";
@@ -235,9 +234,6 @@ function parsePost(filename: string): Post {
       wrapTables(marked.parse(body, { async: false, renderer }) as string),
     ),
   );
-  const shareImage =
-    html.match(/<img\b[^>]*\bsrc=["'](\/assets\/images\/[^"']+)["']/i)?.[1] ??
-    null;
   return {
     title,
     date: displayDate(date),
@@ -250,7 +246,6 @@ function parsePost(filename: string): Post {
     translationStatus: "original",
     source: `_posts/${filename}`,
     html,
-    shareImage,
   };
 }
 

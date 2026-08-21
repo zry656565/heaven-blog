@@ -1,7 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import { listPosts } from "../lib/posts";
-import { PAGE_SIZE, siteTitle } from "../lib/site";
+import { PAGE_SIZE, siteDescription } from "../lib/site";
 import { plainText } from "../lib/text";
 
 export function getStaticPaths() {
@@ -26,7 +26,10 @@ const prevHref = page === 2 ? "/" : `/${page - 1}/`;
 const nextHref = page < totalPages ? `/${page + 1}/` : null;
 ---
 
-<Base title={siteTitle} description={undefined}>
+<Base
+  title={`文章归档第 ${page} 页`}
+  description={`文章归档第 ${page} 页。${siteDescription}`}
+>
   <ol class="post-list">
     {
       posts.map((post) => (

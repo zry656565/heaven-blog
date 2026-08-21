@@ -16,7 +16,6 @@ const blog = defineCollection({
       translationStatus: post.translationStatus,
       source: post.source,
       html: post.html,
-      shareImage: post.shareImage,
     })),
   schema: z.object({
     title: z.string().min(1),
@@ -29,7 +28,6 @@ const blog = defineCollection({
     translationStatus: z.enum(["original", "translated"]),
     source: z.string(),
     html: z.string(),
-    shareImage: z.string().nullable(),
   }),
 });
 

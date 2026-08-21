@@ -77,7 +77,7 @@ assert.match(
 assert.doesNotMatch(html, /安静的事/, "站点 description 不应再使用旧文案");
 assert.match(html, /property="og:title"/, "首页应输出 Open Graph 标题");
 assert.match(html, /application\/ld\+json/, "首页应包含 JSON-LD");
-assert.match(html, /\/api\/wechat-jssdk/, "微信 UA 下应请求 JS-SDK 签名接口");
+assert.doesNotMatch(html, /wechat-jssdk|jweixin/, "本阶段不应接入微信 JS-SDK");
 assert.match(html, /hreflang="zh-CN"/, "中文页应声明 hreflang");
 assert.match(
   html,
@@ -99,6 +99,11 @@ assert.match(
   "文章页不得误用首页通用分享文案",
 );
 assert.match(essay, /"@type":"BlogPosting"/, "文章页 JSON-LD 应为 BlogPosting");
+assert.match(
+  essay,
+  /og:image" content="https:\/\/heaven-blog-next\.pages\.dev\/assets\/images\/og-default\.jpg"/,
+  "文章页应使用统一默认分享图，不自动取正文首图",
+);
 assert.match(codePost, /<pre class="shiki/, "代码样本应保留代码块");
 assert.match(codePost, /shiki/, "代码样本应使用 Shiki 构建期高亮");
 assert.match(tablePost, /table-wrap/, "含表格的文章应可横向滚动而不是撑破版心");
@@ -219,7 +224,9 @@ for (const filename of postFiles) {
 const contract = JSON.parse(
   readFileSync(join(repoRoot, "migration-contract.json"), "utf8"),
 );
+const aliasPath = "/posts/shadowsocks-with-digitalocean/";
 for (const route of contract.routes) {
+  if (route.path === aliasPath) continue;
   const filePath =
     route.path === "/feed.xml" ||
     route.path === "/robots.txt" ||
@@ -234,23 +241,30 @@ for (const route of contract.routes) {
 }
 
 const pageTwo = await readFile(join(distDir, "2/index.html"), "utf8");
-assert.match(pageTwo, /<title>咀嚼之味<\/title>/, "/2/ 应保持历史分页标题");
+assert.match(
+  pageTwo,
+  /<title>文章归档第 2 页 \| 咀嚼之味<\/title>/,
+  "/2/ 的 title 应体现页码",
+);
+assert.match(
+  pageTwo,
+  /og:title" content="文章归档第 2 页 \| 咀嚼之味"/,
+  "/2/ 的 OG title 应体现页码",
+);
+assert.match(pageTwo, /文章归档第 2 页/, "/2/ 的 description 应体现页码");
 assert.match(pageTwo, /上一页/, "/2/ 应能回到首页");
 assert.match(pageTwo, /下一页/, "/2/ 应能翻到更早一页");
 
-const alias = await readFile(
-  join(distDir, "posts/shadowsocks-with-digitalocean/index.html"),
-  "utf8",
-);
+const redirects = await readFile(join(distDir, "_redirects"), "utf8");
 assert.match(
-  alias,
-  /<title>Redirecting\.\.\.<\/title>/,
-  "旧 shadowsocks 地址应保留兼容页",
+  redirects,
+  /\/posts\/shadowsocks-with-digitalocean\/\s+\/posts\/shadowsocks-and-digitalocean\/\s+301/,
+  "旧 shadowsocks 地址应 301 到现行 permalink",
 );
-assert.match(
-  alias,
-  /shadowsocks-and-digitalocean/,
-  "旧 shadowsocks 地址应指向现行 permalink",
+assert.equal(
+  existsSync(join(distDir, "posts/shadowsocks-with-digitalocean/index.html")),
+  false,
+  "旧 shadowsocks 地址不应再输出 HTML 兼容页，以免挡住 301",
 );
 
 const chew = await readFile(join(distDir, "posts/chew/index.html"), "utf8");
