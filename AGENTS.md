@@ -36,5 +36,5 @@
 
 - `origin` 是私有改造仓库，`upstream` 是现有公开博客。
 - 不强推、不改写共享历史；Pull Request 默认使用 Rebase and merge。
-- 目标链路为 GitHub Actions CI + Cloudflare Pages CD；新链路验证完成前保留旧 CircleCI 回滚能力。
+- 目标链路为 GitHub Actions CI + Cloudflare Pages CD。本仓库已退役 CircleCI / Grunt / Jekyll 构建链。jerryzou.com 现网回滚仍走公开仓库 + GitHub Pages，直到 Stage 9（#11）。
 - 正式域名切换只在最终阶段并经明确确认后执行。

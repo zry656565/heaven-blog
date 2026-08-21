@@ -18,5 +18,7 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
           cache-dependency-path: astro/package-lock.json
-      - run: npm ci --prefix astro
-      - run: npm run verify
+      - name: Install locked Astro dependencies
+        run: npm ci --prefix astro
+      - name: Verify contract, secrets, format, types, build and smoke
+        run: npm run verify

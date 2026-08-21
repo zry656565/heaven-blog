@@ -1,32 +1,17 @@
-#jekyll & grunt build
+# leftover local artifacts from the retired Jekyll/Grunt toolchain
 _site
 release
-_includes/head.html
-pages/1_articles.md
 .jekyll-metadata
 .jekyll-cache
-
-#temporary files produced by grunt
 .tmp
-assets/css/main.css
-assets/css/posts.css
-assets/css/pages.css
+vendor
 
-#PhpStorm configure files
+# editor / os
 .idea
+.DS_Store
 
-#npm
+# node / astro
 node_modules
 astro/dist
 astro/.astro
 astro/public/assets/responsive
-
-#react cache
-build/.module-cache
-build/articles.js
-
-#bundler
-vendor
-
-.circleci
-.DS_Store
