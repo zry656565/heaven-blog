@@ -1,5 +1,6 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { marked, Renderer } from "marked";
 import {
   createCssVariablesTheme,
@@ -74,35 +75,32 @@ export type Post = {
   permalink: string;
   slug: string;
   labels: string[];
+  language: "zh-CN";
+  translationStatus: "original" | "translated";
   source: string;
   html: string;
+  shareImage: string | null;
 };
 
 export const LOST_IMAGE_TEXT = "图片已失联在历史的海洋中...";
 
-function findPostsDir(): string {
-  const candidates = [
-    resolve(process.cwd(), "..", "_posts"),
-    resolve(process.cwd(), "_posts"),
-  ];
-  const found = candidates.find((dir) => existsSync(dir));
-  if (!found) {
-    throw new Error(`找不到 _posts 目录（cwd=${process.cwd()}）`);
+function findRepoRoot(): string {
+  const starts = [dirname(fileURLToPath(import.meta.url)), process.cwd()];
+  for (const start of starts) {
+    let dir = start;
+    for (let i = 0; i < 8; i += 1) {
+      if (existsSync(join(dir, "_posts"))) return dir;
+      const parent = join(dir, "..");
+      if (parent === dir) break;
+      dir = parent;
+    }
   }
-  return found;
+  throw new Error("找不到 _posts 目录");
 }
 
-function findImagesDir(): string {
-  const candidates = [
-    resolve(process.cwd(), "..", "assets", "images"),
-    resolve(process.cwd(), "assets", "images"),
-    resolve(process.cwd(), "public", "assets", "images"),
-  ];
-  return candidates.find((dir) => existsSync(dir)) ?? candidates[0];
-}
-
-const postsDir = findPostsDir();
-const imagesDir = findImagesDir();
+const repoRoot = findRepoRoot();
+const postsDir = join(repoRoot, "_posts");
+const imagesDir = join(repoRoot, "assets", "images");
 
 function scalar(frontMatter: string, key: string): string | null {
   const value = frontMatter
@@ -227,8 +225,19 @@ function parsePost(filename: string): Post {
   if (!title || !date || !permalink) {
     throw new Error(`${filename} 缺少 title、date 或 permalink`);
   }
+  if (!/^\/posts\/.+\/$/.test(permalink)) {
+    throw new Error(`${filename} 的 permalink 不符合历史格式：${permalink}`);
+  }
 
   const body = prepareMarkdown(source.slice(match[0].length));
+  const html = rewriteArticleScripts(
+    rewriteRawImages(
+      wrapTables(marked.parse(body, { async: false, renderer }) as string),
+    ),
+  );
+  const shareImage =
+    html.match(/<img\b[^>]*\bsrc=["'](\/assets\/images\/[^"']+)["']/i)?.[1] ??
+    null;
   return {
     title,
     date: displayDate(date),
@@ -237,12 +246,11 @@ function parsePost(filename: string): Post {
     permalink,
     slug: slugFromPermalink(permalink),
     labels: parseLabels(scalar(frontMatter, "labels")),
+    language: "zh-CN",
+    translationStatus: "original",
     source: `_posts/${filename}`,
-    html: rewriteArticleScripts(
-      rewriteRawImages(
-        wrapTables(marked.parse(body, { async: false, renderer }) as string),
-      ),
-    ),
+    html,
+    shareImage,
   };
 }
 

@@ -1,20 +1,17 @@
 import rss from "@astrojs/rss";
 import type { APIRoute } from "astro";
 import { listPosts } from "../lib/posts";
-
-const siteTitle = "咀嚼之味";
-const siteDescription =
-  "咀嚼之味是我分享我对编程与生活的见解之地。我喜欢做一些安静的事，比如看书、看电影、听音乐、散步以及旅行。";
+import { fallbackSite, siteDescription, siteTitle } from "../lib/site";
+import { plainText } from "../lib/text";
 
 function excerpt(html: string, fallback: string | null): string {
   const source = fallback?.trim() || html;
-  const text = source
-    .replace(/<script[\s\S]*?<\/script>/gi, "")
-    .replace(/<style[\s\S]*?<\/style>/gi, "")
-    .replace(/<[^>]+>/g, " ")
-    .replace(/[*_`]{1,3}/g, "")
-    .replace(/\s+/g, " ")
-    .trim();
+  const text = plainText(
+    source
+      .replace(/<script[\s\S]*?<\/script>/gi, "")
+      .replace(/<style[\s\S]*?<\/style>/gi, "")
+      .replace(/<[^>]+>/g, " "),
+  );
   return text.slice(0, 280);
 }
 
@@ -22,7 +19,7 @@ export const GET: APIRoute = (context) =>
   rss({
     title: siteTitle,
     description: siteDescription,
-    site: context.site ?? "https://heaven-blog-next.pages.dev",
+    site: context.site ?? fallbackSite,
     trailingSlash: true,
     customData: "<language>zh-CN</language>",
     items: listPosts()

@@ -285,6 +285,24 @@ main {
   margin: 0.4rem 0 0;
 }
 
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2rem;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+
+.pagination a {
+  color: var(--muted);
+}
+
+.pagination a:hover {
+  color: var(--accent-text);
+}
+
 .page-title + .year-group {
   margin-top: 1.75rem;
 }

@@ -63,9 +63,35 @@ assert.equal(
   "Astro 产物不得包含 CNAME，以免抢占正式域名",
 );
 assert.doesNotMatch(html, /jerryzou\.com/, "预览首页不得绑定正式域名");
+assert.match(html, /rel="canonical"/, "首页应声明 canonical");
+assert.match(
+  html,
+  /href="https:\/\/heaven-blog-next\.pages\.dev\/"/,
+  "预览 canonical 应使用 pages.dev，而不是正式域名",
+);
+assert.match(html, /property="og:title"/, "首页应输出 Open Graph 标题");
+assert.match(html, /application\/ld\+json/, "首页应包含 JSON-LD");
+assert.match(html, /hreflang="zh-CN"/, "中文页应声明 hreflang");
+assert.match(
+  html,
+  /hreflang="x-default"/,
+  "在英文页出现前 x-default 指向中文 canonical",
+);
+assert.match(html, /\/assets\/images\/favicon\.ico/, "首页应声明 favicon");
 assert.match(essay, /年的文章/, "随笔样本应回到年表而不是上一篇下一篇");
 assert.match(essay, /year-mark">2026/, "文末年份入口应指向对应年表");
 assert.doesNotMatch(essay, /上一篇|下一篇/, "文末不应出现上一篇下一篇");
+assert.match(
+  essay,
+  /property="og:type" content="article"/,
+  "文章页 og:type 应为 article",
+);
+assert.match(
+  essay,
+  /og:description" content="两年前的一个深夜/,
+  "文章页不得误用首页通用分享文案",
+);
+assert.match(essay, /"@type":"BlogPosting"/, "文章页 JSON-LD 应为 BlogPosting");
 assert.match(codePost, /<pre class="shiki/, "代码样本应保留代码块");
 assert.match(codePost, /shiki/, "代码样本应使用 Shiki 构建期高亮");
 assert.match(tablePost, /table-wrap/, "含表格的文章应可横向滚动而不是撑破版心");
@@ -182,6 +208,105 @@ for (const filename of postFiles) {
     `${filename} 正文不应留下可执行 script`,
   );
 }
+
+const contract = JSON.parse(
+  readFileSync(join(repoRoot, "migration-contract.json"), "utf8"),
+);
+for (const route of contract.routes) {
+  const filePath =
+    route.path === "/feed.xml" ||
+    route.path === "/robots.txt" ||
+    route.path === "/sitemap.xml"
+      ? join(distDir, route.path.slice(1))
+      : join(distDir, route.path.slice(1), "index.html");
+  assert.equal(
+    existsSync(filePath),
+    true,
+    `历史路由应有对应产物：${route.path}`,
+  );
+}
+
+const pageTwo = await readFile(join(distDir, "2/index.html"), "utf8");
+assert.match(pageTwo, /<title>咀嚼之味<\/title>/, "/2/ 应保持历史分页标题");
+assert.match(pageTwo, /上一页/, "/2/ 应能回到首页");
+assert.match(pageTwo, /下一页/, "/2/ 应能翻到更早一页");
+
+const alias = await readFile(
+  join(distDir, "posts/shadowsocks-with-digitalocean/index.html"),
+  "utf8",
+);
+assert.match(
+  alias,
+  /<title>Redirecting\.\.\.<\/title>/,
+  "旧 shadowsocks 地址应保留兼容页",
+);
+assert.match(
+  alias,
+  /shadowsocks-and-digitalocean/,
+  "旧 shadowsocks 地址应指向现行 permalink",
+);
+
+const chew = await readFile(join(distDir, "posts/chew/index.html"), "utf8");
+assert.match(
+  chew,
+  /<title>咀嚼之味 \| 咀嚼之味<\/title>/,
+  "《咀嚼之味》一文标题应保留重复站点名",
+);
+const dontBeEvil = await readFile(
+  join(distDir, "posts/dontBeEvil/index.html"),
+  "utf8",
+);
+assert.match(
+  dontBeEvil,
+  /<title>Don(?:'|&#39;)t be evil \? \| 咀嚼之味<\/title>/,
+  "Don't be evil 的历史标题应原样保留",
+);
+
+const timeTravel = await readFile(
+  join(distDir, "posts/the-integral-of-now-a-guide-to-time-travel/index.html"),
+  "utf8",
+);
+assert.doesNotMatch(
+  timeTravel,
+  /og:description"[^>]*\*\*/,
+  "文章分享摘要不应残留 Markdown 强调记号",
+);
+assert.match(
+  timeTravel,
+  /时间旅行/,
+  "去掉 Markdown 后仍应保留时间旅行一文的摘要",
+);
+
+const sitemap = await readFile(join(distDir, "sitemap.xml"), "utf8");
+const robots = await readFile(join(distDir, "robots.txt"), "utf8");
+assert.match(sitemap, /<urlset /, "应输出 sitemap.xml");
+assert.match(
+  sitemap,
+  /https:\/\/heaven-blog-next\.pages\.dev\/posts\/floating-on-the-grey-sea\//,
+  "sitemap 应包含正式文章 permalink",
+);
+assert.match(sitemap, /\/2\//, "sitemap 应包含历史分页");
+assert.doesNotMatch(
+  sitemap,
+  /shadowsocks-with-digitalocean/,
+  "旧兼容地址不应进入 sitemap",
+);
+assert.doesNotMatch(sitemap, /jerryzou\.com/, "预览 sitemap 不得绑定正式域名");
+assert.match(
+  robots,
+  /Sitemap: https:\/\/heaven-blog-next\.pages\.dev\/sitemap\.xml/,
+  "robots.txt 应指向预览 sitemap",
+);
+
+const graphql = await readFile(
+  join(distDir, "posts/10-questions-about-graphql/index.html"),
+  "utf8",
+);
+assert.match(
+  graphql,
+  /og:description" content="我在使用 GraphQL/,
+  "GraphQL 一文应使用自己的摘要",
+);
 
 const rxjsPractice = await readFile(
   join(distDir, "posts/rxjs-practice-01/index.html"),

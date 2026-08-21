@@ -1,17 +1,74 @@
 ---
 import "../styles/global.css";
+import {
+  defaultOgImage,
+  fallbackSite,
+  siteDescription,
+  siteEmail,
+  siteOwner,
+  siteTitle,
+} from "../lib/site";
+import { absoluteUrl, plainText } from "../lib/text";
 
 type Props = {
   title: string;
   description?: string | null;
   current?: "home" | "archive" | "about";
+  type?: "website" | "article";
+  publishedAt?: Date;
+  image?: string | null;
+  noindex?: boolean;
 };
 
-const siteTitle = "咀嚼之味";
-const fallbackDescription =
-  "咀嚼之味是我分享我对编程与生活的见解之地。我喜欢做一些安静的事，比如看书、看电影、听音乐、散步以及旅行。";
-const { title, description = fallbackDescription, current } = Astro.props;
-const pageTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
+const {
+  title,
+  description = siteDescription,
+  current,
+  type = "website",
+  publishedAt,
+  image,
+  noindex = false,
+} = Astro.props;
+const pageTitle =
+  type === "article" || title !== siteTitle
+    ? `${title} | ${siteTitle}`
+    : siteTitle;
+const metaDescription = plainText(description) || siteDescription;
+const canonical = absoluteUrl(Astro.url.pathname, Astro.site ?? fallbackSite);
+const shareImage = image || defaultOgImage;
+const ogImage = absoluteUrl(shareImage, Astro.site ?? fallbackSite);
+const knownOgSize = shareImage === defaultOgImage;
+const jsonLd =
+  type === "article"
+    ? {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        headline: title,
+        description: metaDescription,
+        datePublished: publishedAt?.toISOString(),
+        dateModified: publishedAt?.toISOString(),
+        inLanguage: "zh-CN",
+        mainEntityOfPage: canonical,
+        image: ogImage,
+        author: {
+          "@type": "Person",
+          name: siteOwner,
+          email: siteEmail,
+        },
+      }
+    : {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        name: siteTitle,
+        description: siteDescription,
+        url: absoluteUrl("/", Astro.site ?? fallbackSite),
+        inLanguage: "zh-CN",
+        author: {
+          "@type": "Person",
+          name: siteOwner,
+          email: siteEmail,
+        },
+      };
 ---
 
 <!doctype html>
@@ -19,12 +76,53 @@ const pageTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    {description && <meta name="description" content={description} />}
+    <meta name="description" content={metaDescription} />
+    <meta name="author" content={siteOwner} />
+    <meta
+      name="robots"
+      content={noindex ? "noindex, nofollow" : "index, follow"}
+    />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="zh-CN" href={canonical} />
+    <link rel="alternate" hreflang="x-default" href={canonical} />
     <link
       rel="alternate"
       type="application/rss+xml"
       title="咀嚼之味 RSS"
       href="/feed.xml"
+    />
+    <link rel="icon" href="/assets/images/favicon.ico" sizes="any" />
+    <meta property="og:site_name" content={siteTitle} />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    {
+      knownOgSize && (
+        <>
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+        </>
+      )
+    }
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={metaDescription} />
+    <meta name="twitter:image" content={ogImage} />
+    {
+      publishedAt && (
+        <meta
+          property="article:published_time"
+          content={publishedAt.toISOString()}
+        />
+      )
+    }
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify(jsonLd)}
     />
     <title>{pageTitle}</title>
     <script is:inline>
