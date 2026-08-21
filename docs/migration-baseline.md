@@ -12,7 +12,7 @@
 - `/posts/shadowsocks-with-digitalocean/` 是保留中的旧兼容地址，当前以 HTTP 200 HTML 页面跳转到 `/posts/shadowsocks-and-digitalocean/`。
 - `/posts/paperFormat/` 中的 `www.pdf-express.org` 被浏览器解释为站内相对链接，属于已知历史坏链；迁移时不能把它误判成新回归。
 
-机器可读基线位于根目录的 `migration-contract.json`。默认验证不访问网络；`npm run verify:live` 会复核现网状态、元数据和站内链接。预览环境可通过 `VERIFY_ORIGIN` 指向其他域名。
+机器可读基线位于根目录的 `migration-contract.json`。默认验证不访问网络；`npm run verify:live` 会复核现网 `jerryzou.com` 的状态、元数据和站内链接。它对照的是旧站契约，不能用来验收 Cloudflare 预览站。
 
 ## 内容兼容风险
 
