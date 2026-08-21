@@ -193,7 +193,7 @@ a:hover {
   display: none;
   width: 1.15rem;
   height: 1.15rem;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 
 html[data-theme-choice="system"] .theme-icon[data-theme-icon="system"],
@@ -283,6 +283,10 @@ main {
 
 .post-list .post-tags {
   margin: 0.4rem 0 0;
+}
+
+.page-title + .year-group {
+  margin-top: 1.75rem;
 }
 
 .year-group + .year-group {
