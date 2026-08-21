@@ -118,7 +118,9 @@ assert.equal(
   "AVIF 变体应写入产物",
 );
 
-const originalSize = statSync(join(distDir, decodeURI(sampleSrc).slice(1))).size;
+const originalSize = statSync(
+  join(distDir, decodeURI(sampleSrc).slice(1)),
+).size;
 const webps = readdirSync(join(distDir, "assets/responsive")).filter((name) =>
   name.endsWith(".webp"),
 );
