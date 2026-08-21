@@ -13,8 +13,10 @@ const expectedReplacements = 2;
 const legacyCall = "this.$tcb.auth.getCurrenUser()";
 const currentCall = "this.$tcb.auth.getCurrentUser()";
 const legacyLoginCheck = 'this.isLogin="CUSTOM"===e.loginType';
-const compatibleLoginCheck =
+const previousLoginCheck =
   'this.isLogin=!!e&&("CUSTOM"===e.loginType||"custom"===(e.app_metadata&&e.app_metadata.provider))';
+const compatibleLoginCheck =
+  'this.isLogin=!!e&&("CUSTOM"===e.loginType||"custom"===(e.app_metadata&&e.app_metadata.provider)||Array.isArray(e.providers)&&e.providers.some(e=>"custom"===e.id))';
 const swallowedCustomLoginResult =
   'case 1:return t.sent(),[2]}})})},e}();t.CustomAuthProvider=l;';
 const checkedCustomLoginResult =
@@ -61,7 +63,16 @@ function replaceExpected(
 }
 
 replaceExpected(legacyCall, currentCall, "CloudBase auth calls");
-replaceExpected(legacyLoginCheck, compatibleLoginCheck, "admin login checks");
+const previousLoginCheckCount =
+  patched.split(previousLoginCheck).length - 1;
+if (previousLoginCheckCount === expectedReplacements) {
+  patched = patched.replaceAll(previousLoginCheck, compatibleLoginCheck);
+  console.log(
+    `Updated ${expectedReplacements} Twikoo admin login checks for provider arrays.`,
+  );
+} else {
+  replaceExpected(legacyLoginCheck, compatibleLoginCheck, "admin login checks");
+}
 replaceExpected(
   swallowedCustomLoginResult,
   checkedCustomLoginResult,
