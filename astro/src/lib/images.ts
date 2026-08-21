@@ -72,14 +72,15 @@ async function buildOne(file: string): Promise<void> {
 
   try {
     const meta = await sharp(file, { animated: true }).metadata();
+    const animated = ext === ".gif" || (meta.pages ?? 1) > 1;
     const width = meta.width ?? 0;
-    const height = meta.height ?? 0;
+    const height = animated
+      ? (meta.pageHeight ?? meta.height ?? 0)
+      : (meta.height ?? 0);
     if (!width || !height) {
       byHref.set(href, "missing");
       return;
     }
-
-    const animated = ext === ".gif" || (meta.pages ?? 1) > 1;
     const digest = createHash("sha1")
       .update(href)
       .update(readFileSync(file))

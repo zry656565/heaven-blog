@@ -35,14 +35,19 @@ function decodeSrc(src) {
   }
 }
 
-async function isAnimated(src) {
+async function frameSize(src) {
   const file = join(distDir, decodeSrc(src).slice(1));
-  if (!existsSync(file)) return false;
+  if (!existsSync(file)) return null;
   const ext = extname(file).toLowerCase();
-  if (ext === ".gif") return true;
-  if (ext !== ".webp") return false;
   const meta = await sharp(file, { animated: true }).metadata();
-  return (meta.pages ?? 1) > 1;
+  const animated = ext === ".gif" || (meta.pages ?? 1) > 1;
+  return {
+    animated,
+    width: meta.width ?? 0,
+    height: animated
+      ? (meta.pageHeight ?? meta.height ?? 0)
+      : (meta.height ?? 0),
+  };
 }
 
 assert.doesNotMatch(
@@ -95,10 +100,20 @@ for (const slug of postDirs) {
     const src = html.match(/\bsrc="(\/assets\/images\/[^"]+)"/)?.[1];
     if (!src) continue;
     const img = html.match(/<img\b[^>]*>/i)?.[0] ?? html;
-    assert.match(img, /\bwidth="\d+"/, `${slug} ${src} 应有 width`);
-    assert.match(img, /\bheight="\d+"/, `${slug} ${src} 应有 height`);
+    const frame = await frameSize(src);
+    assert.ok(frame?.width && frame.height, `${slug} ${src} 应能读取源图尺寸`);
+    assert.match(
+      img,
+      new RegExp(`\\bwidth="${frame.width}"`),
+      `${slug} ${src} 的 width 应为单帧 ${frame.width}`,
+    );
+    assert.match(
+      img,
+      new RegExp(`\\bheight="${frame.height}"`),
+      `${slug} ${src} 的 height 应为单帧 ${frame.height}`,
+    );
     assert.match(img, /loading="lazy"/, `${slug} ${src} 应懒加载`);
-    if (await isAnimated(src)) {
+    if (frame.animated) {
       animatedCount += 1;
       assert.doesNotMatch(
         html,
