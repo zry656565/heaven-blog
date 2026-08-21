@@ -1,12 +1,12 @@
 import type { APIRoute } from "astro";
 import { listPosts } from "../lib/posts";
-import { PAGE_SIZE, fallbackSite } from "../lib/site";
+import { archivePageCount, fallbackSite } from "../lib/site";
 import { absoluteUrl } from "../lib/text";
 
 export const GET: APIRoute = ({ site }) => {
   const origin = site ?? fallbackSite;
   const posts = listPosts();
-  const totalPages = Math.ceil(posts.length / PAGE_SIZE);
+  const totalPages = archivePageCount(posts.length);
   const paths = [
     "/",
     "/about/",

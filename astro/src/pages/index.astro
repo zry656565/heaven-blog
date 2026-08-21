@@ -1,9 +1,10 @@
 ---
 import Base from "../layouts/Base.astro";
 import { listPosts } from "../lib/posts";
+import { HOME_PAGE_SIZE } from "../lib/site";
 import { plainText } from "../lib/text";
 
-const posts = listPosts().slice(0, 8);
+const posts = listPosts().slice(0, HOME_PAGE_SIZE);
 
 function excerpt(text: string | null): string {
   return plainText(text);

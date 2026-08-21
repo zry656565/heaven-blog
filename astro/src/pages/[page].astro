@@ -1,21 +1,25 @@
 ---
 import Base from "../layouts/Base.astro";
 import { listPosts } from "../lib/posts";
-import { PAGE_SIZE, siteDescription } from "../lib/site";
+import {
+  archivePageCount,
+  archivePageRange,
+  siteDescription,
+} from "../lib/site";
 import { plainText } from "../lib/text";
 
 export function getStaticPaths() {
   const posts = listPosts();
-  const totalPages = Math.ceil(posts.length / PAGE_SIZE);
+  const totalPages = archivePageCount(posts.length);
   return Array.from({ length: totalPages - 1 }, (_, index) => {
     const page = index + 2;
-    const start = (page - 1) * PAGE_SIZE;
+    const { start, end } = archivePageRange(page);
     return {
       params: { page: String(page) },
       props: {
         page,
         totalPages,
-        posts: posts.slice(start, start + PAGE_SIZE),
+        posts: posts.slice(start, end),
       },
     };
   });
