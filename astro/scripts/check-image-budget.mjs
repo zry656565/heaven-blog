@@ -22,7 +22,7 @@ const missingImagePost = await readFile(
 function prose(page) {
   return (
     page.match(
-      /<div class="prose">([\s\S]*?)<\/div>\s*<p class="article-exit">/,
+      /<div class="prose">([\s\S]*?)<\/div>\s*<footer class="article-footer">/,
     )?.[1] ?? ""
   );
 }

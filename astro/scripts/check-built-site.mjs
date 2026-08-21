@@ -45,6 +45,19 @@ assert.match(
   /是一个写了十多年代码的程序员，如今深耕人事工作，对创造一家生机勃勃的公司充满好奇/,
   "关于页应说明如今深耕人事工作",
 );
+assert.match(essay, /article-copyright/, "文章页应保留版权声明");
+assert.match(
+  essay,
+  /creativecommons\.org\/licenses\/by-nc\/3\.0/,
+  "文章页版权应指向 CC BY-NC 3.0",
+);
+assert.match(
+  essay,
+  /mailto:jerry\.zry@outlook\.com/,
+  "文章页版权应指向作者邮箱",
+);
+assert.doesNotMatch(html, /article-copyright/, "首页不应出现文章版权声明");
+assert.doesNotMatch(about, /article-copyright/, "关于页不应出现文章版权声明");
 assert.match(
   about,
   /让我感到幸福的，通常是理解了一件新事物/,
@@ -184,7 +197,7 @@ function expectedPublishedAt(raw) {
 
 function proseHtml(page) {
   return page.match(
-    /<div class="prose">([\s\S]*?)<\/div>\s*<p class="article-exit">/,
+    /<div class="prose">([\s\S]*?)<\/div>\s*<footer class="article-footer">/,
   )?.[1];
 }
 
