@@ -240,6 +240,42 @@ for (const route of contract.routes) {
   );
 }
 
+function listPermalinks(pageHtml) {
+  const list =
+    pageHtml.match(/<ol class="post-list">([\s\S]*?)<\/ol>/)?.[1] ?? "";
+  return [...list.matchAll(/href="(\/posts\/[^"]+\/)"/g)].map(
+    (match) => match[1],
+  );
+}
+
+const homeLinks = listPermalinks(html);
+assert.equal(homeLinks.length, 8, "首页应列出 8 篇近作");
+const listed = new Set(homeLinks);
+let archivePage = 2;
+while (existsSync(join(distDir, String(archivePage), "index.html"))) {
+  const pageHtml = await readFile(
+    join(distDir, String(archivePage), "index.html"),
+    "utf8",
+  );
+  const links = listPermalinks(pageHtml);
+  assert.ok(links.length > 0, `/${archivePage}/ 不应为空`);
+  assert.ok(links.length <= 7, `/${archivePage}/ 每页最多 7 篇`);
+  for (const link of links) {
+    assert.equal(
+      listed.has(link),
+      false,
+      `${link} 不应同时出现在首页或更前分页与 /${archivePage}/`,
+    );
+    listed.add(link);
+  }
+  archivePage += 1;
+}
+assert.equal(
+  listed.size,
+  postFiles.length,
+  "首页加分页应恰好覆盖全部文章且无重复",
+);
+
 const pageTwo = await readFile(join(distDir, "2/index.html"), "utf8");
 assert.match(
   pageTwo,
