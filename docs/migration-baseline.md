@@ -73,4 +73,8 @@
 
 ## 当前构建限制
 
-旧 Jekyll 构建依赖 Bundler 2.3.12，而当前系统 Ruby 未安装该版本。此处不继续扩建旧工具链；CircleCI 仍保留作回滚路径，Stage 1 以全新 Astro 构建替代。新验证入口不依赖旧 Ruby、Grunt 或网络。
+旧 Jekyll 构建依赖 Bundler 2.3.12，而当时系统 Ruby 未安装该版本。此处不继续扩建旧工具链；Stage 1 以全新 Astro 构建替代。新验证入口不依赖旧 Ruby、Grunt 或网络。
+
+## 状态更新（Issue #13）
+
+本仓库已删除 CircleCI、Grunt、Yarn 与 Jekyll 构建链。文章继续以 `_posts` 的历史 Markdown / Liquid 接入 Astro。`jerryzou.com` 现网回滚仍依赖公开仓库，直到 Stage 9。

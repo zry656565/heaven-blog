@@ -1,66 +1,71 @@
-《咀嚼之味》博客
-===========
+# 咀嚼之味
 
-[![CircleCI](https://circleci.com/gh/zry656565/heaven-blog.svg?style=svg)](https://circleci.com/gh/zry656565/heaven-blog)
+本博客遵循 MIT 开源协议。本仓库是私有改版仓库：站点由 Astro 构建，GitHub Actions 做 CI，Cloudflare Pages 做预览与部署。
 
-本博客遵循MIT开源协议。
+文章仍写在 [`_posts/`](_posts/)（历史 Jekyll Markdown / Liquid），图片在 [`assets/images/`](assets/images/)。构建入口在 [`astro/`](astro/)。
 
-## 改版验证
+## 本地
 
-Astro 改版与旧 Jekyll 暂时并存。新站工程位于 [`astro/`](astro/)，使用 Node.js 22.12.0：
+需要 Node.js 22.12.0（见 `.nvmrc`）：
 
 ```bash
 npm ci --prefix astro
 npm --prefix astro run dev
 ```
 
-提交前统一运行：
+提交前：
 
 ```bash
 npm run verify
 ```
 
-涉及历史 URL、页面元数据或现网链接时，再运行 `npm run verify:live`。迁移基线见 [`docs/migration-baseline.md`](docs/migration-baseline.md)。
-
-### CI / CD
-
-- **CI**：GitHub Actions（[`.github/workflows/verify.yml`](.github/workflows/verify.yml)）在 Pull Request 和 `master` 上执行 `npm ci --prefix astro` 与 `npm run verify`。权限仅为 `contents: read`。仓库里不放令牌；生产凭据只进 GitHub Secrets 或 Cloudflare 项目变量。
-- **CD**：Cloudflare Pages 连接私有仓库 `heaven-blog-next`。正式域名切换只在 Stage 9。Stage 1 只用 `*.pages.dev` 预览。
-- **推荐 Pages 设置**：项目名 `heaven-blog-next`；生产分支 `master`；Root directory `astro`；Build command `npm ci && npm run build`；Build output `dist`；Node `22.12.0`。不要勾选把根目录 `CNAME` 拷进产物。
-- **预览失败**：Actions 检查失败应阻止合并；Pages 构建失败不得覆盖上一份成功部署。
-- **回滚**：观察期内现网仍由公开仓库 + GitHub Pages / CircleCI 提供。Cloudflare 控制台可回退到上一次成功部署；不要在本阶段改 `jerryzou.com` DNS。
-- **排查**：本地先 `npm run verify`；Actions 看 `verify` job 日志；Pages 看对应 commit 的 build log。预览域名用 `VERIFY_ORIGIN` 跑 `npm run verify:live`。
-
-## 如何组建出我的博客
-- Jekyll: 静态网站模版引擎
-- Github Pages: 挂载博客的服务器
-- grunt: 用于网站的静态文件自动合并压缩，并部署
-- React: 使用React来组织“[所有文章](https://jerryzou.com/all-articles/)”页面
-
-## 安装依赖环境
+核对历史 URL、页面元数据或现网链接时：
 
 ```bash
-# 如果你的系统没有 ruby 环境，请先安装
-# 使用 gem 安装主要的依赖
-gem install jekyll bundler
-
-# 安装依赖的 gem 包
-bundle install
-
-# 安装依赖的 npm 包
-yarn install
+npm run verify:live
 ```
 
-## FAQ
+预览站可设 `VERIFY_ORIGIN`。迁移基线见 [`docs/migration-baseline.md`](docs/migration-baseline.md)。
 
-1. 如果你无法在 Mac 上启动 Jekyll 参见[Jekyll on macOS](https://jekyllrb.com/docs/installation/macos/)
+## CI / CD
 
-## 编译与部署
+### CI：GitHub Actions
 
-```bash
-yarn grunt build      # 本地编译
-yarn grunt debug      # 本地编译并启动测试服务器
-yarn grunt release    # 本地编译出线上版本（应用各种优化）
-yarn grunt serve      # 本地编译并启动测试服务器（应用各种优化）
-yarn grunt deploy     # 将站点发布到 gh-pages 分支下
-```
+工作流 [`.github/workflows/verify.yml`](.github/workflows/verify.yml) 在 Pull Request 和 `master` 上执行：
+
+1. 按 `.nvmrc` 安装 Node 22.12.0。
+2. `npm ci --prefix astro`，锁定并缓存 `astro/package-lock.json`。
+3. 根目录 `npm run verify`：迁移契约、密钥签名、Prettier、`astro check`、生产构建、日期与产物冒烟。
+
+权限仅为 `contents: read`。仓库不放令牌。当前构建不需要 GitHub Secrets；Cloudflare 凭据只存在 Pages 项目里。
+
+私有仓库无法开启 GitHub 分支保护（需要 Pro）。合并前仍应等 Actions 的 `verify` 变绿，不要在检查失败时合并。
+
+### CD：Cloudflare Pages
+
+- 项目：`heaven-blog-next`（已连接本私有仓库）
+- 生产分支：`master`
+- Root directory：`astro`
+- Build command：`npm ci && npm run build`
+- Build output：`dist`
+- Node：`22.12.0`
+- 不要把仓库根目录的 `CNAME` 拷进产物
+
+PR 与非 `master` 分支出独立预览 URL。`master` 合并后自动发生产（当前是 `*.pages.dev`，不是 `jerryzou.com`）。Pages 构建失败不会覆盖上一份成功部署。
+
+### 失败排查
+
+1. 本地先跑 `npm run verify`。
+2. Actions：看对应 commit 的 `verify` job 日志。
+3. Pages：看对应 commit 的 build log。
+4. 预览域名：`VERIFY_ORIGIN=https://....pages.dev npm run verify:live`。
+
+### 回滚
+
+- **本仓库 / 预览站**：在 Cloudflare 控制台回退到上一次成功部署。
+- **jerryzou.com**：仍由公开仓库 `heaven-blog` + GitHub Pages / CircleCI 提供。本仓库已删除 CircleCI、Grunt 与 Jekyll 构建链，**不要**因此去关公开仓库的 CircleCI。正式切域名只在 Stage 9（#11），本阶段不改 DNS。
+- 若 CircleCI 曾 follow 本私有仓库 `heaven-blog-next`，可在 CircleCI 控制台 unfollow，并删除只属于该项目的部署密钥。公开仓库的部署密钥必须留到 #11。
+
+### 本仓库已移除
+
+CircleCI 配置、Gruntfile、Yarn lock、Ruby Gemfile、Jekyll 布局，以及旧静态入口（根目录 `index.html` / `feed.xml` / `robots.txt`、`_includes`、`_layouts`、`pages/`、`articles.raw`、`assets/css`、`assets/js`）。它们不再参与构建。`CNAME` 仍保留；切域名属于 #11。
