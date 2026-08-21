@@ -1,5 +1,13 @@
 ---
 import Base from "../layouts/Base.astro";
+import { imageMarkup, prepareResponsiveImages } from "../lib/images";
+
+await prepareResponsiveImages();
+const monkey = imageMarkup("/assets/images/monkey-transparent.png", {
+  className: "monkey-avatar",
+  alt: "",
+  sizes: "6.5rem",
+});
 
 type TimelineItem = {
   when: string;
@@ -62,11 +70,7 @@ const school: TimelineItem[] = [
       <a href="https://www.douban.com/people/jerry_zou/">豆瓣</a>
       <a href="https://x.com/JerryDDG">X</a>
     </p>
-    <img
-      class="monkey-avatar"
-      src="/assets/images/monkey-transparent.png"
-      alt=""
-    />
+    <Fragment set:html={monkey} />
     <h2>工作</h2>
     <ol class="timeline">
       {

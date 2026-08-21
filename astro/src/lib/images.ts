@@ -1,18 +1,24 @@
 import { createHash } from "node:crypto";
-import { existsSync, mkdirSync, readdirSync, statSync } from "node:fs";
+import {
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  readdirSync,
+  statSync,
+} from "node:fs";
 import { dirname, extname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 
 const WIDTHS = [400, 800, 1200] as const;
-const SIZES = "(max-width: 600px) calc(100vw - 1.5rem), 42rem";
+export const ARTICLE_SIZES = "(max-width: 600px) calc(100vw - 1.5rem), 42rem";
 const RASTER = new Set([".png", ".jpg", ".jpeg", ".webp", ".bmp"]);
-const ANIMATED = new Set([".gif"]);
 
 export type ImageInfo = {
   href: string;
   width: number;
   height: number;
+  animated: boolean;
   variants: { width: number; avif: string; webp: string }[];
 };
 
@@ -52,21 +58,20 @@ function hrefFor(file: string): string {
 }
 
 function variantName(
-  href: string,
+  digest: string,
   width: number,
   format: "avif" | "webp",
 ): string {
-  const id = createHash("sha1").update(href).digest("hex").slice(0, 12);
-  return `${id}-w${width}.${format}`;
+  return `${digest}-w${width}.${format}`;
 }
 
 async function buildOne(file: string): Promise<void> {
   const href = hrefFor(file);
   const ext = extname(file).toLowerCase();
-  if (!RASTER.has(ext) && !ANIMATED.has(ext)) return;
+  if (!RASTER.has(ext) && ext !== ".gif") return;
 
   try {
-    const meta = await sharp(file, { animated: ANIMATED.has(ext) }).metadata();
+    const meta = await sharp(file, { animated: true }).metadata();
     const width = meta.width ?? 0;
     const height = meta.height ?? 0;
     if (!width || !height) {
@@ -74,15 +79,21 @@ async function buildOne(file: string): Promise<void> {
       return;
     }
 
-    const info: ImageInfo = { href, width, height, variants: [] };
-    if (RASTER.has(ext) && !meta.pages) {
+    const animated = ext === ".gif" || (meta.pages ?? 1) > 1;
+    const digest = createHash("sha1")
+      .update(href)
+      .update(readFileSync(file))
+      .digest("hex")
+      .slice(0, 12);
+    const info: ImageInfo = { href, width, height, animated, variants: [] };
+    if (RASTER.has(ext) && !animated) {
       const widths: number[] = WIDTHS.filter((value) => value <= width);
       if (width <= 1600 && !widths.includes(width)) widths.push(width);
       widths.sort((a, b) => a - b);
       const source = sharp(file).rotate();
       for (const target of widths) {
-        const avifName = variantName(href, target, "avif");
-        const webpName = variantName(href, target, "webp");
+        const avifName = variantName(digest, target, "avif");
+        const webpName = variantName(digest, target, "webp");
         const avifPath = join(outDir, avifName);
         const webpPath = join(outDir, webpName);
         if (!existsSync(avifPath)) {
@@ -137,28 +148,38 @@ function srcset(info: ImageInfo, format: "avif" | "webp"): string {
     .join(", ");
 }
 
+function lookup(src: string): ImageInfo | "missing" | undefined {
+  let decoded = src;
+  try {
+    decoded = decodeURI(src);
+  } catch {
+    // keep the raw path when it is not a valid escape sequence
+  }
+  return byHref.get(decoded) ?? byHref.get(src);
+}
+
+export function imageMarkup(
+  src: string,
+  options: { alt?: string; className?: string; sizes?: string } = {},
+): string {
+  const info = lookup(src);
+  const alt = options.alt ?? "";
+  const classAttr = options.className ? ` class="${options.className}"` : "";
+  if (!info || info === "missing") {
+    return `<img src="${src}" alt="${alt}"${classAttr} loading="lazy" decoding="async">`;
+  }
+  const img = `<img src="${src}" alt="${alt}"${classAttr} width="${info.width}" height="${info.height}" loading="lazy" decoding="async">`;
+  if (info.animated || info.variants.length === 0) return img;
+  const sizes = options.sizes ?? ARTICLE_SIZES;
+  return `<picture><source type="image/avif" srcset="${srcset(info, "avif")}" sizes="${sizes}"><source type="image/webp" srcset="${srcset(info, "webp")}" sizes="${sizes}">${img}</picture>`;
+}
+
 export function upgradeImages(html: string): string {
-  let first = true;
   return html.replace(/<img\b[^>]*>/gi, (tag) => {
     if (/\bclass=["'][^"']*\blost-image/.test(tag)) return tag;
     const src = attr(tag, "src");
     if (!src || !src.startsWith("/assets/images/")) return tag;
-    let decoded = src;
-    try {
-      decoded = decodeURI(src);
-    } catch {
-      // keep the raw path when it is not a valid escape sequence
-    }
-    const info = byHref.get(decoded) ?? byHref.get(src);
-    if (!info || info === "missing") return tag;
-
-    const isLcp = first;
-    first = false;
-    const alt = attr(tag, "alt") ?? "";
-    const loading = isLcp ? "eager" : "lazy";
-    const extra = isLcp ? ` fetchpriority="high"` : "";
-    const img = `<img src="${src}" alt="${alt}" width="${info.width}" height="${info.height}" loading="${loading}" decoding="async"${extra}>`;
-    if (info.variants.length === 0) return img;
-    return `<picture><source type="image/avif" srcset="${srcset(info, "avif")}" sizes="${SIZES}"><source type="image/webp" srcset="${srcset(info, "webp")}" sizes="${SIZES}">${img}</picture>`;
+    const className = attr(tag, "class") ?? undefined;
+    return imageMarkup(src, { alt: attr(tag, "alt") ?? "", className });
   });
 }

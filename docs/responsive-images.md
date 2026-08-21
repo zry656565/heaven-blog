@@ -11,7 +11,9 @@
 - SVG：不栅格化。
 - 超长图：按宽度缩放，CSS `max-width: 100%; height: auto`。
 - 剧照 / 截图：与普通栅格图相同；不放大超过原像素。
-- 正文第一张：`loading="eager"` + `fetchpriority="high"`；其余 `lazy`。
+- 正文图默认 `loading="lazy"`，不设 `fetchpriority`。本站没有文章 hero；若以后有真正首屏主图，再按页面显式开启。
+- 关于页头像同样走 `<picture>`，`sizes` 为 `6.5rem`。
+- 变体文件名含源文件内容哈希；同路径换图会生成新文件。`/assets/responsive/*` 使用长期 immutable 缓存。
 - 缺失图：继续用失联占位，不生成变体。
 - 字体：继续系统栈，不自托管。
 
