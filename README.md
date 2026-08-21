@@ -19,13 +19,7 @@ npm --prefix astro run dev
 npm run verify
 ```
 
-核对历史 URL、页面元数据或现网链接时：
-
-```bash
-npm run verify:live
-```
-
-预览站可设 `VERIFY_ORIGIN`。迁移基线见 [`docs/migration-baseline.md`](docs/migration-baseline.md)。
+`npm run verify:live` 对照现网 `jerryzou.com` 的旧站契约，不是给 Cloudflare 预览用的。迁移基线见 [`docs/migration-baseline.md`](docs/migration-baseline.md)。
 
 ## CI / CD
 
@@ -58,7 +52,7 @@ PR 与非 `master` 分支出独立预览 URL。`master` 合并后自动发生产
 1. 本地先跑 `npm run verify`。
 2. Actions：看对应 commit 的 `verify` job 日志。
 3. Pages：看对应 commit 的 build log。
-4. 预览域名：`VERIFY_ORIGIN=https://....pages.dev npm run verify:live`。
+4. 预览验收看 GitHub `verify`、Cloudflare 部署状态，以及关键端点：`/`、`/feed.xml`、`/robots.txt`、`/posts/shadowsocks-with-digitalocean/`（应为 301）。不要对预览站跑 `verify:live`：契约记录的是旧站 canonical / 标题 / 200 兼容页，预览站必然对不上。
 
 ### 回滚
 
