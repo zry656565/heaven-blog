@@ -8,6 +8,7 @@ import {
   isSpecialLang,
 } from "shiki";
 import { displayDate, parsePublishedAt } from "./dates";
+import { prepareResponsiveImages, upgradeImages } from "./images";
 import { rewriteArticleScripts } from "./rewrite-article-scripts";
 
 const paperTheme = createCssVariablesTheme({
@@ -38,6 +39,8 @@ const highlighter = await createHighlighter({
     "xml",
   ],
 });
+
+await prepareResponsiveImages();
 
 const langAlias: Record<string, string> = {
   apacheconf: "apache",
@@ -230,8 +233,10 @@ function parsePost(filename: string): Post {
 
   const body = prepareMarkdown(source.slice(match[0].length));
   const html = rewriteArticleScripts(
-    rewriteRawImages(
-      wrapTables(marked.parse(body, { async: false, renderer }) as string),
+    upgradeImages(
+      rewriteRawImages(
+        wrapTables(marked.parse(body, { async: false, renderer }) as string),
+      ),
     ),
   );
   return {
