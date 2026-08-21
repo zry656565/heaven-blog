@@ -77,6 +77,7 @@ assert.match(
 assert.doesNotMatch(html, /安静的事/, "站点 description 不应再使用旧文案");
 assert.match(html, /property="og:title"/, "首页应输出 Open Graph 标题");
 assert.match(html, /application\/ld\+json/, "首页应包含 JSON-LD");
+assert.match(html, /\/api\/wechat-jssdk/, "微信 UA 下应请求 JS-SDK 签名接口");
 assert.match(html, /hreflang="zh-CN"/, "中文页应声明 hreflang");
 assert.match(
   html,

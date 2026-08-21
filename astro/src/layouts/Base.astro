@@ -300,5 +300,52 @@ const jsonLd =
         );
       })();
     </script>
+    <script is:inline>
+      (function () {
+        if (!/MicroMessenger/i.test(navigator.userAgent)) return;
+        var pageUrl = location.href.split("#")[0];
+        fetch("/api/wechat-jssdk?url=" + encodeURIComponent(pageUrl))
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (config) {
+            if (!config || !config.enabled) return;
+            var script = document.createElement("script");
+            script.src = "https://res.wx.qq.com/open/js/jweixin-1.6.0.js";
+            script.onload = function () {
+              if (!window.wx) return;
+              var attr = function (selector) {
+                var node = document.querySelector(selector);
+                return (
+                  node && (node.getAttribute("content") || node.textContent)
+                );
+              };
+              window.wx.config({
+                debug: false,
+                appId: config.appId,
+                timestamp: config.timestamp,
+                nonceStr: config.nonceStr,
+                signature: config.signature,
+                jsApiList: [
+                  "updateAppMessageShareData",
+                  "updateTimelineShareData",
+                ],
+              });
+              window.wx.ready(function () {
+                var share = {
+                  title: attr('meta[property="og:title"]') || document.title,
+                  desc: attr('meta[property="og:description"]') || "",
+                  link: attr('meta[property="og:url"]') || pageUrl,
+                  imgUrl: attr('meta[property="og:image"]') || "",
+                };
+                window.wx.updateAppMessageShareData(share);
+                window.wx.updateTimelineShareData(share);
+              });
+            };
+            document.head.appendChild(script);
+          })
+          .catch(function () {});
+      })();
+    </script>
   </body>
 </html>
