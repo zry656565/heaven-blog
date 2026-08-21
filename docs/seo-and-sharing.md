@@ -24,9 +24,11 @@
 分两类能力，不能混为一谈：
 
 1. **普通链接抓取**：依赖公开 HTML 里的 title、description、og 标签。本站已输出这些字段，微信会不会采用由客户端决定。
-2. **JS-SDK 自定义分享**：需要已认证公众号、JS 接口安全域名，以及服务端签名。当前静态站点不具备这些条件，因此不接入 JS-SDK，也不承诺能完全控制微信内分享卡片。
+2. **JS-SDK 自定义分享**：页面在微信 UA 下会请求 `/api/wechat-jssdk`，用签名调用 `updateAppMessageShareData` / `updateTimelineShareData`。签名密钥放在 Cloudflare Pages 的 `WECHAT_APP_ID`、`WECHAT_APP_SECRET`，不进仓库。密钥未配置时接口返回 501，页面静默回退到 og 标签。
 
-回退展示就是页面上的标题、摘要和 og 图。无法控制的行为包括：微信缓存旧卡片、用正文首图覆盖 og 图、在聊天里截断标题。
+JS 接口安全域名必须 ICP 备案。`heaven-blog-next.pages.dev` 过不了这项校验，所以预览站上的 JS-SDK 在真机微信里不会生效。不必等切域名才能合代码；要在微信里验证自定义卡片，需要站点已经用 `jerryzou.com` 打开，并在公众号后台填入该域名。未认证订阅号通常没有自定义分享权限。
+
+无法控制的行为包括：微信缓存旧卡片、用正文首图覆盖 og 图、在聊天里截断标题。
 
 ## 站点地图与 RSS
 
