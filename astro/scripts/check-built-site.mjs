@@ -69,6 +69,12 @@ assert.match(
   /href="https:\/\/heaven-blog-next\.pages\.dev\/"/,
   "预览 canonical 应使用 pages.dev，而不是正式域名",
 );
+assert.match(
+  html,
+  /name="description" content="用语音和文字理解世界，做困难而有价值的事，珍惜人与人之间真诚的双向付出。"/,
+  "站点 description 应使用首页引言，而不是旧自我介绍",
+);
+assert.doesNotMatch(html, /安静的事/, "站点 description 不应再使用旧文案");
 assert.match(html, /property="og:title"/, "首页应输出 Open Graph 标题");
 assert.match(html, /application\/ld\+json/, "首页应包含 JSON-LD");
 assert.match(html, /hreflang="zh-CN"/, "中文页应声明 hreflang");
