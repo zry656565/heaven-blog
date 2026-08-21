@@ -33,7 +33,28 @@ assert.match(html, /data-theme-toggle/, "首页应提供主题切换");
 assert.match(html, /data-menu-toggle/, "移动导航应可点按，不依赖 hover");
 assert.match(html, /跳到正文/, "应提供跳到正文链接");
 assert.match(html, /浮在灰蒙蒙的海上/, "首页应列出真实文章标题");
-assert.doesNotMatch(html, /首页引言占位，待确认/, "确认前首页不应渲染占位引言");
+assert.match(
+  html,
+  /用语音和文字理解世界，做困难而有价值的事，珍惜人与人之间真诚的双向付出。/,
+  "首页应显示确认后的引言",
+);
+assert.doesNotMatch(html, /首页引言占位，待确认/, "首页不应再出现引言占位");
+const about = await readFile(join(distDir, "about/index.html"), "utf8");
+assert.match(
+  about,
+  /是一个写了十多年代码的程序员，如今深耕人事工作，对创造一家生机勃勃的公司充满好奇/,
+  "关于页应说明如今深耕人事工作",
+);
+assert.match(
+  about,
+  /让我感到幸福的，通常是理解了一件新事物/,
+  "关于页应保留幸福感与长期投入的说明",
+);
+assert.match(
+  about,
+  /\/assets\/images\/monkey-transparent\.png/,
+  "关于页应使用透明底头像",
+);
 assert.match(html, /post-tags/, "首页近期文章应露出标签");
 assert.doesNotMatch(html, /HEAVEN BLOG/, "首页不应再使用占位 eyebrow");
 assert.equal(
@@ -102,6 +123,11 @@ assert.match(
   assert.match(css, /--font-mono/, "日期与标签应使用等宽字体");
   assert.match(css, /#f8f6f2/, "浅色背景应使用淡暖纸色而不是过黄的纸色");
   assert.match(css, /#117865/, "浅色主题文字强调色应达到可读对比度");
+  assert.match(
+    css,
+    /page-title\s*\+\s*\.year-group/,
+    "所有文章页大标题与首个年份之间应有额外留白",
+  );
 }
 
 function expectedPublishedAt(raw) {
