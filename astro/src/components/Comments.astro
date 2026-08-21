@@ -6,9 +6,6 @@ type Props = {
 const { path } = Astro.props;
 const envId = import.meta.env.PUBLIC_TWIKOO_ENV_ID?.trim();
 const region = import.meta.env.PUBLIC_TWIKOO_REGION?.trim();
-const scriptUrl =
-  import.meta.env.PUBLIC_TWIKOO_SCRIPT_URL?.trim() ||
-  "https://registry.npmmirror.com/twikoo/1.7.15/files/dist/twikoo.all.min.js";
 const enabled = Boolean(envId);
 ---
 
@@ -20,7 +17,6 @@ const enabled = Boolean(envId);
   data-comment-path={path}
   data-env-id={envId}
   data-region={region}
-  data-script-url={scriptUrl}
 >
   <h2 id="comments-title">评论</h2>
   {
@@ -40,15 +36,15 @@ const enabled = Boolean(envId);
       <p class="comments-status">评论区尚未配置，正文阅读不受影响。</p>
     )
   }
-  <script is:inline>
-    (function () {
-      var current = document.currentScript;
-      var section = current && current.closest("[data-twikoo-comments]");
+  <script>
+    (async function () {
+      var section = document.querySelector<HTMLElement>(
+        "[data-twikoo-comments]",
+      );
       if (!section || section.dataset.twikooEnabled !== "true") return;
 
-      var status = section.querySelector("[data-comments-status]");
-      var mount = section.querySelector("[data-comments-mount]");
-      var script = document.createElement("script");
+      var status = section.querySelector<HTMLElement>("[data-comments-status]");
+      var mount = section.querySelector<HTMLElement>("[data-comments-mount]");
 
       function fail() {
         if (status) {
@@ -57,36 +53,35 @@ const enabled = Boolean(envId);
         }
       }
 
-      script.src = section.dataset.scriptUrl;
-      script.async = true;
-      script.onload = function () {
-        if (!window.twikoo || !mount) {
-          fail();
-          return;
-        }
+      try {
+        // Twikoo does not publish TypeScript declarations.
+        // @ts-expect-error -- runtime shape is validated below.
+        var module = await import("twikoo");
+        var twikoo = module.default;
+        if (!twikoo || !mount) throw new Error("Twikoo failed to load");
 
-        var options = {
-          envId: section.dataset.envId,
+        var options: {
+          envId: string;
+          el: string;
+          path: string;
+          lang: string;
+          region?: string;
+        } = {
+          envId: section.dataset.envId || "",
           el: "#tcomment",
-          path: section.dataset.commentPath,
+          path: section.dataset.commentPath || location.pathname,
           lang: "zh-CN",
         };
         if (section.dataset.region) {
           options.region = section.dataset.region;
         }
 
-        try {
-          Promise.resolve(window.twikoo.init(options))
-            .then(function () {
-              if (status) status.hidden = true;
-            })
-            .catch(fail);
-        } catch (_error) {
-          fail();
-        }
-      };
-      script.onerror = fail;
-      document.head.appendChild(script);
+        await twikoo.init(options);
+        if (status) status.hidden = true;
+      } catch (_error) {
+        console.error("Twikoo initialization failed", _error);
+        fail();
+      }
     })();
   </script>
 </section>
