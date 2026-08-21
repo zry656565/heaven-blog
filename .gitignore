@@ -19,6 +19,7 @@ assets/css/pages.css
 node_modules
 astro/dist
 astro/.astro
+astro/public/assets/responsive
 
 #react cache
 build/.module-cache

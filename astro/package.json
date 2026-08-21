@@ -12,13 +12,14 @@
     "preview": "astro preview",
     "format:check": "prettier --check package.json astro.config.mjs tsconfig.json 'src/**/*.{astro,css}' 'scripts/**/*.mjs'",
     "check": "astro check",
-    "test": "node --experimental-strip-types --no-warnings scripts/check-dates.ts && node scripts/check-built-site.mjs",
+    "test": "node --experimental-strip-types --no-warnings scripts/check-dates.ts && node scripts/check-built-site.mjs && node scripts/check-image-budget.mjs",
     "verify": "npm run format:check && npm run check && npm run build && npm run test"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",
     "astro": "^7.2.2",
     "marked": "^18.0.10",
+    "sharp": "^0.34.4",
     "shiki": "^4.4.3"
   },
   "devDependencies": {

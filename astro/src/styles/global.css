@@ -450,6 +450,15 @@ main {
   margin: 0;
 }
 
+.prose picture {
+  display: block;
+  margin: 2rem 0;
+}
+
+.prose picture img {
+  margin: 0;
+}
+
 .prose img {
   display: block;
   max-width: 100%;
