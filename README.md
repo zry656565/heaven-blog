@@ -63,3 +63,22 @@ PR 与非 `master` 分支出独立预览 URL。`master` 合并后自动发生产
 ### 本仓库已移除
 
 CircleCI 配置、Gruntfile、Yarn lock、Ruby Gemfile、Jekyll 布局，以及旧静态入口（根目录 `index.html` / `feed.xml` / `robots.txt`、`_includes`、`_layouts`、`pages/`、`articles.raw`、`assets/css`、`assets/js`）。它们不再参与构建。`CNAME` 仍保留；切域名属于 #11。
+
+## Twikoo 评论
+
+文章页和关于页接入 Twikoo。构建环境未配置后端时只显示降级提示，不影响正文阅读。Cloudflare Pages 需要配置：
+
+- `PUBLIC_TWIKOO_ENV_ID`：CloudBase 环境 ID，设置后启用评论区。
+- `PUBLIC_TWIKOO_REGION`：可选；上海环境使用 `ap-shanghai`。
+
+Twikoo 前端依赖精确锁定为 `1.7.19`，由 Astro 构建并在评论启用时懒加载。安装后脚本会修复 Twikoo 1.7.19 与 CloudBase Web SDK 4 的认证调用差异，并严格校验替换数量；版本漂移时直接失败。
+
+评论 path 使用文章 front matter 中原有、带尾部斜杠的 `permalink`；关于页固定使用 `/about/`。CloudBase 控制台必须启用匿名登录，并把实际站点域名加入 WEB 安全域名。管理员私钥、密码及邮件凭据不得写入仓库。
+
+Twikoo 的 Disqus 导入器会把 thread `<id>` 当作评论 path。旧导出需先生成路径修正版；原始导出不要修改：
+
+```bash
+npm run comments:prepare-disqus -- /path/to/disqus.xml.gz /private/path/disqus-for-twikoo.xml --public-existing-only
+```
+
+脚本会根据 `<link>` 恢复历史 permalink、应用仓库已有 301 映射，并排除 spam、deleted 和已删除文章的评论。修正版和评论恢复计划包含个人信息，只能作为私密迁移文件保存，不得提交仓库。
