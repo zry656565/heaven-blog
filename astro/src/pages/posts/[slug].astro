@@ -1,21 +1,26 @@
 ---
+import { getCollection } from "astro:content";
 import Base from "../../layouts/Base.astro";
-import { getPost, listPosts } from "../../lib/posts";
 
-export function getStaticPaths() {
-  return listPosts().map((post) => ({
-    params: { slug: post.slug },
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((entry) => ({
+    params: { slug: entry.id },
+    props: { post: entry.data },
   }));
 }
 
-const post = getPost(Astro.params.slug as string);
-if (!post) {
-  throw new Error(`未找到文章：${Astro.params.slug}`);
-}
+const { post } = Astro.props;
 const year = post.date.slice(0, 4);
 ---
 
-<Base title={post.title} description={post.description}>
+<Base
+  title={post.title}
+  description={post.description}
+  type="article"
+  publishedAt={post.publishedAt}
+  image={post.shareImage}
+>
   <article>
     <h1 class="page-title">{post.title}</h1>
     <p class="meta">

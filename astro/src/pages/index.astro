@@ -1,14 +1,12 @@
 ---
 import Base from "../layouts/Base.astro";
 import { listPosts } from "../lib/posts";
+import { plainText } from "../lib/text";
 
 const posts = listPosts().slice(0, 8);
 
 function excerpt(text: string | null): string {
-  return (text ?? "")
-    .replace(/[*_`]+/g, "")
-    .replace(/\s+/g, " ")
-    .trim();
+  return plainText(text);
 }
 ---
 

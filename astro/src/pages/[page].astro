@@ -1,0 +1,51 @@
+---
+import Base from "../layouts/Base.astro";
+import { listPosts } from "../lib/posts";
+import { PAGE_SIZE, siteTitle } from "../lib/site";
+import { plainText } from "../lib/text";
+
+export function getStaticPaths() {
+  const posts = listPosts();
+  const totalPages = Math.ceil(posts.length / PAGE_SIZE);
+  return Array.from({ length: totalPages - 1 }, (_, index) => {
+    const page = index + 2;
+    const start = (page - 1) * PAGE_SIZE;
+    return {
+      params: { page: String(page) },
+      props: {
+        page,
+        totalPages,
+        posts: posts.slice(start, start + PAGE_SIZE),
+      },
+    };
+  });
+}
+
+const { page, totalPages, posts } = Astro.props;
+const prevHref = page === 2 ? "/" : `/${page - 1}/`;
+const nextHref = page < totalPages ? `/${page + 1}/` : null;
+---
+
+<Base title={siteTitle} description={undefined}>
+  <ol class="post-list">
+    {
+      posts.map((post) => (
+        <li>
+          <time datetime={post.publishedAt.toISOString()}>{post.date}</time>
+          <a href={post.permalink}>{post.title}</a>
+          {plainText(post.description) && (
+            <p class="excerpt">{plainText(post.description)}</p>
+          )}
+          {post.labels.length > 0 && (
+            <p class="post-tags">{post.labels.join(" · ")}</p>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+  <nav class="pagination" aria-label="分页">
+    <a href={prevHref}>上一页</a>
+    <span>{page} / {totalPages}</span>
+    {nextHref ? <a href={nextHref}>下一页</a> : <span />}
+  </nav>
+</Base>
