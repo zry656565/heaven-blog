@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import Comments from "../../components/Comments.astro";
 import Base from "../../layouts/Base.astro";
 import { siteEmail, siteOwner } from "../../lib/site";
 
@@ -46,5 +47,6 @@ const year = post.date.slice(0, 4);
         </a>
       </p>
     </footer>
+    <Comments path={post.permalink} />
   </article>
 </Base>
