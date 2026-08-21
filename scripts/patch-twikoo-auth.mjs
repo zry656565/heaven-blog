@@ -8,19 +8,19 @@ const twikooBundle = join(
   repoRoot,
   "astro/node_modules/twikoo/dist/twikoo.all.min.js",
 );
-const supportedVersion = "1.7.15";
+const supportedVersion = "1.7.19";
 const expectedReplacements = 2;
 const legacyCall = "this.$tcb.auth.getCurrenUser()";
 const currentCall = "this.$tcb.auth.getCurrentUser()";
 const legacyLoginCheck = 'this.isLogin="CUSTOM"===e.loginType';
-const previousLoginCheck =
-  'this.isLogin=!!e&&("CUSTOM"===e.loginType||"custom"===(e.app_metadata&&e.app_metadata.provider))';
 const compatibleLoginCheck =
-  'this.isLogin=!!e&&("CUSTOM"===e.loginType||"custom"===(e.app_metadata&&e.app_metadata.provider)||Array.isArray(e.providers)&&e.providers.some(e=>"custom"===e.id))';
-const swallowedCustomLoginResult =
-  'case 1:return t.sent(),[2]}})})},e}();t.CustomAuthProvider=l;';
-const checkedCustomLoginResult =
-  'case 1:if((e=t.sent())&&e.error)throw e.error;return[2,e]}})})},e}();t.CustomAuthProvider=l;';
+  'this.isLogin=!!e&&(Array.isArray(e.providers)?e.providers.some(e=>"custom"===e.id):"CUSTOM"===e.loginType)';
+const legacyAnonymousLogin = ".anonymousAuthProvider().signIn()";
+const currentAnonymousLogin = ".signInAnonymously()";
+const legacyCustomLogin =
+  "await this.$tcb.auth.customAuthProvider().signIn(t.result.ticket)";
+const currentCustomLogin =
+  "this.$tcb.auth.setCustomSignFunc(()=>Promise.resolve(t.result.ticket)),await this.$tcb.auth.signInWithCustomTicket()";
 
 const { version } = JSON.parse(readFileSync(twikooPackage, "utf8"));
 if (version !== supportedVersion) {
@@ -63,20 +63,20 @@ function replaceExpected(
 }
 
 replaceExpected(legacyCall, currentCall, "CloudBase auth calls");
-const previousLoginCheckCount =
-  patched.split(previousLoginCheck).length - 1;
-if (previousLoginCheckCount === expectedReplacements) {
-  patched = patched.replaceAll(previousLoginCheck, compatibleLoginCheck);
-  console.log(
-    `Updated ${expectedReplacements} Twikoo admin login checks for provider arrays.`,
-  );
-} else {
-  replaceExpected(legacyLoginCheck, compatibleLoginCheck, "admin login checks");
-}
 replaceExpected(
-  swallowedCustomLoginResult,
-  checkedCustomLoginResult,
-  "custom login error handling",
+  legacyLoginCheck,
+  compatibleLoginCheck,
+  "admin login checks",
+);
+replaceExpected(
+  legacyAnonymousLogin,
+  currentAnonymousLogin,
+  "anonymous login calls",
+);
+replaceExpected(
+  legacyCustomLogin,
+  currentCustomLogin,
+  "custom login call",
   1,
 );
 
