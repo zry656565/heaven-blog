@@ -1,0 +1,92 @@
+---
+type Props = {
+  path: string;
+};
+
+const { path } = Astro.props;
+const envId = import.meta.env.PUBLIC_TWIKOO_ENV_ID?.trim();
+const region = import.meta.env.PUBLIC_TWIKOO_REGION?.trim();
+const scriptUrl =
+  import.meta.env.PUBLIC_TWIKOO_SCRIPT_URL?.trim() ||
+  "https://registry.npmmirror.com/twikoo/1.7.15/files/dist/twikoo.all.min.js";
+const enabled = Boolean(envId);
+---
+
+<section
+  class="comments"
+  aria-labelledby="comments-title"
+  data-twikoo-comments
+  data-twikoo-enabled={String(enabled)}
+  data-comment-path={path}
+  data-env-id={envId}
+  data-region={region}
+  data-script-url={scriptUrl}
+>
+  <h2 id="comments-title">评论</h2>
+  {
+    enabled ? (
+      <>
+        <p class="comments-status" role="status" data-comments-status>
+          评论区正在加载…
+        </p>
+        <div id="tcomment" data-comments-mount />
+        <noscript>
+          <p class="comments-status">
+            需要启用 JavaScript 才能查看和发表评论。
+          </p>
+        </noscript>
+      </>
+    ) : (
+      <p class="comments-status">评论区尚未配置，正文阅读不受影响。</p>
+    )
+  }
+  <script is:inline>
+    (function () {
+      var current = document.currentScript;
+      var section = current && current.closest("[data-twikoo-comments]");
+      if (!section || section.dataset.twikooEnabled !== "true") return;
+
+      var status = section.querySelector("[data-comments-status]");
+      var mount = section.querySelector("[data-comments-mount]");
+      var script = document.createElement("script");
+
+      function fail() {
+        if (status) {
+          status.hidden = false;
+          status.textContent = "评论区暂时无法加载，请稍后刷新重试。";
+        }
+      }
+
+      script.src = section.dataset.scriptUrl;
+      script.async = true;
+      script.onload = function () {
+        if (!window.twikoo || !mount) {
+          fail();
+          return;
+        }
+
+        var options = {
+          envId: section.dataset.envId,
+          el: "#tcomment",
+          path: section.dataset.commentPath,
+          lang: "zh-CN",
+        };
+        if (section.dataset.region) {
+          options.region = section.dataset.region;
+        }
+
+        try {
+          Promise.resolve(window.twikoo.init(options))
+            .then(function () {
+              if (status) status.hidden = true;
+            })
+            .catch(fail);
+        } catch (_error) {
+          fail();
+        }
+      };
+      script.onerror = fail;
+      document.head.appendChild(script);
+    })();
+  </script>
+</section>

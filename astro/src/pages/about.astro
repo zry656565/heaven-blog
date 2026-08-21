@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import Comments from "../components/Comments.astro";
 import { imageMarkup, prepareResponsiveImages } from "../lib/images";
 
 await prepareResponsiveImages();
@@ -107,4 +108,5 @@ const school: TimelineItem[] = [
       <a href="https://h1z3y3.me/links/">h1z3y3</a>
     </p>
   </div>
+  <Comments path="/about/" />
 </Base>

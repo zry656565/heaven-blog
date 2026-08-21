@@ -68,6 +68,11 @@ assert.match(
   /\/assets\/images\/monkey-transparent\.png/,
   "关于页应使用透明底头像",
 );
+assert.match(
+  about,
+  /data-comment-path="\/about\/"/,
+  "关于页应保留历史评论 path",
+);
 assert.match(html, /post-tags/, "首页近期文章应露出标签");
 assert.doesNotMatch(html, /HEAVEN BLOG/, "首页不应再使用占位 eyebrow");
 assert.equal(
@@ -101,6 +106,12 @@ assert.match(html, /\/assets\/images\/favicon\.ico/, "首页应声明 favicon");
 assert.match(essay, /年的文章/, "随笔样本应回到年表而不是上一篇下一篇");
 assert.match(essay, /year-mark">2026/, "文末年份入口应指向对应年表");
 assert.doesNotMatch(essay, /上一篇|下一篇/, "文末不应出现上一篇下一篇");
+assert.match(essay, /data-twikoo-comments/, "文章页应包含 Twikoo 评论容器");
+assert.match(
+  essay,
+  /data-comment-path="\/posts\/floating-on-the-grey-sea\/"/,
+  "评论 path 应使用带尾部斜杠的历史 permalink",
+);
 assert.match(
   essay,
   /property="og:type" content="article"/,
@@ -231,6 +242,13 @@ for (const filename of postFiles) {
     body,
     /<script\b/i,
     `${filename} 正文不应留下可执行 script`,
+  );
+  assert.match(
+    page,
+    new RegExp(
+      `data-comment-path="${permalink.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"`,
+    ),
+    `${filename} 的评论 path 应与历史 permalink 完全一致`,
   );
 }
 
