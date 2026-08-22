@@ -1,6 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import Comments from "../components/Comments.astro";
+import PageViews from "../components/PageViews.astro";
 import { imageMarkup, prepareResponsiveImages } from "../lib/images";
 
 await prepareResponsiveImages();
@@ -57,6 +58,7 @@ const school: TimelineItem[] = [
 
 <Base title="关于我" current="about">
   <h1 class="page-title">关于我</h1>
+  <p class="meta"><PageViews /></p>
   <div class="about">
     <p>
       你们好，我是邹润阳，是一个写了十多年代码的程序员，如今深耕人事工作，对创造一家生机勃勃的公司充满好奇。如果你有任何问题，欢迎邮件联系我：<a

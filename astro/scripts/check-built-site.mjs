@@ -105,6 +105,11 @@ assert.match(
   /data-comment-path="\/about\/"/,
   "关于页应保留历史评论 path",
 );
+assert.match(
+  about,
+  /id="twikoo_visitors"[^>]*>—<\/span>/,
+  "关于页应显示访问量，并在异步结果返回前保留默认状态",
+);
 assert.match(html, /post-tags/, "首页近期文章应露出标签");
 assert.doesNotMatch(html, /HEAVEN BLOG/, "首页不应再使用占位 eyebrow");
 assert.equal(
@@ -295,6 +300,11 @@ for (const filename of postFiles) {
       `data-comment-path="${permalink.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"`,
     ),
     `${filename} 的评论 path 应与历史 permalink 完全一致`,
+  );
+  assert.match(
+    page,
+    /id="twikoo_visitors"[^>]*>—<\/span>/,
+    `${filename} 应显示访问量，并在异步结果返回前保留默认状态`,
   );
 }
 
