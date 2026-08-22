@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import Comments from "../../components/Comments.astro";
+import PageViews from "../../components/PageViews.astro";
 import Base from "../../layouts/Base.astro";
 import { siteEmail, siteOwner } from "../../lib/site";
 
@@ -38,6 +39,7 @@ const { post, previous, next } = Astro.props;
           <span class="post-tags"> · {post.labels.join(" · ")}</span>
         )
       }
+      <PageViews />
     </p>
     <div class="prose" set:html={post.html} />
     <footer class="article-footer">
