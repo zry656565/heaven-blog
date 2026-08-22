@@ -5,14 +5,22 @@ import Base from "../../layouts/Base.astro";
 import { siteEmail, siteOwner } from "../../lib/site";
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog");
-  return posts.map((entry) => ({
+  const posts = (await getCollection("blog")).sort(
+    (a, b) =>
+      b.data.publishedAt.getTime() - a.data.publishedAt.getTime() ||
+      b.id.localeCompare(a.id),
+  );
+  return posts.map((entry, index) => ({
     params: { slug: entry.id },
-    props: { post: entry.data },
+    props: {
+      post: entry.data,
+      previous: posts[index + 1]?.data ?? null,
+      next: posts[index - 1]?.data ?? null,
+    },
   }));
 }
 
-const { post } = Astro.props;
+const { post, previous, next } = Astro.props;
 const year = post.date.slice(0, 4);
 ---
 
@@ -41,6 +49,30 @@ const year = post.date.slice(0, 4);
           >Attribution-NonCommercial 3.0 License</a
         >。任何人可以进行转载、分享，但不可在未经允许的情况下用于商业用途；转载请注明出处。感谢配合！
       </p>
+      <nav class="article-neighbors" aria-label="相邻文章">
+        {
+          previous && (
+            <a
+              class="article-neighbor article-neighbor-previous"
+              href={previous.permalink}
+            >
+              <span>上一篇</span>
+              <strong>{previous.title}</strong>
+            </a>
+          )
+        }
+        {
+          next && (
+            <a
+              class="article-neighbor article-neighbor-next"
+              href={next.permalink}
+            >
+              <span>下一篇</span>
+              <strong>{next.title}</strong>
+            </a>
+          )
+        }
+      </nav>
       <p class="article-exit">
         <a href={`/all-articles/#y${year}`}>
           <span class="year-mark">{year}</span> 年的文章

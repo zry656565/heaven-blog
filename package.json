@@ -7,7 +7,6 @@
   },
   "scripts": {
     "comments:prepare-disqus": "node scripts/prepare-disqus-for-twikoo.mjs",
-    "comments:plan-recovery": "node scripts/plan-twikoo-comment-recovery.mjs",
     "verify": "npm run verify:migration && npm run verify:secrets && npm --prefix astro run verify",
     "verify:migration": "node scripts/verify-migration.mjs",
     "verify:secrets": "node scripts/verify-secrets.mjs",

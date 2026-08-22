@@ -24,6 +24,10 @@ const missingImagePost = await readFile(
   join(distDir, "posts/method-of-self-learning/index.html"),
   "utf8",
 );
+const oldestPost = await readFile(
+  join(distDir, "posts/storageMethod/index.html"),
+  "utf8",
+);
 const feed = await readFile(join(distDir, "feed.xml"), "utf8");
 
 assert.match(html, /<html lang="zh-CN">/, "首页应声明中文语言");
@@ -103,9 +107,25 @@ assert.match(
   "在英文页出现前 x-default 指向中文 canonical",
 );
 assert.match(html, /\/assets\/images\/favicon\.ico/, "首页应声明 favicon");
-assert.match(essay, /年的文章/, "随笔样本应回到年表而不是上一篇下一篇");
+assert.match(essay, /年的文章/, "随笔样本应保留对应年份的年表入口");
 assert.match(essay, /year-mark">2026/, "文末年份入口应指向对应年表");
-assert.doesNotMatch(essay, /上一篇|下一篇/, "文末不应出现上一篇下一篇");
+assert.match(essay, /aria-label="相邻文章"/, "文章页应提供相邻文章导航");
+assert.match(essay, /上一篇/, "最新文章应链接上一篇文章");
+assert.match(
+  essay,
+  /href="\/posts\/when-the-lobster-decided-to-learn-smoking\/"/,
+  "最新文章的上一篇应指向时间上相邻的旧文章",
+);
+assert.doesNotMatch(essay, /下一篇/, "最新文章不应显示不存在的下一篇");
+assert.match(oldestPost, /下一篇/, "最早文章应链接下一篇文章");
+assert.match(
+  oldestPost,
+  /href="\/posts\/tipsforC\/"/,
+  "最早文章的下一篇应指向时间上相邻的新文章",
+);
+assert.doesNotMatch(oldestPost, /上一篇/, "最早文章不应显示不存在的上一篇");
+assert.match(codePost, /上一篇/, "中间文章应显示上一篇");
+assert.match(codePost, /下一篇/, "中间文章应显示下一篇");
 assert.match(essay, /data-twikoo-comments/, "文章页应包含 Twikoo 评论容器");
 assert.match(
   essay,
