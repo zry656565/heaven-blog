@@ -1,6 +1,6 @@
 # SEO 与分享卡片
 
-对应 Issue #6。预览站 `site` 仍是 `https://heaven-blog-next.pages.dev`。正式 canonical 改到 `https://jerryzou.com` 属于 Stage 9，本阶段不改 DNS、CNAME 或生产域名。
+对应 Issue #6。Stage 9 正式上线后，站点 canonical、分享 URL、Sitemap 与 RSS 统一使用 `https://jerryzou.com`；Pages 预览域名只用于部署验收。
 
 ## 页面元数据
 

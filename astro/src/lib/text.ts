@@ -9,6 +9,6 @@ export function absoluteUrl(
   path: string,
   site: URL | string | undefined,
 ): string {
-  const origin = site ?? "https://heaven-blog-next.pages.dev";
+  const origin = site ?? "https://jerryzou.com";
   return new URL(path, origin).href;
 }

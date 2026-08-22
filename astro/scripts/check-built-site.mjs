@@ -84,12 +84,11 @@ assert.equal(
   false,
   "Astro 产物不得包含 CNAME，以免抢占正式域名",
 );
-assert.doesNotMatch(html, /jerryzou\.com/, "预览首页不得绑定正式域名");
 assert.match(html, /rel="canonical"/, "首页应声明 canonical");
 assert.match(
   html,
-  /href="https:\/\/heaven-blog-next\.pages\.dev\/"/,
-  "预览 canonical 应使用 pages.dev，而不是正式域名",
+  /href="https:\/\/jerryzou\.com\/"/,
+  "正式 canonical 应使用主域名",
 );
 assert.match(
   html,
@@ -144,7 +143,7 @@ assert.match(
 assert.match(essay, /"@type":"BlogPosting"/, "文章页 JSON-LD 应为 BlogPosting");
 assert.match(
   essay,
-  /og:image" content="https:\/\/heaven-blog-next\.pages\.dev\/assets\/images\/og-default\.jpg"/,
+  /og:image" content="https:\/\/jerryzou\.com\/assets\/images\/og-default\.jpg"/,
   "文章页应使用统一默认分享图，不自动取正文首图",
 );
 assert.match(codePost, /<pre class="shiki/, "代码样本应保留代码块");
@@ -162,7 +161,7 @@ assert.match(
   "Feed 应保留《浮在灰蒙蒙的海上》原文 22:30 +0800",
 );
 assert.doesNotMatch(feed, /\*\*/, "Feed 摘要不应残留 Markdown 强调记号");
-assert.doesNotMatch(feed, /jerryzou\.com/, "预览 Feed 不得绑定正式域名");
+assert.match(feed, /https:\/\/jerryzou\.com\//, "Feed 应使用正式主域名");
 assert.match(
   essay,
   /<img src="\/assets\/images\/posts\/[^"]+\.png"/,
@@ -389,7 +388,7 @@ const robots = await readFile(join(distDir, "robots.txt"), "utf8");
 assert.match(sitemap, /<urlset /, "应输出 sitemap.xml");
 assert.match(
   sitemap,
-  /https:\/\/heaven-blog-next\.pages\.dev\/posts\/floating-on-the-grey-sea\//,
+  /https:\/\/jerryzou\.com\/posts\/floating-on-the-grey-sea\//,
   "sitemap 应包含正式文章 permalink",
 );
 assert.match(sitemap, /\/2\//, "sitemap 应包含历史分页");
@@ -398,11 +397,10 @@ assert.doesNotMatch(
   /shadowsocks-with-digitalocean/,
   "旧兼容地址不应进入 sitemap",
 );
-assert.doesNotMatch(sitemap, /jerryzou\.com/, "预览 sitemap 不得绑定正式域名");
 assert.match(
   robots,
-  /Sitemap: https:\/\/heaven-blog-next\.pages\.dev\/sitemap\.xml/,
-  "robots.txt 应指向预览 sitemap",
+  /Sitemap: https:\/\/jerryzou\.com\/sitemap\.xml/,
+  "robots.txt 应指向正式 sitemap",
 );
 
 const graphql = await readFile(
