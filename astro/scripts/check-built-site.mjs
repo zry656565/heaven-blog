@@ -107,8 +107,7 @@ assert.match(
   "在英文页出现前 x-default 指向中文 canonical",
 );
 assert.match(html, /\/assets\/images\/favicon\.ico/, "首页应声明 favicon");
-assert.match(essay, /年的文章/, "随笔样本应保留对应年份的年表入口");
-assert.match(essay, /year-mark">2026/, "文末年份入口应指向对应年表");
+assert.doesNotMatch(essay, /article-exit/, "文章页不应重复提供年度归档入口");
 assert.match(essay, /aria-label="相邻文章"/, "文章页应提供相邻文章导航");
 assert.match(essay, /上一篇/, "最新文章应链接上一篇文章");
 assert.match(
