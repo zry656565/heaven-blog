@@ -223,7 +223,6 @@ main {
 .meta,
 .post-list time,
 .post-tags,
-.article-exit,
 .year-group h2,
 .year-list time {
   font-family: var(--font-mono);
@@ -236,10 +235,6 @@ main {
 }
 
 .post-tags {
-  color: var(--accent-text);
-}
-
-.year-mark {
   color: var(--accent-text);
 }
 
@@ -383,20 +378,6 @@ main {
 }
 
 .article-neighbor:hover strong {
-  color: var(--accent-text);
-}
-
-.article-exit {
-  margin: 1rem 0 0;
-  color: var(--muted);
-  font-size: 0.92rem;
-}
-
-.article-exit a {
-  color: var(--muted);
-}
-
-.article-exit a:hover {
   color: var(--accent-text);
 }
 
