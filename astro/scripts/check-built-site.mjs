@@ -30,10 +30,23 @@ const oldestPost = await readFile(
 );
 const feed = await readFile(join(distDir, "feed.xml"), "utf8");
 
-assert.match(html, /<html lang="zh-CN">/, "首页应声明中文语言");
+assert.match(
+  html,
+  /<html lang="zh-CN" data-theme="light">/,
+  "首页应声明中文语言并默认使用浅色主题",
+);
 assert.match(html, /<meta name="viewport"/, "首页应包含移动端 viewport");
 assert.match(html, /<title>咀嚼之味<\/title>/, "首页标题应保持原博客名称");
 assert.match(html, /data-theme-toggle/, "首页应提供主题切换");
+assert.match(html, /切换到深色模式/, "浅色主题按钮应提示切换到深色模式");
+assert.match(html, /切换到浅色模式/, "深色主题按钮应提示切换到浅色模式");
+assert.match(html, /data-theme-icon="light"/, "主题按钮应提供浅色图标");
+assert.match(html, /data-theme-icon="dark"/, "主题按钮应提供深色图标");
+assert.doesNotMatch(
+  html,
+  /data-theme-icon="system"|跟随系统|prefers-color-scheme/,
+  "主题按钮不应保留系统跟随状态",
+);
 assert.match(html, /data-menu-toggle/, "移动导航应可点按，不依赖 hover");
 assert.match(html, /跳到正文/, "应提供跳到正文链接");
 assert.match(html, /浮在灰蒙蒙的海上/, "首页应列出真实文章标题");
