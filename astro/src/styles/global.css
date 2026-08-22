@@ -631,6 +631,13 @@ html[data-theme="dark"] .lost-image-frame {
   margin: 0;
 }
 
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.35rem 0;
+}
+
 @media (max-width: 600px) {
   .article-neighbors {
     grid-template-columns: minmax(0, 1fr);

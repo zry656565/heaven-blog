@@ -38,6 +38,7 @@ const canonical = absoluteUrl(Astro.url.pathname, Astro.site ?? fallbackSite);
 const shareImage = image || defaultOgImage;
 const ogImage = absoluteUrl(shareImage, Astro.site ?? fallbackSite);
 const knownOgSize = shareImage === defaultOgImage;
+const currentYear = new Date().getFullYear();
 const jsonLd =
   type === "article"
     ? {
@@ -248,9 +249,20 @@ const jsonLd =
     </main>
     <footer class="site-footer">
       <div class="wrap">
+        <p class="footer-text">© 2013–{currentYear} {siteOwner}</p>
+        <nav class="footer-links" aria-label="页脚导航">
+          <a href="/feed.xml">RSS 订阅</a>
+          <span aria-hidden="true">·</span>
+          <a href="/about/">关于我</a>
+          <span aria-hidden="true">·</span>
+          <a href={`mailto:${siteEmail}`}>联系我</a>
+        </nav>
         <p class="footer-text">
-          本站使用 <a href="https://astro.build">Astro</a>
+          使用 <a href="https://astro.build">Astro</a> 构建，托管于 <a
+            href="https://pages.cloudflare.com">Cloudflare Pages</a
+          >
         </p>
+        <p class="footer-text">本站使用 Google Analytics 了解整体访问情况</p>
       </div>
     </footer>
     <script is:inline>
