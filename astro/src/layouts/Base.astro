@@ -88,6 +88,25 @@ const jsonLd =
 <!doctype html>
 <html lang="zh-CN" data-theme="light">
   <head>
+    <script is:inline>
+      if (
+        window.location.hostname === "jerryzou.com" ||
+        window.location.hostname === "www.jerryzou.com"
+      ) {
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function () {
+          window.dataLayer.push(arguments);
+        };
+        window.gtag("js", new Date());
+        window.gtag("config", "G-QDS85ESC7N");
+
+        var googleTag = document.createElement("script");
+        googleTag.async = true;
+        googleTag.src =
+          "https://www.googletagmanager.com/gtag/js?id=G-QDS85ESC7N";
+        document.head.appendChild(googleTag);
+      }
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={metaDescription} />
