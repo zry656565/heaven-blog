@@ -196,9 +196,8 @@ a:hover {
   transform: translateY(-2px);
 }
 
-html[data-theme-choice="system"] .theme-icon[data-theme-icon="system"],
-html[data-theme-choice="light"] .theme-icon[data-theme-icon="light"],
-html[data-theme-choice="dark"] .theme-icon[data-theme-icon="dark"] {
+html[data-theme="light"] .theme-icon[data-theme-icon="dark"],
+html[data-theme="dark"] .theme-icon[data-theme-icon="light"] {
   display: block;
 }
 
