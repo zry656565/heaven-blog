@@ -37,6 +37,21 @@ assert.match(
 );
 assert.match(html, /<meta name="viewport"/, "首页应包含移动端 viewport");
 assert.match(html, /<title>咀嚼之味<\/title>/, "首页标题应保持原博客名称");
+assert.equal(
+  (html.match(/G-QDS85ESC7N/g) ?? []).length,
+  2,
+  "首页应只配置一次正确的 GA4 Measurement ID",
+);
+assert.match(
+  html,
+  /https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=G-QDS85ESC7N/,
+  "首页应加载 GA4 Google tag",
+);
+assert.match(
+  html,
+  /window\.location\.hostname\s*===\s*"jerryzou\.com"\s*\|\|\s*window\.location\.hostname\s*===\s*"www\.jerryzou\.com"/,
+  "GA4 只应在正式域名采集，避免预览站污染数据",
+);
 assert.match(html, /data-theme-toggle/, "首页应提供主题切换");
 assert.match(html, /切换到深色模式/, "浅色主题按钮应提示切换到深色模式");
 assert.match(html, /切换到浅色模式/, "深色主题按钮应提示切换到浅色模式");
